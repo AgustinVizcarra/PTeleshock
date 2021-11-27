@@ -118,5 +118,6 @@ public class BPrueba {
     public void setPedDeseados(int pedDeseados) {
         this.pedDeseados = pedDeseados;
     }
+    String hola = "esto es un prueba";
 }
 
