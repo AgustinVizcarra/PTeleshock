@@ -37,7 +37,7 @@ public class BolsaCompraDao extends BaseDao {
             String sql2 = "INSERT INTO detallepedido (idpedido, idproducto, idfarmacia,cantidad) VALUES (?,?,?,?)";
 
             try (Connection connection = this.getConnection();
-                 PreparedStatement pstmt = connection.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);) {
+                 PreparedStatement pstmt = connection.prepareStatement(sql2)) {
 
                 pstmt.setInt(1, idPedido);
                 pstmt.setInt(2, idProd);
@@ -109,7 +109,7 @@ public class BolsaCompraDao extends BaseDao {
         String sql = "UPDATE pedido set idestatuspedido = 2, fechapedido = now() , fechaentrega = ? , codigodeventa = ? where idpedido = ?";
 
         try (Connection connection = this.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
             pstmt.setString(1, (fecha +" "+ hora));
             pstmt.setInt(2, (int) Math.floor(Math.random()*4000 + 1000));

@@ -1,13 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="pe.edu.pucp.pteleshock.Beans.BPedidoEstado" %><%--
-  Created by IntelliJ IDEA.
-  User: casa
-  Date: 5/11/2021
-  Time: 18:44
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BPedidoEstado"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="farmacia" type="pe.edu.pucp.proyecto_integrado_511.Beans.BFarmaciaPorDistrito" scope="request"/>
+<jsp:useBean id="farmacia" type="pe.edu.pucp.pteleshock.Beans.BFarmaciaPorDistrito" scope="request"/>
 <%
     ArrayList<BPedidoEstado> listaProductosC = (ArrayList<BPedidoEstado>) request.getAttribute("listaPedidoCarrito");
 %>
@@ -91,75 +85,95 @@
             <!-- Main -->
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4 mt-5">
+                    <div class="container-fluid px-5 mt-5">
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="<%= request.getContextPath()%>/Client_Farmacias">Farmacias</a>
                             </li>
                             <li class="breadcrumb-item active">Bolsa de compras</li>
                         </ol>
 
-                        <div class="row">
-                            <div class="col-auto">
-
+                        <div class="row px-3">
+                            <div class="col-7">
                                 <div class="card-body">
                                     <h5 class="card-title">Bolsa de Compras</h5>
-                                    <h6 class="card-title"><%=farmacia.getNombreFarmacia()%>
-                                    </h6>
-                                    <table class="table align-content-center">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Producto</th>
-                                                <th scope="col"></th>
-                                                <th scope="col">Unidad</th>
-                                                <th scope="col">Precio</th>
-                                                <th scope="col" style="text-align:center">Receta</th>
-                                                <th scope="col"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <%double subtotal = 0.0;%>
-                                            <%for (BPedidoEstado pedidoC : listaProductosC) {%>
-                                            <tr>
-                                                <th scope="row"><img src="<%=pedidoC.getFotoProducto()%>"
-                                                                     class="img-thumbnail"
-                                                                     alt="..."
-                                                                     style="width: 100px; height: 100px"></th>
-                                                <td><small><%=pedidoC.getNombreProducto()%>
-                                                </small></td>
-                                                <td>
-                                                    <%=pedidoC.getCantidad()%>
-                                                </td>
-                                                <td><%=(pedidoC.getPrecioUnitario() * pedidoC.getCantidad())%>
-                                                </td>
-                                                <%subtotal = subtotal + (pedidoC.getPrecioUnitario() * pedidoC.getCantidad());%>
-
-                                                <%if (pedidoC.isRecetaMedica()) {%>
-                                                <td>
-                                                    <div class="mb-3">
-                                                        <input class="form-control" name="fotoReceta" type="file" id="formFile1">
+                                    <div class="accordion" id="accordionExample">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingOne">
+                                                <div class="row">
+                                                    <div class="col"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></button></div>
+                                                    <div class="col">
+                                                        <h6 class="card-title"><%=farmacia.getNombreFarmacia()%>
+                                                        </h6>
                                                     </div>
-                                                </td>
-                                                <%} else {%>
-                                                <td class="text-center">No requiere</td>
-                                                <%}%>
-                                                <td class="align-content-md-center">
-                                                    <button type="button" class="btn btn-outline-danger">
-                                                        Eliminar
-                                                    </button>
-                                                </td>
+                                                    <div class="col">
+                                                        <div>
+                                                            <form method="post" action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=comprar">
+                                                                <div>
+                                                                    <input type="datetime-local" name="date-time">
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </h2>
+                                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <table class="table align-content-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Producto</th>
+                                                                <th scope="col"></th>
+                                                                <th scope="col">Unidad</th>
+                                                                <th scope="col">Precio</th>
+                                                                <th scope="col" style="text-align:center">Receta</th>
+                                                                <th scope="col"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <%double subtotal = 0.0;%>
+                                                            <%for (BPedidoEstado pedidoC : listaProductosC) {%>
+                                                            <tr>
+                                                                <th scope="row"><img src="<%=pedidoC.getFotoProducto()%>"
+                                                                                     class="img-thumbnail"
+                                                                                     alt="..."
+                                                                                     style="width: 100px; height: 100px"></th>
+                                                                <td><small><%=pedidoC.getNombreProducto()%>
+                                                                </small></td>
+                                                                <td>
+                                                                    <%=pedidoC.getCantidad()%>
+                                                                </td>
+                                                                <td><%=(pedidoC.getPrecioUnitario() * pedidoC.getCantidad())%>
+                                                                </td>
+                                                                <%subtotal = subtotal + (pedidoC.getPrecioUnitario() * pedidoC.getCantidad());%>
 
-                                            </tr>
-                                            <%}%>
-
-                                        </tbody>
-                                    </table>
+                                                                <%if (pedidoC.isRecetaMedica()) {%>
+                                                                <td>
+                                                                    <div class="mb-3">
+                                                                        <input class="form-control" name="fotoReceta" type="file" id="formFile1">
+                                                                    </div>
+                                                                </td>
+                                                                <%} else {%>
+                                                                <td class="text-center">No requiere</td>
+                                                                <%}%>
+                                                                <td class="align-content-md-center">
+                                                                    <button type="button" class="btn btn-outline-danger">
+                                                                        Eliminar
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                            <%}%>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
 
-                            <div class=" col-auto card-body border ">
-                                <form method="POST"
-                                      action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=comprar">
+                            <div class=" col-5 my-5">
+                                <form method="POST" action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=comprar">
                                     <input type="hidden" class="form-control" name="idPedido" value="<%=listaProductosC.get(0).getPedido().getIdPedido()%>">
                                     <input type="hidden" class="form-control" name="receta" value="<%=listaProductosC.get(0).isRecetaMedica()%>">
 
@@ -177,9 +191,9 @@
                                                 <td class="text-center">
 
 
-                                                        <input type="date" id="party" name="fechaEnt" min="2021-01-01"
-                                                               max="2021-12-31" required>
-                                                        <span class="validity"></span>
+                                                    <input type="date" id="party" name="fechaEnt" min="2021-01-01"
+                                                           max="2021-12-31" required>
+                                                    <span class="validity"></span>
 
                                                 </td>
                                             </tr>
