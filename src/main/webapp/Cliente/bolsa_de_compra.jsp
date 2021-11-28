@@ -133,7 +133,7 @@
                                                             <%double subtotal = 0.0;%>
                                                             <%for (BPedidoEstado pedidoC : listaProductosC) {%>
                                                             <tr>
-                                                                <th scope="row"><img src="<%=pedidoC.getFotoProducto()%>"
+                                                                <th scope="row"><img  src="<%= request.getContextPath()%>/ImgServlet?prod=<%=pedidoC.getIdProducto()%>"
                                                                                      class="img-thumbnail"
                                                                                      alt="..."
                                                                                      style="width: 100px; height: 100px"></th>

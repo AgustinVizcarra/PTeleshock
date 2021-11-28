@@ -26,7 +26,6 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
 
         request.setAttribute("cantProd",cantStr);
 
-
         RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
         view.forward(request,response);
 

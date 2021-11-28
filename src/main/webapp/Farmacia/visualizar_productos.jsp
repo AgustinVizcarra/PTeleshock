@@ -186,7 +186,8 @@
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-end">
                             <% int cantProdInt=Integer.parseInt(cantProd);%>
-                            <% for(int i=1; i<Math.floor(cantProdInt/12)+2; i++) { %>
+                            <% int resto= cantProdInt%12==0? 0:1; %>
+                            <% for(int i=1; i<Math.floor(cantProdInt/12)+resto+1; i++) { %>
                             <li class="page-item"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=<%=i %>"><%=i%></a></li>
 
                             <% } %>

@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="mensajealerta" scope="request" class="java.lang.String" type="java.lang.String"/>
+<jsp:useBean id="mail" scope="request" class="java.lang.String" type="java.lang.String"/>
+<jsp:useBean id="pwd" scope="request" class="java.lang.String" type="java.lang.String"/>
 <html lang="en" xmlns:background-color="http://www.w3.org/1999/xhtml" xmlns: xmlns:>
 <head>
     <meta charset="utf-8"/>
@@ -18,6 +21,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
             crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/a8c05a362e.js" crossorigin="anonymous"></script>
+    <style>
+        #popup:target{
+            visibility: hidden; /* Se regresa a hidden para ocultar */
+            opacity: 0;  /*Se regresa a o para hacerlo "invisible" */
+        }
+        .overlay1{display: flex; justify-content: center ; align-items: center; position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            background-repeat: repeat-y;
+            transition: opacity 500ms;
+            visibility: visible;
+            opacity: 1} </style>
 </head>
 <body class="sb-nav-fixed"
       style="background-image: url('img/Fondo_login.jpg'); background-repeat:repeat-y; background-size: cover">
@@ -54,27 +72,25 @@
                                     <h3 class="text-center font-weight-light my-3">Iniciar Sesión</h3>
                                 </div>
                                 <div class="card-body p-3">
-                                    <form>
-                                        <div class="row mb-4">
-                                            <label for="inputEmail" class="col-sm-4 col-form-label">Correo
-                                                : </label>
+                                    <form method="post" action="<%= request.getContextPath()%>/Login?action=login">
+                                        <div class="row mb-4" >
+                                            <label for="inputEmail" class="col-sm-4 col-form-label">Correo: </label>
                                             <div class="col-sm-8">
-                                                <input type="email" class="form-control" id="inputEmail">
+                                                <input type="email" class="form-control" id="inputEmail" name="correo" pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$" title="Debe especificar una ruta de correo valida"
+                                                value="<%=mail%>">
                                             </div>
                                         </div>
                                         <div class="row mb-4">
-                                            <label for="inputPassword" class="col-sm-4 col-form-label">Contraseña
-                                                : </label>
+                                            <label for="inputPassword" class="col-sm-4 col-form-label">Contraseña: </label>
                                             <div class="col-sm-8">
                                                 <input type="password" class="form-control"
-                                                       id="inputPassword">
+                                                       id="inputPassword" name="pass" value="<%=pwd%>">
                                             </div>
                                         </div>
                                         <div class="d-grid gap-3 col-6 mx-auto mb-3">
-                                            <a class="btn btn-primary me-md-7"
-                                               href="<%= request.getContextPath()%>/">Ingresar</a>
-                                            <a class="btn btn-success me-md-7"
-                                               href="Registro.html">Registrar</a>
+                                            <button class="btn btn-primary me-md-7" href="#popup1" type="submit">Ingresar</button>
+                                            <button class="btn btn-success me-md-7"
+                                               href="<%= request.getContextPath()%>/Login_Register">Registrarse</button>
                                         </div>
                                         <div class="text-center mb-2">
                                             <a class="small text-white" href="<%= request.getContextPath()%>/Login_Password">¿Olvidaste tu
@@ -88,11 +104,22 @@
 
                 </div>
 
-
             </div>
         </main>
     </div>
 </div>
+<%if(!mensajealerta.equalsIgnoreCase("")){%>
+<nav id="popup" class="overlay1">
+    <div class=" popup card text-center ">
+        <h5 class="card-header text-center text-light">Teleshock</h5>
+        <div class="card-body">
+            <h5 class="card-title p-2"><%=mensajealerta%></h5>
+            <!--<p>Se ha enviado un correo para confirmar el cambio de contraseña</p>-->
+            <a href="<%= request.getContextPath()%>/Login" class="btn btn-success mb-2">Intentar nuevamente</a>
+        </div>
+    </div>
+</nav>
+<%}%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
 <script src="js/scripts.js"></script>

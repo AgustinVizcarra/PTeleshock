@@ -134,7 +134,7 @@
                                                 style="top: 0.5rem; right: 0.5rem">Sale</div>-->
 
                                             <!-- Product image-->
-                                            <img class="card-img-top" src="<%=listaProd.getFoto()%>" alt="...">
+                                            <img class="card-img-top"  src="<%= request.getContextPath()%>/ImgServlet?prod=<%=listaProd.getIdProducto()%>" alt="...">
                                             <!-- Product details-->
                                             <div class="card-body p-2">
                                                 <div class="text-center">

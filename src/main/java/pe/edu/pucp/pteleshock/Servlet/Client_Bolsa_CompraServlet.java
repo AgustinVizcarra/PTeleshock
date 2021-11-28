@@ -2,6 +2,7 @@ package pe.edu.pucp.pteleshock.Servlet;
 
 
 
+import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.BolsaCompraDao;
 import pe.edu.pucp.pteleshock.Dao.ProductosFDao;
 
@@ -11,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "Client_Bolsa_CompraServlet", value = "/Client_Bolsa_Compra")
@@ -18,21 +20,31 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String idPedidoStr = request.getParameter("idP") != null ? request.getParameter("idP") : "";
-        String idFarmaciaStr = request.getParameter("idF") != null ? request.getParameter("idF") : "";
+        HttpSession session = request.getSession();
+        BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");
+
+        if (cliente != null) {
+
+            String idPedidoStr = request.getParameter("idP") != null ? request.getParameter("idP") : "";
+            String idFarmaciaStr = request.getParameter("idF") != null ? request.getParameter("idF") : "";
 
 
-        BolsaCompraDao bolsaCompraDao = new BolsaCompraDao();
-        ProductosFDao productosFDao = new ProductosFDao();
+            BolsaCompraDao bolsaCompraDao = new BolsaCompraDao();
+            ProductosFDao productosFDao = new ProductosFDao();
 
 
-        request.setAttribute("listaPedidoCarrito", bolsaCompraDao.listarPedidosCarrito(Integer.parseInt(idPedidoStr)));
-        request.setAttribute("farmacia", productosFDao.obtenerFarmacia(Integer.parseInt(idFarmaciaStr)));
+            request.setAttribute("listaPedidoCarrito", bolsaCompraDao.listarPedidosCarrito(Integer.parseInt(idPedidoStr)));
+            request.setAttribute("farmacia", productosFDao.obtenerFarmacia(Integer.parseInt(idFarmaciaStr)));
 
 
-        response.setContentType("text/html");
-        RequestDispatcher view = request.getRequestDispatcher("/Cliente/bolsa_de_compra.jsp");
-        view.forward(request, response);
+            response.setContentType("text/html");
+            RequestDispatcher view = request.getRequestDispatcher("/Cliente/bolsa_de_compra.jsp");
+            view.forward(request, response);
+
+        } else {
+            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
+            viewError.forward(request, response);
+        }
     }
 
     @Override

@@ -14,8 +14,17 @@ import java.io.IOException;
 public class Farm_Gestionar_PedidosServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String pag= request.getParameter("pag")!= null? request.getParameter("pag"):"1";
+
         GPedidoDao gPedidoDao = new GPedidoDao();
-        request.setAttribute("listaPedido",gPedidoDao.listaPedidos());
+
+        int cantPed= gPedidoDao.cantidadPedidos();
+        String cantPedStr= String.valueOf(cantPed);
+
+
+        request.setAttribute("listaPedido",gPedidoDao.listaPedidosPag(pag));
+        request.setAttribute("cantPed",cantPedStr);
         RequestDispatcher view = request.getRequestDispatcher("/Farmacia/gestionar_pedidos.jsp");
         view.forward(request,response);
 

@@ -8,6 +8,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% ArrayList<BPedidoG> listaPedido=(ArrayList<BPedidoG>) request.getAttribute("listaPedido");%>
+<jsp:useBean type="java.lang.String" scope="request" id="cantPed" class="java.lang.String"/>
+
 <head>
 
     <meta charset="utf-8">
@@ -73,7 +75,7 @@
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Lista de Pedidos</h1>
                 <div class="row   row-cols-4">
-                    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="post" action="<%=request.getContextPath()%>/Farm_Gestionar_Pedidos" >
+                    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="post" action="<%=request.getContextPath()%>/Farm_Gestionar_Pedidos?pag=1" >
                         <div class="input-group">
                             <input class="form-control" type="text" name="textoBuscar" placeholder="Buscar..." aria-label="Buscar..."
                                    aria-describedby="btnNavbarSearch"/>
@@ -125,6 +127,17 @@
                         </table>
                     </div>
                 </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-end">
+                        <% int cantPedInt=Integer.parseInt(cantPed);%>
+                        <% int resto= cantPedInt%3==0? 0:1; %>
+                        <% for(int i=1; i<Math.floor(cantPedInt/3)+resto+1; i++) { %>
+                        <li class="page-item"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Gestionar_Pedidos?pag=<%=i %>"><%=i%></a></li>
+                        <% } %>
+
+                    </ul>
+                </nav>
+
             </div>
         </main>
         <footer class="py-4 bg-light mt-auto">
