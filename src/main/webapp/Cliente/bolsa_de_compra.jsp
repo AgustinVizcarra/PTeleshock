@@ -97,7 +97,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Bolsa de Compras</h5>
                                     <div class="accordion" id="accordionExample">
-                                        <% for(){%>
+                                        <%--<% for(){%>--%>
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingOne">
                                                 <div class="row">
@@ -169,13 +169,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <%}%>
+                                            <%--<% <%}%>%>--%>
                                     </div>
                                 </div>
 
                             </div>
 
-                            <div class=" col-5 my-5">
+                            <div class=" col-5 my-3">
                                 <h5 class="card-title">Resumen de compra</h5>
                                 <form method="POST" action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=comprar">
                                     <input type="hidden" class="form-control" name="idPedido" value="<%=listaProductosC.get(0).getPedido().getIdPedido()%>">
