@@ -175,7 +175,7 @@
                                                     <div class="card-group">
 
                                                         <div class="card-body justify-content-start">
-                                                            <a><img src="<%=pedidoE.getFotoProducto()%>"
+                                                            <a><img  src="<%= request.getContextPath()%>/ImgServlet?prod=<%=pedidoE.getIdProducto()%>"
                                                                     class="img-thumbnail"
                                                                     alt="..."
                                                                     style="width: 100px; height: 100px"></a>
