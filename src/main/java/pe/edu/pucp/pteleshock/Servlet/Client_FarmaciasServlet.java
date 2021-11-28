@@ -24,7 +24,7 @@ public class Client_FarmaciasServlet extends HttpServlet {
 
         if (cliente != null) {
 
-            String idDistritoStr = request.getParameter("idD") != null ? request.getParameter("idD") : String.valueOf(cliente.getDistritos().getIdDistrito());
+            String idDistritoStr = request.getParameter("idD") != null ? request.getParameter("idD") : String.valueOf(cliente.getIdDistrito());
             String pagStr = request.getParameter("pag") != null ? request.getParameter("pag") : "1";
 
             int idDistrito = Integer.parseInt(idDistritoStr);

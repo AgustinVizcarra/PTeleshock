@@ -17,12 +17,26 @@ public class Login_SessionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
+        String mensaje = request.getParameter("mensaje") == null ? "" : request.getParameter("mensaje");
+        String mail = request.getParameter("correo") == null ? "" : request.getParameter("correo");
+        String pwd = request.getParameter("pwd") == null ? "" : request.getParameter("pwd");
+
+        request.setAttribute("pwd", pwd);
+        request.setAttribute("mail", mail);
+        request.setAttribute("mensajealerta", mensaje);
+
         RequestDispatcher view = request.getRequestDispatcher("/Login/login.jsp");
         view.forward(request, response);
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
 
@@ -34,36 +48,41 @@ public class Login_SessionServlet extends HttpServlet {
                 String pass = request.getParameter("pass") != null ? request.getParameter("pass") : "";
 
                 BUsuario usuario = usuarioDao.validarUsuarioPassword(correo, pass);
+                String mensaje = "";
+
                 if (usuario != null) {
                     HttpSession session = request.getSession();
 
-                    int rol = usuario.getRol().getIdRol();
-                    System.out.println(usuario.getRol().getIdRol());
-
+                    int rol = usuario.getIdRol();
                     switch (rol) {
                         case 1:
                             session.setAttribute("clienteSession", usuario);
-                            response.sendRedirect(request.getContextPath() + "/Client_Farmacias?idD=" + usuario.getDistritos().getIdDistrito());
+                            response.sendRedirect(request.getContextPath() + "/Client_Farmacias");
                             break;
                         case 2:
                             session.setAttribute("adminSession", usuario);
-                            //agregar
+                            response.sendRedirect(request.getContextPath() + "/Admin_Index");
                             break;
                         case 3:
-                            session.setAttribute("farmaciaSession", usuario);
-                            response.sendRedirect(request.getContextPath() + "/Farm_Index?idF="+ usuario.getIdUsuario());
-                            System.out.println(usuario.getIdUsuario());
-                            System.out.println("entro a farmacia");
+                            //debemos verificar que la farmacia no se encuentra bloqueada
+                            if (usuarioDao.farmaciaBloqueada(usuario.getIdUsuario())) {
+                                mensaje = "La farmacia se encuentra bloqueada, por favor ponerse en contacto con el Administrador";
+                                response.sendRedirect(request.getContextPath() + "/Login?mensaje=" + mensaje + "&correo=" + correo + "&pwd=" + pass);
+                            } else {
+                                session.setAttribute("farmaciaSession", usuario);
+                                response.sendRedirect(request.getContextPath() + "/Farm_Index");
+                            }
                             break;
+                        default:
+                            System.out.println("ocurrio un error en el switch del login");
                     }
 
                     System.out.println("tracer 1");
                 } else {
-                    response.sendRedirect(request.getContextPath() + "/Login?error");
+                    mensaje = "Contraseña o Dirección de correo invalidos";
+                    response.sendRedirect(request.getContextPath() + "/Login?mensaje=" + mensaje + "&correo=" + correo + "&pwd=" + pass);
                     System.out.println("tracer 2");
                 }
-
-                break;
 
 
         }

@@ -2,23 +2,14 @@ package pe.edu.pucp.pteleshock.Beans;
 
 public class BUsuario {
     private int idUsuario;
-    private BRol rol;
-    private BDistristos distritos;
+    private int idRol;
+    private int idDistrito;
     private String nombre;
     private String apellido;
     private String correo;
     private String dni;
     private String ruc;
-    private String contrasenia;
-
-    public String getRuc() {
-        return ruc;
-    }
-
-    public void setRuc(String ruc) {
-        this.ruc = ruc;
-    }
-
+    private String pwd;
 
     public int getIdUsuario() {
         return idUsuario;
@@ -28,20 +19,20 @@ public class BUsuario {
         this.idUsuario = idUsuario;
     }
 
-    public BRol getRol() {
-        return rol;
+    public int getIdRol() {
+        return idRol;
     }
 
-    public void setRol(BRol rol) {
-        this.rol = rol;
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
     }
 
-    public BDistristos getDistritos() {
-        return distritos;
+    public int getIdDistrito() {
+        return idDistrito;
     }
 
-    public void setDistritos(BDistristos distritos) {
-        this.distritos = distritos;
+    public void setIdDistrito(int idDistrito) {
+        this.idDistrito = idDistrito;
     }
 
     public String getNombre() {
@@ -76,11 +67,19 @@ public class BUsuario {
         this.dni = dni;
     }
 
-    public String getContrasenia() {
-        return contrasenia;
+    public String getRuc() {
+        return ruc;
     }
 
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 }
