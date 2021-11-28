@@ -5,6 +5,7 @@
   Time: 18:47
   To change this template use File | Settings | File Templates.
 --%>
+<jsp:useBean id="nombre" type="java.lang.String" scope="request" class="java.lang.String"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
@@ -32,24 +33,22 @@
                         <br><br><br><br><br>
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
                             <div class="card-header text-white" style="background-color:black"><h3
-                                    class="text-center font-weight-light my-4">Recupera tu contraseña</h3></div>
+                                    class="text-center font-weight-light my-4">Ingresa tu nueva contraseña</h3></div>
                             <div class="card-body">
                                 <div class="medium mb-3 text-muted">Crea una nueva contraseña</div>
-                                <form>
+                                <form method="post" action="<%= request.getContextPath()%>/Login_Password_Recovery" oninput='pwd2.setCustomValidity(pwd2.value != pwd1.value ? "Las contraseñas no coinciden" : "" )'>
+                                    <input type="hidden" name="user_mail" value="<%=nombre%>">
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="inputPassword" type="password"
-                                               placeholder="name@example.com"/>
+                                        <input class="form-control" id="inputPassword" type="password" name="pwd1" placeholder="name@example.com" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contraseña debe contener como mínimo 8 caracteres, 1 número, una letra mayúscula"/>
                                         <label for="inputPassword" class="mb-3 text-muted">Contraseña</label>
                                     </div>
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="inputPassword1" type="password"
-                                               placeholder="name@example.com"/>
-                                        <label for="inputPassword" class="mb-3 text-muted">Confirmar
-                                            contraseña</label>
+                                                name="pwd2" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="name@example.com" title="La contraseña debe contener como mínimo 8 caracteres, 1 número, una letra mayúscula"/>
+                                        <label for="inputPassword1" class="mb-3 text-muted">Confirmar contraseña</label>
                                     </div>
                                     <div class="d-grid gap-2 col-6 mx-auto mb-3">
-                                        <a class="btn btn-success"
-                                           href="#popup1">Actualizar</a>
+                                        <button class="btn btn-success" href="#popup1" type="submit">Actualizar</button>
                                         <a class="small text-center" href="<%= request.getContextPath()%>/Login">Volver</a>
                                     </div>
                                 </form>
@@ -66,8 +65,8 @@
     <div class=" popup card text-center ">
         <h5 class="card-header text-center text-light">Teleshock</h5>
         <div class="card-body">
-            <h5 class="card-title p-2">¡Se recuperó con éxito la contraseña!</h5>
-            <p>Se ha enviado un correo para confirmar el cambio de contraseña</p>
+            <h5 class="card-title p-2">¡Se registró con éxito la contraseña!</h5>
+            <!--<p>Se ha enviado un correo para confirmar el cambio de contraseña</p>-->
             <a href="<%= request.getContextPath()%>/Login" class="btn btn-success mb-2">Ir a la página de ingreso</a>
         </div>
     </div>
