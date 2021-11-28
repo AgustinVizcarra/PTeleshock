@@ -84,10 +84,10 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
 
         String nombre=request.getParameter("nombre").strip() != "" ? request.getParameter("nombre") : "";
 
-        String stockStr=request.getParameter("stock").strip() != "" ? request.getParameter("stock") : "1";
-        String stockPosi= Integer.parseInt(stockStr) >0 ? "": "neg";
-        String precioUnitarioStr=request.getParameter("precioUnitario").strip() != "" ? request.getParameter("precioUnitario") : "1";
-        String precioPosi= Double.parseDouble(precioUnitarioStr) >0 ? "": "neg";
+        String stockStr=request.getParameter("stock").strip() != "" ? request.getParameter("stock") : "0";
+        String stockPosi= Integer.parseInt(stockStr) >=0 ? "": "neg";
+        String precioUnitarioStr=request.getParameter("precioUnitario").strip() != "" ? request.getParameter("precioUnitario") : "0";
+        String precioPosi= Double.parseDouble(precioUnitarioStr) >=0 ? "": "neg";
         String descripcion=request.getParameter("descripcion").strip() != "" ? request.getParameter("descripcion") : "";
         String descripcionLeght=descripcion.length() >500 ? "muchoTxt": "";
         String recetamedica=request.getParameter("recetamedica").strip() != "" ? request.getParameter("recetamedica") : "a";
@@ -97,7 +97,7 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
 
 
 
-        if(nombre.equals("") || stockStr.equals("1") || precioUnitarioStr.equals("1") || descripcion.equals("") || recetamedica.equals("a")){
+        if(nombre.equals("") || stockStr.equals("0") || precioUnitarioStr.equals("0") || descripcion.equals("") || recetamedica.equals("a")){
             response.sendRedirect(request.getContextPath() + "/Farm_Registro_Producto?msg=error&nom="+ nombre +"&des="+ descripcion +"&rec="+ recetamedica +"&sto="+stockStr+"&prec="+precioUnitarioStr);
 
 

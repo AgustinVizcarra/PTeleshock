@@ -45,6 +45,67 @@ public class GPedidoDao extends BaseDao {
         return listaPedidos;
     }
 
+    public ArrayList<BPedidoG> listaPedidosPag(String pag){
+        ArrayList<BPedidoG> listaPedidos = new ArrayList<>();
+        int pagint =Integer.parseInt(pag);
+
+
+        try {
+            Connection connection = this.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("select p.idpedido,p.fechapedido, u.nombre,u.apellido,u.dni,p.codigodeventa,p.preciototal from detallepedido dp\n" +
+                    "inner join pedido p on (dp.idpedido=p.idpedido)\n" +
+                    "inner join usuario u on (p.idusuario=u.idusuario)\n" +
+                    "where not (p.idestatuspedido = 1) and dp.idfarmacia=2 #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
+                    "group by dp.idpedido\n" +
+                    "order by p.fechapedido desc limit "+(pagint-1)*3 +",3;");
+
+
+            while (rs.next()) {
+                BPedidoG bpg = new BPedidoG();
+                bpg.setIdPedido(rs.getInt(1));
+                bpg.setFecha(rs.getString(2));
+                bpg.setNombre(rs.getString(3));
+                bpg.setApellido(rs.getString(4));
+                bpg.setDni(rs.getString(5));
+                bpg.setCodigoV(rs.getString(6));
+                bpg.setPrecioTotal(rs.getDouble(7));
+                listaPedidos.add(bpg);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaPedidos;
+    }
+
+
+
+    public int cantidadPedidos(){
+        int cant =0;
+        try {
+            Connection connection = this.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("select count(*) from (select count(*) from detallepedido dp\n" +
+                    "                    inner join pedido p on (dp.idpedido=p.idpedido)\n" +
+                    "                    inner join usuario u on (p.idusuario=u.idusuario)\n" +
+                    "                    where not (p.idestatuspedido = 1) and dp.idfarmacia=2 \n" +
+                    "                    group by dp.idpedido) tabla;");
+
+
+            while (rs.next()) {
+                cant=rs.getInt(1);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cant;
+    }
+
+
 
     public ArrayList<BPedidoD> listaPedidosD(int id){
         ArrayList<BPedidoD> listaPedidosD = new ArrayList<>();
