@@ -33,6 +33,34 @@ public class ListaDistritosDao extends BaseDao {
             e.printStackTrace();
         }
         return listaDistritos;
-
     }
+
+    public ArrayList<BDistristos> listarTotalDistritos() {
+        //msql
+
+        ArrayList<BDistristos> listaTotalDistritos = new ArrayList<>();
+
+        try {
+            Connection connection = this.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT d.iddistrito, d.nombre FROM distrito d;");
+
+
+            while (rs.next()) {
+                BDistristos dis = new BDistristos();
+                dis.setIdDistrito(rs.getInt(1));
+                dis.setNombre(rs.getString(2));
+                listaTotalDistritos.add(dis);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaTotalDistritos;
+    }
+    
+    
+    
+    
+    
 }
