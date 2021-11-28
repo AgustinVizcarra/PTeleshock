@@ -9,6 +9,8 @@ public class BCliente {
     private BDistristos distrito;
 
 
+
+
     public int getIdCliente() {
         return idCliente;
     }

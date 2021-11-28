@@ -58,9 +58,5 @@ public class ListaDistritosDao extends BaseDao {
         }
         return listaTotalDistritos;
     }
-    
-    
-    
-    
-    
+
 }

@@ -39,6 +39,8 @@ public class PerfilClientDao extends BaseDao {
         return bCliente;
     }
 
+
+
     public void editarCliente(int idCliente,String nombre, String apellido, int idDis) {
         String sql ="UPDATE usuario SET nombre=?,apellido=?,iddistrito=? WHERE (idusuario=?)";
         try (Connection conn = this.getConnection();
