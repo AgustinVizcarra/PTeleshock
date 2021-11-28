@@ -1,7 +1,7 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
 
-import pe.edu.pucp.pteleshock.Beans.BUsuarioCliente;
+import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.FarmaciasPorDistritoDao;
 import pe.edu.pucp.pteleshock.Dao.ListaDistritosDao;
 
@@ -20,7 +20,7 @@ public class Client_FarmaciasServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        BUsuarioCliente cliente = (BUsuarioCliente) session.getAttribute("clienteSession");
+        BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");
 
         if (cliente != null) {
 

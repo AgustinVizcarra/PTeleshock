@@ -1,6 +1,6 @@
 package pe.edu.pucp.pteleshock.Beans;
 
-public class BUsuarioCliente {
+public class BUsuario {
     private int idUsuario;
     private BRol rol;
     private BDistristos distritos;
