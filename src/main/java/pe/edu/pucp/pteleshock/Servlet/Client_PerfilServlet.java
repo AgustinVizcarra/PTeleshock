@@ -1,10 +1,8 @@
 package pe.edu.pucp.pteleshock.Servlet;
-
 import pe.edu.pucp.pteleshock.Beans.BCliente;
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.ListaDistritosDao;
 import pe.edu.pucp.pteleshock.Dao.PerfilClientDao;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,10 +17,10 @@ public class Client_PerfilServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-
         HttpSession session = request.getSession();
         BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");
+
+
 
         if(cliente != null) {
 

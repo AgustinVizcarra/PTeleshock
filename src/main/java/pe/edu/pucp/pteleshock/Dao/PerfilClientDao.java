@@ -33,6 +33,8 @@ public class PerfilClientDao extends BaseDao {
                 }
             }
 
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
