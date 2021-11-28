@@ -1,13 +1,17 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: casa
-  Date: 5/11/2021
-  Time: 18:47
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BDistristos" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<jsp:useBean id="cliente" type="pe.edu.pucp.pteleshock.Beans.BCliente" scope="request"/>
+<jsp:useBean type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BDistristos>" scope="request" id="listaDistritos"/>
+<jsp:useBean id="valor" scope="request" type="java.lang.String" class="java.lang.String"/>
+
 <html lang="en">
 <head>
+
+
+
+
+
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -99,56 +103,59 @@
                             <div class="card-header text-white" style="background-color:#00152D; opacity: 0.9">
                                 <h3 class="text-center font-weight-light my-4">Mi perfil</h3></div>
                             <div class="card-body" style="background-color:#00152D; opacity: 0.9">
-                                <form>
+                                <form method="post" action="<%=request.getContextPath()%>/Client_Perfil?action=actualizar">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-8">
+                                            <input class="form-control" type="hidden" name="idC" value="<%=cliente.getIdCliente()%>">
+                                        </div>
+                                    </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label text-white">Nombre : </label>
                                         <div class="col-sm-8">
-                                            <input class="form-control" id="inputNombre" type="nombre"/>
+                                            <input class="form-control" type="text" name="nombreC" id="nombreC" value="<%=cliente.getNombre()%>">
+                                            <%--<input class="form-control" type="text" name="nombreEst" id="nombreEst" value="<%=estudiante.getNombreParticipante()%>">---%>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label text-white">Apellido : </label>
                                         <div class="col-sm-8">
-                                            <input class="form-control" id="inputApellido" type="apellido"/>
+                                            <input class="form-control" type="text" name="apellidoC" id="apellidoC" value="<%=cliente.getApellido()%>">
+
                                         </div>
                                     </div>
+
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label text-white">DNI : </label>
                                         <div class="col-sm-8">
                                             <input class="form-control" id="inputDni" type="dni"
-                                                   placeholder="73076891" readonly="readonly"/>
+                                                   placeholder="<%=cliente.getDni()%>" readonly="readonly"/>
                                         </div>
                                     </div>
+
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label text-white">Correo : </label>
                                         <div class="col-sm-8">
                                             <input class="form-control" id="inputEmail" type="email"
-                                                   placeholder="name@example.com" readonly="readonly"/>
+                                                   placeholder="<%=cliente.getCorreo()%>" readonly="readonly"/>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label text-white">Distrito: </label>
                                         <div class="col-sm-8">
-                                            <select class="form-select" aria-label="Default select example">
-                                                <option selected>Seleccione el distrito</option>
-                                                <option value="1">La Molina</option>
-                                                <option value="2">Callao</option>
-                                                <option value="3">San Isidro</option>
-                                                <option value="4">Callao</option>
-                                                <option value="5">Chaclacayo</option>
-                                                <option value="6">Callao</option>
-                                                <option value="7">San Miguel</option>
-                                                <option value="8">SJL</option>
-                                                <option value="9">SJM</option>
-                                                <option value="10">Surco</option>
-                                                <option value="11">Breña</option>
-                                                <option value="12">La Victoria</option>
-                                                <option value="13">Three</option>
+                                            <select class="form-select" aria-label="Default select example" name="idDis">
+                                                <% for(BDistristos dis : listaDistritos){%>
+                                                <option value="<%=dis.getIdDistrito()%>"<%=dis.getIdDistrito()==cliente.getDistrito().getIdDistrito() ? "selected" : ""%>><%=dis.getNombre()%></option>
+                                                <%}%>
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="text-danger text-center ">
+                                        <%if(request.getAttribute("er")!=null){%>
+                                        <%=request.getAttribute("er")%>
+                                        <%}%>
+                                    </div>
                                     <div class="d-md-block mt-5 mb-4 text-center font-weight-light my-5">
-                                        <a class="btn btn-primary" href="#popup1">Guardar</a>
+                                        <button type="submit" class="btn btn-primary" href="popup2" >Guardar</button>
                                     </div>
                                 </form>
                             </div>
@@ -160,25 +167,49 @@
     </div>
 </div>
 
+<% if (valor.equals("edit")) {%>
+<nav id="popup2" style="display: flex; justify-content: center ; align-items: center;position: fixed;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+background: rgba(0, 0, 0, 0.7);
+transition: opacity 500ms;
+visibility: visible;
+opacity: 1;">
+    <div class=" popup card text-center " style="background-color: white">
+        <h5 class="card-header text-center ">Teleshock</h5>
+        <div class="card-body">
+            <h5 class="card-title p-2">¡Se han guardado con éxito sus datos!</h5>
+            <img class="img mt-3 mb-3" style="width: 50px; height: 50px;"
+                 src="https://cdn-icons-png.flaticon.com/512/179/179372.png">
+            <div class="mt-3">
+                <a href="<%= request.getContextPath()%>/Client_Perfil" class="btn btn-success mb-2">Aceptar</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<%}%>
+
+
+
+
+
+<%---
 <nav id="popup1" class="overlay">
     <div class=" popup card text-center ">
         <h5 class="card-header text-center text-light">Teleshock</h5>
         <div class="card-body">
             <h5 class="card-title p-2">¡Se han guardado con éxito sus datos!</h5>
-
             <img class="img mt-3 mb-3" style="width: 50px; height: 50px;"
                  src="https://cdn-icons-png.flaticon.com/512/179/179372.png">
-
-
             <div class="mt-3">
                 <a href="<%= request.getContextPath()%>/Client_Perfil" class="btn btn-success mb-2">Aceptar</a>
             </div>
-
-
         </div>
     </div>
 </nav>
-
+--%>
 <nav id="salir" class="overlay">
     <div class=" popup card text-center ">
         <h5 class="card-header text-center text-light">Teleshock</h5>

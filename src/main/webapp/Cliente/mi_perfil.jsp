@@ -1,17 +1,17 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: casa
-  Date: 5/11/2021
-  Time: 18:47
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%-- Exportamos el cliente --%>
+<jsp:useBean type="pe.edu.pucp.pteleshock.Beans.BCliente" scope="request" id="cliente"/>
+
 <html lang="en">
 <head>
+
+
+
+
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <title>Password Reset - SB Admin</title>
+    <title>Mi Perfil</title>
     <link href="css/style.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
             crossorigin="anonymous"></script>
@@ -104,41 +104,41 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label text-white">Nombre : </label>
                                         <div class="col-sm-8">
-                                            <input class="form-control" id="inputNombre" type="nombre"
-                                                   placeholder="Dayana" readonly="readonly"/>
+                                            <input class="form-control" id="inputNombre" type="text"
+                                                   placeholder="<%=cliente.getNombre()%>" readonly="readonly"/>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label text-white">Apellido
                                             : </label>
                                         <div class="col-sm-8">
-                                            <input class="form-control" id="inputApellido" type="apellido"
-                                                   placeholder="Ramirez" readonly="readonly"/>
+                                            <input class="form-control" id="inputApellido" type="text"
+                                                   placeholder="<%=cliente.getApellido()%>" readonly="readonly"/>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label text-white">DNI : </label>
                                         <div class="col-sm-8">
-                                            <input class="form-control" id="inputDni" type="dni"
-                                                   placeholder="73076891" readonly="readonly"/>
+                                            <input class="form-control" id="inputDni" type="text"
+                                                   placeholder="<%=cliente.getDni()%>" readonly="readonly"/>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label text-white">Correo : </label>
                                         <div class="col-sm-8">
                                             <input class="form-control" id="inputEmail" type="email"
-                                                   placeholder="name@example.com" readonly="readonly"/>
+                                                   placeholder="<%=cliente.getCorreo()%>" readonly="readonly"/>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label text-white">Distrito: </label>
                                         <div class="col-sm-8">
-                                            <input class="form-control" id="inputDistrito" type="distrito"
-                                                   placeholder="Los Olivos" readonly="readonly"/>
+                                            <input class="form-control" id="inputDistrito" type="text"
+                                                   placeholder="<%=cliente.getDistrito().getNombre()%>" readonly="readonly"/>
                                         </div>
                                     </div>
                                     <div class="d-md-block mt-5 mb-4 text-center font-weight-light my-5">
-                                        <a class="btn btn-primary me-md-5" href="<%= request.getContextPath()%>/Cliente_Edicion_Perfil">Editar
+                                        <a class="btn btn-primary me-md-5" href="<%= request.getContextPath()%>/Client_Perfil?action=editar&idC=<%=cliente.getIdCliente()%>">Editar
                                             perfil</a>
                                         <a class="btn btn-danger " href="#popup1">Eliminar
                                             cuenta</a>

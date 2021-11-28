@@ -139,5 +139,21 @@ public class BolsaCompraDao extends BaseDao {
 
     }
 
+    public void cancelarPedido(int idPedido){
+
+        String sql = "UPDATE pedido set fechastatus=now() where idpedido=?;";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setInt(1,idPedido);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 }
