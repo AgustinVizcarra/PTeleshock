@@ -97,22 +97,26 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Bolsa de Compras</h5>
                                     <div class="accordion" id="accordionExample">
+                                        <% for(){%>
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingOne">
                                                 <div class="row">
-                                                    <div class="col"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></button></div>
                                                     <div class="col">
-                                                        <h6 class="card-title"><%=farmacia.getNombreFarmacia()%>
-                                                        </h6>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div>
-                                                            <form method="post" action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=comprar">
+                                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            <div class="col">
+                                                                <h6 class="card-title"><%=farmacia.getNombreFarmacia()%>
+                                                                </h6>
+                                                            </div>
+                                                            <div class="col">
                                                                 <div>
-                                                                    <input type="datetime-local" name="date-time">
+                                                                    <form method="post" action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=comprar">
+                                                                        <div>
+                                                                            <input type="datetime-local" name="date-time">
+                                                                        </div>
+                                                                    </form>
                                                                 </div>
-                                                            </form>
-                                                        </div>
+                                                            </div>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </h2>
@@ -134,9 +138,9 @@
                                                             <%for (BPedidoEstado pedidoC : listaProductosC) {%>
                                                             <tr>
                                                                 <th scope="row"><img  src="<%= request.getContextPath()%>/ImgServlet?prod=<%=pedidoC.getIdProducto()%>"
-                                                                                     class="img-thumbnail"
-                                                                                     alt="..."
-                                                                                     style="width: 100px; height: 100px"></th>
+                                                                                      class="img-thumbnail"
+                                                                                      alt="..."
+                                                                                      style="width: 100px; height: 100px"></th>
                                                                 <td><small><%=pedidoC.getNombreProducto()%>
                                                                 </small></td>
                                                                 <td>
@@ -156,9 +160,7 @@
                                                                 <td class="text-center">No requiere</td>
                                                                 <%}%>
                                                                 <td class="align-content-md-center">
-                                                                    <button type="button" class="btn btn-outline-danger">
-                                                                        Eliminar
-                                                                    </button>
+                                                                    <button type="button" class="btn btn-outline-danger">Eliminar</button>
                                                                 </td>
                                                             </tr>
                                                             <%}%>
@@ -167,57 +169,19 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <%}%>
                                     </div>
                                 </div>
 
                             </div>
 
                             <div class=" col-5 my-5">
+                                <h5 class="card-title">Resumen de compra</h5>
                                 <form method="POST" action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=comprar">
                                     <input type="hidden" class="form-control" name="idPedido" value="<%=listaProductosC.get(0).getPedido().getIdPedido()%>">
                                     <input type="hidden" class="form-control" name="receta" value="<%=listaProductosC.get(0).isRecetaMedica()%>">
 
-                                    <table class="table">
 
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"></th>
-                                                <th scope="col"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody >
-                                            <tr>
-                                                <th scope="row">Fecha de recojo:</th>
-                                                <td class="text-center">
-
-
-                                                    <input type="date" id="party" name="fechaEnt" min="2021-01-01"
-                                                           max="2021-12-31" required>
-                                                    <span class="validity"></span>
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Hora de recojo:</th>
-
-                                                <td class="text-center">
-
-                                                    <div class="card-header text-center justify-content-center">
-                                                        <label>
-                                                            <input type="time" name="horaEnt" min="07:00" max="21:00"
-                                                                   step="60"/>
-                                                        </label>
-                                                    </div>
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Subtotal:</th>
-                                                <td style="text-align: center"><%=subtotal%>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
 
                                     <button type="submit" class="btn btn-warning">Realizar Pedido</button>
                                 </form>

@@ -1,11 +1,8 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
-
-
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.BolsaCompraDao;
 import pe.edu.pucp.pteleshock.Dao.ProductosFDao;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +22,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
 
         if (cliente != null) {
 
+            String action = request.getParameter("action") == null ? "" : request.getParameter("action");
             String idPedidoStr = request.getParameter("idP") != null ? request.getParameter("idP") : "";
             String idFarmaciaStr = request.getParameter("idF") != null ? request.getParameter("idF") : "";
 
@@ -32,6 +30,9 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
             BolsaCompraDao bolsaCompraDao = new BolsaCompraDao();
             ProductosFDao productosFDao = new ProductosFDao();
 
+            if(action.equalsIgnoreCase("cancelar")) {
+                bolsaCompraDao.cancelarPedido(Integer.parseInt(idPedidoStr));
+            }
 
             request.setAttribute("listaPedidoCarrito", bolsaCompraDao.listarPedidosCarrito(Integer.parseInt(idPedidoStr)));
             request.setAttribute("farmacia", productosFDao.obtenerFarmacia(Integer.parseInt(idFarmaciaStr)));
