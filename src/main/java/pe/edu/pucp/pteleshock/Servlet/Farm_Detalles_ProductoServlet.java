@@ -2,6 +2,7 @@ package pe.edu.pucp.pteleshock.Servlet;
 
 
 import pe.edu.pucp.pteleshock.Beans.BListaPFarmacia;
+import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.DetProdDao;
 
 import javax.servlet.RequestDispatcher;
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -17,9 +19,12 @@ import java.sql.SQLException;
 public class Farm_Detalles_ProductoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
+
+        if (farmacia != null) {
+
         response.setContentType("text/html");
-
-
 
         String prod = request.getParameter("prod");
 
@@ -66,6 +71,11 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
         }
 
 
+
+        } else {
+            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
+            viewError.forward(request, response);
+        }
     }
 
 }

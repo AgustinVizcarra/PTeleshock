@@ -1,6 +1,7 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
 
+import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.GPedidoDao;
 
 import javax.servlet.RequestDispatcher;
@@ -9,12 +10,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "Farm_Detalle_Pedido_ModServlet", value = "/Farm_Detalle_Pedido_Mod")
 public class Farm_Detalles_Pedido_ModServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
+
+        if (farmacia != null) {
+
         GPedidoDao gPedidoDao = new GPedidoDao();
         String idStr = request.getParameter("id");
         String msg = request.getParameter("msg") != null ? request.getParameter("msg") :"defect";
@@ -42,6 +49,11 @@ public class Farm_Detalles_Pedido_ModServlet extends HttpServlet {
         // }else {
         //  response.sendRedirect(request.getContextPath() + "/Farm_Detalle_Pedido_Mod");
         //}
+
+        } else {
+            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
+            viewError.forward(request, response);
+        }
     }
 
     @Override

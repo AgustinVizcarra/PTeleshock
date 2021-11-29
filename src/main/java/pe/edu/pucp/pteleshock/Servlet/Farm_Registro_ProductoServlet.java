@@ -2,16 +2,14 @@ package pe.edu.pucp.pteleshock.Servlet;
 
 
 
+import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.RegistrarProDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -21,6 +19,12 @@ import java.util.ArrayList;
 public class Farm_Registro_ProductoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
+
+        if (farmacia != null) {
+
+
         response.setContentType("text/html");
 
         String msg = request.getParameter("msg") !=null ? request.getParameter("msg"): "reg";
@@ -72,6 +76,12 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
                 RequestDispatcher view3 = request.getRequestDispatcher("/Farmacia/registro_producto.jsp");
                 view3.forward(request,response);
 
+        }
+
+
+        } else {
+            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
+            viewError.forward(request, response);
         }
 
     }
