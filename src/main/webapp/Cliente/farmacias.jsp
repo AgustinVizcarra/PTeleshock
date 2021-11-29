@@ -4,8 +4,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean type="java.lang.Integer" scope="request" id="totalPag"/>
 <jsp:useBean type="java.lang.Integer" scope="request" id="pag"/>
-<jsp:useBean id="listaxFarmacias" scope="request" type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BFarmaciaPorDistrito>" class="java.util.ArrayList"/>
-<jsp:useBean id="listaDistritos" scope="request" type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BDistristos>" class="java.util.ArrayList"/>
+<jsp:useBean type="java.lang.String" scope="request" id="nombreFarmacia" class="java.lang.String"/>
+<jsp:useBean id="listaxFarmacias" scope="request"
+             type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BFarmaciaPorDistrito>" class="java.util.ArrayList"/>
+<jsp:useBean id="listaDistritos" scope="request" type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BDistristos>"
+             class="java.util.ArrayList"/>
 
 <html lang="en">
 
@@ -39,8 +42,9 @@
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
                            aria-describedby="btnNavbarSearch"/>
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                    <button class="btn btn-primary"  type="button"><i
                             class="fas fa-search"></i></button>
+                    <!-- al button le quité esta linea dentro de sus parámetros  id="btnNavbarSearch" -->
                 </div>
             </form>
             <!-- Navbar-->
@@ -98,13 +102,13 @@
                                 <h1 class=" mt-4 ms-3">Farmacias</h1>
 
 
-                                <form  method="POST" action="<%=request.getContextPath()%>/Client_Farmacias">
+                                <form method="POST" action="<%=request.getContextPath()%>/Client_Farmacias">
                                     <div class="row mb-3 ms-3">
                                         <label class=" breadcrumb-item active">Distrito:</label>
                                         <div class="col">
                                             <select class="form-select" aria-label="Default select example" name="idD">
                                                 <%for (BDistristos dis : listaDistritos) {%>
-                                                <option  value="<%=dis.getIdDistrito()%>" <%=dis.getNombre().equalsIgnoreCase(listaxFarmacias.get(0).getDistritoFarmacia()) ? "selected" : ""%>><%=dis.getNombre()%>
+                                                <option value="<%=dis.getIdDistrito()%>" <%=dis.getNombre().equalsIgnoreCase(listaxFarmacias.get(0).getDistritoFarmacia()) ? "selected" : ""%>><%=dis.getNombre()%>
                                                 </option>
                                                 <%}%>
                                             </select>
@@ -115,6 +119,32 @@
                                     </div>
                                 </form>
 
+
+                                <div class="row  row-cols-4">
+                                    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
+                                          method="post"
+                                          action="<%=request.getContextPath()%>/Client_Farmacias">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" name="nombreFarmacia"
+                                                   placeholder="Buscar..." aria-label="Buscar..."
+                                                   aria-describedby="btnNavbarSearch"
+                                                    <% if (nombreFarmacia != null) {%>
+                                                   value="<%=nombreFarmacia%>"
+                                                    <% } %> />
+                                            <input class="form-control" type="text" name="idD"
+                                                   hidden aria-describedby="btnNavbarSearch"
+                                                   value="<%=listaxFarmacias.get(0).getIdDistritoF()%>"/>
+                                            <button class="btn btn-primary" id="btnNavbarSearch" type="submit"
+                                                    style="background-color: #00152D;border-color: #00152D">
+                                                <i class="fas fa-search"></i></button>
+                                            <a class="input-group-text"
+                                               href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>">
+                                                <i class="fas fa-undo"></i>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                                <br><br>
 
                                 <nav aria-label="Page navigation">
                                     <ul class="pagination justify-content-end text-primary">
