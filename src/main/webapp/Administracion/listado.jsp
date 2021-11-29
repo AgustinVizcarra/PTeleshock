@@ -6,6 +6,7 @@
 <jsp:useBean id="cantidad" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="distrito" scope="request" type="pe.edu.pucp.pteleshock.Beans.BDistrito"/><!--BDistrito-->
 <jsp:useBean id="textoBusqueda" scope="request" type="java.lang.String" class="java.lang.String"/>
+<jsp:useBean id="adminSession" scope="session" class="pe.edu.pucp.pteleshock.Beans.BUsuario"/>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -110,7 +111,7 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small"><font color="#00152D">Logueado como:</font></div>
-                <font color="#00152D">Administrador 1</font>
+                <font color="#00152D"><%=adminSession.getNombre()%></font>
             </div>
         </nav>
     </div>

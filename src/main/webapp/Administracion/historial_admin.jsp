@@ -2,6 +2,7 @@
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BAnadidas" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.Bbloqueadas" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.Bdesbloqueadas" %>
+<jsp:useBean id="adminSession" scope="session" class="pe.edu.pucp.pteleshock.Beans.BUsuario"/>
 <%--
   Created by IntelliJ IDEA.
   User: casa
@@ -113,7 +114,7 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small"><font color="#00152D">Logueado como:</font></div>
-                <font color="#00152D">Administrador 1</font>
+                <font color="#00152D"><%=adminSession.getNombre()%></font>
             </div>
         </nav>
     </div>

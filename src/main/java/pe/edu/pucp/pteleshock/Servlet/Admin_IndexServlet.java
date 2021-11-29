@@ -2,6 +2,7 @@ package pe.edu.pucp.pteleshock.Servlet;
 
 
 
+import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.Distrfarm_Dao;
 
 import javax.servlet.RequestDispatcher;
@@ -10,17 +11,25 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "Admin_IndexServlet", value = "/Admin_Index")
 public class Admin_IndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Distrfarm_Dao distrfarm_dao = new Distrfarm_Dao();
-        request.setAttribute("distritos",distrfarm_dao.listar_distritos());
-        response.setContentType("text/html");
-        RequestDispatcher view = request.getRequestDispatcher("/Administracion/index_admin.jsp");
-        view.forward(request,response);
+        HttpSession session = request.getSession();
+        BUsuario admin = (BUsuario) session.getAttribute("adminSession");
+        if(admin!=null) {
+            Distrfarm_Dao distrfarm_dao = new Distrfarm_Dao();
+            request.setAttribute("distritos", distrfarm_dao.listar_distritos());
+            response.setContentType("text/html");
+            RequestDispatcher view = request.getRequestDispatcher("/Administracion/index_admin.jsp");
+            view.forward(request, response);
+        }else{
+            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
+            viewError.forward(request, response);
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
 import pe.edu.pucp.pteleshock.Beans.BFarmacia;
+import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.FarmaciaDao;
 
 import javax.servlet.RequestDispatcher;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "Admin_BloqFarmServlet", value = "/Admin_BloqFarm")
@@ -16,14 +18,21 @@ public class Admin_LockFarmServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String mensaje = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
-        String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
-        String razon = request.getParameter("razon")!= null ? request.getParameter("razon"):"";
-        request.setAttribute("mensaje", mensaje);
-        request.setAttribute("rucListado", ruc);
-        request.setAttribute("razon",razon);
-        RequestDispatcher view = request.getRequestDispatcher("/Administracion/bloquear_farmacia.jsp");
-        view.forward(request, response);
+        HttpSession session = request.getSession();
+        BUsuario admin = (BUsuario) session.getAttribute("adminSession");
+        if(admin!=null) {
+            String mensaje = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
+            String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
+            String razon = request.getParameter("razon") != null ? request.getParameter("razon") : "";
+            request.setAttribute("mensaje", mensaje);
+            request.setAttribute("rucListado", ruc);
+            request.setAttribute("razon", razon);
+            RequestDispatcher view = request.getRequestDispatcher("/Administracion/bloquear_farmacia.jsp");
+            view.forward(request, response);
+        }else{
+            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
+            viewError.forward(request, response);
+        }
     }
 
     @Override

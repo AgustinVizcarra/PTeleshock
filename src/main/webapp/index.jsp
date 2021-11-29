@@ -8,6 +8,6 @@
 <h1><%= "Hello World!" %>
 </h1>
 <br/>
-<a href="<%= request.getContextPath() %>/Farm_Index">Hello Servlet</a>
+<a href="<%= request.getContextPath() %>/Login">Hello Servlet</a>
 </body>
 </html>

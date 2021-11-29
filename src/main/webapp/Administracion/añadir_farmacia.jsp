@@ -1,5 +1,6 @@
 
 <%@ page import="java.util.ArrayList" %>
+<jsp:useBean id="adminSession" scope="session" class="pe.edu.pucp.pteleshock.Beans.BUsuario"/>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BDistrito" %><%--
@@ -134,7 +135,7 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small"><font color="#00152D">Logueado como:</font></div>
-                <font color="#00152D">Administrador 1</font>
+                <font color="#00152D"><%=adminSession.getNombre()%></font>
             </div>
         </nav>
     </div>
@@ -154,7 +155,7 @@
                                     <div class="card-body"
                                          style="background-color: #9AB0E0; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
                                         <form method="post" action="<%= request.getContextPath()%>/Admin_AddFarm">
-                                            <input type="hidden" name="admin" value="Agustin">
+                                            <input type="hidden" name="admin" value="<%=adminSession.getNombre()%>">
                                             <!--Luego se hara de manera dinamica-->
                                             <div class="form-floating mb-3">
                                                 <input class="form-control" id="inputNombre_Farmacia" type="text"

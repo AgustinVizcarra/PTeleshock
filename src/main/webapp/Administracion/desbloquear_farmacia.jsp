@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="adminSession" scope="session" class="pe.edu.pucp.pteleshock.Beans.BUsuario"/>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -108,7 +109,7 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small"><font color="#00152D">Logueado como:</font></div>
-                <font color="#00152D">Administrador 1</font>
+                <font color="#00152D"><%=adminSession.getNombre()%></font>
             </div>
         </nav>
     </div>

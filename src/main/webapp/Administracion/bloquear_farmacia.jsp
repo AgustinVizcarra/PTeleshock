@@ -9,6 +9,7 @@
 <jsp:useBean type="java.lang.String" scope="request" id="mensaje" class="java.lang.String"/>
 <jsp:useBean type="java.lang.String" scope="request" id="rucListado" class="java.lang.String"/>
 <jsp:useBean type="java.lang.String" scope="request" id="razon" class="java.lang.String"/>
+<jsp:useBean id="adminSession" scope="session" class="pe.edu.pucp.pteleshock.Beans.BUsuario"/>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -126,7 +127,7 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small"><font color="#00152D">Logueado como:</font></div>
-                <font color="#00152D">Administrador 1</font>
+                <font color="#00152D"><%= adminSession.getNombre()%></font>
             </div>
         </nav>
     </div>
@@ -147,7 +148,7 @@
                                          style="background-color: #FFD51E; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
                                         <form method="post"
                                               action="<%=request.getContextPath()%>/Admin_BloqFarm">
-                                            <input type="hidden" name="admin" value="Agustin">
+                                            <input type="hidden" name="admin" value="<%=adminSession.getNombre()%>">
                                             <div class="mb-3">
                                                 <label for="razonParaBloquear" class="form-label"><b>Razón de
                                                     Bloqueo</b></label>
