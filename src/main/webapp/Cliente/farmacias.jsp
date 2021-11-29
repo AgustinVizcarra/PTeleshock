@@ -4,13 +4,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean type="java.lang.Integer" scope="request" id="totalPag"/>
 <jsp:useBean type="java.lang.Integer" scope="request" id="pag"/>
-
-<%
-    ArrayList<BFarmaciaPorDistrito> listaxFarmacias = (ArrayList<BFarmaciaPorDistrito>) request.getAttribute("listaxFarmacias");
-    ArrayList<BDistristos> listaDistritos = (ArrayList<BDistristos>) request.getAttribute("listaDistritos");
-
-%>
-
+<jsp:useBean id="listaxFarmacias" scope="request" type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BFarmaciaPorDistrito>" class="java.util.ArrayList"/>
+<jsp:useBean id="listaDistritos" scope="request" type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BDistristos>" class="java.util.ArrayList"/>
 
 <html lang="en">
 

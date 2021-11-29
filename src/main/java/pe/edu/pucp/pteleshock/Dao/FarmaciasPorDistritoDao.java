@@ -32,7 +32,6 @@ public class FarmaciasPorDistritoDao extends BaseDao {
             pstmt.setInt(1, iddistrito);
 
             try (ResultSet rs = pstmt.executeQuery()) {
-
                 while (rs.next()) {
                     BFarmaciaPorDistrito fxD = new BFarmaciaPorDistrito();
                     fxD.setNombreFarmacia(rs.getString(1));
@@ -40,8 +39,6 @@ public class FarmaciasPorDistritoDao extends BaseDao {
                     fxD.setDireccionFarmacia(rs.getString(3));
                     fxD.setIdFarmacia(rs.getInt(4));
                     fxD.setIdDistritoF(rs.getString(5));
-
-
                     listaFarmaciasPorDistrito.add(fxD);
                 }
 

@@ -45,17 +45,25 @@ public class Client_FarmaciasServlet extends HttpServlet {
             if (0 < pag & pag <= totalPag) {
                 inicio = pag * pedidosxPag - pedidosxPag;
             }
-
             //Enviar datos al servlet
+            //System.out.println("Id distrito: "+idDistritoStr);
+            //System.out.println("parseado: "+idDistrito);
+            //System.out.println("inicio: "+inicio);
+            System.out.println("cantidad de farmacias: "+fxDao.listarFarmaciasPorDistrito(idDistrito,inicio).size());
+            //aqui esta el error
+            if(fxDao.listarFarmaciasPorDistrito(idDistrito,inicio).isEmpty()){
+                idDistrito = 18;
+                //default option
+            }
+            System.out.println("cantidad de farmacias luego de default: "+fxDao.listarFarmaciasPorDistrito(idDistrito,inicio).size());
             request.setAttribute("listaxFarmacias", fxDao.listarFarmaciasPorDistrito(idDistrito, inicio));
             request.setAttribute("totalPag", totalPag);
             request.setAttribute("pag", pag);
-
-
             // Listar distritos
             ListaDistritosDao listaDistritosDao = new ListaDistritosDao();
 
             //Enviar datos al servlet
+            //System.out.println("cantidad de Distritos: "+listaDistritosDao.listarDistritos().size());
             request.setAttribute("listaDistritos", listaDistritosDao.listarDistritos());
             request.setAttribute("idDis", idDistritoStr);
 
