@@ -118,7 +118,7 @@
                                     <input class="form-control" type="hidden"  name="idPedido" value="<%=bPedidoD.getIdpedido()%>">
                                     <select name="idEstado">
                                         <%for(BEstado bEstado:listaEstados){%>
-                                        <option value="<%=bEstado.getIdEstado()%>"><%=bEstado.getEstado()%></option>
+                                        <option value="<%=bEstado.getIdEstado()%>" <%=bPedidoD.getEstado().equals(bEstado.getEstado()) ? "selected": ""%>><%=bEstado.getEstado()%></option>
                                         <%}%>
                                     </select>
                                 </div>
@@ -257,7 +257,7 @@
         <div class="card-body">
             <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
             <a href="#" class="btn btn-primary mb-2">Cancelar</a>
-            <a href="<%= request.getContextPath()%>/Login_Exit" class="btn btn-danger mb-2">Salir</a>
+            <a href="<%= request.getContextPath()%>/Login" class="btn btn-danger mb-2">Salir</a>
 
         </div>
     </div>

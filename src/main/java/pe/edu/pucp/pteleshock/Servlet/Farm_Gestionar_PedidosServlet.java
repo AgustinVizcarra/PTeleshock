@@ -34,16 +34,18 @@ public class Farm_Gestionar_PedidosServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String texto = request.getParameter("textoBuscar");
+        String texto = request.getParameter("textoBuscar").trim();
+        String pag = request.getParameter("pag") !=null ? request.getParameter("pag"): "1";
 
         GPedidoDao pedidodao=new GPedidoDao();
         if (texto == null) {
             response.sendRedirect(request.getContextPath() + "/Farm_Gestionar_Pedidos");
         } else {
-
+            int cantPed= pedidodao.cantidadPedidosBuscados(texto);
+            String cantPedStr= String.valueOf(cantPed);
             request.setAttribute("textbuscar",texto);
-
-            request.setAttribute("listaPedidosfiltrada", pedidodao.listaPedidosporNombre(texto));
+            request.setAttribute("cantPed",cantPedStr);
+            request.setAttribute("listaPedidosfiltrada", pedidodao.listaPedidosporNombre(pag,texto));
             RequestDispatcher view = request.getRequestDispatcher("/Farmacia/gestionar_pedidos_filtrados.jsp");
             view.forward(request, response);
 

@@ -10,6 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% ArrayList<BPedidoG> listaPedido=(ArrayList<BPedidoG>) request.getAttribute("listaPedidosfiltrada");%>
 <jsp:useBean type="java.lang.String" scope="request" id="textbuscar" class="java.lang.String"/>
+<jsp:useBean type="java.lang.String" scope="request" id="cantPed" class="java.lang.String"/>
 <head>
 
     <meta charset="utf-8">
@@ -126,6 +127,26 @@
                             </table>
                         </div>
                     </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-end">
+                            <% int cantPedInt=Integer.parseInt(cantPed);%>
+                            <% int resto= cantPedInt%3==0? 0:1; %>
+                            <% for(int i=1; i<Math.floor(cantPedInt/3)+resto+1; i++) { %>
+
+                            <form method="post"   action="<%=request.getContextPath()%>/Farm_Gestionar_Pedidos?pag=<%=i%>&textoBuscar=<%=textbuscar %> ">
+                                <!-- <input class="form-control" type="hidden"   value="" placeholder="Buscar..." aria-label="Buscar..."
+                                        aria-describedby="btnNavbarSearch" /> -->
+                                <button class="page-item"><a class="page-link" type="submit"><%=i%></a></button>
+
+                            </form>
+
+
+                            <% } %>
+
+                        </ul>
+                    </nav>
+
+
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
@@ -149,7 +170,7 @@
             <div class="card-body">
                 <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
                 <a href="#" class="btn btn-primary mb-2">Cancelar</a>
-                <a href="<%= request.getContextPath()%>/Login_Exit" class="btn btn-danger mb-2">Salir</a>
+                <a href="<%= request.getContextPath()%>/Login" class="btn btn-danger mb-2">Salir</a>
 
             </div>
         </div>
