@@ -29,8 +29,11 @@ public class Login_SessionServlet extends HttpServlet {
         request.setAttribute("mail", mail);
         request.setAttribute("mensajealerta", mensaje);
 
+
+
         RequestDispatcher view = request.getRequestDispatcher("/Login/login.jsp");
         view.forward(request, response);
+
 
     }
 
@@ -84,9 +87,17 @@ public class Login_SessionServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/Login?mensaje=" + mensaje + "&correo=" + correo + "&pwd=" + pass);
                     System.out.println("tracer 2");
                 }
+                break;
+            case "logout":
+
+                request.getSession().invalidate();
+                response.sendRedirect(request.getContextPath() + "/Login");
+
+                break;
 
 
         }
+
 
     }
 }

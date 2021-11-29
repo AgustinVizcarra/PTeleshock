@@ -1,6 +1,7 @@
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BPerfilFarmacia" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="pe.edu.pucp.pteleshock.Beans.BVentasPorFecha" %><%--
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BVentasPorFecha" %>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %><%--
   Created by IntelliJ IDEA.
   User: casa
   Date: 5/11/2021
@@ -90,7 +91,8 @@
             </div>
             <div class="sb-sidenav-footer" style="color: darkgrey">
                 <div class="small">Logged in as:</div>
-                Mifarma
+                <%BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");%>
+                <%=farmacia.getNombre()%>
             </div>
         </nav>
 
@@ -197,7 +199,12 @@
         <div class="card-body">
             <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
             <a href="#" class="btn btn-primary mb-2">Cancelar</a>
-            <a href="<%= request.getContextPath()%>/Login" class="btn btn-danger mb-2">Salir</a>
+            <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                <button class="btn btn-danger mb-2"  style=" background-color: #5bc0de " type="submit">
+                    Salir
+                </button>
+
+            </form>
 
         </div>
     </div>
