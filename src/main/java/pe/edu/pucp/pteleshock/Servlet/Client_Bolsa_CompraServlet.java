@@ -11,9 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 @WebServlet(name = "Client_Bolsa_CompraServlet", value = "/Client_Bolsa_Compra")
 public class Client_Bolsa_CompraServlet extends HttpServlet {
+
+    BolsaCompraDao bolsaCompraDao = new BolsaCompraDao();
+    HashMap<String, ArrayList> productos=new HashMap<>();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -26,18 +32,16 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
             String idPedidoStr = request.getParameter("idP") != null ? request.getParameter("idP") : "";
             String idFarmaciaStr = request.getParameter("idF") != null ? request.getParameter("idF") : "";
 
-
             BolsaCompraDao bolsaCompraDao = new BolsaCompraDao();
+
             ProductosFDao productosFDao = new ProductosFDao();
 
             if(action.equalsIgnoreCase("cancelar")) {
                 bolsaCompraDao.cancelarPedido(Integer.parseInt(idPedidoStr));
             }
 
-            request.setAttribute("listaPedidoCarrito", bolsaCompraDao.listarPedidosCarrito(Integer.parseInt(idPedidoStr)));
-            request.setAttribute("farmacia", productosFDao.obtenerFarmacia(Integer.parseInt(idFarmaciaStr)));
-
-
+            productos.put(productosFDao.obtenerFarmacia(Integer.parseInt(idFarmaciaStr)).getNombreFarmacia(),bolsaCompraDao.listarPedidosCarrito(Integer.parseInt(idPedidoStr)));
+            session.setAttribute("hashmap",productos);
             response.setContentType("text/html");
             RequestDispatcher view = request.getRequestDispatcher("/Cliente/bolsa_de_compra.jsp");
             view.forward(request, response);
@@ -48,12 +52,12 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
         }
     }
 
+    int f = 0;
+    /*int idPedido=0;*/
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
-        BolsaCompraDao bolsaCompraDao = new BolsaCompraDao();
-
 
         switch (action) {
             case "agregar":
@@ -62,15 +66,16 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                 String idFarmaciaStr = request.getParameter("idFarmacia") != null ? request.getParameter("idFarmacia") : "";
                 String receta = request.getParameter("receta") != null ? request.getParameter("receta") : "";
 
-
-                int idPedido = bolsaCompraDao.generarPedidoCarrito();
                 int idFarmacia = Integer.parseInt(idFarmaciaStr);
-
-
+                /*if(idFarmacia!=f){
+                    f=idFarmacia;
+                    idPedido= listaProd.generarPedidoCarrito(idFarmacia);
+                }*/
+                int idPedido= bolsaCompraDao.generarPedidoCarrito(idFarmacia);
                 bolsaCompraDao.agregarProductoCarrito(idPedido, Integer.parseInt(idProdStr), Integer.parseInt(cantidadPStr), Integer.parseInt(idFarmaciaStr));
-
                 response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra?idP=" + idPedido + "&idF=" + idFarmacia);
                 break;
+
             case "comprar":
                 String idPedidoC = request.getParameter("idPedido") != null ? request.getParameter("idPedido") : "";
                 String fechaEnt = request.getParameter("fechaEnt") != null ? request.getParameter("fechaEnt") : "";

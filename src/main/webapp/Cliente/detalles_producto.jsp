@@ -106,11 +106,6 @@
                                            <h5>Descripción:</h5>
                                             <p class="lead"><%=detProd.getDescripcion()%></p>
                                         <div class="d-flex">
-                                            <div>
-                                                <input class="  form-control text-center me-3"
-                                                       id="inputQuantity" name="cantidad"
-                                                       type="num" value="1" style="max-width: 3rem"/>
-                                            </div>
                                             <div class="card-footer p-2 pt-0 border-top-0 bg-transparent">
                                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto"
                                                                             href="#popup1">Agregar</a>

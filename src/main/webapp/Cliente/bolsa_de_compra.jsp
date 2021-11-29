@@ -1,11 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BPedidoEstado"%>
+<%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="farmacia" type="pe.edu.pucp.pteleshock.Beans.BFarmaciaPorDistrito" scope="request"/>
-<%
-    ArrayList<BPedidoEstado> listaProductosC = (ArrayList<BPedidoEstado>) request.getAttribute("listaPedidoCarrito");
-%>
-
 
 <html lang="en">
     <head>
@@ -97,14 +93,15 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Bolsa de Compras</h5>
                                     <div class="accordion" id="accordionExample">
-                                        <%--<% for(){%>--%>
+                                        <% HashMap hashMap= (HashMap) session.getAttribute("hashmap"); %>
+                                        <% for(Object nF: hashMap.keySet()){%>
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingOne">
                                                 <div class="row">
                                                     <div class="col">
                                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                                             <div class="col">
-                                                                <h6 class="card-title"><%=farmacia.getNombreFarmacia()%>
+                                                                <h6 class="card-title"><%=nF%>
                                                                 </h6>
                                                             </div>
                                                             <div class="col">
@@ -135,22 +132,25 @@
                                                         </thead>
                                                         <tbody>
                                                             <%double subtotal = 0.0;%>
-                                                            <%for (BPedidoEstado pedidoC : listaProductosC) {%>
+                                                            <% Object prod= hashMap.get(nF);%>
+                                                            <% ArrayList listaProd= (ArrayList) prod;%>
+                                                            <%for (Object beanProd: listaProd){%>
+                                                            <% BPedidoEstado beanP= (BPedidoEstado) beanProd;%>
                                                             <tr>
-                                                                <th scope="row"><img  src="<%= request.getContextPath()%>/ImgServlet?prod=<%=pedidoC.getIdProducto()%>"
+                                                                <th scope="row"><img  src="<%= request.getContextPath()%>/ImgServlet?prod=<%=beanP.getIdProducto()%>"
                                                                                       class="img-thumbnail"
                                                                                       alt="..."
                                                                                       style="width: 100px; height: 100px"></th>
-                                                                <td><small><%=pedidoC.getNombreProducto()%>
+                                                                <td><small><%=beanP.getNombreProducto()%>
                                                                 </small></td>
                                                                 <td>
-                                                                    <%=pedidoC.getCantidad()%>
+                                                                    <input class="form-control" id="unidadProd" type="number" name="unidadProd" min="1" value="1">
                                                                 </td>
-                                                                <td><%=(pedidoC.getPrecioUnitario() * pedidoC.getCantidad())%>
+                                                                <td><%=(beanP.getPrecioUnitario() * beanP.getCantidad())%>
                                                                 </td>
-                                                                <%subtotal = subtotal + (pedidoC.getPrecioUnitario() * pedidoC.getCantidad());%>
+                                                                <%subtotal = subtotal + (beanP.getPrecioUnitario() * beanP.getCantidad());%>
 
-                                                                <%if (pedidoC.isRecetaMedica()) {%>
+                                                                <%if (beanP.isRecetaMedica()) {%>
                                                                 <td>
                                                                     <div class="mb-3">
                                                                         <input class="form-control" name="fotoReceta" type="file" id="formFile1">
@@ -169,7 +169,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                            <%--<% <%}%>%>--%>
+                                       <%}%>
                                     </div>
                                 </div>
 
@@ -178,9 +178,6 @@
                             <div class=" col-5 my-3">
                                 <h5 class="card-title">Resumen de compra</h5>
                                 <form method="POST" action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=comprar">
-                                    <input type="hidden" class="form-control" name="idPedido" value="<%=listaProductosC.get(0).getPedido().getIdPedido()%>">
-                                    <input type="hidden" class="form-control" name="receta" value="<%=listaProductosC.get(0).isRecetaMedica()%>">
-
 
 
                                     <button type="submit" class="btn btn-warning">Realizar Pedido</button>

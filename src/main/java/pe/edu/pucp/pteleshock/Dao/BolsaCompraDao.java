@@ -4,11 +4,11 @@ import pe.edu.pucp.pteleshock.Beans.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BolsaCompraDao extends BaseDao {
 
-    public int generarPedidoCarrito() {
-
+    public int generarPedidoCarrito(int idfarmacia) {
         int idPedido = -1;
 
         String sql = "INSERT INTO pedido (idusuario, idestatuspedido, preciototal) VALUES (10,1,0)";
@@ -26,8 +26,8 @@ public class BolsaCompraDao extends BaseDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    return idPedido;
 
-        return idPedido;
     }
 
     public void agregarProductoCarrito(int idPedido, int idProd, int cantidad, int idFarmacia) {
@@ -53,9 +53,9 @@ public class BolsaCompraDao extends BaseDao {
 
     }
 
-    public ArrayList<BPedidoEstado> listarPedidosCarrito(int idP) {
+    ArrayList<BPedidoEstado> listaPedidosCarrito = new ArrayList<>();
 
-        ArrayList<BPedidoEstado> listaPedidosCarrito = new ArrayList<>();
+    public ArrayList<BPedidoEstado> listarPedidosCarrito(int idP) {
 
         String sql = "SELECT pe.idpedido, dp.idproducto, dp.idfarmacia, p.nombre,pxf.recetamedica, dp.cantidad, pxf.preciounitario, f.foto1 FROM pedido pe \n" +
                 "left join detallepedido dp on(pe.idpedido=dp.idpedido)\n" +
@@ -79,9 +79,7 @@ public class BolsaCompraDao extends BaseDao {
                     pedido.setIdPedido(rs.getInt(1));
                     pedido.setIdFarmacia(rs.getInt(3));
 
-
                     pedidoC.setPedido(pedido);
-
 
                     pedidoC.setFotoProducto(rs.getString(8));
                     pedidoC.setNombreProducto(rs.getString(4));
@@ -90,8 +88,10 @@ public class BolsaCompraDao extends BaseDao {
                     pedidoC.setIdProducto(rs.getInt(2));
                     pedidoC.setRecetaMedica(rs.getBoolean(5));
 
-
                     listaPedidosCarrito.add(pedidoC);
+                    for(int i=0;i<listaPedidosCarrito.size();i++){
+                        System.out.println(listaPedidosCarrito.get(i).getNombreProducto());
+                    }
 
                 }
             }
