@@ -105,6 +105,32 @@ public class GPedidoDao extends BaseDao {
         return cant;
     }
 
+    public int cantidadPedidosBuscados(String texto){
+        int cant =0;
+
+        String sql="select count(*) from (select count(*) from detallepedido dp\n" +
+                "                                   inner join pedido p on (dp.idpedido=p.idpedido)\n" +
+                "                                   inner join usuario u on (p.idusuario=u.idusuario)\n" +
+                "                                    where not (p.idestatuspedido = 1) and dp.idfarmacia=2 and (lower(u.nombre) like ? or lower(u.apellido) like ? or u.dni like ?)  #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
+                "                                  group by dp.idpedido\n" +
+                "                                  order by p.fechapedido desc) tabla;";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            pstmt.setString(1, "%" + texto + "%");
+            pstmt.setString(2, "%" + texto + "%");
+            pstmt.setString(3, "%" + texto + "%");
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    cant=rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cant;
+    }
 
 
     public ArrayList<BPedidoD> listaPedidosD(int id){
@@ -235,16 +261,16 @@ public class GPedidoDao extends BaseDao {
         return bPedidoFarm;
     }
 
-    public ArrayList<BPedidoG> listaPedidosporNombre(String nombre){
+    public ArrayList<BPedidoG> listaPedidosporNombre(String pag,String nombre){
         ArrayList<BPedidoG> listaPedidos = new ArrayList<>();
 
-
+        int pagint =Integer.parseInt(pag);
         String sql = "select p.idpedido,p.fechapedido, u.nombre,u.apellido,u.dni,p.codigodeventa,p.preciototal from detallepedido dp\n" +
                 "                    inner join pedido p on (dp.idpedido=p.idpedido)\n" +
                 "                    inner join usuario u on (p.idusuario=u.idusuario)\n" +
                 "                    where not (p.idestatuspedido = 1) and dp.idfarmacia=2 and (lower(u.nombre) like ? or lower(u.apellido) like ? or u.dni like ?)  #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
                 "                    group by dp.idpedido\n" +
-                "                    order by p.fechapedido desc;";
+                "                    order by p.fechapedido desc limit "+(pagint-1)*3 +",3;";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {

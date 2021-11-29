@@ -28,7 +28,7 @@
 
     </head>
     <body class="sb-nav-fixed"
-          style="background-image: url('img/farmacia_background.PNG'); background-repeat:repeat-y; background-size: cover">
+          style="background-image: url('img/farmacia_background.PNG'); background-repeat: no-repeat; background-size: cover; background-attachment: fixed; background-position: center center;">
         <nav class="sb-topnav navbar navbar-expand" style="background-color: #00152D; opacity: 0.9;">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" style="color: white" href="<%= request.getContextPath()%>/Farm_Index">
@@ -262,7 +262,7 @@
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
                     <a href="#" class="btn btn-primary mb-2">Cancelar</a>
-                    <a href="<%= request.getContextPath()%>/Login_Exit" class="btn btn-danger mb-2">Salir</a>
+                    <a href="<%= request.getContextPath()%>/Login" class="btn btn-danger mb-2">Salir</a>
 
                 </div>
             </div>
