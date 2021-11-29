@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "Login_PasswordServlet", value = "/Login_Password")
@@ -18,7 +19,9 @@ public class Login_PasswordServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         String mensaje = request.getParameter("mensaje")!=null?request.getParameter("mensaje"):"";
+        String correo = request.getParameter("correo")!=null?request.getParameter("correo"):"";
         request.setAttribute("mensaje",mensaje);
+        request.setAttribute("correo",correo);
         RequestDispatcher view = request.getRequestDispatcher("/Login/contraseña.jsp");
         view.forward(request,response);
     }
@@ -30,12 +33,17 @@ public class Login_PasswordServlet extends HttpServlet {
         String correo = request.getParameter("email")!=null?request.getParameter("email"):"";
         ValidacionAdd_Dao validacionAdd_dao = new ValidacionAdd_Dao();
         String mensaje = "";
-        System.out.println(correo);
+        //System.out.println(correo);
         int idusuario = validacionAdd_dao.getIdusuario(correo);
-        System.out.println(idusuario);
+        //System.out.println(idusuario);
         if(!correo.equalsIgnoreCase("")){
             if(validacionAdd_dao.email_unico(correo)){
-                response.sendRedirect(request.getContextPath()+"/Login_Password_Recovery?idusuario="+idusuario);
+                //response.sendRedirect(request.getContextPath()+"/Login_Password_Recovery?idusuario="+idusuario);
+                // se crea una sesión:
+                HttpSession session_login = request.getSession();
+                String idStr = String.valueOf(idusuario);
+                session_login.setAttribute("logid",idStr);
+                response.sendRedirect(request.getContextPath()+"/Login_Password_Recovery");
             }else {
                 mensaje = "No se encuentra la ruta de correo especificada";
                 response.sendRedirect(request.getContextPath()+"/Login_Password?mensaje="+mensaje);

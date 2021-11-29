@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="mensaje" class="java.lang.String" type="java.lang.String" scope="request"/>
+<jsp:useBean id="correo" class="java.lang.String" type="java.lang.String" scope="request"/>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -44,7 +45,7 @@
                                 <form method="post" action="<%= request.getContextPath()%>/Login_Password">
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="inputEmail" type="email"
-                                               placeholder="name@example.com" name="email" pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$" title="Debe especificar una ruta de correo valida"/>
+                                               placeholder="name@example.com" name="email" pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$" title="Debe especificar una ruta de correo valida" value="<%=correo%>"/>
                                         <label for="inputEmail" class="mb-3 text-muted">Correo
                                             electrónico</label>
                                     </div>
