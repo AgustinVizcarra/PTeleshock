@@ -27,8 +27,10 @@ public class Farm_PefilServlet extends HttpServlet {
         PerfilFarmDao pfdao = new PerfilFarmDao();
         VentFechaDao vfdao = new VentFechaDao();
 
-        request.setAttribute("perfilfarm",pfdao.perfilFarmacia());
-        request.setAttribute("listventfecha",vfdao.listventasFecha());
+        int idF = (Integer) session.getAttribute("idFarmacia");
+
+        request.setAttribute("perfilfarm",pfdao.perfilFarmacia(idF));
+        request.setAttribute("listventfecha",vfdao.listventasFecha(idF));
 
         RequestDispatcher view = request.getRequestDispatcher("/Farmacia/perfil_farmacia.jsp");
         view.forward(request,response);

@@ -7,7 +7,7 @@
   Time: 19:01
   To change this template use File | Settings | File Templates.
 --%>
-<% ArrayList<BPerfilFarmacia> perfilfarm=(ArrayList<BPerfilFarmacia>) request.getAttribute("perfilfarm"); %>
+<% //ArrayList<BPerfilFarmacia> perfilfarm=(ArrayList<BPerfilFarmacia>) request.getAttribute("perfilfarm"); %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
@@ -133,6 +133,7 @@
                 </div>
 
                 </h1>
+            </div>
         </main>
 
         <footer class="py-4 bg-light mt-auto">
@@ -188,13 +189,13 @@
 <script src="assets/djemo/chart-bar-demo.s"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 <script src="js/datatables-simple-demo.js"></script>
-    <% for (BPerfilFarmacia perffarm : perfilfarm){ %>
+    <% //for (BPerfilFarmacia perffarm : perfilfarm){ %>
     <script>
         const ctx = document.getElementById('myChart').getContext('2d');
         const myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['<%= perffarm.getNombre()%>', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'],
+                labels: ['<%// perffarm.getNombre()%>', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'],
                 datasets: [{
                     label: '# de Ventas',
                     data: [12, 19, 3, 5, 2, 3,5,16,25,3,13,30],
@@ -238,6 +239,6 @@
             }
         });
     </script>
-    <% } %>
+    <% //} %>
 </body>
 </html>

@@ -628,5 +628,29 @@ public class FarmaciaDao extends BaseDao {
         return listaFarmacias;
     }
 
+    public int obtenerIdFarmacia(int idUsuario ){
+
+        int idFarmacia=0;
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement("SELECT idfarmacia FROM farmacia where idusuario=?;")) {
+
+            pstmt.setInt(1, idUsuario);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+
+                if (rs.next()) {
+                    idFarmacia = rs.getInt(1);
+
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error en obtener todas las farmacias por distrito con busqueda");
+            e.printStackTrace();
+        }
+        return idFarmacia;
+
+    }
+
 }
 

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class PerfilFarmDao extends BaseDao{
 
 
-    public ArrayList<BPerfilFarmacia> perfilFarmacia(){
+    public ArrayList<BPerfilFarmacia> perfilFarmacia(int idFarmacia){
         ArrayList<BPerfilFarmacia> perfilFarmacia = new ArrayList<>();
 
         try {
@@ -23,7 +23,7 @@ public class PerfilFarmDao extends BaseDao{
                     "from farmacia f\n" +
                     "inner join usuario u on (f.idusuario=u.idusuario)\n" +
                     "inner join distrito d on (u.iddistrito=d.iddistrito)\n" +
-                    "where f.idfarmacia='2';");
+                    "where f.idfarmacia="+idFarmacia+";");
 
 
             while (rs.next()) {

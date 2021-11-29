@@ -1,6 +1,7 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
+import pe.edu.pucp.pteleshock.Dao.FarmaciaDao;
 import pe.edu.pucp.pteleshock.Dao.PerfilFarmDao;
 
 import javax.servlet.RequestDispatcher;
@@ -18,13 +19,19 @@ public class Farm_IndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
-
         if (farmacia != null) {
+
 
         response.setContentType("text/html");
 
+        FarmaciaDao farmaciaDao= new FarmaciaDao();
+        int idFarmacia= farmaciaDao.obtenerIdFarmacia(farmacia.getIdUsuario());
+
+
+        session.setAttribute("idFarmacia",idFarmacia);
+
         PerfilFarmDao pfdao = new PerfilFarmDao();
-        request.setAttribute("perfilfarm",pfdao.perfilFarmacia());
+        //request.setAttribute("perfilfarm",pfdao.perfilFarmacia();
         RequestDispatcher view = request.getRequestDispatcher("/Farmacia/index_farmacia.jsp");
         view.forward(request,response);
 
