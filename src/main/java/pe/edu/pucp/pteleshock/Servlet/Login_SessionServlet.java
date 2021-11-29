@@ -19,7 +19,8 @@ public class Login_SessionServlet extends HttpServlet {
         response.setContentType("text/html");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-
+        HttpSession session_login = request.getSession();
+        session_login.removeAttribute("logid");
         String mensaje = request.getParameter("mensaje") == null ? "" : request.getParameter("mensaje");
         String mail = request.getParameter("correo") == null ? "" : request.getParameter("correo");
         String pwd = request.getParameter("pwd") == null ? "" : request.getParameter("pwd");

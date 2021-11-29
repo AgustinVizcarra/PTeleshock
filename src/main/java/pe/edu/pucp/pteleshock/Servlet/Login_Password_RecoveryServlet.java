@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "Login_Password_RecoveryServlet", value = "/Login_Password_Recovery")
@@ -15,11 +16,17 @@ public class Login_Password_RecoveryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        String idUStr = request.getParameter("idusuario")!=null? request.getParameter("idusuario"):"0";
-        System.out.println(idUStr);
-        request.setAttribute("idusuario",idUStr);
-        RequestDispatcher view = request.getRequestDispatcher("/Login/recuperacion_contraseña.jsp");
-        view.forward(request,response);
+        HttpSession session_login = request.getSession();
+        System.out.println("Id: "+session_login.getAttribute("logid"));
+        if(session_login.getAttribute("logid")!=null) {
+            request.setAttribute("idusuario",session_login.getAttribute("logid"));
+            RequestDispatcher view = request.getRequestDispatcher("/Login/recuperacion_contraseña.jsp");
+            //session_login.removeAttribute("logid");
+            view.forward(request, response);
+        }else{
+            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
+            viewError.forward(request, response);
+        }
     }
 
     @Override
