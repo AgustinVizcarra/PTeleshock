@@ -89,8 +89,8 @@
                                         </div>
                                         <div class="d-grid gap-3 col-6 mx-auto mb-3">
                                             <button class="btn btn-primary me-md-7" href="#popup1" type="submit">Ingresar</button>
-                                            <button class="btn btn-success me-md-7"
-                                               href="<%= request.getContextPath()%>/Login_Register">Registrarse</button>
+                                            <a class="btn btn-success me-md-7"
+                                               href="<%= request.getContextPath()%>/Login_Register?action=anadir">Registrarse</a>
                                         </div>
                                         <div class="text-center mb-2">
                                             <a class="small text-white" href="<%= request.getContextPath()%>/Login_Password">¿Olvidaste tu

@@ -3,6 +3,9 @@ import pe.edu.pucp.pteleshock.Beans.BCliente;
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.ListaDistritosDao;
 import pe.edu.pucp.pteleshock.Dao.PerfilClientDao;
+import pe.edu.pucp.pteleshock.Dao.RegistrarClienteDao;
+import pe.edu.pucp.pteleshock.Dao.RegistrarProDao;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,11 +22,7 @@ public class Client_PerfilServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");
-
-
-
         if(cliente != null) {
-
             PerfilClientDao perfilClientDao = new PerfilClientDao();
             ListaDistritosDao listaDistritosDao = new ListaDistritosDao();
 
@@ -33,7 +32,7 @@ public class Client_PerfilServlet extends HttpServlet {
 
                 case "mostrar":
                     //Implementar cliente dinamico -> Sesiones
-                    request.setAttribute("cliente", perfilClientDao.clientePerfil(10));
+                    request.setAttribute("cliente", perfilClientDao.clientePerfil(cliente.getIdUsuario()));
                     RequestDispatcher view = request.getRequestDispatcher("/Cliente/mi_perfil.jsp");
                     view.forward(request, response);
                     break;
@@ -75,8 +74,10 @@ public class Client_PerfilServlet extends HttpServlet {
 
         System.out.println(action);
         PerfilClientDao perfilClientDao = new PerfilClientDao();
+        RegistrarClienteDao registrarClienteDao = new RegistrarClienteDao();
 
         switch (action){
+
             case "actualizar":
                 String idClienteStr = request.getParameter("idC") != null ? request.getParameter("idC") : "";
                 String nombreStr = request.getParameter("nombreC").strip() != "" ? request.getParameter("nombreC") : "a";
