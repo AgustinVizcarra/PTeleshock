@@ -39,8 +39,8 @@
                         <p></p><br>
                         <h5>¿Desea cerrar está sesión?</h5>
                         <div class="d-md-block mt-5 mb-4 text-center font-weight-light my-5">
-                            <a class="btn btn-primary me-md-4" href="<%= request.getContextPath()%>/Login">Cancelar</a>
-                            <a class="btn btn-danger me-md-4" href="mensajes_emergentes4.html">Salir</a>
+                            <a class="btn btn-primary me-md-4" href="<%= request.getContextPath()%>/Login">Salir</a>
+                            <a class="btn btn-danger me-md-4" href="<%= request.getContextPath()%>">Cancelar</a>
                             <!--no se esta considerando estos mensajes emergentes-->
                         </div>
                     </form>

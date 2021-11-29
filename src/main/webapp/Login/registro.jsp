@@ -63,7 +63,7 @@
                                     <div class="row mb-4">
                                         <label for="dni" class="col-sm-4 col-form-label">DNI : </label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="dni" id="dni">
+                                            <input type="text" class="form-control" name="dni" id="dni" pattern="[0-9]{8}" title="El DNI debe contener 8 dígitos.">
                                         </div>
                                     </div>
                                     <div class="row mb-4">

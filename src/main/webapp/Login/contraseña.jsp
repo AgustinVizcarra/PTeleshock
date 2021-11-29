@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="mensaje" class="java.lang.String" type="java.lang.String" scope="request"/>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -40,15 +41,20 @@
                                 <div class="medium mb-3 text-muted">¡No te preocupes! Nos sucede a todos.
                                     Ingresa el e-mail con el que te registraste y te ayudaremos.
                                 </div>
-                                <form>
+                                <form method="post" action="<%= request.getContextPath()%>/Login_Password">
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="inputEmail" type="email"
-                                               placeholder="name@example.com"/>
+                                               placeholder="name@example.com" name="email" pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$" title="Debe especificar una ruta de correo valida"/>
                                         <label for="inputEmail" class="mb-3 text-muted">Correo
                                             electrónico</label>
                                     </div>
+                                    <div class="text-danger" style="padding-bottom: 15px">
+                                        <%if(!mensaje.equalsIgnoreCase("")){%>
+                                        <%=mensaje%>
+                                        <%}%>
+                                    </div>
                                     <div class="d-grid gap-2 col-6 mx-auto mb-3">
-                                        <a class="btn btn-success" href="<%= request.getContextPath()%>/Login_Password_Recovery">Solicitar</a>
+                                        <button class="btn btn-success" type="submit">Solicitar</button>
                                         <a class="small text-center" href="<%= request.getContextPath()%>/Login">Inicio de sesión</a>
                                     </div>
                                 </form>

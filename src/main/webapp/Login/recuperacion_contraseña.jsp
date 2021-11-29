@@ -5,7 +5,7 @@
   Time: 18:47
   To change this template use File | Settings | File Templates.
 --%>
-<jsp:useBean id="nombre" type="java.lang.String" scope="request" class="java.lang.String"/>
+<jsp:useBean id="idusuario" type="java.lang.String" scope="request" class="java.lang.String"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
@@ -37,7 +37,7 @@
                             <div class="card-body">
                                 <div class="medium mb-3 text-muted">Crea una nueva contraseña</div>
                                 <form method="post" action="<%= request.getContextPath()%>/Login_Password_Recovery" oninput='pwd2.setCustomValidity(pwd2.value != pwd1.value ? "Las contraseñas no coinciden" : "" )'>
-                                    <input type="hidden" name="user_mail" value="<%=nombre%>">
+                                    <input type="hidden" name="id_user" value="<%=idusuario%>">
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="inputPassword" type="password" name="pwd1" placeholder="name@example.com" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contraseña debe contener como mínimo 8 caracteres, 1 número, una letra mayúscula"/>
                                         <label for="inputPassword" class="mb-3 text-muted">Contraseña</label>

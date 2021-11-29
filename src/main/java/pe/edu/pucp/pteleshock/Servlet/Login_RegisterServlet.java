@@ -77,6 +77,7 @@ public class Login_RegisterServlet extends HttpServlet {
                     }else{
                         if(contrasenia.equals(contrasenia2)){
                             registrarClienteDao.añadirCliente(idDistrito, nombre, apellido, correo, dni, contrasenia);
+                            registrarClienteDao.enviarCorreoRegistro(correo,nombre);
                             response.sendRedirect(request.getContextPath() + "/Login");
                         }else{
                             response.sendRedirect(request.getContextPath() + "/Login_Register?action=anadir&er=3");

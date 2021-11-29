@@ -43,7 +43,7 @@ public class ValidacionAdd_Dao extends BaseDao {
         try {
             Connection connection = this.getConnection();
             Statement statement= connection.createStatement();
-            ResultSet rs = statement.executeQuery("select u.correo from usuario u where u.idrol=3");
+            ResultSet rs = statement.executeQuery("select correo from usuario");
             while(rs.next()){
                 correos.add(rs.getString(1));
             }
@@ -133,6 +133,21 @@ public class ValidacionAdd_Dao extends BaseDao {
             e.printStackTrace();
         }
     }
+    public int getIdusuario(String correo){
+        int idusuario=0;
+        String sql = "select idusuario from usuario where correo = ?";
+        try(Connection  connection = this.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);){
+            preparedStatement.setString(1,correo);
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()){
+                idusuario=rs.getInt(1);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return idusuario;
+    }
     public void enviar_correo(String destinario,String nombre){
         Properties propiedad = new Properties();
         propiedad.setProperty("mail.smtp.host","smtp.gmail.com");
@@ -143,9 +158,11 @@ public class ValidacionAdd_Dao extends BaseDao {
         String owner_cuenta = "TeleshockInc@gmail.com";
         String pswd = "ProyectoTeleshock2021";
         String dest = destinario;
+        int idusuario = this.getIdusuario(destinario);
+        String idstr = String.valueOf(idusuario) ;
         String asunto = "Confirmación de registro de cuenta";
         String mensaje = "<p><b> Estimada(o) "+nombre+": </b></p><div>Es grato comentarle que su cuenta se ha registrado correctamente</div><p></p><div><img src=\"cid:image\"></div><p></p><div><p><b>Para ingresar su nueva" +
-                "contraseña ingrese al siguiente enlace:</b></p><p><b><a href=\"http://localhost:8080/PTeleshock_war_exploded/Login_Password_Recovery?nombre="+nombre+"\">Ingrese su nueva contraseña</a></b></p></div><p></p><div><br>Saludos Cordiales</br><br><FONT COLOR=\"gray\">El equipo técnico de Teleshock</FONT></br></div>";
+                "contraseña ingrese al siguiente enlace:</b></p><p><b><a href=\"http://localhost:8080/PTeleshock_war_exploded/Login_Password_Recovery?idusuario="+idstr+"\">Ingrese su nueva contraseña</a></b></p></div><p></p><div><br>Saludos Cordiales</br><br><FONT COLOR=\"gray\">El equipo técnico de Teleshock</FONT></br></div>";
         MimeMessage mail = new MimeMessage(session);
         try {
             mail.setFrom(new InternetAddress(owner_cuenta));

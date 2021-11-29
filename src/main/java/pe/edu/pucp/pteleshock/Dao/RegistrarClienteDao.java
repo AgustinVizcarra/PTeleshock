@@ -1,13 +1,23 @@
 package pe.edu.pucp.pteleshock.Dao;
 import pe.edu.pucp.pteleshock.Beans.BCliente;
+
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class RegistrarClienteDao extends BaseDao{
 
         public void añadirCliente(int idDis, String nombre, String apellido, String correo,String dni, String contrasenia) {
 
-            String sql = "INSERT INTO usuario (idrol, iddistrito, nombre, apellido, correo, dni, contrasenia) VALUES (1,?,?,?,?,?, SHA2(?,256))";
+            String sql = "INSERT INTO usuario (idrol, iddistrito, nombre, apellido, correo, dni, contrasenia) VALUES (1,?,?,?,?,?,?)";
 
             try (Connection conn = this.getConnection();
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -72,5 +82,39 @@ public class RegistrarClienteDao extends BaseDao{
         return siExiste;
     }
 
-
+    public void enviarCorreoRegistro(String dest,String nombre){
+        Properties propiedad = new Properties();
+        propiedad.setProperty("mail.smtp.host","smtp.gmail.com");
+        propiedad.setProperty("mail.smtp.starttls.enable","true");
+        propiedad.setProperty("mail.smtp.port","587");
+        propiedad.setProperty("mail.smtp.auth","true");
+        Session session = Session.getDefaultInstance(propiedad);
+        String owner_cuenta = "TeleshockInc@gmail.com";
+        String pswd = "ProyectoTeleshock2021";
+        String asunto = "Confirmación de registro de cuenta de Usuario";
+        String mensaje = "<p><b> Estimada(o) "+nombre+": </b></p><div>Es grato comentarle que su cuenta se ha registrado de manera exitosa</div><p></p><div><img src=\"cid:image\"></div><p></p><p></p><div><br>Saludos Cordiales</br><br><FONT COLOR=\"gray\">El equipo técnico de Teleshock</FONT></br></div>";
+        MimeMessage mail = new MimeMessage(session);
+        try {
+            mail.setFrom(new InternetAddress(owner_cuenta));
+            mail.addRecipient(Message.RecipientType.TO,new InternetAddress(dest));
+            mail.setSubject(asunto);
+            MimeMultipart multipart = new MimeMultipart("related");
+            BodyPart html_parte= new MimeBodyPart();
+            html_parte.setContent(mensaje,"text/html");
+            multipart.addBodyPart(html_parte);
+            BodyPart imagen = new MimeBodyPart();
+            DataSource fds =  new FileDataSource("C:\\Users\\casa\\Desktop\\Ingenieria Web\\confirmacion_registro.png");
+            imagen.setDataHandler(new DataHandler(fds));
+            imagen.setHeader("Content-ID","<image>");
+            multipart.addBodyPart(imagen);
+            mail.setContent(multipart);
+            Transport transport = session.getTransport("smtp");
+            transport.connect(owner_cuenta,pswd);
+            transport.sendMessage(mail,mail.getRecipients(Message.RecipientType.TO));
+            transport.close();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

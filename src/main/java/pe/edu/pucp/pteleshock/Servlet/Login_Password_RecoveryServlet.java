@@ -15,8 +15,9 @@ public class Login_Password_RecoveryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        String nombre_usuario = request.getParameter("nombre")!=null? request.getParameter("nombre"):"";
-        request.setAttribute("nombre",nombre_usuario);
+        String idUStr = request.getParameter("idusuario")!=null? request.getParameter("idusuario"):"0";
+        System.out.println(idUStr);
+        request.setAttribute("idusuario",idUStr);
         RequestDispatcher view = request.getRequestDispatcher("/Login/recuperacion_contraseña.jsp");
         view.forward(request,response);
     }
@@ -25,13 +26,14 @@ public class Login_Password_RecoveryServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        String nombre_farmacia = request.getParameter("user_mail");
+        int id = Integer.parseInt(request.getParameter("id_user"));
+        System.out.println(id);
         String pwd = request.getParameter("pwd1");
         PaswordDao paswordDao = new PaswordDao();
-        System.out.println(nombre_farmacia);
         System.out.println(paswordDao);
         //cambio de contraseña
-        paswordDao.cambiarContra(nombre_farmacia,pwd);
+        paswordDao.cambiarContra(id,pwd);
+        paswordDao.confirmacionCambioContra(id);
         System.out.println("Cambio de contraseña exitoso");
         response.sendRedirect(request.getContextPath()+"/Login_Password_Recovery#popup1");
     }
