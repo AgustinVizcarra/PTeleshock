@@ -26,6 +26,7 @@ public class Client_FarmaciasServlet extends HttpServlet {
 
             String idDistritoStr = request.getParameter("idD") != null ? request.getParameter("idD") : String.valueOf(cliente.getIdDistrito());
             String pagStr = request.getParameter("pag") != null ? request.getParameter("pag") : "1";
+            String nombreFarmaciaBuscar = request.getParameter("nombreFarmacia") != null ? request.getParameter("nombreFarmacia") : "";
 
             int idDistrito = Integer.parseInt(idDistritoStr);
             int pag = 1;
@@ -41,7 +42,7 @@ public class Client_FarmaciasServlet extends HttpServlet {
             // Listar pedidos general | Validación de páginas
             int inicio = 0;
             int pedidosxPag = 6;
-            int totalPag = (int) Math.ceil((double) fxDao.obtenerNumFarmacias(idDistritoStr) / (double) pedidosxPag);
+            int totalPag = (int) Math.ceil((double) fxDao.obtenerNumFarmacias(idDistritoStr, nombreFarmaciaBuscar) / (double) pedidosxPag);
             if (0 < pag & pag <= totalPag) {
                 inicio = pag * pedidosxPag - pedidosxPag;
             }
@@ -49,14 +50,15 @@ public class Client_FarmaciasServlet extends HttpServlet {
             //System.out.println("Id distrito: "+idDistritoStr);
             //System.out.println("parseado: "+idDistrito);
             //System.out.println("inicio: "+inicio);
-            System.out.println("cantidad de farmacias: "+fxDao.listarFarmaciasPorDistrito(idDistrito,inicio).size());
+            System.out.println("cantidad de farmacias: " + fxDao.listarFarmaciasPorDistritoConBusqueda(idDistrito, inicio, nombreFarmaciaBuscar).size());
             //aqui esta el error
-            if(fxDao.listarFarmaciasPorDistrito(idDistrito,inicio).isEmpty()){
+            if (fxDao.listarFarmaciasPorDistrito(idDistrito, inicio).isEmpty()) {
                 idDistrito = 18;
                 //default option
             }
-            System.out.println("cantidad de farmacias luego de default: "+fxDao.listarFarmaciasPorDistrito(idDistrito,inicio).size());
-            request.setAttribute("listaxFarmacias", fxDao.listarFarmaciasPorDistrito(idDistrito, inicio));
+            System.out.println("cantidad de farmacias luego de default: " + fxDao.listarFarmaciasPorDistritoConBusqueda(idDistrito, inicio, nombreFarmaciaBuscar).size());
+            request.setAttribute("listaxFarmacias", fxDao.listarFarmaciasPorDistritoConBusqueda(idDistrito, inicio, nombreFarmaciaBuscar));
+            request.setAttribute("nombreFarmacia", nombreFarmaciaBuscar);
             request.setAttribute("totalPag", totalPag);
             request.setAttribute("pag", pag);
             // Listar distritos
@@ -80,8 +82,9 @@ public class Client_FarmaciasServlet extends HttpServlet {
 
         String idDistritoStr = request.getParameter("idD") != null ? request.getParameter("idD") : "18";
         int idDistrito = Integer.parseInt(idDistritoStr);
+        String nombreFarmaciaBuscar = request.getParameter("nombreFarmacia") != null ? request.getParameter("nombreFarmacia") : "";
 
-        response.sendRedirect(request.getContextPath() + "/Client_Farmacias?idD=" + idDistrito);
+        response.sendRedirect(request.getContextPath() + "/Client_Farmacias?idD=" + idDistrito + "&nombreFarmacia=" + nombreFarmaciaBuscar);
 
     }
 }
