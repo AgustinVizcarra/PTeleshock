@@ -183,16 +183,16 @@
                                         <div class="row" style="text-align:left;padding-left: 10px">
                                             <div class="col-md-4">
                                                 <div class="texto-navbar"
-                                                     style="padding-bottom: 5px"><%=bFarmacia.getRuc()%>
+                                                     style="padding-bottom: 5px">RUC: <%=bFarmacia.getRuc()%>
                                                 </div>
                                                 <div class="texto-navbar"
-                                                     style="padding-bottom: 5px"><%=bFarmacia.getDireccion()%>
+                                                     style="padding-bottom: 5px">Dirección: <%=bFarmacia.getDireccion()%>
                                                 </div>
                                                 <div class="texto-navbar"
-                                                     style="padding-bottom: 5px"><%=bFarmacia.getCorreo()%>
+                                                     style="padding-bottom: 5px">Correo: <%=bFarmacia.getCorreo()%>
                                                 </div>
                                                 <div class="texto-navbar"
-                                                     style="padding-bottom: 5px"><%=bFarmacia.getEstado()%>
+                                                     style="padding-bottom: 5px">Estado: <%=bFarmacia.getEstado()%>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">

@@ -42,7 +42,7 @@
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
                            aria-describedby="btnNavbarSearch"/>
-                    <button class="btn btn-primary"  type="button"><i
+                    <button class="btn btn-primary" type="button"><i
                             class="fas fa-search"></i></button>
                     <!-- al button le quité esta linea dentro de sus parámetros  id="btnNavbarSearch" -->
                 </div>
@@ -146,6 +146,7 @@
                                 </div>
                                 <br><br>
 
+
                                 <nav aria-label="Page navigation">
                                     <ul class="pagination justify-content-end text-primary">
                                         <li class="page-item  <%=pag==1?"disabled":""%>  ">
@@ -158,7 +159,6 @@
                                                href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>&pag=<%=i%>"><%=i%>
                                             </a></li>
                                         <%}%>
-
                                         <li class="page-item <%=pag.equals(totalPag)?"disabled":""%>  ">
                                             <a class="page-link"
                                                href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>&pag=<%=pag+1%>">Siguiente</a>

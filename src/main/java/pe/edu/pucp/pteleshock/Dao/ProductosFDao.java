@@ -10,9 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ProductosFDao extends BaseDao{
+public class ProductosFDao extends BaseDao {
 
-    public ArrayList<BDetProd> listarProductosF(int idFarmacia, int inicio) {
+    public ArrayList<BDetProd> listarProductosF(int idFarmacia, int inicio, String nombreProducto) {
         //msql
 
         ArrayList<BDetProd> listarProductosF = new ArrayList<>();
@@ -21,19 +21,20 @@ public class ProductosFDao extends BaseDao{
         String sql = "Select  p.idproducto,p.nombre, f.foto1,pf.stock,pf.preciounitario,pf.recetamedica from productoporfarmacia pf\n" +
                 "inner join producto p on (pf.idproducto=p.idproducto)\n" +
                 "left join foto f on (pf.idproducto=f.idproducto and pf.idfarmacia=f.idfarmacia)\n" +
-                "where pf.idfarmacia=? limit " + inicio + ",6 ;";
+                "where lower(p.nombre) like lower(?) and pf.idfarmacia=? limit " + inicio + ",6 ;";
 
         if (inicio == -1) {
             sql = "Select  p.idproducto,p.nombre, f.foto1,pf.stock,pf.preciounitario,pf.recetamedica from productoporfarmacia pf\n" +
                     "inner join producto p on (pf.idproducto=p.idproducto)\n" +
                     "left join foto f on (pf.idproducto=f.idproducto and pf.idfarmacia=f.idfarmacia)\n" +
-                    "where pf.idfarmacia=?;";
+                    "where lower(p.nombre) like lower(?) and pf.idfarmacia=?;";
         }
 
 
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
-            pstmt.setInt(1, idFarmacia);
+            pstmt.setString(1,  "%" + nombreProducto + "%");
+            pstmt.setInt(2, idFarmacia);
 
             try (ResultSet rs = pstmt.executeQuery()) {
 
@@ -60,15 +61,15 @@ public class ProductosFDao extends BaseDao{
 
     }
 
-    public int obtenerNumProductos(String idFarmacia) {
+    public int obtenerNumProductos(String idFarmacia,String nombreProducto) {
         int numProductos = 0;
 
-        String sql = "select count(*) from (SELECT * FROM productoporfarmacia where idfarmacia = ?) as `productos`;";
+        String sql = "select count(*) from (SELECT * FROM productoporfarmacia a inner join producto b on a.idproducto=b.idproducto where idfarmacia = ? and lower(b.nombre) like lower(?)) as `productos`;";
 
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setString(1, idFarmacia);
-
+            pstmt.setString(2,  "%" + nombreProducto + "%");
             try (ResultSet rs = pstmt.executeQuery()) {
 
                 if (rs.next()) {
@@ -78,7 +79,7 @@ public class ProductosFDao extends BaseDao{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("No se pudo hallar en numero de productos");
+            System.out.println("No se pudo hallar el numero de productos");
 
         }
         return numProductos;
