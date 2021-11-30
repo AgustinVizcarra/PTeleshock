@@ -22,14 +22,14 @@ public class Farm_Detalles_PedidoServlet extends HttpServlet {
         BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
 
         if (farmacia != null) {
-
-        GPedidoDao gPedidoDao = new GPedidoDao();
-        String id = request.getParameter("id");
-        int idInt = Integer.parseInt(id);
-        request.setAttribute("listaDPedido",gPedidoDao.listaPedidosD(idInt));
-        request.setAttribute("listaproducto",gPedidoDao.listaProductos(idInt));
-        RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_pedido.jsp");
-        view.forward(request,response);
+            int idF = (Integer) session.getAttribute("idFarmacia");
+            GPedidoDao gPedidoDao = new GPedidoDao();
+            String id = request.getParameter("id");
+            int idInt = Integer.parseInt(id);
+            request.setAttribute("listaDPedido",gPedidoDao.listaPedidosD(idF,idInt));
+            request.setAttribute("listaproducto",gPedidoDao.listaProductos(idF,idInt));
+            RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_pedido.jsp");
+            view.forward(request,response);
 
         } else {
             RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");

@@ -88,7 +88,7 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        HttpSession session = request.getSession();
         request.setCharacterEncoding("UTF-8");
         RegistrarProDao registrarProDao = new RegistrarProDao();
 
@@ -126,7 +126,8 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
             int stock=Integer.parseInt(stockStr);
             double precioUnitario=Double.parseDouble(precioUnitarioStr);
 
-            registrarProDao.registrarProducto(nombre,stock,precioUnitario,descripcion,inputStream,recetamedica);
+            int idF = (Integer) session.getAttribute("idFarmacia");
+            registrarProDao.registrarProducto(idF,nombre,stock,precioUnitario,descripcion,inputStream,recetamedica);
             response.sendRedirect(request.getContextPath() + "/Farm_Registro_Producto?msg=ok");
         }
 

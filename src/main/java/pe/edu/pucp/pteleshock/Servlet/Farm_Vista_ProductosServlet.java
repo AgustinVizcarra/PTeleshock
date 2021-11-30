@@ -23,19 +23,21 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
 
         if (farmacia != null) {
 
+            int idF = (Integer) session.getAttribute("idFarmacia");
+            String pag = request.getParameter("pag") !=null ? request.getParameter("pag"): "1";
 
-        String pag = request.getParameter("pag") !=null ? request.getParameter("pag"): "1";
+            PxFarDao pxFarDao=new PxFarDao();
 
-        PxFarDao pxFarDao=new PxFarDao();
+            int cant=pxFarDao.cantidadProductosF(idF);
+            String cantStr=String.valueOf(cant);
 
-        int cant=pxFarDao.cantidadProductosF();
-        String cantStr=String.valueOf(cant);
-        request.setAttribute("listaxFarmacia",pxFarDao.listarProductosF(pag));
 
-        request.setAttribute("cantProd",cantStr);
+            request.setAttribute("listaxFarmacia",pxFarDao.listarProductosF(idF,pag));
 
-        RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
-        view.forward(request,response);
+            request.setAttribute("cantProd",cantStr);
+
+            RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
+            view.forward(request,response);
 
         } else {
             RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
@@ -45,30 +47,28 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         request.setCharacterEncoding("UTF-8");
         String texto = request.getParameter("textoBuscar");
         String pag = request.getParameter("pag") !=null ? request.getParameter("pag"): "1";
 
+        int idF = (Integer) session.getAttribute("idFarmacia");
         PxFarDao pxFarDao=new PxFarDao();
         if (texto == null) {
             response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
         } else {
-            int cant=pxFarDao.cantidadProductosBuscados(texto);
+            int cant=pxFarDao.cantidadProductosBuscados(idF,texto);
             String cantStr=String.valueOf(cant);
             request.setAttribute("cantProd",cantStr);
             request.setAttribute("textbuscar",texto);
 
-            request.setAttribute("listaxFarmacia", pxFarDao.buscarProductoPorNombre(pag,texto));
+            request.setAttribute("listaxFarmacia", pxFarDao.buscarProductoPorNombre(idF,pag,texto));
             RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productosFiltrados.jsp");
             view.forward(request, response);
-
 
         }
 
     }
-
-
-
 
 
 }

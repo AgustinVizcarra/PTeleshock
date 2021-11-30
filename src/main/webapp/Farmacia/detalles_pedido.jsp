@@ -112,7 +112,7 @@
                     <div class="card col-6 mb-4 ">
                         <h4 class="text-center">Cliente</h4>
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-3">
                                 <p >Nombre:</p>
                                 <p >Apellido:</p>
                             </div>

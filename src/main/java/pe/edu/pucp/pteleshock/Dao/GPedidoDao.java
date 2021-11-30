@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class GPedidoDao extends BaseDao {
-    public ArrayList<BPedidoG> listaPedidos(){
+    public ArrayList<BPedidoG> listaPedidos(int idFarmacia){
         ArrayList<BPedidoG> listaPedidos = new ArrayList<>();
 
 
@@ -21,7 +21,7 @@ public class GPedidoDao extends BaseDao {
             ResultSet rs = statement.executeQuery("select p.idpedido,p.fechapedido, u.nombre,u.apellido,u.dni,p.codigodeventa,p.preciototal from detallepedido dp\n" +
                     "inner join pedido p on (dp.idpedido=p.idpedido)\n" +
                     "inner join usuario u on (p.idusuario=u.idusuario)\n" +
-                    "where not (p.idestatuspedido = 1) and dp.idfarmacia=2 #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
+                    "where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+" #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
                     "group by dp.idpedido\n" +
                     "order by p.fechapedido desc;");
 
@@ -45,7 +45,7 @@ public class GPedidoDao extends BaseDao {
         return listaPedidos;
     }
 
-    public ArrayList<BPedidoG> listaPedidosPag(String pag){
+    public ArrayList<BPedidoG> listaPedidosPag(int idFarmacia,String pag){
         ArrayList<BPedidoG> listaPedidos = new ArrayList<>();
         int pagint =Integer.parseInt(pag);
 
@@ -56,7 +56,7 @@ public class GPedidoDao extends BaseDao {
             ResultSet rs = statement.executeQuery("select p.idpedido,p.fechapedido, u.nombre,u.apellido,u.dni,p.codigodeventa,p.preciototal from detallepedido dp\n" +
                     "inner join pedido p on (dp.idpedido=p.idpedido)\n" +
                     "inner join usuario u on (p.idusuario=u.idusuario)\n" +
-                    "where not (p.idestatuspedido = 1) and dp.idfarmacia=2 #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
+                    "where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+" #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
                     "group by dp.idpedido\n" +
                     "order by p.fechapedido desc limit "+(pagint-1)*3 +",3;");
 
@@ -82,7 +82,7 @@ public class GPedidoDao extends BaseDao {
 
 
 
-    public int cantidadPedidos(){
+    public int cantidadPedidos(int idFarmacia){
         int cant =0;
         try {
             Connection connection = this.getConnection();
@@ -90,7 +90,7 @@ public class GPedidoDao extends BaseDao {
             ResultSet rs = statement.executeQuery("select count(*) from (select count(*) from detallepedido dp\n" +
                     "                    inner join pedido p on (dp.idpedido=p.idpedido)\n" +
                     "                    inner join usuario u on (p.idusuario=u.idusuario)\n" +
-                    "                    where not (p.idestatuspedido = 1) and dp.idfarmacia=2 \n" +
+                    "                    where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+"\n" +
                     "                    group by dp.idpedido) tabla;");
 
 
@@ -105,13 +105,13 @@ public class GPedidoDao extends BaseDao {
         return cant;
     }
 
-    public int cantidadPedidosBuscados(String texto){
+    public int cantidadPedidosBuscados(int idFarmacia,String texto){
         int cant =0;
 
         String sql="select count(*) from (select count(*) from detallepedido dp\n" +
                 "                                   inner join pedido p on (dp.idpedido=p.idpedido)\n" +
                 "                                   inner join usuario u on (p.idusuario=u.idusuario)\n" +
-                "                                    where not (p.idestatuspedido = 1) and dp.idfarmacia=2 and (lower(u.nombre) like ? or lower(u.apellido) like ? or u.dni like ?)  #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
+                "                                    where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+" and (lower(u.nombre) like ? or lower(u.apellido) like ? or u.dni like ?)  #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
                 "                                  group by dp.idpedido\n" +
                 "                                  order by p.fechapedido desc) tabla;";
 
@@ -133,7 +133,7 @@ public class GPedidoDao extends BaseDao {
     }
 
 
-    public ArrayList<BPedidoD> listaPedidosD(int id){
+    public ArrayList<BPedidoD> listaPedidosD(int idFarmacia,int id){
         ArrayList<BPedidoD> listaPedidosD = new ArrayList<>();
 
         try {
@@ -147,7 +147,7 @@ public class GPedidoDao extends BaseDao {
                     "inner join producto pr on (pf.idproducto=pr.idproducto)\n" +
                     "inner join distrito d on(u.iddistrito=d.iddistrito)\n" +
                     "inner join estatuspedido ep on (ep.idestatuspedido=p.idestatuspedido)\n" +
-                    "where not (p.idestatuspedido = 1) and dp.idfarmacia=2 and p.idpedido=?;");
+                    "where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+"  and p.idpedido=?;");
 
             pstmt.setInt(1,id);
             try(ResultSet rs=pstmt.executeQuery()){
@@ -171,7 +171,7 @@ public class GPedidoDao extends BaseDao {
         return listaPedidosD;
     }
 
-    public ArrayList<BPedidoD> listaProductos(int id){
+    public ArrayList<BPedidoD> listaProductos(int idFarmacia,int id){
         ArrayList<BPedidoD> listaPedidosD = new ArrayList<>();
         try {
             Connection connection = this.getConnection();
@@ -184,7 +184,7 @@ public class GPedidoDao extends BaseDao {
                     "inner join producto pr on (pf.idproducto=pr.idproducto)\n" +
                     "inner join distrito d on(u.iddistrito=d.iddistrito)\n" +
                     "inner join estatuspedido ep on (ep.idestatuspedido=p.idestatuspedido)\n" +
-                    "where not (p.idestatuspedido = 1) and dp.idfarmacia=2 and p.idpedido=?;");
+                    "where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+"  and p.idpedido=?;");
 
             pstmt.setInt(1,id);
             try(ResultSet rs=pstmt.executeQuery()){
@@ -261,14 +261,14 @@ public class GPedidoDao extends BaseDao {
         return bPedidoFarm;
     }
 
-    public ArrayList<BPedidoG> listaPedidosporNombre(String pag,String nombre){
+    public ArrayList<BPedidoG> listaPedidosporNombre(int idFarmacia,String pag,String nombre){
         ArrayList<BPedidoG> listaPedidos = new ArrayList<>();
 
         int pagint =Integer.parseInt(pag);
         String sql = "select p.idpedido,p.fechapedido, u.nombre,u.apellido,u.dni,p.codigodeventa,p.preciototal from detallepedido dp\n" +
                 "                    inner join pedido p on (dp.idpedido=p.idpedido)\n" +
                 "                    inner join usuario u on (p.idusuario=u.idusuario)\n" +
-                "                    where not (p.idestatuspedido = 1) and dp.idfarmacia=2 and (lower(u.nombre) like ? or lower(u.apellido) like ? or u.dni like ?)  #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
+                "                    where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+"  and (lower(u.nombre) like ? or lower(u.apellido) like ? or u.dni like ?)  #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
                 "                    group by dp.idpedido\n" +
                 "                    order by p.fechapedido desc limit "+(pagint-1)*3 +",3;";
 

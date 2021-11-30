@@ -21,34 +21,35 @@ public class Farm_Detalles_Pedido_ModServlet extends HttpServlet {
         BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
 
         if (farmacia != null) {
+            int idF = (Integer) session.getAttribute("idFarmacia");
 
-        GPedidoDao gPedidoDao = new GPedidoDao();
-        String idStr = request.getParameter("id");
-        String msg = request.getParameter("msg") != null ? request.getParameter("msg") :"defect";
-        String r = request.getParameter("r") != null ? request.getParameter("r") : "";
-        int idint = Integer.parseInt(idStr);
-        request.setAttribute("listaDPedido",gPedidoDao.listaPedidosD(idint));
-        request.setAttribute("listaproducto",gPedidoDao.listaProductos(idint));
-        request.setAttribute("listaEstados",gPedidoDao.listaEstados());
+            GPedidoDao gPedidoDao = new GPedidoDao();
+            String idStr = request.getParameter("id");
+            String msg = request.getParameter("msg") != null ? request.getParameter("msg") :"defect";
+            String r = request.getParameter("r") != null ? request.getParameter("r") : "";
+            int idint = Integer.parseInt(idStr);
+            request.setAttribute("listaDPedido",gPedidoDao.listaPedidosD(idF,idint));
+            request.setAttribute("listaproducto",gPedidoDao.listaProductos(idF,idint));
+            request.setAttribute("listaEstados",gPedidoDao.listaEstados());
 
-        request.setAttribute("msg",msg);
-        //RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_pedido_modificado.jsp");
-        //view.forward(request,response);
-        //BPedido bPedido = gPedidoDao.obtenerPedidoId(idint);
-        //System.out.println(bPedido.getIdPedido()+bPedido.getIdEstado());
-        // if(bPedido!=null){
-        // request.setAttribute("pedido",bPedido);
+            request.setAttribute("msg",msg);
+            //RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_pedido_modificado.jsp");
+            //view.forward(request,response);
+            //BPedido bPedido = gPedidoDao.obtenerPedidoId(idint);
+            //System.out.println(bPedido.getIdPedido()+bPedido.getIdEstado());
+            // if(bPedido!=null){
+            // request.setAttribute("pedido",bPedido);
 
-        //if(r.equals("1")){
-           // RequestDispatcher view1=request.getRequestDispatcher("/Farmacia/detalles_pedido.jsp");
-          //  view1.forward(request,response);
-        //}else{
-            RequestDispatcher view1=request.getRequestDispatcher("/Farmacia/detalles_pedido_modificado.jsp");
-            view1.forward(request,response);
-        //}
-        // }else {
-        //  response.sendRedirect(request.getContextPath() + "/Farm_Detalle_Pedido_Mod");
-        //}
+            //if(r.equals("1")){
+               // RequestDispatcher view1=request.getRequestDispatcher("/Farmacia/detalles_pedido.jsp");
+              //  view1.forward(request,response);
+            //}else{
+                RequestDispatcher view1=request.getRequestDispatcher("/Farmacia/detalles_pedido_modificado.jsp");
+                view1.forward(request,response);
+            //}
+            // }else {
+            //  response.sendRedirect(request.getContextPath() + "/Farm_Detalle_Pedido_Mod");
+            //}
 
         } else {
             RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");

@@ -20,6 +20,7 @@ public class Farm_Editar_Inf_ProductoServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
+        int idF = (Integer) session.getAttribute("idFarmacia");
 
         if (farmacia != null) {
 
@@ -36,21 +37,21 @@ public class Farm_Editar_Inf_ProductoServlet extends HttpServlet {
             case "ok":
                 request.setAttribute("val","ok");
                 request.setAttribute("idp",prod);
-                request.setAttribute("listadetallesP",detProdDao.listadetallesP(prod));
+                request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
                 RequestDispatcher view = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
                 view.forward(request,response);
                 break;
             case "error":
                 request.setAttribute("val","error");
                 request.setAttribute("idp",prod);
-                request.setAttribute("listadetallesP",detProdDao.listadetallesP(prod));
+                request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
                 RequestDispatcher view2 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
                 view2.forward(request,response);
                 break;
             case "reg":
 
                 request.setAttribute("idp",prod);
-                request.setAttribute("listadetallesP",detProdDao.listadetallesP(prod));
+                request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
                 RequestDispatcher view3 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
                 view3.forward(request,response);
 
@@ -65,7 +66,7 @@ public class Farm_Editar_Inf_ProductoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        HttpSession session = request.getSession();
         request.setCharacterEncoding("UTF-8");
         RegistrarProDao registrarProDao = new RegistrarProDao();
 
@@ -91,7 +92,9 @@ public class Farm_Editar_Inf_ProductoServlet extends HttpServlet {
             int stock=Integer.parseInt(stockStr);
             double precioUnitario=Double.parseDouble(precioUnitarioStr);
 
-            registrarProDao.actualizarProducto(idprod,stock,precioUnitario,descripcion,recetamedica,inputStream);
+            int idF = (Integer) session.getAttribute("idFarmacia");
+
+            registrarProDao.actualizarProducto(idF,idprod,stock,precioUnitario,descripcion,recetamedica,inputStream);
 
             //hace una nueva solicitud
 //            response.sendRedirect(request.getContextPath()+"/Farm_Detalles_Producto?prod="+idprod);

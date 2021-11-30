@@ -1,5 +1,6 @@
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BListaPFarmacia" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %>
 <%--
   Created by IntelliJ IDEA.
   User: casa

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 //detalle por producto
 public class DetProdDao extends BaseDao {
 
-    public ArrayList<BDetProdFarm> listadetallesP(String prod){
+    public ArrayList<BDetProdFarm> listadetallesP(int idFarmacia,String prod){
         ArrayList<BDetProdFarm> listadetallesP = new ArrayList<>();
 
         try {
@@ -22,7 +22,7 @@ public class DetProdDao extends BaseDao {
                     "FROM productoporfarmacia pf \n" +
                     "left join producto p on (p.idproducto=pf.idproducto)\n" +
                     "left join foto f on (f.idfarmacia=pf.idfarmacia and f.idproducto=pf.idproducto)\n" +
-                    "where   pf.idfarmacia='2' and p.idproducto='"+prod+"';");//Ojo es dinamico el idproducto
+                    "where   pf.idfarmacia="+idFarmacia+" and p.idproducto='"+prod+"';");//Ojo es dinamico el idproducto
 
 
             while (rs.next()) {
@@ -47,14 +47,14 @@ public class DetProdDao extends BaseDao {
 
 
 
-    public BListaPFarmacia existeProParaEliminar(String prod){
+    public BListaPFarmacia existeProParaEliminar(int idFarmacia,String prod){
         BListaPFarmacia bListaPFarmacia=null;
 
         String sql1 = "select * from (SELECT pf.idproducto idproducto FROM productoporfarmacia pf\n" +
                 "inner join detallepedido dp on (dp.idproducto=pf.idproducto)\n" +
                 "inner join pedido p on (p.idpedido=dp.idpedido)\n" +
                 "inner join estatuspedido sp on (sp.idestatuspedido=p.idestatuspedido)\n" +
-                "where sp.idestatuspedido in (1,2) and pf.idfarmacia=2) tb\n" +
+                "where sp.idestatuspedido in (1,2) and pf.idfarmacia="+idFarmacia+") tb\n" +
                 "where tb.idproducto =(?)\n" +
                 "group by tb.idproducto;";
 
@@ -79,9 +79,9 @@ public class DetProdDao extends BaseDao {
     }
 
 
-    public void borrarProducto(int idProd) throws SQLException {
+    public void borrarProducto(int idFarmacia,int idProd) throws SQLException {
 
-        String sql1 = "delete from foto where idproducto=? and idfarmacia=2";
+        String sql1 = "delete from foto where idproducto=? and idfarmacia="+idFarmacia+";";
 
 
         try (Connection connection = this.getConnection();
@@ -92,7 +92,7 @@ public class DetProdDao extends BaseDao {
 
 
         String sql = "delete from productoporfarmacia \n" +
-                "where idproducto = ? and idfarmacia=2"; //ojo con la farmacia
+                "where idproducto = ? and idfarmacia="+idFarmacia+";\n" ;
 
 
         try (Connection connection = this.getConnection();
@@ -102,7 +102,7 @@ public class DetProdDao extends BaseDao {
         }
     }
 
-    public void listarImg (String prod, HttpServletResponse response){
+    public void listarImg (int idFarmacia,String prod, HttpServletResponse response){
         String url = "jdbc:mysql://localhost:3306/mydb?serverTimezone=America/Lima"; //ojo con el nombre
         InputStream inputStream=null;
         OutputStream outputStream = null;
@@ -117,7 +117,7 @@ public class DetProdDao extends BaseDao {
                     "FROM productoporfarmacia pf \n" +
                     "left join producto p on (p.idproducto=pf.idproducto)\n" +
                     "left join foto f on (f.idfarmacia=pf.idfarmacia and f.idproducto=pf.idproducto)\n" +
-                    "where   pf.idfarmacia='2' and p.idproducto='"+prod+"';");//Ojo es dinamico el idproducto
+                    "where   pf.idfarmacia="+idFarmacia+" and p.idproducto='"+prod+"';");//Ojo es dinamico el idproducto
 
 
             if(rs.next()){

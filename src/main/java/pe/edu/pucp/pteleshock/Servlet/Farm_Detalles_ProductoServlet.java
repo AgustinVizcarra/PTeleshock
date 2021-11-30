@@ -21,7 +21,7 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
-
+        int idF = (Integer) session.getAttribute("idFarmacia");
         if (farmacia != null) {
 
         response.setContentType("text/html");
@@ -35,11 +35,11 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
         String action = request.getParameter("action") !=null ? request.getParameter("action"): "detalles";
         switch (action){
             case "borrar":
-                BListaPFarmacia exProd = dpdao.existeProParaEliminar(prod);
+                BListaPFarmacia exProd = dpdao.existeProParaEliminar(idF,prod);
 
                 int idproducto= Integer.parseInt(prod);
                 if (exProd != null) {
-                    request.setAttribute("listadetallesP",dpdao.listadetallesP(prod));
+                    request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
                     request.setAttribute("idp",prod);
                     request.setAttribute("valor","noborr");
                     RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_producto.jsp");
@@ -47,10 +47,10 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
                 } else {
                     try {
 
-                        dpdao.borrarProducto(idproducto);
+                        dpdao.borrarProducto(idF,idproducto);
 
 //                        response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
-                        request.setAttribute("listadetallesP",dpdao.listadetallesP(prod));
+                        request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
                         request.setAttribute("idp",prod);
                         request.setAttribute("valor","borr");
                         RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_producto.jsp");
@@ -63,7 +63,7 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
                 }
                 break;
             case "detalles":
-                request.setAttribute("listadetallesP",dpdao.listadetallesP(prod));
+                request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
                 request.setAttribute("idp",prod);
                 RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_producto.jsp");
                 view.forward(request,response);
