@@ -1,5 +1,7 @@
 package pe.edu.pucp.pteleshock.Dao;
 
+import pe.edu.pucp.pteleshock.Beans.InputStreamDataSource;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -8,6 +10,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -161,27 +167,33 @@ public class ValidacionAdd_Dao extends BaseDao {
         // int idusuario = this.getIdusuario(destinario);
         // String idstr = String.valueOf(idusuario) ;
         String asunto = "Confirmación de registro de cuenta";
-        String mensaje = "<p><b> Estimada(o) "+nombre+": </b></p><div>Es grato comentarle que su cuenta se ha registrado correctamente</div><p></p><div><img src=\"cid:image\"></div><p></p><div><p><b>Para ingresar su nueva" +
+        String mensaje = "<p><b> Estimada(o) "+nombre+": </b></p><div>Es grato comentarle que su cuenta se ha registrado correctamente</div><p></p><div><img src=\"cid:image\"></div><p></p><div><p><b>Para ingresar su nueva " +
                 "contraseña ingrese al siguiente enlace:</b></p><p><b><a href=\"http://localhost:8080/PTeleshock_war_exploded/Login_Password?correo="+dest+"\">Ingrese su nueva contraseña</a></b></p></div><p></p><div><br>Saludos Cordiales</br><br><FONT COLOR=\"gray\">El equipo técnico de Teleshock</FONT></br></div>";
         MimeMessage mail = new MimeMessage(session);
         try {
             mail.setFrom(new InternetAddress(owner_cuenta));
-            mail.addRecipient(Message.RecipientType.TO,new InternetAddress(dest));
+            mail.addRecipient(Message.RecipientType.TO, new InternetAddress(dest));
             mail.setSubject(asunto);
             MimeMultipart multipart = new MimeMultipart("related");
-            BodyPart html_parte= new MimeBodyPart();
-            html_parte.setContent(mensaje,"text/html");
+            BodyPart html_parte = new MimeBodyPart();
+            html_parte.setContent(mensaje, "text/html");
             multipart.addBodyPart(html_parte);
             BodyPart imagen = new MimeBodyPart();
-            DataSource fds =  new FileDataSource("C:\\Users\\casa\\Desktop\\Ingenieria Web\\confirmacion_imagen.png");
-            imagen.setDataHandler(new DataHandler(fds));
-            imagen.setHeader("Content-ID","<image>");
-            multipart.addBodyPart(imagen);
-            mail.setContent(multipart);
-            Transport transport = session.getTransport("smtp");
-            transport.connect(owner_cuenta,pswd);
-            transport.sendMessage(mail,mail.getRecipients(Message.RecipientType.TO));
-            transport.close();
+            //añadir la ruta de manera dinamica
+            try {
+                InputStream iStream = getClass().getClassLoader().getResource("img/confirmacion_imagen.png").openStream();
+                DataSource fds =  new InputStreamDataSource(iStream,"confirmacion_imagen","image/png");
+                imagen.setDataHandler(new DataHandler(fds));
+                imagen.setHeader("Content-ID","<image>");
+                multipart.addBodyPart(imagen);
+                mail.setContent(multipart);
+                Transport transport = session.getTransport("smtp");
+                transport.connect(owner_cuenta,pswd);
+                transport.sendMessage(mail,mail.getRecipients(Message.RecipientType.TO));
+                transport.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } catch (MessagingException e) {
             e.printStackTrace();
         }

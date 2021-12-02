@@ -1,6 +1,7 @@
 package pe.edu.pucp.pteleshock.Dao;
 
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
+import pe.edu.pucp.pteleshock.Beans.InputStreamDataSource;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -10,6 +11,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
@@ -59,15 +62,23 @@ public class PaswordDao extends BaseDao{
             html_parte.setContent(mensaje,"text/html");
             multipart.addBodyPart(html_parte);
             BodyPart imagen = new MimeBodyPart();
-            DataSource fds =  new FileDataSource("C:\\Users\\casa\\Desktop\\Ingenieria Web\\confirmacion_pwd.png");
-            imagen.setDataHandler(new DataHandler(fds));
-            imagen.setHeader("Content-ID","<image>");
-            multipart.addBodyPart(imagen);
-            mail.setContent(multipart);
-            Transport transport = session.getTransport("smtp");
-            transport.connect(owner_cuenta,pswd);
-            transport.sendMessage(mail,mail.getRecipients(Message.RecipientType.TO));
-            transport.close();
+            //DataSource fds =  new FileDataSource("C:\\Users\\casa\\Desktop\\Ingenieria Web\\confirmacion_pwd.png");
+            try {
+                InputStream iStream = getClass().getClassLoader().getResource("img/confirmacion_pwd.png").openStream();
+                DataSource fds =  new InputStreamDataSource(iStream,"confirmacion_password","image/png");
+                imagen.setDataHandler(new DataHandler(fds));
+                imagen.setHeader("Content-ID","<image>");
+                multipart.addBodyPart(imagen);
+                mail.setContent(multipart);
+                Transport transport = session.getTransport("smtp");
+                transport.connect(owner_cuenta,pswd);
+                transport.sendMessage(mail,mail.getRecipients(Message.RecipientType.TO));
+                transport.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //imagen.setDataHandler(new DataHandler(fds));
+            //imagen.setHeader("Content-ID","<image>");
         } catch (MessagingException e) {
             e.printStackTrace();
         }

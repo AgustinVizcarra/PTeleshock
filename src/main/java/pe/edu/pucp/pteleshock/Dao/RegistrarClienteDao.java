@@ -1,5 +1,6 @@
 package pe.edu.pucp.pteleshock.Dao;
 import pe.edu.pucp.pteleshock.Beans.BCliente;
+import pe.edu.pucp.pteleshock.Beans.InputStreamDataSource;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -9,6 +10,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -103,15 +106,21 @@ public class RegistrarClienteDao extends BaseDao{
             html_parte.setContent(mensaje,"text/html");
             multipart.addBodyPart(html_parte);
             BodyPart imagen = new MimeBodyPart();
-            DataSource fds =  new FileDataSource("C:\\Users\\casa\\Desktop\\Ingenieria Web\\confirmacion_registro.png");
-            imagen.setDataHandler(new DataHandler(fds));
-            imagen.setHeader("Content-ID","<image>");
-            multipart.addBodyPart(imagen);
-            mail.setContent(multipart);
-            Transport transport = session.getTransport("smtp");
-            transport.connect(owner_cuenta,pswd);
-            transport.sendMessage(mail,mail.getRecipients(Message.RecipientType.TO));
-            transport.close();
+            //DataSource fds =  new FileDataSource("C:\\Users\\casa\\Desktop\\Ingenieria Web\\confirmacion_registro.png");
+            try {
+                InputStream iStream = getClass().getClassLoader().getResource("img/confirmacion_registro.png").openStream();
+                DataSource fds =  new InputStreamDataSource(iStream,"confirmacion_registro","image/png");
+                imagen.setDataHandler(new DataHandler(fds));
+                imagen.setHeader("Content-ID","<image>");
+                multipart.addBodyPart(imagen);
+                mail.setContent(multipart);
+                Transport transport = session.getTransport("smtp");
+                transport.connect(owner_cuenta,pswd);
+                transport.sendMessage(mail,mail.getRecipients(Message.RecipientType.TO));
+                transport.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } catch (MessagingException e) {
             e.printStackTrace();
         }
