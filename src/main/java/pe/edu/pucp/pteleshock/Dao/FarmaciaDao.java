@@ -211,57 +211,6 @@ public class FarmaciaDao extends BaseDao {
 
 
     public void actualizarFarmaciaBloqueada(BFarmacia farmacia, String razon, String nAdmi) {
-        /*
-        int idfarmacia = 0;
-        int idusuario = 0;
-        int pedPendientes = 0;
-        String nombre = null;
-
-        try (Connection conn1 = DriverManager.getConnection(url,user,pass);
-            PreparedStatement pstmt1 = conn1.prepareStatement( "select a.idusuario, b.nombre, a.idfarmacia\n" +
-                   "from farmacia a\n" +
-                   "inner join usuario b on a.idusuario=b.idusuario\n" +
-                   "inner join distrito c on c.iddistrito=b.iddistrito\n" + "where b.ruc = ?;")){
-            pstmt1.setString(1, ruc);
-
-            try (ResultSet rs = pstmt1.executeQuery()) {
-
-                if (rs.next()) {
-                    idusuario = rs.getInt(1);
-                    nombre = rs.getString(2);
-                    idfarmacia = rs.getInt(3);
-
-                }
-                System.out.println(idusuario);
-                System.out.println(idfarmacia);
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error en la actualizacion");
-            e.printStackTrace();
-        }
-
-
-
-        try (Connection conn2 = DriverManager.getConnection(url, user, pass);
-             Statement stmt2 = conn2.createStatement();
-             ResultSet rs2 = stmt2.executeQuery("select d.idfarmacia, a.nombre Estado, count(distinct(b.idpedido)) NroPedidos\n" +
-                     "from estatuspedido a\n" +
-                     "inner join pedido b on a.idestatuspedido=b.idestatuspedido\n" +
-                     "inner join detallepedido c on b.idpedido=c.idpedido\n" +
-                     "inner join farmacia d on d.idfarmacia=c.idfarmacia\n" +
-                     "inner join usuario e on e.idusuario=d.idusuario\n" +
-                     "inner join distrito f on f.iddistrito=e.iddistrito\n" +
-                     "where d.idfarmacia = ? and a.nombre=\"pendiente\" group by  d.idfarmacia, a.nombre;")) {
-
-            if (rs2.next()) {
-                pedPendientes = rs2.getInt(3);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error en la busqueda");
-            e.printStackTrace();
-        }
-        */
 
         String sql1 = "UPDATE farmacia SET estatus='bloqueado' where idfarmacia = ? ;";
 
@@ -301,19 +250,24 @@ public class FarmaciaDao extends BaseDao {
 
     }
 
+    //Cambio 3/12/2021 --> Eliminación de la paginación
     public boolean existeFarmacia(String ruc) {
-        ArrayList<BFarmacia> listafarmacias = getListaTodasFarmacias("1");
-        //presenta un error@Elianne,Alessandra esto esta hardcodeado en funcion del número de páginas deben coordinar con cesar para hacerlo dinamico
-        //sugerencia: No es necesario que hagan la implementacion en función de la pagina lo pueden hacer considerando todas las farmacias registradas
-        // y comparar su RUC
-        boolean siExiste = false;
-        for (BFarmacia farmacia : listafarmacias) {
-            if (farmacia.getRuc().equals(ruc)) {
-                siExiste = true;
+        boolean sExiste = false;
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement("select * from usuario where ruc = ?;")) {
+            pstmt.setString(1, ruc);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    sExiste = true;
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return siExiste;
+        return sExiste;
     }
+
 
     public int cantidadListaTodasFarmacias() {
 
