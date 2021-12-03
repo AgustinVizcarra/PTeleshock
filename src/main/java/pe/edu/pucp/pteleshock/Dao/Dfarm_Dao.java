@@ -21,7 +21,7 @@ public class Dfarm_Dao extends BaseDao{
                     "inner join usuario a on (a.idusuario=historialadmin.idusuario)\n" +
                     "inner join accion on (accion.idaccion=historialadmin.idaccion)\n" +
                     "inner join usuario farm on (farm.idusuario=f.idusuario)\n" +
-                    "where accion.idaccion=2");
+                    "where accion.idaccion=2 order by historialadmin.fechahora desc");
             while(rs.next()){
                 Bdesbloqueadas desbloqueada = new Bdesbloqueadas();
                 desbloqueada.setAdministrador_nombre(rs.getString(1));

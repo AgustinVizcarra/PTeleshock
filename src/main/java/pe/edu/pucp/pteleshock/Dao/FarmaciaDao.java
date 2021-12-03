@@ -303,6 +303,9 @@ public class FarmaciaDao extends BaseDao {
 
     public boolean existeFarmacia(String ruc) {
         ArrayList<BFarmacia> listafarmacias = getListaTodasFarmacias("1");
+        //presenta un error@Elianne,Alessandra esto esta hardcodeado en funcion del número de páginas deben coordinar con cesar para hacerlo dinamico
+        //sugerencia: No es necesario que hagan la implementacion en función de la pagina lo pueden hacer considerando todas las farmacias registradas
+        // y comparar su RUC
         boolean siExiste = false;
         for (BFarmacia farmacia : listafarmacias) {
             if (farmacia.getRuc().equals(ruc)) {

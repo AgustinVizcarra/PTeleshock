@@ -21,7 +21,7 @@ public class Afarm_Dao extends BaseDao {
                     "inner join usuario a on (a.idusuario=historialadmin.idusuario)\n" +
                     "inner join accion on (accion.idaccion=historialadmin.idaccion)\n" +
                     "inner join usuario farm on (farm.idusuario=f.idusuario)\n" +
-                    "where accion.idaccion=3");
+                    "where accion.idaccion=3 order by historialadmin.fechahora desc");
             while(rs.next()){
                 BAnadidas farmacia = new BAnadidas();
                 farmacia.setAdministrador_nombre(rs.getString(1));

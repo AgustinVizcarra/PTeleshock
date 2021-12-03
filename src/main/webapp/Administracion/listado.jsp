@@ -243,7 +243,7 @@
                                                     <p style="height: 30px"></p>
                                                     <a class="stretched-link;nav-link dropdown toogle boton_bloqueo_desbloqueo"
                                                        role="button" aria-expanded="false"
-                                                       href="<%=request.getContextPath()%>/Admin_UnlockFarm">
+                                                       href="<%=request.getContextPath()%>/Admin_UnlockFarm?idfarmacia=<%=bFarmacia.getIdfarmacia()%>">
                                                         <div><i class="fas fa-lock-open fs-3"></i></div>
                                                     </a>
                                                     <%} else { %>

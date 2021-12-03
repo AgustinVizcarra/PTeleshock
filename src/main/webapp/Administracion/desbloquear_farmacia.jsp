@@ -1,4 +1,6 @@
-<%--
+<%@ page import="pe.edu.pucp.pteleshock.Beans.Bbloqueadas" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BLbloqueadas" %><%--
   Created by IntelliJ IDEA.
   User: casa
   Date: 5/11/2021
@@ -7,6 +9,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="adminSession" scope="session" class="pe.edu.pucp.pteleshock.Beans.BUsuario"/>
+<jsp:useBean id="farmaciasBloqueadas" scope="session" class="java.util.ArrayList" type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BLbloqueadas>"/>
+<jsp:useBean id="mensaje" scope="request" class="java.lang.String" type="java.lang.String"/>
+<jsp:useBean id="idfarm" scope="request" class="java.lang.String" type="java.lang.String"/>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -24,6 +29,27 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <style>
+        #popup:target {
+            visibility: hidden; /* Se regresa a hidden para ocultar */
+            opacity: 0; /*Se regresa a o para hacerlo "invisible" */
+        }
+
+        .overlay1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            background-repeat: repeat-y;
+            transition: opacity 500ms;
+            visibility: visible;
+            opacity: 1
+        } </style>
 </head>
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -128,106 +154,71 @@
                                     </div>
                                     <div class="card-body" ;
                                          style="background-color: #7ED957; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
-                                        <form>
+                                        <form method="post" action="<%= request.getContextPath()%>/Admin_UnlockFarm">
                                             <br>
                                             <div class="row" style="background-color: #8CD48C; opacity: 0.9">
                                                 <table class="table table-striped">
                                                     <tr style="color: white">
                                                         <th class="text-center">Desbloquear</th>
                                                         <th class="text-center">Nombre</th>
-                                                        <th class="text-center">Fecha de Bloqueo</th>
+                                                        <th class="text-center">RUC</th>
                                                     </tr>
+                                                    <%if(!farmaciasBloqueadas.isEmpty()){
+                                                    int i=1;%>
+                                                    <%for (BLbloqueadas bLbloqueadas : farmaciasBloqueadas){%>
                                                     <tr style="color: white">
                                                         <td class="text-center">
+                                                            <%if(String.valueOf(bLbloqueadas.getId()).equalsIgnoreCase(idfarm)){%>
                                                             <div>
                                                                 <input
                                                                         class="form-check-input"
-                                                                        type="checkbox"
-                                                                        id="checkboxNoLabel"
-                                                                        value=""
-                                                                        aria-label="..."
+                                                                        type="radio"
+                                                                        name="farmaciaId"
+                                                                        id="<%= "opcion"+i%>"
+                                                                        value="<%=bLbloqueadas.getId()%>"
+                                                                        checked
                                                                 />
                                                             </div>
-                                                        </td>
-                                                        <td class="text-center">FarmaciaX</td>
-                                                        <td class="text-center">dd/mm/aaaa</td>
-                                                    </tr>
-                                                    <tr style="color: white">
-                                                        <td class="text-center">
+                                                            <%}else{%>
                                                             <div>
                                                                 <input
                                                                         class="form-check-input"
-                                                                        type="checkbox"
-                                                                        id="checkboxNoLabel"
-                                                                        value=""
-                                                                        aria-label="..."
+                                                                        type="radio"
+                                                                        id="<%= "opcion"+i%>"
+                                                                        name="farmaciaId"
+                                                                        value="<%=bLbloqueadas.getId()%>"
                                                                 />
                                                             </div>
+                                                            <%}%>
                                                         </td>
-                                                        <td class="text-center">FarmaciaX</td>
-                                                        <td class="text-center">dd/mm/aaaa</td>
+                                                        <td class="text-center"><%= bLbloqueadas.getNombre()%></td>
+                                                        <td class="text-center"><%= bLbloqueadas.getRuc()%></td>
                                                     </tr>
+                                                    <%i++;}%>
+                                                    <%}else{%>
                                                     <tr style="color: white">
                                                         <td class="text-center">
                                                             <div>
-                                                                <input
-                                                                        class="form-check-input"
-                                                                        type="checkbox"
-                                                                        id="checkboxNoLabel"
-                                                                        value=""
-                                                                        aria-label="..."
-                                                                />
+                                                                <a>No hay farmacias bloqueadas</a>
                                                             </div>
                                                         </td>
-                                                        <td class="text-center">FarmaciaX</td>
-                                                        <td class="text-center">dd/mm/aaaa</td>
                                                     </tr>
-                                                    <tr style="color: white">
-                                                        <td class="text-center">
-                                                            <div>
-                                                                <input
-                                                                        class="form-check-input"
-                                                                        type="checkbox"
-                                                                        id="checkboxNoLabel"
-                                                                        value=""
-                                                                        aria-label="..."
-                                                                />
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-center">FarmaciaX</td>
-                                                        <td class="text-center">dd/mm/aaaa</td>
-                                                    </tr>
-                                                    <tr style="color: white">
-                                                        <td class="text-center">
-                                                            <div>
-                                                                <input
-                                                                        class="form-check-input"
-                                                                        type="checkbox"
-                                                                        id="checkboxNoLabel"
-                                                                        value=""
-                                                                        aria-label="..."
-                                                                />
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-center">FarmaciaX</td>
-                                                        <td class="text-center">dd/mm/aaaa</td>
-                                                    </tr>
+                                                    <%}%>
                                                 </table>
                                             </div>
                                             <br>
                                             <div class="mb-3">
-                                                <label for="razonParaBloquear" class="form-label"
+                                                <label for="razondesbloquear" class="form-label"
                                                        style="color: rgba(12,11,11,0.82)"><b>Razón de
                                                     Bloqueo</b></label>
-                                                <textarea class="form-control" id="razonParaBloquear"
-                                                          rows="3"></textarea>
+                                                <textarea class="form-control" id="razondesbloquear" name="razon"
+                                                          rows="3" maxlength="300"></textarea>
                                             </div>
+                                            <input type="hidden" value="<%=adminSession.getNombre()%>" name="admin">
                                             <div class="mt-4 mb-0">
                                                 <div class="d-grid">
-                                                    <a class="btn btn-primary"
-                                                       href="#popup1"
-                                                       style="margin-top: 15px; margin-bottom: 15px; background-color: #8BC34A; width: fit-content;
-                                                       margin-left: auto; margin-right: auto;">GRABAR Y CONTINUAR</a>
+                                                    <button class="btn btn-primary" type="submit" style="margin-top: 15px; margin-bottom: 15px; background-color: #8BC34A; width: fit-content;
+                                                       margin-left: auto; margin-right: auto" href="#popup1">GRABAR Y CONTINUAR</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -262,17 +253,33 @@
     </div>
 </div>
 
-<nav id="popup1" class="overlay">
-    <div class=" popup card text-center ">
-        <h5 class="card-header text-center text-black">Teleshock</h5>
+<% if (mensaje.equalsIgnoreCase("Desbloqueo exitoso")) {%>
+<nav id="popup" class="overlay1">
+    <div class=" popup card text-center " style="border: 1px solid #8BC34A">
+        <h5 class="card-header text-center">Teleshock</h5>
         <div class="card-body">
-            <h5 class="card-title p-2">¡Farmacia desbloqueada!</h5>
-            <a href="<%=request.getContextPath()%>/Admin_UnlockFarm" class="btn btn-success mb-2">Desbloquear nueva Farmacia</a>
-            <a href="<%=request.getContextPath()%>/Admin_Index" class="btn btn-primary mb-2">Ir al Menú Principal</a>
+            <h5 class="card-title p-2">¡Farmacia desbloqueada correctamente!</h5>
+            <a href="<%=request.getContextPath()%>/Admin_UnlockFarm" class="btn btn-success mb-2">Desbloquear otra farmacia</a>
+            <a href="<%=request.getContextPath()%>/Admin_Index" class="btn btn-secondary mb-2">Ir al Menú
+                Principal</a>
         </div>
     </div>
 </nav>
-
+<%} else if (!mensaje.equalsIgnoreCase("Desbloqueo exitoso") && !mensaje.equalsIgnoreCase("")) {%>
+<nav id="popup" class="overlay1">
+    <div class=" popup card text-center " style="border: 1px solid #8BC34A">
+        <h5 class="card-header text-center">Teleshock</h5>
+        <div class="card-body">
+            <h5 class="card-title p-2"><%= mensaje%>
+            </h5>
+            <a href="#popup" class="btn btn-danger mb-2">Volver a intentar</a> <!--Importante-->
+            <a href="<%=request.getContextPath()%>/Admin_Index" class="btn btn-secondary mb-2">Ir al Menú
+                Principal</a>
+        </div>
+    </div>
+</nav>
+<%} else {%>
+<%}%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
 <script src="js/scripts.js"></script>
