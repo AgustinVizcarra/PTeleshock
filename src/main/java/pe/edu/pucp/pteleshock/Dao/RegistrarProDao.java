@@ -1,5 +1,9 @@
 package pe.edu.pucp.pteleshock.Dao;
 
+import pe.edu.pucp.pteleshock.Beans.BCliente;
+import pe.edu.pucp.pteleshock.Beans.BDistristos;
+import pe.edu.pucp.pteleshock.Beans.BPerfilFarmacia;
+
 import java.io.InputStream;
 import java.sql.*;
 
@@ -7,12 +11,16 @@ public class RegistrarProDao extends BaseDao{
 
 
     public void registrarProducto(int idFarmacia , String nombre, int stock, double preciounitario , String descripcion, InputStream inputstream, String recetamedica){
+
+        String nombre1 = nombre.toUpperCase().charAt(0) + nombre.substring(1, nombre.length()).toLowerCase();
+
+
         int idproducto= 0;
         String sql1 = "INSERT INTO producto (nombre) VALUES (?)";
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql1,Statement.RETURN_GENERATED_KEYS);) {
 
-            pstmt.setString(1, nombre);
+            pstmt.setString(1, nombre1);
             pstmt.executeUpdate();
 
             ResultSet idProd =pstmt.getGeneratedKeys();
@@ -55,6 +63,33 @@ public class RegistrarProDao extends BaseDao{
 
 
     }
+
+
+    public int existeProducto(int idFarmacia , String nombre){
+        String nombre1 = nombre.toUpperCase().charAt(0) + nombre.substring(1, nombre.length()).toLowerCase();
+
+        int idproducto = 0;
+        String sql = "SELECT pf.idproducto FROM productoporfarmacia pf\n" +
+                "inner join producto p on p.idproducto=pf.idproducto\n" +
+                "where p.nombre like"+nombre1+" and pf.idfarmacia="+idFarmacia+";";
+
+        try (Connection conn1 = this.getConnection();
+             Statement stmt = conn1.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if(rs.next()){
+               idproducto=rs.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return  idproducto;
+
+    }
+
+
+
 
 
 

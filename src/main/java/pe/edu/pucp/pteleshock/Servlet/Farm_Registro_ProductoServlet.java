@@ -70,6 +70,12 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
                 RequestDispatcher view5 = request.getRequestDispatcher("/Farmacia/registro_producto.jsp");
                 view5.forward(request,response);
                 break;
+            case "prodRepetido":
+                request.setAttribute("val","prodRepetido");
+                request.setAttribute("listDatos",datosProd);
+                RequestDispatcher view6 = request.getRequestDispatcher("/Farmacia/registro_producto.jsp");
+                view6.forward(request,response);
+                break;
             case "reg":
                 request.setAttribute("val","reg");
                 request.setAttribute("listDatos",datosProd);
@@ -91,6 +97,7 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
         HttpSession session = request.getSession();
         request.setCharacterEncoding("UTF-8");
         RegistrarProDao registrarProDao = new RegistrarProDao();
+        int idF = (Integer) session.getAttribute("idFarmacia");
 
         String nombre=request.getParameter("nombre").strip() != "" ? request.getParameter("nombre") : "";
 
@@ -124,11 +131,19 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
             int stock=Integer.parseInt(stockStr);
             double precioUnitario=Double.parseDouble(precioUnitarioStr);
 
-            int idF = (Integer) session.getAttribute("idFarmacia");
-            registrarProDao.registrarProducto(idF,nombre,stock,precioUnitario,descripcion,inputStream,recetamedica);
-            response.sendRedirect(request.getContextPath() + "/Farm_Registro_Producto?msg=ok");
-        }
+            int idproducto= registrarProDao.existeProducto(idF,nombre);
 
+            if(idproducto > 0 ){
+                response.sendRedirect(request.getContextPath() + "/Farm_Registro_Producto?msg=prodRepetido&nom="+ nombre +"&des="+ descripcion +"&rec="+ recetamedica +"&sto="+stockStr+"&prec="+precioUnitarioStr);
+
+
+            }else{
+                registrarProDao.registrarProducto(idF,nombre,stock,precioUnitario,descripcion,inputStream,recetamedica);
+                response.sendRedirect(request.getContextPath() + "/Farm_Registro_Producto?msg=ok");
+            }
+
+
+        }
 
 
 
