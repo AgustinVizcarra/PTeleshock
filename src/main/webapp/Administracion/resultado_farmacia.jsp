@@ -1,12 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: casa
-  Date: 5/11/2021
-  Time: 18:41
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="adminSession" scope="session" class="pe.edu.pucp.pteleshock.Beans.BUsuario"/>
+<jsp:useBean id="farmaciaEncontrada" scope="request" type="pe.edu.pucp.pteleshock.Beans.BFarmacia"/>
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
@@ -133,22 +127,22 @@
                                                      style="text-align:left;padding-left: 20px; padding-right: 20px">
                                                     <div class="col-md-12">
                                                         <div class="texto-navbar" style="padding-bottom: 5px">* RUC:
-                                                            20181454
+                                                            <%=farmaciaEncontrada.getRuc()%>
                                                         </div>
                                                         <div class="texto-navbar" style="padding-bottom: 5px">* Nombre:
-                                                            Farmacia B
+                                                            <%=farmaciaEncontrada.getNombre()%>
                                                         </div>
                                                         <div class="texto-navbar" style="padding-bottom: 5px">*
-                                                            Distrito: Distrito B
+                                                            Distrito: FALTAAAAAA
                                                         </div>
                                                         <div class="texto-navbar" style="padding-bottom: 5px">*
-                                                            Dirrección: Av. Universitaria 1801, San Miguel 15088
+                                                            Dirrección: <%=farmaciaEncontrada.getDireccion()%>
                                                         </div>
                                                         <div class="texto-navbar" style="padding-bottom: 5px">* Correo:
-                                                            farmaciaA@yahoo.es
+                                                            <%=farmaciaEncontrada.getCorreo()%>
                                                         </div>
                                                         <div class="texto-navbar" style="padding-bottom: 5px">* Status:
-                                                            Desbloqueado
+                                                            <%=farmaciaEncontrada.getEstado()%>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
@@ -157,7 +151,8 @@
                                                             <thead class="thead-dark">
                                                                 <tr>
                                                                     <th scope="col">Pedidos</th>
-                                                                    <th scope="col">42</th>
+                                                                    <th scope="col"><%=farmaciaEncontrada.getPedEntregados() + farmaciaEncontrada.getPedEntregados() + farmaciaEncontrada.getPedCancelados()%>
+                                                                    </th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -166,21 +161,24 @@
                                                                         style="background: #FFFFFF">
                                                                         Entregado
                                                                     </th>
-                                                                    <td style="background: #FFFFFF">36</td>
+                                                                    <td style="background: #FFFFFF"><%=farmaciaEncontrada.getPedEntregados()%>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row" class="color-fila-resultado"
                                                                         style="background: #FFFFFF">
                                                                         Pendiente
                                                                     </th>
-                                                                    <td style="background: #FFFFFF">6</td>
+                                                                    <td style="background: #FFFFFF"><%=farmaciaEncontrada.getPedPendientes()%>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th scope="row" class="color-fila-resultado"
                                                                         style="background: #FFFFFF">
                                                                         Cancelado
                                                                     </th>
-                                                                    <td style="background: #FFFFFF">0</td>
+                                                                    <td style="background: #FFFFFF"><%=farmaciaEncontrada.getPedCancelados()%>
+                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

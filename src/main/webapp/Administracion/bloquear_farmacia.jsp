@@ -223,15 +223,7 @@
             </div>
         </div>
 
-        <% if
-        (
-                mensaje
-                        .
-                        equalsIgnoreCase
-                                (
-                                        "Se ha bloqueado exitosamente"
-                                )
-        ) {%>
+        <% if (mensaje.equalsIgnoreCase("Se ha bloqueado exitosamente")) {%>
         <nav id="popup" class="overlay1">
             <div class=" popup card text-center " style="border: 1px solid #38B6FF">
                 <h5 class="card-header text-center">Teleshock</h5>
@@ -246,24 +238,7 @@
             </div>
         </nav>
         <%
-        } else if
-        (
-                !
-                        mensaje
-                                .
-                                equalsIgnoreCase
-                                        (
-                                                "Se ha bloqueado exitosamente"
-                                        )
-                        &&
-                        !
-                                mensaje
-                                        .
-                                        equalsIgnoreCase
-                                                (
-                                                        ""
-                                                )
-        ) {
+        } else if (!mensaje.equalsIgnoreCase("Se ha bloqueado exitosamente") && !mensaje.equalsIgnoreCase("")) {
         %>
         <nav id="popup" class="overlay1">
             <div class=" popup card text-center " style="border: 1px solid #38B6FF">

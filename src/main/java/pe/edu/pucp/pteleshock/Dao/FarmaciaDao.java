@@ -209,6 +209,77 @@ public class FarmaciaDao extends BaseDao {
         return farmacia;
     }
 
+    public BFarmacia getFarmaciaCompleta(String rucBuscar) {
+
+        BFarmacia bFarmacia = null;
+
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement("select a.idusuario, a.idfarmacia, b.nombre, b.ruc, a.direccion, b.correo, a.estatus\n" +
+                     "from farmacia a\n" +
+                     "inner join usuario b on a.idusuario=b.idusuario\n" +
+                     "inner join distrito c on c.iddistrito=b.iddistrito\n" +
+                     "where b.ruc = ?\n;")) {
+
+            pstmt.setString(1, rucBuscar);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+
+                while (rs.next()) {
+
+                    int idusuario = rs.getInt(1);
+                    int idfarmacia = rs.getInt(2);
+                    String nombre = rs.getString(3);
+                    String ruc = rs.getString(4);
+                    String direccion = rs.getString(5);
+                    String correo = rs.getString(6);
+                    String estado = rs.getString(7);
+                    int pedEntregados = 0;
+                    int pedPendientes = 0;
+                    int pedCancelados = 0;
+                    int pedDeseados = 0;
+
+                    try (Connection conn2 = this.getConnection();
+                         Statement stmt2 = conn2.createStatement();
+                         ResultSet rs2 = stmt2.executeQuery("select d.idfarmacia, a.nombre Estado, count(distinct(b.idpedido)) NroPedidos\n" +
+                                 "from estatuspedido a \n" +
+                                 "inner join pedido b on a.idestatuspedido=b.idestatuspedido\n" +
+                                 "inner join detallepedido c on b.idpedido=c.idpedido\n" +
+                                 "inner join farmacia d on d.idfarmacia=c.idfarmacia\n" +
+                                 "inner join usuario e on e.idusuario=d.idusuario\n" +
+                                 "inner join distrito f on f.iddistrito=e.iddistrito\n" +
+                                 "where d.idfarmacia = " + idfarmacia + "\n" +
+                                 "group by  d.idfarmacia, a.nombre;")) {
+
+                        while (rs2.next()) {
+                            String estadopedido = rs2.getString(2);
+                            switch (estadopedido) {
+                                case "entregado":
+                                    pedEntregados = rs2.getInt(3);
+                                    break;
+                                case "pendiente":
+                                    pedPendientes = rs2.getInt(3);
+                                    break;
+                                case "cancelado":
+                                    pedCancelados = rs2.getInt(3);
+                                    break;
+                                case "deseado":
+                                    pedDeseados = rs2.getInt(3);
+                                    break;
+                            }
+                        }
+                    }
+
+                    bFarmacia = new BFarmacia(idusuario, idfarmacia, nombre, ruc, direccion, correo, estado, pedEntregados, pedPendientes, pedCancelados, pedDeseados);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error en obtener Farmacia Completa");
+            e.printStackTrace();
+        }
+        return bFarmacia;
+    }
+
 
     public void actualizarFarmaciaBloqueada(BFarmacia farmacia, String razon, String nAdmi) {
 

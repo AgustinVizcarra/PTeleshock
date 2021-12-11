@@ -1,6 +1,8 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
+import pe.edu.pucp.pteleshock.Beans.BFarmacia;
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
+import pe.edu.pucp.pteleshock.Dao.FarmaciaDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,10 +20,15 @@ public class Admin_SearchFarmServlet extends HttpServlet {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
         BUsuario admin = (BUsuario) session.getAttribute("adminSession");
-        if(admin!=null) {
+        if (admin != null) {
+            String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
+            String mensaje = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
+
+            request.setAttribute("mensaje", mensaje);
+            request.setAttribute("rucListado", ruc);
             RequestDispatcher view = request.getRequestDispatcher("/Administracion/buscar_farmacia.jsp");
             view.forward(request, response);
-        }else{
+        } else {
             RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
             viewError.forward(request, response);
         }
@@ -29,6 +36,30 @@ public class Admin_SearchFarmServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
+
+        FarmaciaDao farmaciaDao = new FarmaciaDao();
+        String mensaje = "";
+        boolean campos_nulos = false;
+
+        if (request.getParameter("ruc").isEmpty()) {
+            campos_nulos = true;
+            mensaje = "Usted envio campos nulos, por favor intente de nuevo";
+        }
+
+        if (!campos_nulos) {
+            if (farmaciaDao.existeFarmacia(ruc)) {
+                response.sendRedirect(request.getContextPath() + "/Admin_Result?ruc=" + ruc);
+            } else {
+                mensaje = "El RUC introducido no existe o se ha introducido un nombre incorrecto";
+                response.sendRedirect(request.getContextPath() + "/Admin_SearchFarm?mensaje=" + mensaje + "&ruc=" + ruc);
+            }
+        }
+
+        //System.out.println(mensaje);
+
+
 
     }
 }

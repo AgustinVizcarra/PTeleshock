@@ -20,7 +20,7 @@ public class Admin_LockFarmServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         BUsuario admin = (BUsuario) session.getAttribute("adminSession");
-        if(admin!=null) {
+        if (admin != null) {
             String mensaje = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
             String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
             String razon = request.getParameter("razon") != null ? request.getParameter("razon") : "";
@@ -29,7 +29,7 @@ public class Admin_LockFarmServlet extends HttpServlet {
             request.setAttribute("razon", razon);
             RequestDispatcher view = request.getRequestDispatcher("/Administracion/bloquear_farmacia.jsp");
             view.forward(request, response);
-        }else{
+        } else {
             RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
             viewError.forward(request, response);
         }
@@ -75,7 +75,7 @@ public class Admin_LockFarmServlet extends HttpServlet {
             }
         }
         //System.out.println(mensaje);
-        response.sendRedirect(request.getContextPath() + "/Admin_BloqFarm?mensaje=" + mensaje+"&ruc="+ruc+"&razon"+razon);
+        response.sendRedirect(request.getContextPath() + "/Admin_BloqFarm?mensaje=" + mensaje + "&ruc=" + ruc + "&razon" + razon);
     }
 }
 

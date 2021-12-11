@@ -1,6 +1,8 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
+import pe.edu.pucp.pteleshock.Beans.BFarmacia;
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
+import pe.edu.pucp.pteleshock.Dao.FarmaciaDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +20,12 @@ public class Admin_ResultServlet extends HttpServlet {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
         BUsuario admin = (BUsuario) session.getAttribute("adminSession");
+        FarmaciaDao farmaciaDao = new FarmaciaDao();
+
         if(admin!=null) {
+            String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
+            BFarmacia farmaciaEncontrada = farmaciaDao.getFarmaciaCompleta(ruc);
+            request.setAttribute("farmaciaEncontrada", farmaciaEncontrada);
             RequestDispatcher view = request.getRequestDispatcher("/Administracion/resultado_farmacia.jsp");
             view.forward(request, response);
         }else{

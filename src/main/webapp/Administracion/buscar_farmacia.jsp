@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="adminSession" scope="session" class="pe.edu.pucp.pteleshock.Beans.BUsuario"/>
+<jsp:useBean type="java.lang.String" scope="request" id="mensaje" class="java.lang.String"/>
+<jsp:useBean type="java.lang.String" scope="request" id="rucListado" class="java.lang.String"/>
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
@@ -24,6 +26,27 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+        <style>
+            #popup:target {
+                visibility: hidden; /* Se regresa a hidden para ocultar */
+                opacity: 0; /*Se regresa a o para hacerlo "invisible" */
+            }
+
+            .overlay1 {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.7);
+                background-repeat: repeat-y;
+                transition: opacity 500ms;
+                visibility: visible;
+                opacity: 1
+            } </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -121,6 +144,7 @@
                             <div class="container">
                                 <br>
                                 <br>
+                                <br>
                                 <div class="row justify-content-center" style="padding-top: 45px">
                                     <div class="col-lg-5">
                                         <div class="card shadow-lg border-0 rounded-lg mt-5" style="border-top-left-radius: 2rem; border-top-right-radius: 2rem;
@@ -132,35 +156,39 @@
 
                                             <div class="card-body"
                                                  style="background-color: #FA9F9F; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
-                                                <form>
+                                                <form method="post"
+                                                      action="<%=request.getContextPath()%>/Admin_SearchFarm">
                                                     <br>
                                                     <div class="form-floating mb-3">
-                                                        <input class="form-control" id="inputNombre" type="text"
-                                                               placeholder="Ingrese su Nombre">
-                                                        <label for="inputNombre">Nombre</label>
-                                                    </div>
-                                                    <br>
-                                                    <div class="form-floating mb-3">
-                                                        <input class="form-control" id="inputRUC" type="text"
+                                                        <% if (rucListado != "") {%>
+                                                        <input class="form-control" id="inputRUC" type="text" name="ruc"
+                                                               placeholder="Ingrese su numero de RUC"
+                                                               value="<%=rucListado%>">
+                                                        <%} else {%>
+                                                        <input class="form-control" id="inputRUC" type="text" name="ruc"
                                                                placeholder="Ingrese su numero de RUC">
+                                                        <%}%>
                                                         <label for="inputRUC">RUC</label>
                                                     </div>
                                                     <br>
+
                                                     <div class="mt-4 mb-0" style="align-content: center">
                                                         <div class="d-grid" style="align-content: center">
-                                                            <a class="btn btn-primary"
-                                                               href="<%=request.getContextPath()%>/Admin_Result" style="background-color: #E24E34;
-                                                     width: fit-content; margin-left: auto; margin-right: auto;">ACEPTAR</a>
-
+                                                            <button class="btn btn-primary" type="submit" style="margin-top: 15px; margin-bottom: 15px; background-color: #F2AC34; width: fit-content;
+                                                            margin-left: auto; margin-right: auto" href="#popup1">
+                                                                ACEPTAR
+                                                            </button>
                                                         </div>
                                                     </div>
-                                                    <br>
-                                                    <br>
+
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <br>
+                                <br>
+                                <br>
                             </div>
                             <div class="col-xl-3 col-md-8">
                             </div>
@@ -187,6 +215,23 @@
                 </footer>
             </div>
         </div>
+
+        <% if (!mensaje.equalsIgnoreCase("")) {%>
+        <nav id="popup" class="overlay1">
+            <div class=" popup card text-center " style="border: 1px solid #38B6FF">
+                <h5 class="card-header text-center">Teleshock</h5>
+                <div class="card-body">
+                    <h5 class="card-title p-2"><%=mensaje%>
+                    </h5>
+                    <a href="#popup" class="btn btn-danger mb-2">Intentar
+                        nuevamente</a>
+                    <a href="<%=request.getContextPath()%>/Admin_Index" class="btn btn-primary mb-2">Ir al Menú
+                        Principal</a>
+                </div>
+            </div>
+        </nav>
+        <% } %>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
                 crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
