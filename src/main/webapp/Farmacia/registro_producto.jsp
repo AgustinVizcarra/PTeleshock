@@ -308,7 +308,7 @@
         <div class=" popup card text-center " style="background-color: white">
             <h5 class="card-header text-center ">Teleshock</h5>
             <div class="card-body">
-                <h5 class="card-title p-2">El producto ingresado ya existe</h5>
+                <h5 class="card-title p-2">El producto <%=session.getAttribute("nombreprod")%> ya existe</h5>
                 <a href="#popup" class="btn btn-success mb-2" >Aceptar</a>
 
             </div>

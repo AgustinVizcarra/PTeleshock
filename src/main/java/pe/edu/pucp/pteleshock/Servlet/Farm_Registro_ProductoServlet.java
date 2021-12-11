@@ -73,6 +73,7 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
             case "prodRepetido":
                 request.setAttribute("val","prodRepetido");
                 request.setAttribute("listDatos",datosProd);
+                session.setAttribute("nombreprod",nom);
                 RequestDispatcher view6 = request.getRequestDispatcher("/Farmacia/registro_producto.jsp");
                 view6.forward(request,response);
                 break;
@@ -131,14 +132,20 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
             int stock=Integer.parseInt(stockStr);
             double precioUnitario=Double.parseDouble(precioUnitarioStr);
 
-            int idproducto= registrarProDao.existeProducto(idF,nombre);
+            int verif= registrarProDao.existeProductoporfarmacia(idF,nombre);
 
-            if(idproducto > 0 ){
+            if( verif> 0 ){
                 response.sendRedirect(request.getContextPath() + "/Farm_Registro_Producto?msg=prodRepetido&nom="+ nombre +"&des="+ descripcion +"&rec="+ recetamedica +"&sto="+stockStr+"&prec="+precioUnitarioStr);
 
-
             }else{
-                registrarProDao.registrarProducto(idF,nombre,stock,precioUnitario,descripcion,inputStream,recetamedica);
+
+                int idproducto = registrarProDao.existeProducto(nombre);
+
+                if(idproducto!=0){
+                    registrarProDao.registrarProducto2(idF,idproducto,stock,precioUnitario,descripcion,inputStream,recetamedica);
+                }else{
+                    registrarProDao.registrarProducto(idF,nombre,stock,precioUnitario,descripcion,inputStream,recetamedica);
+                }
                 response.sendRedirect(request.getContextPath() + "/Farm_Registro_Producto?msg=ok");
             }
 

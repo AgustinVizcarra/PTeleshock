@@ -65,19 +65,78 @@ public class RegistrarProDao extends BaseDao{
     }
 
 
-    public int existeProducto(int idFarmacia , String nombre){
+    public int existeProductoporfarmacia(int idFarmacia , String nombre){
         String nombre1 = nombre.toUpperCase().charAt(0) + nombre.substring(1, nombre.length()).toLowerCase();
 
-        int idproducto = 0;
+        int verif = 0;
         String sql = "SELECT pf.idproducto FROM productoporfarmacia pf\n" +
                 "inner join producto p on p.idproducto=pf.idproducto\n" +
-                "where p.nombre like"+nombre1+" and pf.idfarmacia="+idFarmacia+";";
+                "where p.nombre like '"+nombre1+"' and pf.idfarmacia="+idFarmacia+";";
 
         try (Connection conn1 = this.getConnection();
              Statement stmt = conn1.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             if(rs.next()){
-               idproducto=rs.getInt(1);
+               verif=1;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return  verif;
+
+    }
+
+
+    public void registrarProducto2(int idFarmacia , int idproducto, int stock, double preciounitario , String descripcion, InputStream inputstream, String recetamedica){
+
+
+        String sql2 = "INSERT INTO productoporfarmacia (idproducto,idfarmacia, stock,preciounitario,descripcion,recetamedica) VALUES (?,?,?,?,?,?)";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt2 = connection.prepareStatement(sql2);) {
+
+            pstmt2.setInt(1, idproducto);
+            pstmt2.setInt(2, idFarmacia); //ojo esta hardcodeado(asumiendo que es la farmacia2)
+            pstmt2.setInt(3, stock);
+            pstmt2.setDouble(4, preciounitario);
+            pstmt2.setString(5, descripcion);
+            pstmt2.setString(6, recetamedica);
+            pstmt2.executeUpdate();
+            System.out.println(idproducto);
+            System.out.println(stock);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String sql3 = "INSERT INTO foto (idfarmacia,idproducto,foto1) VALUES (?,?,?)";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt3 = connection.prepareStatement(sql3);) {
+
+            pstmt3.setInt(1, idFarmacia);
+            pstmt3.setInt(2, idproducto);
+            pstmt3.setBlob(3, inputstream);
+            pstmt3.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public int existeProducto(String nombre){
+        String nombre2 = nombre.toUpperCase().charAt(0) + nombre.substring(1, nombre.length()).toLowerCase();
+
+        int idproducto = 0;
+        String sql = "SELECT * FROM mydb.producto where nombre like '"+nombre2+"';";
+
+        try (Connection conn1 = this.getConnection();
+             Statement stmt = conn1.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if(rs.next()){
+                idproducto=rs.getInt(1);
             }
 
         } catch (SQLException ex) {
@@ -87,10 +146,6 @@ public class RegistrarProDao extends BaseDao{
         return  idproducto;
 
     }
-
-
-
-
 
 
     public void actualizarProducto(int idFarmacia,int idproducto,int stock, double preciounitario , String descripcion,String recetamedica, InputStream inputstream){
