@@ -1,6 +1,7 @@
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BPerfilFarmacia" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %><%--
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %>
+<%@ page import="java.util.HashMap" %><%--
   Created by IntelliJ IDEA.
   User: casa
   Date: 5/11/2021
@@ -111,7 +112,7 @@
                     <div class="col-xl-6">
                         <div class="card mb-4">
                             <div class="card-header">
-                                <i class="fas fa-chart-area me-1"></i>
+                                <i class="fas fa-chart-bar me-1"></i>
                                 Ventas realizadas
                             </div>
                             <div class="card-body">
@@ -126,7 +127,7 @@
                                 Productos vendidos
                             </div>
                             <div class="card-body">
-                                <img src="img/estadisticas2.PNG" width="100%">
+                                <canvas id="myChart2" width="400" ></canvas>
                             </div>
                         </div>
                     </div>
@@ -189,16 +190,64 @@
 <script src="assets/djemo/chart-bar-demo.s"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 <script src="js/datatables-simple-demo.js"></script>
-    <% //for (BPerfilFarmacia perffarm : perfilfarm){ %>
     <script>
         const ctx = document.getElementById('myChart').getContext('2d');
+        <% HashMap<Integer, Integer> est = (HashMap<Integer, Integer>) session.getAttribute("estadisticasvent");%>
         const myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['<%// perffarm.getNombre()%>', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'],
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'],
                 datasets: [{
                     label: '# de Ventas',
-                    data: [12, 19, 3, 5, 2, 3,5,16,25,3,13,30],
+                    data: [<%=est.get(1)%>, <%=est.get(2)%>, <%=est.get(3)%>, <%=est.get(4)%>, <%=est.get(5)%>, <%=est.get(6)%>,<%=est.get(7)%>,<%=est.get(8)%>,<%=est.get(9)%>,<%=est.get(10)%>,<%=est.get(11)%>,<%=est.get(12)%>],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(243,47,173, 0.2)',
+                        'rgba(255,245,64, 0.2)',
+                        'rgba(64,67,255, 0.2)',
+                        'rgba(64,255,226, 0.2)',
+                        'rgba(99,255,64,0.2)',
+                        'rgba(191,255,64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(243,47,173,1)',
+                        'rgb(255,245,64,1)',
+                        'rgb(64,67,255,1)',
+                        'rgb(64,255,226,1)',
+                        'rgb(99,255,64,1)',
+                        'rgb(191,255,64,1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        const ctx1 = document.getElementById('myChart2').getContext('2d');
+        <% HashMap<Integer, Integer> est2 = (HashMap<Integer, Integer>) session.getAttribute("estadisticasprod");%>
+        const myChart2 = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'],
+                datasets: [{
+                    label: '# de Productos',
+                    data: [<%=est2.get(1)%>, <%=est2.get(2)%>, <%=est2.get(3)%>, <%=est2.get(4)%>, <%=est2.get(5)%>, <%=est2.get(6)%>,<%=est2.get(7)%>,<%=est2.get(8)%>,<%=est2.get(9)%>,<%=est2.get(10)%>,<%=est2.get(11)%>,<%=est2.get(12)%>],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -239,6 +288,7 @@
             }
         });
     </script>
-    <% //} %>
+
+
 </body>
 </html>

@@ -40,7 +40,6 @@ public class RegistrarProDao extends BaseDao{
             e.printStackTrace();
         }
 
-
         String sql3 = "INSERT INTO foto (idfarmacia,idproducto,foto1) VALUES (?,?,?)";
 
         try (Connection connection = this.getConnection();

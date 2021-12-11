@@ -105,8 +105,6 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
         Part part=request.getPart("foto");
         InputStream inputStream=part.getInputStream();
 
-
-
         if(nombre.equals("") || stockStr.equals("0") || precioUnitarioStr.equals("0") || descripcion.equals("") || recetamedica.equals("a")){
             response.sendRedirect(request.getContextPath() + "/Farm_Registro_Producto?msg=error&nom="+ nombre +"&des="+ descripcion +"&rec="+ recetamedica +"&sto="+stockStr+"&prec="+precioUnitarioStr);
 
