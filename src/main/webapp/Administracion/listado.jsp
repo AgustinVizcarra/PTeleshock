@@ -186,7 +186,8 @@
                                                      style="padding-bottom: 5px">RUC: <%=bFarmacia.getRuc()%>
                                                 </div>
                                                 <div class="texto-navbar"
-                                                     style="padding-bottom: 5px">Dirección: <%=bFarmacia.getDireccion()%>
+                                                     style="padding-bottom: 5px">
+                                                    Dirección: <%=bFarmacia.getDireccion()%>
                                                 </div>
                                                 <div class="texto-navbar"
                                                      style="padding-bottom: 5px">Correo: <%=bFarmacia.getCorreo()%>

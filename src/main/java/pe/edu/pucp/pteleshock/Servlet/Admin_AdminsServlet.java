@@ -1,6 +1,8 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
+import pe.edu.pucp.pteleshock.Beans.BFarmacia;
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
+import pe.edu.pucp.pteleshock.Dao.UsuarioDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "Admin_AdminsServlet", value = "/Admin_Admins")
 public class Admin_AdminsServlet extends HttpServlet {
@@ -18,10 +21,14 @@ public class Admin_AdminsServlet extends HttpServlet {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
         BUsuario admin = (BUsuario) session.getAttribute("adminSession");
-        if(admin!=null) {
-        RequestDispatcher view = request.getRequestDispatcher("/Administracion/administradores.jsp");
-        view.forward(request,response);
-        }else{
+        if (admin != null) {
+
+            UsuarioDao usuarioDao = new UsuarioDao();
+            ArrayList<BUsuario> listaAdministradores = usuarioDao.listarAdministradores();
+            request.setAttribute("listaAdministradores", listaAdministradores);
+            RequestDispatcher view = request.getRequestDispatcher("/Administracion/administradores.jsp");
+            view.forward(request, response);
+        } else {
             RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
             viewError.forward(request, response);
         }

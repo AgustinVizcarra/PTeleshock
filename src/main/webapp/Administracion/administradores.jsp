@@ -1,12 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: casa
-  Date: 5/11/2021
-  Time: 18:40
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="adminSession" scope="session" class="pe.edu.pucp.pteleshock.Beans.BUsuario"/>
+<jsp:useBean id="listaAdministradores" scope="request"
+             type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BUsuario>"/>
+
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -119,109 +116,37 @@
                     <ol class="breadcrumb mb-4">
                     </ol>
                     <div class="row">
-                        <div class="col-xl-3 col-md-8">
-                        </div>
+                        <%
+                            for (BUsuario bUsuario : listaAdministradores) {
+                        %>
                         <div class="col-xl-3 col-md-8">
                             <div class="card bg-primary text-white mb-4"
                                  style="color:#FFFFFF; background: #38B6FF;border-color: #FFFFFF">
                                 <div class="texto-navbar"
                                      style="text-align:center;padding-top: 10px;padding-bottom: 20px;color: #00152D;font-size: 25px">
-                                    <u>Administrador 1</u></div>
+                                    <u>Administrador</u></div>
                                 <div class="row" style="text-align:center;padding-left: 10px">
                                     <div class="sb-nav-link-icon"><i class="fas fa-user-circle fa-8x"></i></div>
                                 </div>
                                 <div class="row" style="text-align:left;padding-left: 10px">
                                     <p style="height: 10px"></p>
-                                    <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Nombre: Admin1
+                                    <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Nombre: <%=bUsuario.getNombre()%>
                                     </div>
                                     <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Apellido:
-                                        Admin1_lastname
+                                        <%=bUsuario.getApellido()%>
                                     </div>
                                     <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Correo:
-                                        Admin1@hotmail.com
+                                        <%=bUsuario.getCorreo()%>
                                     </div>
                                     <p style="height: 10px"></p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-md-8">
-                            <div class="card bg-primary text-white mb-4"
-                                 style="color:#FFFFFF; background: #38B6FF;border-color: #FFFFFF">
-                                <div class="texto-navbar"
-                                     style="text-align:center;padding-top: 10px;padding-bottom: 20px;color:#00152D;font-size: 25px">
-                                    <u>Administrador 2</u></div>
-                                <div class="row" style="text-align:center;padding-left: 10px">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-user-circle fa-8x"></i></div>
-                                </div>
-                                <div class="row" style="text-align:left;padding-left: 10px">
-                                    <p style="height: 10px"></p>
-                                    <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Nombre: Admin2
-                                    </div>
-                                    <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Apellido:
-                                        Admin2_lastname
-                                    </div>
-                                    <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Correo:
-                                        Admin2@hotmail.com
-                                    </div>
-                                    <p style="height: 10px"></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-8">
-                        </div>
+                        <% } %>
                     </div>
                     <div class="row">
-                        <div class="col-xl-3 col-md-8">
-                        </div>
-                        <div class="col-xl-3 col-md-8">
-                            <div class="card bg-primary text-white mb-4"
-                                 style="color:#FFFFFF; background: #38B6FF;border-color: #FFFFFF">
-                                <div class="texto-navbar"
-                                     style="text-align:center;padding-top: 10px;padding-bottom: 20px;color: #00152D;font-size: 25px">
-                                    <u>Administrador 3</u></div>
-                                <div class="row" style="text-align:center;padding-left: 10px">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-user-circle fa-8x"></i></div>
-                                </div>
-                                <div class="row" style="text-align:left;padding-left: 10px">
-                                    <p style="height: 10px"></p>
-                                    <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Nombre: Admin3
-                                    </div>
-                                    <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Apellido:
-                                        Admin3_lastname
-                                    </div>
-                                    <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Correo:
-                                        Admin3@hotmail.com
-                                    </div>
-                                    <p style="height: 10px"></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-8">
-                            <div class="card bg-primary text-white mb-4"
-                                 style="color:#FFFFFF; background: #38B6FF;border-color: #FFFFFF">
-                                <div class="texto-navbar"
-                                     style="text-align:center;padding-top: 10px;padding-bottom: 20px;color: #00152D;font-size: 25px">
-                                    <u>Administrador 4</u></div>
-                                <div class="row" style="text-align:center;padding-left: 10px">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-user-circle fa-8x"></i></div>
-                                </div>
-                                <div class="row" style="text-align:left;padding-left: 10px">
-                                    <p style="height: 10px"></p>
-                                    <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Nombre: Admin4
-                                    </div>
-                                    <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Apellido:
-                                        Admin4_lastname
-                                    </div>
-                                    <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Correo:
-                                        Admin4@hotmail.com
-                                    </div>
-                                    <p style="height: 10px"></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-8">
-                        </div>
-                        <div>
+                        <br><br><br><br><br><br>
+                        <div class="col" style="position: absolute; bottom: 0; right: 0;" >
                             <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
                                href="<%= request.getContextPath()%>/Admin_Index">
                                 <div class="boton_añadir_escape"><i class="fas fa-door-open fs-3"></i></div>

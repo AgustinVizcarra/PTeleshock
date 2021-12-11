@@ -1,7 +1,6 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
 
-
 import pe.edu.pucp.pteleshock.Beans.BDistrito;
 import pe.edu.pucp.pteleshock.Beans.BFarmacia;
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
@@ -26,7 +25,7 @@ Admin_Farm_ListServlet extends HttpServlet {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
         BUsuario admin = (BUsuario) session.getAttribute("adminSession");
-        if(admin!=null) {
+        if (admin != null) {
             FarmaciaDao farmaciaDao = new FarmaciaDao();
             Distrfarm_Dao distrfarm_dao = new Distrfarm_Dao();
             ArrayList<BFarmacia> listaFarmacias;
@@ -56,7 +55,7 @@ Admin_Farm_ListServlet extends HttpServlet {
 
             RequestDispatcher view = request.getRequestDispatcher("/Administracion/listado.jsp");
             view.forward(request, response);
-        }else{
+        } else {
             RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
             viewError.forward(request, response);
         }
@@ -81,11 +80,11 @@ Admin_Farm_ListServlet extends HttpServlet {
             if (iddistrito == null) {
                 response.sendRedirect(request.getContextPath() + "/Admin_Farm_List");
             } else {
-                response.sendRedirect(request.getContextPath() + "/Admin_Farm_List?iddistrito="+iddistrito);
+                response.sendRedirect(request.getContextPath() + "/Admin_Farm_List?iddistrito=" + iddistrito);
             }
         } else {
             if (iddistrito == null) {
-                listaFarmacias = farmaciaDao.getListaTodasFarmaciasConBusqueda(pag,texto);
+                listaFarmacias = farmaciaDao.getListaTodasFarmaciasConBusqueda(pag, texto);
                 cant = farmaciaDao.cantidadListaTodasFarmaciasConBusqueda(texto);
                 bDistrito = distrfarm_dao.obtenerDistritoPorId("1");
                 filtrar = 0;
@@ -93,7 +92,7 @@ Admin_Farm_ListServlet extends HttpServlet {
             } else {
                 listaFarmacias = farmaciaDao.getListaFarmaciasPorDistritoConBusqueda(iddistrito, pag, texto);
                 filtrar = 1;
-                cant = farmaciaDao.cantidadListaTodasFarmaciasPorDistritoConBusqueda(iddistrito,texto);
+                cant = farmaciaDao.cantidadListaTodasFarmaciasPorDistritoConBusqueda(iddistrito, texto);
                 bDistrito = distrfarm_dao.obtenerDistritoPorId(iddistrito);
             }
 

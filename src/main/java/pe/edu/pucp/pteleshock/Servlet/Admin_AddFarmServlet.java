@@ -20,7 +20,7 @@ public class Admin_AddFarmServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         BUsuario admin = (BUsuario) session.getAttribute("adminSession");
-        if(admin!=null) {
+        if (admin != null) {
             String mensaje = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
             String nombre = request.getParameter("nombre") != "" ? request.getParameter("nombre") : "";
             String ruc = request.getParameter("ruc") != "" ? request.getParameter("ruc") : "";
@@ -38,7 +38,7 @@ public class Admin_AddFarmServlet extends HttpServlet {
             request.setAttribute("distritos", listadoFarmaciasDao.listar_distritos());
             RequestDispatcher view = request.getRequestDispatcher("/Administracion/añadir_farmacia.jsp");
             view.forward(request, response);
-        }else{
+        } else {
             RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
             viewError.forward(request, response);
         }
@@ -50,63 +50,63 @@ public class Admin_AddFarmServlet extends HttpServlet {
         //Verificacion de creacion de un
         request.setCharacterEncoding("UTF-8");
         boolean todo_claro = true;
-        boolean campos_nulos=false;
+        boolean campos_nulos = false;
         ValidacionAdd_Dao validacionAdd_dao = new ValidacionAdd_Dao();
-        String mensaje="Se logro registrar de manera correcta";
-        if((request.getParameter("nombre_farmacia").isEmpty()|| request.getParameter("ruc_farmacia").isEmpty() || request.getParameter("distrito_farmacia")==null ||
-                request.getParameter("correo_farmacia").isEmpty())){
-            campos_nulos=true;
-            todo_claro=false;
-            mensaje="Usted envio campos nulos, por favor intente de nuevo";
+        String mensaje = "Se logro registrar de manera correcta";
+        if ((request.getParameter("nombre_farmacia").isEmpty() || request.getParameter("ruc_farmacia").isEmpty() || request.getParameter("distrito_farmacia") == null ||
+                request.getParameter("correo_farmacia").isEmpty())) {
+            campos_nulos = true;
+            todo_claro = false;
+            mensaje = "Usted envio campos nulos, por favor intente de nuevo";
         }
-        System.out.println("campos nulos: "+campos_nulos);
-        if(!campos_nulos) {
+        System.out.println("campos nulos: " + campos_nulos);
+        if (!campos_nulos) {
             //confirmar que el ruc es unico
             boolean ruc_repetida = validacionAdd_dao.ruc_unico((String) request.getParameter("ruc_farmacia"));
             if (ruc_repetida) {
                 mensaje = "Usted envio un RUC que ya se encuentra registrado";
-                todo_claro=false;
+                todo_claro = false;
             }
             //confirmar que el nombre es correcto y no son puros numeros
             boolean nombre_incorrecto = validacionAdd_dao.nombre_correcto((String) request.getParameter("nombre_farmacia"));
             if (nombre_incorrecto) {
                 mensaje = "Usted digito un nombre de farmacia que solo contiene numeros";
-                todo_claro=false;
+                todo_claro = false;
             }
             //confirma si la dirección de correo no se encuentra utilizada
             boolean correo_repetido = validacionAdd_dao.email_unico((String) request.getParameter("correo_farmacia"));
-            if(correo_repetido){
-                mensaje="Usted usa un correo que ya se encuentra utilizado";
-                todo_claro=false;
+            if (correo_repetido) {
+                mensaje = "Usted usa un correo que ya se encuentra utilizado";
+                todo_claro = false;
             }
         }
-        String nombre_farmacia="";
-        String ruc_farmacia="";
-        String correo_farmacia="";
-        String direccion_farmacia="";
+        String nombre_farmacia = "";
+        String ruc_farmacia = "";
+        String correo_farmacia = "";
+        String direccion_farmacia = "";
         int distrito_farmacia;
         nombre_farmacia = request.getParameter("nombre_farmacia");
         ruc_farmacia = request.getParameter("ruc_farmacia");
         correo_farmacia = request.getParameter("correo_farmacia");
         direccion_farmacia = request.getParameter("direccion_farmacia");
-        if(request.getParameter("distrito_farmacia")!=null){
-            distrito_farmacia=Integer.parseInt(request.getParameter("distrito_farmacia"));
-        }else{
-            distrito_farmacia=0;
+        if (request.getParameter("distrito_farmacia") != null) {
+            distrito_farmacia = Integer.parseInt(request.getParameter("distrito_farmacia"));
+        } else {
+            distrito_farmacia = 0;
         }
-        if(todo_claro){
+        if (todo_claro) {
             String admin = request.getParameter("admin");
-            validacionAdd_dao.insertar_farmacia_usuario(nombre_farmacia,ruc_farmacia,distrito_farmacia,correo_farmacia);
-            validacionAdd_dao.insertar_farmacia_farmacia(direccion_farmacia,ruc_farmacia);
-            validacionAdd_dao.insertar_registro_historial(admin,ruc_farmacia);
+            validacionAdd_dao.insertar_farmacia_usuario(nombre_farmacia, ruc_farmacia, distrito_farmacia, correo_farmacia);
+            validacionAdd_dao.insertar_farmacia_farmacia(direccion_farmacia, ruc_farmacia);
+            validacionAdd_dao.insertar_registro_historial(admin, ruc_farmacia);
             //una vez que ya se tiene correo
-            validacionAdd_dao.enviar_correo(correo_farmacia,nombre_farmacia);
+            validacionAdd_dao.enviar_correo(correo_farmacia, nombre_farmacia);
             System.out.println("Registro exitoso");
-        }else{
+        } else {
             System.out.println("Hubo error");
         }
         //request.getSession().setAttribute("mensaje",mensaje);
         response.setCharacterEncoding("UTF-8");
-        response.sendRedirect(request.getContextPath()+"/Admin_AddFarm?mensaje="+mensaje+"&nombre="+nombre_farmacia+"&ruc="+ruc_farmacia+"&correo="+correo_farmacia+"&direccion="+direccion_farmacia+"&distrito="+distrito_farmacia);
+        response.sendRedirect(request.getContextPath() + "/Admin_AddFarm?mensaje=" + mensaje + "&nombre=" + nombre_farmacia + "&ruc=" + ruc_farmacia + "&correo=" + correo_farmacia + "&direccion=" + direccion_farmacia + "&distrito=" + distrito_farmacia);
     }
 }

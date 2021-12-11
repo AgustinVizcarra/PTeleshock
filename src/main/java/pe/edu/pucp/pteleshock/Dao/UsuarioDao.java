@@ -1,10 +1,10 @@
 package pe.edu.pucp.pteleshock.Dao;
 
-import pe.edu.pucp.pteleshock.Beans.BDistristos;
-import pe.edu.pucp.pteleshock.Beans.BRol;
+import pe.edu.pucp.pteleshock.Beans.BFarmacia;
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class UsuarioDao extends BaseDao {
 
@@ -68,19 +68,46 @@ public class UsuarioDao extends BaseDao {
         return usuario;
     }
 
-    public boolean farmaciaBloqueada(int id_farmacia){
+    public boolean farmaciaBloqueada(int id_farmacia) {
         boolean estaBloqueada = false;
-        String sql = "select * from usuario u inner join farmacia f on (f.idusuario=u.idusuario) where u.idusuario="+id_farmacia+" and f.estatus = \"bloqueado\" ";
-        try(Connection connection = this.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql)){
-            if(rs.next()){
-                estaBloqueada=true;
+        String sql = "select * from usuario u inner join farmacia f on (f.idusuario=u.idusuario) where u.idusuario=" + id_farmacia + " and f.estatus = \"bloqueado\" ";
+        try (Connection connection = this.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(sql)) {
+            if (rs.next()) {
+                estaBloqueada = true;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return estaBloqueada;
     }
+
+    public ArrayList<BUsuario> listarAdministradores() {
+
+        ArrayList<BUsuario> listaAdministradores = new ArrayList<>();
+        String sql = "select usuario.nombre,usuario.apellido,usuario.correo from usuario where (usuario.idrol=\"2\");";
+        try (Connection conn = this.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                BUsuario bUsuario = new BUsuario();
+                bUsuario.setNombre(rs.getString(1));
+                bUsuario.setApellido(rs.getString(2));
+                bUsuario.setCorreo(rs.getString(3));
+
+                listaAdministradores.add(bUsuario);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error en obtener la lista de administadores");
+            e.printStackTrace();
+        }
+        return listaAdministradores;
+
+
+    }
+
 
 }
