@@ -1,5 +1,7 @@
 package pe.edu.pucp.pteleshock.Dao;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import pe.edu.pucp.pteleshock.Beans.InputStreamDataSource;
 
 import javax.activation.DataHandler;
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
 
 public class ValidacionAdd_Dao extends BaseDao {
@@ -168,7 +171,7 @@ public class ValidacionAdd_Dao extends BaseDao {
         // String idstr = String.valueOf(idusuario) ;
         String asunto = "Confirmación de registro de cuenta";
         String mensaje = "<p><b> Estimada(o) "+nombre+": </b></p><div>Es grato comentarle que su cuenta se ha registrado correctamente</div><p></p><div><img src=\"cid:image\"></div><p></p><div><p><b>Para ingresar su nueva " +
-                "contraseña ingrese al siguiente enlace:</b></p><p><b><a href=\"http://localhost:8080/PTeleshock_war_exploded/Login_Password?correo="+dest+"\">Ingrese su nueva contraseña</a></b></p></div><p></p><div><br>Saludos Cordiales</br><br><FONT COLOR=\"gray\">El equipo técnico de Teleshock</FONT></br></div>";
+                "contraseña ingrese al siguiente enlace:</b></p><p><b><a href=\"http://localhost:8080/PTeleshock_war_exploded/Login_Password?correo="+this.generarToken(dest,nombre)+"\">Ingrese su nueva contraseña</a></b></p></div><p></p><div><br>Saludos Cordiales</br><br><FONT COLOR=\"gray\">El equipo técnico de Teleshock</FONT></br></div>";
         MimeMessage mail = new MimeMessage(session);
         try {
             mail.setFrom(new InternetAddress(owner_cuenta));
@@ -197,5 +200,21 @@ public class ValidacionAdd_Dao extends BaseDao {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+    }
+    public String generarToken(String destinatario,String nombre){
+        String token="";
+        String key = "TeleshockToken";
+        Algorithm algorithm = Algorithm.HMAC256(key);
+        //creacion del token
+        Date date = new Date();
+        token = JWT.create()
+                .withIssuer("Teleshock")//emisor
+                .withSubject("email")//sujeto
+                .withIssuedAt(date)
+                .withExpiresAt(new Date(date.getTime()+540*1000L))//duracion de 9 min
+                .withClaim("correo",destinatario)
+                .withClaim("usuario",nombre)
+                .sign(algorithm);
+        return token;
     }
 }

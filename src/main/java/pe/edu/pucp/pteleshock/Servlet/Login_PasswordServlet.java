@@ -19,7 +19,7 @@ public class Login_PasswordServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         String mensaje = request.getParameter("mensaje")!=null?request.getParameter("mensaje"):"";
-        String correo = request.getParameter("correo")!=null?request.getParameter("correo"):"";
+        String correo = request.getParameter("email")!=null?request.getParameter("email"):"";
         request.setAttribute("mensaje",mensaje);
         request.setAttribute("correo",correo);
         RequestDispatcher view = request.getRequestDispatcher("/Login/contraseña.jsp");
@@ -31,6 +31,7 @@ public class Login_PasswordServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         String correo = request.getParameter("email")!=null?request.getParameter("email"):"";
+        System.out.println("Correo: "+correo);
         ValidacionAdd_Dao validacionAdd_dao = new ValidacionAdd_Dao();
         String mensaje = "";
         //System.out.println(correo);
