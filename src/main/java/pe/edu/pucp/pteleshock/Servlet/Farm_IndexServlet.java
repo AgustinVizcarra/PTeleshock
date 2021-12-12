@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.HashMap;
 
 @WebServlet(name = "Farm_IndexServlet", value = "/Farm_Index")
 public class Farm_IndexServlet extends HttpServlet {
@@ -30,10 +34,26 @@ public class Farm_IndexServlet extends HttpServlet {
 
         session.setAttribute("idFarmacia",idFarmacia);
 
-        PerfilFarmDao pfdao = new PerfilFarmDao();
-        //request.setAttribute("perfilfarm",pfdao.perfilFarmacia();
+
+        FarmaciaDao farmdao=new FarmaciaDao();
+
+        Date date = new Date();
+
+        ZoneId timeZone = ZoneId.systemDefault();
+        LocalDate getLocalDate = date.toInstant().atZone(timeZone).toLocalDate();
+
+        String year = String.valueOf(getLocalDate.getYear());
+        HashMap<Integer, Integer> estadisticasvent=farmdao.estadisticasventasmeses(year,idFarmacia);
+        HashMap<Integer, Integer> estadisticasprod=farmdao.estadisticasproductosmeses(year,idFarmacia);
+
+
+        session.setAttribute("estadisticasvent",estadisticasvent);
+        session.setAttribute("estadisticasprod",estadisticasprod);
+
         RequestDispatcher view = request.getRequestDispatcher("/Farmacia/index_farmacia.jsp");
         view.forward(request,response);
+
+
 
 
         } else {

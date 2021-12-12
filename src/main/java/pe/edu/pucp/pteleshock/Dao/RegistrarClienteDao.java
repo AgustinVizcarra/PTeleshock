@@ -59,6 +59,8 @@ public class RegistrarClienteDao extends BaseDao{
     }
 
 
+
+
     public boolean correoExistente (String correo){
         boolean siExiste = false;
         ArrayList<BCliente> listaClientes = listaClientesR();

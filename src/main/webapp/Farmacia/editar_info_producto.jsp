@@ -134,7 +134,7 @@
                                 </div>
                             </div>
                             <div class="form-floating mb-3">
-                                <textarea name="descripcion" rows="10" cols="50"  ><%=pdetalles.getDescripcion() %></textarea>
+                                <textarea name="descripcion" rows="10" cols="50" maxlength="500" ><%=pdetalles.getDescripcion() %></textarea>
                             </div>
 
                             <div class="d-flex flex-row align-items-center mb-4">

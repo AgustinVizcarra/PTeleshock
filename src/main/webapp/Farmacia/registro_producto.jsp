@@ -139,6 +139,7 @@
                             <%}%>
                             <label for="nombre">Nombre</label>
                         </div>
+
                         <div class="form-floating mb-3">
                             <% if(listDatos.get(3)==null || listDatos.get(3).equals("1")){ %>
                             <input class="form-control" id="stock" type="number" name="stock">
@@ -297,6 +298,17 @@
             <h5 class="card-header text-center ">Teleshock</h5>
             <div class="card-body">
                 <h5 class="card-title p-2">El precio y el stock deben ser valores positivos</h5>
+                <a href="#popup" class="btn btn-success mb-2" >Aceptar</a>
+
+            </div>
+        </div>
+    </nav>
+    <% } else if (val.equals("prodRepetido")){%>
+    <nav id="popup"  class="overlay1">
+        <div class=" popup card text-center " style="background-color: white">
+            <h5 class="card-header text-center ">Teleshock</h5>
+            <div class="card-body">
+                <h5 class="card-title p-2">El producto <%=session.getAttribute("nombreprod")%> ya existe</h5>
                 <a href="#popup" class="btn btn-success mb-2" >Aceptar</a>
 
             </div>

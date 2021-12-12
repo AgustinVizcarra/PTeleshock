@@ -6,6 +6,7 @@ import pe.edu.pucp.pteleshock.Beans.BFarmacia;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FarmaciaDao extends BaseDao {
 
@@ -678,6 +679,70 @@ public class FarmaciaDao extends BaseDao {
         }
         return idFarmacia;
 
+    }
+
+
+    public HashMap<Integer, Integer> estadisticasventasmeses(String year,int idfarmacia) {
+        HashMap<Integer, Integer> arreglo = new HashMap<>();
+
+
+        for(int i=1;i<=12;++i){
+            String sql= "select count(*) as 'número de ventas' from (select p.idpedido from detallepedido dp\n" +
+                    "inner join pedido p on (dp.idpedido=p.idpedido)\n" +
+                    "where p.idestatuspedido='3' and dp.idfarmacia="+idfarmacia+" \n" +
+                    "and extract(year from p.fechastatus)="+year+" and extract(month from p.fechastatus)="+i+"\n" +
+                    "group by dp.idpedido) subquery;";
+
+
+            try (Connection conn = this.getConnection();
+                 Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery(sql)) {
+
+                if(rs.next()){
+                    arreglo.put(i,rs.getInt(1));
+                }else{
+                    arreglo.put(i,0);
+                }
+
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
+        }
+
+        return arreglo;
+    }
+
+    public HashMap<Integer, Integer> estadisticasproductosmeses(String year,int idfarmacia) {
+        HashMap<Integer, Integer> arreglo1 = new HashMap<>();
+
+
+        for(int i=1;i<=12;++i){
+            String sql= "select sum(cantidad) from detallepedido dp\n" +
+                    "inner join pedido p on (dp.idpedido=p.idpedido)\n" +
+                    "where p.idestatuspedido='3' and dp.idfarmacia="+idfarmacia+" and\n" +
+                    "extract(year from p.fechastatus)="+year+" and extract(month from p.fechastatus)="+i+";";
+
+
+            try (Connection conn1 = this.getConnection();
+                 Statement stmt = conn1.createStatement();
+                 ResultSet rs = stmt.executeQuery(sql)) {
+
+                if(rs.next()){
+                    arreglo1.put(i,rs.getInt(1));
+                }else{
+                    arreglo1.put(i,0);
+                }
+
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
+        }
+
+        return arreglo1;
     }
 
 }
