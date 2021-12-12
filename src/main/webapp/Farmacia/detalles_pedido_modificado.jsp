@@ -226,11 +226,11 @@
         <h5 class="card-header text-center ">Teleshock</h5>
         <div class="card-body">
             <form>
-                <h5 class="card-title p-2">¿Seguro que deseas actualizar el estado?</h5>
+                <h5 class="card-title p-2">Se ha editado el producto correctamente</h5>
                 <div class="btn-group" role="group" aria-label="Basic example" style="display: flex;justify-content: center">
-                    <a href="#popup2" class="btn btn-success mb-2">Sí</a>
-                    <%for(BPedidoD bPedidoD:listaDPedido){%>
-                    <a href="<%= request.getContextPath()%>/Farm_Detalles_Pedido?id=<%=bPedidoD.getIdpedido()%>" class="btn btn-success mb-2">No</a>
+
+                    <%for(BPedidoD bPedidoD1:listaDPedido){%>
+                    <a href="<%= request.getContextPath()%>/Farm_Detalles_Pedido?id=<%=bPedidoD1.getIdpedido()%>" class="btn btn-success mb-2">Aceptar</a>
                     <%}%>
                 </div>
             </form>
