@@ -133,7 +133,7 @@
                                     <label class="form-label"  style="color: white; font-size: 23px"> Descripción </label>
                                 </div>
                             </div>
-                            <b>max:500 caracteres</b>
+                            <b style="color: #d5d5d5">max:500 caracteres</b>
                             <div class="form-floating mb-3">
                                 <textarea name="descripcion" rows="10" cols="50" maxlength="500" ><%=pdetalles.getDescripcion() %></textarea>
                             </div>

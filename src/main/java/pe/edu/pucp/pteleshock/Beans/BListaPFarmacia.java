@@ -4,6 +4,7 @@ public class BListaPFarmacia {
     private Integer idProducto;
     private String nombre;
     private String foto;
+    private int stock;
 
     public String getNombre() {
         return nombre;
@@ -28,5 +29,13 @@ public class BListaPFarmacia {
 
     public void setIdProducto(Integer idProducto) {
         this.idProducto = idProducto;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }

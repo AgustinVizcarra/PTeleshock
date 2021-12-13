@@ -21,16 +21,15 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
-        int idF = (Integer) session.getAttribute("idFarmacia");
-        if (farmacia != null) {
 
+        if (farmacia != null) {
         response.setContentType("text/html");
 
         String prod = request.getParameter("prod");
 
         DetProdDao dpdao = new DetProdDao();
 
-
+        int idF = (Integer) session.getAttribute("idFarmacia");
 
         String action = request.getParameter("action") !=null ? request.getParameter("action"): "detalles";
         switch (action){
@@ -61,6 +60,23 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
                     }
 
                 }
+
+
+//                try {
+//
+//                    int idproducto= Integer.parseInt(prod);
+//                    dpdao.productoeliminadostock0(idF,idproducto,0);
+//
+//                    request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
+//                    request.setAttribute("idp",prod);
+//                    request.setAttribute("valor","borr");
+//                    RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_producto.jsp");
+//                    view.forward(request,response);
+//                } catch (SQLException e) {
+//                    response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
+//                    e.printStackTrace();
+//                }
+
                 break;
             case "detalles":
                 request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));

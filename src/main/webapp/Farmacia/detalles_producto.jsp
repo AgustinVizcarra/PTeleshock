@@ -142,7 +142,12 @@
                                         </div>
                                     </div>
                                     <div style="margin-left: 50px">
-                                        <p style="color: white; font-size: 18px"> <%=pdetalles.getStock()%> unidades</p>
+                                        <% if (pdetalles.getStock()==0){%>
+                                        <p style="color:red; font-size: 18px"> <%=pdetalles.getStock()%> unidades</p>
+                                        <%}else{%>
+                                        <p style="color:white; font-size: 18px"> <%=pdetalles.getStock()%> unidades</p>
+
+                                        <%}%>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
