@@ -176,7 +176,7 @@
                                                     <div class="form-floating mb-3">
                                                         <input class="form-control" id="inputRUC_Farmacia" type="text"
                                                                placeholder="Ingrese su numero de RUC"
-                                                               name="ruc_farmacia" value="<%=ruc%>" pattern="[0-9]{10}"
+                                                               name="ruc_farmacia" value="<%=ruc%>" pattern="[0-9]{11}"
                                                                title="El RUC debe contener 10 dígitos.">
                                                         <label for="inputRUC_Farmacia">RUC</label>
                                                     </div>

@@ -210,7 +210,7 @@
                                             <div class="mb-3">
                                                 <label for="razondesbloquear" class="form-label"
                                                        style="color: rgba(12,11,11,0.82)"><b>Razón de
-                                                    Bloqueo</b></label>
+                                                    Desbloqueo</b></label>
                                                 <textarea class="form-control" id="razondesbloquear" name="razon"
                                                           rows="3" maxlength="300"></textarea>
                                             </div>
