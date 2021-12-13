@@ -28,50 +28,51 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+        <style>
+            .overlay_logout {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.7);
+                background-repeat: repeat-y;
+                transition: opacity 500ms;
+                visibility: hidden;
+                opacity: 0;
+            }
+
+            .overlay_logout:target {
+                visibility: visible; /* Se regresa a hidden para ocultar */
+                opacity: 1; /*Se regresa a o para hacerlo "invisible" */
+            }
+        </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
-                <svg class="svg-inline--fa fa-bars fs-4" aria-hidden="true" focusable="false" data-prefix="fas"
-                     data-icon="bars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-                     data-fa-i2svg="">
-                    <path fill="#FFFFFF"
-                          d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path>
-                </svg><!-- <i class="fas fa-bars"></i> Font Awesome fontawesome.com --></button>
-            <!-- Navbar Search-->
             <a class="navbar-brand ps-3" style="color: white"><img style="width: 30px;height: 30px" class="icon"
                                                                    src="img/logo_final.png">eleshock</a>
-            <!-- Navbar-->
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" style="color: white" id="sidebarToggle"
+                    href="#!"><i
+                    class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <div class="position-absolute top-50 start-100 translate-middle" style="padding-right:5%">
-                        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <svg class="svg-inline--fa fa-user fa-lg fa-w-14 fa-fw" aria-hidden="true"
-                                         focusable="false"
-                                         data-prefix="fas" data-icon="user" role="img"
-                                         xmlns="http://www.w3.org/2000/svg"
-                                         viewBox="0 0 448 512" data-fa-i2svg="">
-                                        <path fill="#FFFFFF"
-                                              d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"></path>
-                                    </svg><!-- <i class="fas fa-user fa-fw"></i> Font Awesome fontawesome.com --></a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#!">Settings</a></li>
-                                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider"/>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#!">Logout</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
+
                 </div>
             </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item">
+                    <a class="nav-link" style="color: white" href="#popup_logout" role="button"><i
+                            class="fas fa-sign-out-alt"></i></a>
+                </li>
+            </ul>
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -119,7 +120,7 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-                <main class="clase_principal" style="height:92%">
+                <main class="clase_principal" style="height:92%; position: relative">
                     <div class="container-fluid px-4">
                         <div>
                             <%
@@ -271,44 +272,36 @@
                             </div>
                         </div>
                     </div>
-                    <div class="container-fluid px-4"
-                         style="<%= filtrar==0?"":"bottom: 7%;right: 3%;position: absolute"%>">
-                        <div class="row align-items-center">
-                            <div class="col align-self-start"></div>
-                            <div class="col align-self-center">
-                                <a style="position: center">
-                                    <nav aria-label="Page navigation example" style="align-content: center">
-                                        <%
-                                            if (filtrar == 0) {%>
-                                        <ul class="pagination justify-content-center">
-                                            <% for (int i = 1; i < Math.floor(cantidad / 4) + 2; i++) { %>
-                                            <li class="page-item"><a class="page-link"
-                                                                     href="<%= request.getContextPath()%>/Admin_Farm_List?pag=<%=i %>"><%=i%>
-                                            </a></li>
-                                            <% } %>
-                                        </ul>
-                                        <%
-                                        } else {%>
-                                        <ul class="pagination justify-content-end">
-                                            <% for (int i = 1; i < Math.floor(cantidad / 4) + 2; i++) { %>
-                                            <li class="page-item"><a class="page-link"
-                                                                     href="<%= request.getContextPath()%>/Admin_Farm_List?iddistrito=<%=distrito.getId_distrito()%>&pag=<%=i %>"><%=i%>
-                                            </a></li>
-                                            <% } %>
-                                        </ul>
-                                        <% }
-                                        %>
-
-                                    </nav>
-                                </a>
-                            </div>
-                            <div class="col">
-                                <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
-                                   href="<%=request.getContextPath()%>/Admin_Index">
-                                    <div class="boton_añadir_escape" style="padding-right: 15px;padding-bottom: 5px"><i
-                                            class="fas fa-door-open fs-3"></i></div>
-                                </a>
-                            </div>
+                    <div class="col align-self-center">
+                        <a style="position: center">
+                            <nav aria-label="Page navigation example" style="align-content: center">
+                                <% if (filtrar == 0) {%>
+                                <ul class="pagination justify-content-center">
+                                    <% for (int i = 1; i < Math.floor(cantidad / 4) + 2; i++) { %>
+                                    <li class="page-item"><a class="page-link"
+                                                             href="<%= request.getContextPath()%>/Admin_Farm_List?pag=<%=i %>"><%=i%>
+                                    </a></li>
+                                    <% } %>
+                                </ul>
+                                <%
+                                } else {%>
+                                <ul class="pagination justify-content-center">
+                                    <% for (int i = 1; i < Math.floor(cantidad / 4) + 2; i++) { %>
+                                    <li class="page-item"><a class="page-link"
+                                                             href="<%= request.getContextPath()%>/Admin_Farm_List?iddistrito=<%=distrito.getId_distrito()%>&pag=<%=i %>"><%=i%>
+                                    </a></li>
+                                    <% } %>
+                                </ul>
+                                <% } %>
+                            </nav>
+                        </a>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="position: absolute; bottom: 0; right: 0;">
+                            <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
+                               href="<%= request.getContextPath()%>/Admin_Index">
+                                <div class="boton_añadir_escape"><i class="fas fa-door-open fs-3"></i></div>
+                            </a>
                         </div>
                     </div>
                 </main>
@@ -326,6 +319,23 @@
                 </footer>
             </div>
         </div>
+
+        <nav id="popup_logout" class="overlay_logout"
+             style="display: flex; justify-content: center ; align-items: center;">
+            <div class=" popup card text-center " style="background-color: white">
+                <h5 class="card-header text-center">Teleshock</h5>
+                <div class="card-body">
+                    <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
+                    <a href="#" class="btn btn-primary mb-2">Cancelar</a>
+                    <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                        <button class="btn btn-danger mb-2" style=" background-color: #5bc0de " type="submit">
+                            Salir
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
         <script src="https://.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
                 crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>

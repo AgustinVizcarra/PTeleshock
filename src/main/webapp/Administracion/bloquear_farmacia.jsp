@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: casa
-  Date: 5/11/2021
-  Time: 18:40
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean type="java.lang.String" scope="request" id="mensaje" class="java.lang.String"/>
 <jsp:useBean type="java.lang.String" scope="request" id="rucListado" class="java.lang.String"/>
@@ -47,51 +40,53 @@
                 transition: opacity 500ms;
                 visibility: visible;
                 opacity: 1
-            } </style>
+            }
+
+            .overlay_logout {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.7);
+                background-repeat: repeat-y;
+                transition: opacity 500ms;
+                visibility: hidden;
+                opacity: 0;
+            }
+
+            .overlay_logout:target {
+                visibility: visible; /* Se regresa a hidden para ocultar */
+                opacity: 1; /*Se regresa a o para hacerlo "invisible" */
+            }
+
+        </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
-                <svg class="svg-inline--fa fa-bars fs-4" aria-hidden="true" focusable="false" data-prefix="fas"
-                     data-icon="bars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-                     data-fa-i2svg="">
-                    <path fill="#FFFFFF"
-                          d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path>
-                </svg><!-- <i class="fas fa-bars"></i> Font Awesome fontawesome.com --></button>
-            <!-- Navbar Search-->
             <a class="navbar-brand ps-3" style="color: white"><img style="width: 30px;height: 30px" class="icon"
                                                                    src="img/logo_final.png">eleshock</a>
-            <!-- Navbar-->
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" style="color: white" id="sidebarToggle"
+                    href="#!"><i
+                    class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <div class="position-absolute top-50 start-100 translate-middle" style="padding-right:5%">
-                        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    <svg class="svg-inline--fa fa-user fa-lg fa-w-14 fa-fw" aria-hidden="true"
-                                         focusable="false"
-                                         data-prefix="fas" data-icon="user" role="img"
-                                         xmlns="http://www.w3.org/2000/svg"
-                                         viewBox="0 0 448 512" data-fa-i2svg="">
-                                        <path fill="#FFFFFF"
-                                              d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"></path>
-                                    </svg><!-- <i class="fas fa-user fa-fw"></i> Font Awesome fontawesome.com --></a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#!">Settings</a></li>
-                                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider"/>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#!">Logout</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
+
                 </div>
             </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item">
+                    <a class="nav-link" style="color: white" href="#popup_logout" role="button"><i
+                            class="fas fa-sign-out-alt"></i></a>
+                </li>
+            </ul>
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
@@ -198,11 +193,14 @@
                             </div>
                             <div class="col-xl-3 col-md-8">
                             </div>
-                            <div>
-                                <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
-                                   href="<%=request.getContextPath()%>/Admin_Index">
-                                    <div class="boton_añadir_escape"><i class="fas fa-door-open fs-3"></i></div>
-                                </a>
+                            <div class="row">
+                                <br><br><br>
+                                <div class="col" style="position: absolute; bottom: 0; right: 0;">
+                                    <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
+                                       href="<%= request.getContextPath()%>/Admin_Index">
+                                        <div class="boton_añadir_escape"><i class="fas fa-door-open fs-3"></i></div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -222,6 +220,22 @@
                 </footer>
             </div>
         </div>
+
+        <nav id="popup_logout" class="overlay_logout"
+             style="display: flex; justify-content: center ; align-items: center;">
+            <div class=" popup card text-center " style="background-color: white">
+                <h5 class="card-header text-center">Teleshock</h5>
+                <div class="card-body">
+                    <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
+                    <a href="#" class="btn btn-primary mb-2">Cancelar</a>
+                    <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                        <button class="btn btn-danger mb-2" style=" background-color: #5bc0de " type="submit">
+                            Salir
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
 
         <% if (mensaje.equalsIgnoreCase("Se ha bloqueado exitosamente")) {%>
         <nav id="popup" class="overlay1">
