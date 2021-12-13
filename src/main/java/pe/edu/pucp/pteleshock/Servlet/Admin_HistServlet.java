@@ -20,21 +20,32 @@ import java.io.IOException;
 public class Admin_HistServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        BUsuario admin = (BUsuario) session.getAttribute("adminSession");
-        if(admin!=null) {
-            Afarm_Dao afarm_dao = new Afarm_Dao();
-            Bfarm_Dao bfarm_dao = new Bfarm_Dao();
-            Dfarm_Dao dfarm_dao = new Dfarm_Dao();
-            request.setAttribute("anadidas", afarm_dao.listar_anadidas());
-            request.setAttribute("bloqueadas", bfarm_dao.listar_bloqueadas());
-            request.setAttribute("desbloqueadas", dfarm_dao.listar_desbloqueadas());
-            response.setContentType("text/html");
-            RequestDispatcher view = request.getRequestDispatcher("/Administracion/historial_admin.jsp");
-            view.forward(request, response);
-        }else{
-            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
-            viewError.forward(request, response);
+        response.setContentType("text/html");
+        request.setCharacterEncoding("UTF-8");
+        Afarm_Dao afarm_dao = new Afarm_Dao();
+        Bfarm_Dao bfarm_dao = new Bfarm_Dao();
+        Dfarm_Dao dfarm_dao = new Dfarm_Dao();
+        String action = request.getParameter("action")==null?"":request.getParameter("action");
+        System.out.println("accion: "+action);
+        switch (action){
+            case "add":
+                request.setAttribute("anadidas", afarm_dao.listar_anadidas());
+                RequestDispatcher viewAdd = request.getRequestDispatcher("/Administracion/historial_anadidas.jsp");
+                viewAdd.forward(request, response);
+                break;
+            case "block":
+                request.setAttribute("bloqueadas", bfarm_dao.listar_bloqueadas());
+                RequestDispatcher viewBlock = request.getRequestDispatcher("/Administracion/historial_bloqueadas.jsp");
+                viewBlock.forward(request, response);
+                break;
+            case "unlock":
+                request.setAttribute("desbloqueadas", dfarm_dao.listar_desbloqueadas());
+                RequestDispatcher viewUnlock = request.getRequestDispatcher("/Administracion/historial_desbloqueadas.jsp");
+                viewUnlock.forward(request, response);
+                break;
+            default:
+                RequestDispatcher view = request.getRequestDispatcher("/Administracion/historial_admin.jsp");
+                view.forward(request, response);
         }
     }
 

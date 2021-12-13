@@ -18,20 +18,14 @@ public class Admin_SearchFarmServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        HttpSession session = request.getSession();
-        BUsuario admin = (BUsuario) session.getAttribute("adminSession");
-        if (admin != null) {
-            String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
-            String mensaje = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
 
-            request.setAttribute("mensaje", mensaje);
-            request.setAttribute("rucListado", ruc);
-            RequestDispatcher view = request.getRequestDispatcher("/Administracion/buscar_farmacia.jsp");
-            view.forward(request, response);
-        } else {
-            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
-            viewError.forward(request, response);
-        }
+        String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
+        String mensaje = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
+
+        request.setAttribute("mensaje", mensaje);
+        request.setAttribute("rucListado", ruc);
+        RequestDispatcher view = request.getRequestDispatcher("/Administracion/buscar_farmacia.jsp");
+        view.forward(request, response);
     }
 
     @Override

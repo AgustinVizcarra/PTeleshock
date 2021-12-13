@@ -18,18 +18,13 @@ import java.io.IOException;
 public class Admin_IndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        BUsuario admin = (BUsuario) session.getAttribute("adminSession");
-        if(admin!=null) {
-            Distrfarm_Dao distrfarm_dao = new Distrfarm_Dao();
-            request.setAttribute("distritos", distrfarm_dao.listar_distritos());
-            response.setContentType("text/html");
-            RequestDispatcher view = request.getRequestDispatcher("/Administracion/index_admin.jsp");
-            view.forward(request, response);
-        }else{
-            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
-            viewError.forward(request, response);
-        }
+        request.setCharacterEncoding("UTF-8");
+        Distrfarm_Dao distrfarm_dao = new Distrfarm_Dao();
+        request.setAttribute("distritos", distrfarm_dao.listar_distritos());
+        response.setContentType("text/html");
+        RequestDispatcher view = request.getRequestDispatcher("/Administracion/index_admin.jsp");
+        view.forward(request, response);
+
     }
 
     @Override

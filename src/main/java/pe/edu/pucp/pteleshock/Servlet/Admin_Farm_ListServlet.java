@@ -23,42 +23,37 @@ Admin_Farm_ListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        HttpSession session = request.getSession();
-        BUsuario admin = (BUsuario) session.getAttribute("adminSession");
-        if (admin != null) {
-            FarmaciaDao farmaciaDao = new FarmaciaDao();
-            Distrfarm_Dao distrfarm_dao = new Distrfarm_Dao();
-            ArrayList<BFarmacia> listaFarmacias;
-            BDistrito bDistrito;
+        request.setCharacterEncoding("UTF-8");
+        FarmaciaDao farmaciaDao = new FarmaciaDao();
+        Distrfarm_Dao distrfarm_dao = new Distrfarm_Dao();
+        ArrayList<BFarmacia> listaFarmacias;
+        BDistrito bDistrito;
 
-            String iddistrito = request.getParameter("iddistrito");
-            String pag = request.getParameter("pag") != null ? request.getParameter("pag") : "1";
-            int filtrar;
-            int cant;
+        String iddistrito = request.getParameter("iddistrito");
+        String pag = request.getParameter("pag") != null ? request.getParameter("pag") : "1";
+        int filtrar;
+        int cant;
 
-            if (iddistrito == null) {
-                listaFarmacias = farmaciaDao.getListaTodasFarmacias(pag);
-                cant = farmaciaDao.cantidadListaTodasFarmacias();
-                bDistrito = distrfarm_dao.obtenerDistritoPorId("1");
-                filtrar = 0;
-            } else {
-                listaFarmacias = farmaciaDao.getListaFarmaciasPorDistrito(iddistrito, pag);
-                filtrar = 1;
-                cant = farmaciaDao.cantidadListaTodasFarmaciasPorDistrito(iddistrito);
-                bDistrito = distrfarm_dao.obtenerDistritoPorId(iddistrito);
-            }
-
-            request.setAttribute("listaFarmacias", listaFarmacias);
-            request.setAttribute("filtrar", filtrar);
-            request.setAttribute("distrito", bDistrito);
-            request.setAttribute("cantidad", cant);
-
-            RequestDispatcher view = request.getRequestDispatcher("/Administracion/listado.jsp");
-            view.forward(request, response);
+        if (iddistrito == null) {
+            listaFarmacias = farmaciaDao.getListaTodasFarmacias(pag);
+            cant = farmaciaDao.cantidadListaTodasFarmacias();
+            bDistrito = distrfarm_dao.obtenerDistritoPorId("1");
+            filtrar = 0;
         } else {
-            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
-            viewError.forward(request, response);
+            listaFarmacias = farmaciaDao.getListaFarmaciasPorDistrito(iddistrito, pag);
+            filtrar = 1;
+            cant = farmaciaDao.cantidadListaTodasFarmaciasPorDistrito(iddistrito);
+            bDistrito = distrfarm_dao.obtenerDistritoPorId(iddistrito);
         }
+
+        request.setAttribute("listaFarmacias", listaFarmacias);
+        request.setAttribute("filtrar", filtrar);
+        request.setAttribute("distrito", bDistrito);
+        request.setAttribute("cantidad", cant);
+
+        RequestDispatcher view = request.getRequestDispatcher("/Administracion/listado.jsp");
+        view.forward(request, response);
+
     }
 
     @Override

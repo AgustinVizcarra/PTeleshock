@@ -1,7 +1,4 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="pe.edu.pucp.pteleshock.Beans.BAnadidas" %>
-<%@ page import="pe.edu.pucp.pteleshock.Beans.Bbloqueadas" %>
-<%@ page import="pe.edu.pucp.pteleshock.Beans.Bdesbloqueadas" %>
 <jsp:useBean id="adminSession" scope="session" class="pe.edu.pucp.pteleshock.Beans.BUsuario"/>
 <%--
   Created by IntelliJ IDEA.
@@ -11,9 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% ArrayList<BAnadidas> anadidas = (ArrayList<BAnadidas>) request.getAttribute("anadidas");%>
-<% ArrayList<Bbloqueadas> bloqueadas = (ArrayList<Bbloqueadas>) request.getAttribute("bloqueadas");%>
-<% ArrayList<Bdesbloqueadas> desbloqueadas = (ArrayList<Bdesbloqueadas>) request.getAttribute("desbloqueadas");%>
+
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
@@ -44,8 +39,7 @@
                           d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path>
                 </svg><!-- <i class="fas fa-bars"></i> Font Awesome fontawesome.com --></button>
             <!-- Navbar Search-->
-            <a class="navbar-brand ps-3" style="color: white"><img style="width: 30px;height: 30px" class="icon"
-                                                                   src="img/logo_final.png">eleshock</a>
+            <a class="navbar-brand ps-3" style="color: white"><img style="width: 30px;height: 30px" class="icon" src="img/logo_final.png">eleshock</a>
             <!-- Navbar-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
@@ -122,134 +116,83 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-                <main class="clase_historial-farmacia">
+                <main class="clase_historial-farmacia" style="height: 92%">
                     <div class="container-fluid px-4">
                         <h1 class="mt-4 text-center texto-central" style="padding-top:10px;padding-bottom: 10px">
                             Historial</h1>
                         <ol class="breadcrumb mb-4">
                         </ol>
-                        <div class="row">
-                            <div class="col-xl-1 ">
-                            </div>
-                            <div class="col-xl-10 ">
-                                <div class="card bg-primary text-white mb-4"
-                                     style="color:#FFFFFF; background: #BEE5E6;border-color: #FFFFFF">
-                                    <div class="texto-navbar"
-                                         style="text-align:left;padding-top: 10px;padding-bottom: 20px;color: #00152D;font-size: 25px;padding-left: 2%">
-                                        <u>Farmacias Añadidas</u></div>
-                                    <div style="background-color: #BEE5E6">
-                                        <table class="table table-striped" style="border-color: #BEE5E6">
-                                            <tr style="color: #00152D">
-                                                <th class="text-center">Administrador</th>
-                                                <th class="text-center">Farmacia</th>
-                                                <th class="text-center">RUC</th>
-                                                <th class="text-center">Fecha</th>
-                                            </tr>
-                                            <%for (BAnadidas anadida : anadidas) {%>
-                                            <tr style="color: #00152D">
-                                                <td class="text-center">
-                                                    <%= anadida.getAdministrador_nombre()%>
-                                                </td>
-                                                <td class="text-center"><%= anadida.getFarmacia_nombre()%>
-                                                </td>
-                                                <td class="text-center"><%= anadida.getRuc()%>
-                                                </td>
-                                                <td class="text-center"><%= anadida.getFecha()%>
-                                                </td>
-                                            </tr>
-                                            <% }%>
-                                        </table>
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <div class="card text-white bg-info mb-3">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title" style="color: #FFFFFF;text-underline: #FFFFFF"><u>Farmacias añadidas</u></h5>
+                                                <p class="card-text" style="color: #FFFFFF">Ver todas las farmacias que han sido añadidas</p>
+                                                <a href="<%= request.getContextPath()%>/Admin_Hist?action=add" type="button" class="btn btn-info" style="width: 70%;background-color: #059ac5;color: #FFFFFF"><i class="fas fa-angle-double-down"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="align-content-center" style="padding-top: 35%">
+                                            <i class="fas fs-1 fa-clinic-medical" style="position: center;color: #059ac5"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-1 ">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xl-1 ">
-                            </div>
-                            <div class="col-xl-10 ">
-                                <div class="card bg-primary text-white mb-4"
-                                     style="color:#FFFFFF; background: #FFEA94;border-color: #FFFFFF">
-                                    <div class="texto-navbar"
-                                         style="text-align:left;padding-top: 10px;padding-bottom: 20px;color: #00152D;font-size: 25px;padding-left: 2%">
-                                        <u>Farmacias bloqueadas</u></div>
-                                    <div style="background-color: #FFEA94">
-                                        <table class="table table-striped" style="border-color: #FFEA94">
-                                            <tr style="color: #00152D">
-                                                <th class="text-center">Administrador</th>
-                                                <th class="text-center">Farmacia</th>
-                                                <th class="text-center">Razón</th>
-                                                <th class="text-center">Fecha</th>
-                                            </tr>
-                                            <% for (Bbloqueadas bloqueada : bloqueadas) {%>
-                                            <tr style="color: #00152D">
-                                                <td class="text-center">
-                                                    <%= bloqueada.getAdministrador_nombre()%>
-                                                </td>
-                                                <td class="text-center"><%= bloqueada.getFarmacia_nombre()%>
-                                                </td>
-                                                <td class="text-center"
-                                                    style="font-size:1vw"><%= bloqueada.getRazon_motivo()%>
-                                                </td>
-                                                <td class="text-center"><%= bloqueada.getFecha()%>
-                                                </td>
-                                            </tr>
-                                            <% }%>
-                                        </table>
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <div class="card mb-3 text-white bg-warning" style="border-color: #ffc107">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title" style="color: #FFFFFF;text-underline: #FFFFFF"><u>Farmacias bloqueadas</u></h5>
+                                                <p class="card-text" style="color: #FFFFFF">Ver todas las farmacias que han sido bloqueadas</p>
+                                                <p> <a href="<%= request.getContextPath()%>/Admin_Hist?action=block" type="button" class="btn btn-warning" style="width: 70%;background-color: #e3ac07;color: #FFFFFF"><i class="fas fa-angle-double-down"></i></a></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="align-content-center" style="padding-top: 35%">
+                                                <i class="fas fs-1 fa-lock" style="position: center;color: #e3ac07"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-1 ">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xl-1 ">
-                            </div>
-                            <div class="col-xl-10 ">
-                                <div class="card bg-primary text-white mb-4"
-                                     style="color:#FFFFFF; background: #8BC34A;border-color: #FFFFFF">
-                                    <div class="texto-navbar"
-                                         style="text-align:left;padding-top: 10px;padding-bottom: 20px;color: #00152D;font-size: 25px;padding-left: 2%">
-                                        <u>Farmacias desbloqueadas</u></div>
-                                    <div style="background-color: #8BC34A">
-                                        <table class="table table-striped" style="border-color: #8BC34A">
-                                            <tr style="color: #00152D">
-                                                <th class="text-center">Administrador</th>
-                                                <th class="text-center">Farmacia</th>
-                                                <th class="text-center">Razón</th>
-                                                <th class="text-center">Fecha</th>
-                                            </tr>
-                                            <% for (Bdesbloqueadas desbloqueada : desbloqueadas) {%>
-                                            <tr style="color: #00152D">
-                                                <td class="text-center">
-                                                    <%= desbloqueada.getAdministrador_nombre()%>
-                                                </td>
-                                                <td class="text-center"><%= desbloqueada.getFarmacia_nombre()%>
-                                                </td>
-                                                <td class="text-center"
-                                                    style="font-size:1vw"><%= desbloqueada.getRazon_motivo()%>
-                                                </td>
-                                                <td class="text-center"><%= desbloqueada.getFecha()%>
-                                                </td>
-                                            </tr>
-                                            <%}%>
-                                        </table>
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <div class="card text-white bg-success mb-3" style="border-color: #198754">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title" style="color: #FFFFFF;text-underline: #FFFFFF"><u>Farmacias desbloqueadas</u></h5>
+                                                <p class="card-text" style="color: #FFFFFF">Ver todas las farmacais que han sido desbloquedas</p>
+                                                <p><a href="<%= request.getContextPath()%>/Admin_Hist?action=unlock" type="button" class="btn btn-success" style="width: 70%;background-color: #156c43"><i class="fas fa-angle-double-down"></i></a></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="align-content-center" style="padding-top: 35%">
+                                                <i class="fas fs-1 fa-lock-open" style="position: center;color: #156c43"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-1 ">
                             </div>
                         </div>
                         <div>
+                            <div class="container" style="height: 50px;bottom: 0.5%;right: 5%;position: absolute">
                             <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
                                href="<%=request.getContextPath()%>/Admin_Index">
                                 <div class="boton_añadir_escape"><i class="fas fa-door-open fs-3"></i></div>
                             </a>
+                            </div>
                         </div>
                     </div>
                 </main>
-                <footer class="py-4 bg-light mt-auto">
+                <footer class="py-4 bg-light mt-auto" style="height: 8%">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Teleshock.Inc &copy; 2021</div>

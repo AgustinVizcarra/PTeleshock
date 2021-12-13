@@ -18,30 +18,24 @@ import java.io.IOException;
 public class Admin_AddFarmServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        BUsuario admin = (BUsuario) session.getAttribute("adminSession");
-        if (admin != null) {
-            String mensaje = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
-            String nombre = request.getParameter("nombre") != "" ? request.getParameter("nombre") : "";
-            String ruc = request.getParameter("ruc") != "" ? request.getParameter("ruc") : "";
-            String correo = request.getParameter("correo") != "" ? request.getParameter("correo") : "";
-            String direccion = request.getParameter("direccion") != "" ? request.getParameter("direccion") : "";
-            String id_distrito = request.getParameter("distrito") != "0" ? request.getParameter("distrito") : "0";
-            request.setAttribute("distrito", id_distrito);
-            request.setAttribute("nombre", nombre);
-            request.setAttribute("ruc", ruc);
-            request.setAttribute("correo", correo);
-            request.setAttribute("direccion", direccion);
-            request.setAttribute("mensaje", mensaje);
-            response.setContentType("text/html");
-            ListadoFarmaciasDao listadoFarmaciasDao = new ListadoFarmaciasDao();
-            request.setAttribute("distritos", listadoFarmaciasDao.listar_distritos());
-            RequestDispatcher view = request.getRequestDispatcher("/Administracion/añadir_farmacia.jsp");
-            view.forward(request, response);
-        } else {
-            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
-            viewError.forward(request, response);
-        }
+        request.setCharacterEncoding("UTF-8");
+        String mensaje = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
+        String nombre = request.getParameter("nombre") != "" ? request.getParameter("nombre") : "";
+        String ruc = request.getParameter("ruc") != "" ? request.getParameter("ruc") : "";
+        String correo = request.getParameter("correo") != "" ? request.getParameter("correo") : "";
+        String direccion = request.getParameter("direccion") != "" ? request.getParameter("direccion") : "";
+        String id_distrito = request.getParameter("distrito") != "0" ? request.getParameter("distrito") : "0";
+        request.setAttribute("distrito", id_distrito);
+        request.setAttribute("nombre", nombre);
+        request.setAttribute("ruc", ruc);
+        request.setAttribute("correo", correo);
+        request.setAttribute("direccion", direccion);
+        request.setAttribute("mensaje", mensaje);
+        response.setContentType("text/html");
+        ListadoFarmaciasDao listadoFarmaciasDao = new ListadoFarmaciasDao();
+        request.setAttribute("distritos", listadoFarmaciasDao.listar_distritos());
+        RequestDispatcher view = request.getRequestDispatcher("/Administracion/añadir_farmacia.jsp");
+        view.forward(request, response);
     }
 
     @Override

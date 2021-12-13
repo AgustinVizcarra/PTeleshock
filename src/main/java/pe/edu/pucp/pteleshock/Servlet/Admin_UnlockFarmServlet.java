@@ -19,23 +19,18 @@ public class Admin_UnlockFarmServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        response.setContentType("text/html");
+        request.setCharacterEncoding("UTF-8");
+
         HttpSession session = request.getSession();
-        BUsuario admin = (BUsuario) session.getAttribute("adminSession");
-        if(admin!=null) {
-            ValidacionUnl_Dao ufarmDao = new ValidacionUnl_Dao();
-            String mensaje = request.getParameter("mensaje")==null?"":request.getParameter("mensaje");
-            String idfarmacia = request.getParameter("idfarmacia")==null?"":request.getParameter("idfarmacia");
-            ArrayList<BLbloqueadas> farmaciabloqueadas = ufarmDao.listarBloqueada();
-            session.setAttribute("farmaciasBloqueadas",farmaciabloqueadas);
-            request.setAttribute("mensaje",mensaje);
-            request.setAttribute("idfarm",idfarmacia);
-            RequestDispatcher view = request.getRequestDispatcher("/Administracion/desbloquear_farmacia.jsp");
-            view.forward(request, response);
-        }else{
-            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
-            viewError.forward(request, response);
-        }
+        ValidacionUnl_Dao ufarmDao = new ValidacionUnl_Dao();
+        String mensaje = request.getParameter("mensaje")==null?"":request.getParameter("mensaje");
+        String idfarmacia = request.getParameter("idfarmacia")==null?"":request.getParameter("idfarmacia");
+        ArrayList<BLbloqueadas> farmaciabloqueadas = ufarmDao.listarBloqueada();
+        session.setAttribute("farmaciasBloqueadas",farmaciabloqueadas);
+        request.setAttribute("mensaje",mensaje);
+        request.setAttribute("idfarm",idfarmacia);
+        RequestDispatcher view = request.getRequestDispatcher("/Administracion/desbloquear_farmacia.jsp");
+        view.forward(request, response);
     }
 
     @Override

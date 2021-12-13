@@ -18,20 +18,12 @@ import java.util.ArrayList;
 public class Admin_AdminsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        HttpSession session = request.getSession();
-        BUsuario admin = (BUsuario) session.getAttribute("adminSession");
-        if (admin != null) {
-
-            UsuarioDao usuarioDao = new UsuarioDao();
-            ArrayList<BUsuario> listaAdministradores = usuarioDao.listarAdministradores();
-            request.setAttribute("listaAdministradores", listaAdministradores);
-            RequestDispatcher view = request.getRequestDispatcher("/Administracion/administradores.jsp");
-            view.forward(request, response);
-        } else {
-            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
-            viewError.forward(request, response);
-        }
+        request.setCharacterEncoding("UTF-8");
+        UsuarioDao usuarioDao = new UsuarioDao();
+        ArrayList<BUsuario> listaAdministradores = usuarioDao.listarAdministradores();
+        request.setAttribute("listaAdministradores", listaAdministradores);
+        RequestDispatcher view = request.getRequestDispatcher("/Administracion/administradores.jsp");
+        view.forward(request, response);
     }
 
     @Override

@@ -18,21 +18,14 @@ public class Admin_LockFarmServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        HttpSession session = request.getSession();
-        BUsuario admin = (BUsuario) session.getAttribute("adminSession");
-        if (admin != null) {
-            String mensaje = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
-            String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
-            String razon = request.getParameter("razon") != null ? request.getParameter("razon") : "";
-            request.setAttribute("mensaje", mensaje);
-            request.setAttribute("rucListado", ruc);
-            request.setAttribute("razon", razon);
-            RequestDispatcher view = request.getRequestDispatcher("/Administracion/bloquear_farmacia.jsp");
-            view.forward(request, response);
-        } else {
-            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
-            viewError.forward(request, response);
-        }
+        String mensaje = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
+        String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
+        String razon = request.getParameter("razon") != null ? request.getParameter("razon") : "";
+        request.setAttribute("mensaje", mensaje);
+        request.setAttribute("rucListado", ruc);
+        request.setAttribute("razon", razon);
+        RequestDispatcher view = request.getRequestDispatcher("/Administracion/bloquear_farmacia.jsp");
+        view.forward(request, response);
     }
 
     @Override
