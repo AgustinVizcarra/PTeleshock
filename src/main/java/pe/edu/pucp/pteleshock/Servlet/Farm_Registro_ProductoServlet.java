@@ -102,10 +102,12 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
 
         String nombre=request.getParameter("nombre").strip() != "" ? request.getParameter("nombre") : "";
 
-        String stockStr=request.getParameter("stock").strip() != "" ? request.getParameter("stock") : "0";
-        String stockPosi= Integer.parseInt(stockStr) >=0 ? "": "neg";
-        String precioUnitarioStr=request.getParameter("precioUnitario").strip() != "" ? request.getParameter("precioUnitario") : "0";
-        String precioPosi= Double.parseDouble(precioUnitarioStr) >=0 ? "": "neg";
+        String stockStr=request.getParameter("stock").strip() != "" ? request.getParameter("stock") : "a";
+        String stockTemp= stockStr.equals("a")? "0": request.getParameter("stock");
+        String stockPosi= Integer.parseInt(stockTemp) >=0 ? "": "neg";
+        String precioUnitarioStr=request.getParameter("precioUnitario").strip() != "" ? request.getParameter("precioUnitario") : "a";
+        String precioUnitarioTemp= precioUnitarioStr.equals("a")? "0": request.getParameter("precioUnitario");
+        String precioPosi= Double.parseDouble(precioUnitarioTemp) >=0 ? "": "neg";
         String descripcion=request.getParameter("descripcion").strip() != "" ? request.getParameter("descripcion") : "";
         String descripcionLeght=descripcion.length() >500 ? "muchoTxt": "";
         String recetamedica=request.getParameter("recetamedica").strip() != "" ? request.getParameter("recetamedica") : "a";
@@ -113,7 +115,7 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
         Part part=request.getPart("foto");
         InputStream inputStream=part.getInputStream();
 
-        if(nombre.equals("") || stockStr.equals("0") || precioUnitarioStr.equals("0") || descripcion.equals("") || recetamedica.equals("a")){
+        if(nombre.equals("") || stockStr.equals("a") || precioUnitarioStr.equals("a") || descripcion.equals("") || recetamedica.equals("a")){
             response.sendRedirect(request.getContextPath() + "/Farm_Registro_Producto?msg=error&nom="+ nombre +"&des="+ descripcion +"&rec="+ recetamedica +"&sto="+stockStr+"&prec="+precioUnitarioStr);
 
 
