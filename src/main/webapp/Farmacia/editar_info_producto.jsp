@@ -133,7 +133,7 @@
                                     <label class="form-label"  style="color: white; font-size: 23px"> Descripción </label>
                                 </div>
                             </div>
-                            <b>max:500 caracteres</b>
+                            <b style="color: #d5d5d5">max:500 caracteres</b>
                             <div class="form-floating mb-3">
                                 <textarea name="descripcion" rows="10" cols="50" maxlength="500" ><%=pdetalles.getDescripcion() %></textarea>
                             </div>
@@ -289,7 +289,26 @@
     </div>
 </nav>
 <% } else if (val.equals("error")){%>
-<nav id="popup1"  style="display: flex; justify-content: center ; align-items: center; position: fixed;
+    <nav id="popup1"  style="display: flex; justify-content: center ; align-items: center; position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        transition: opacity 500ms;
+        visibility: visible;
+        opacity: 1;">
+        <div class=" popup card text-center " style="background-color: white">
+            <h5 class="card-header text-center ">Teleshock</h5>
+            <div class="card-body">
+                <h5 class="card-title p-2">Por favor llenar todos los campos</h5>
+                <a href="<%= request.getContextPath()%>/Farm_Editar_Inf_Producto?prod=<%=idp%>" class="btn btn-success mb-2" >Aceptar</a>
+
+            </div>
+        </div>
+    </nav>
+<% } else if (val.equals("errorNeg")){%>
+    <nav id="popup1"  style="display: flex; justify-content: center ; align-items: center; position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
@@ -298,16 +317,37 @@
     transition: opacity 500ms;
     visibility: visible;
     opacity: 1;">
-    <div class=" popup card text-center " style="background-color: white">
-        <h5 class="card-header text-center ">Teleshock</h5>
-        <div class="card-body">
-            <h5 class="card-title p-2">Por favor llenar todos los campos</h5>
-            <a href="<%= request.getContextPath()%>/Farm_Editar_Inf_Producto?prod=<%=idp%>" class="btn btn-success mb-2" >Aceptar</a>
+        <div class=" popup card text-center " style="background-color: white">
+            <h5 class="card-header text-center ">Teleshock</h5>
+            <div class="card-body">
+                <h5 class="card-title p-2">Por favor ingrese solo valores positivos</h5>
+                <a href="<%= request.getContextPath()%>/Farm_Editar_Inf_Producto?prod=<%=idp%>" class="btn btn-success mb-2" >Aceptar</a>
 
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+<% } else if (val.equals("muchoTxt")){%>
+    <nav id="popup1"  style="display: flex; justify-content: center ; align-items: center; position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: visible;
+    opacity: 1;">
+        <div class=" popup card text-center " style="background-color: white">
+            <h5 class="card-header text-center ">Teleshock</h5>
+            <div class="card-body">
+                <h5 class="card-title p-2">La cantidad maxima de caracteres es 500</h5>
+                <a href="<%= request.getContextPath()%>/Farm_Editar_Inf_Producto?prod=<%=idp%>" class="btn btn-success mb-2" >Aceptar</a>
+
+            </div>
+        </div>
+    </nav>
+
 <% } else {%>
+
 <% } %>
 
 

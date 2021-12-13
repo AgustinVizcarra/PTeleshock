@@ -150,7 +150,11 @@
                                                  class="card-img-top circular--square">
                                             <div class="card-body p-2">
                                                 <div class="text-center">
+                                                    <%if(plistaFarm.getStock()==0){%>
+                                                    <h5 class="fw-bolder" style="color: red"> <%= plistaFarm.getNombre() %> (agotado) </h5>
+                                                    <%}else{%>
                                                     <h5 class="fw-bolder"> <%= plistaFarm.getNombre() %> </h5>
+                                                    <%}%>
                                                     <div class="text-center"><a class="btn btn-outline-dark mt-auto"
                                                                                 href="<%= request.getContextPath()%>/Farm_Detalles_Producto?prod=<%= plistaFarm.getIdProducto() %>">Ver detalles</a></div>
                                                 </div>

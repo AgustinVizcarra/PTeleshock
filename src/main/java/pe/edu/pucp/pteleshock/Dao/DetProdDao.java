@@ -102,6 +102,25 @@ public class DetProdDao extends BaseDao {
         }
     }
 
+
+    public void productoeliminadostock0(int idFarmacia,int idproducto,int stock) throws SQLException{
+        String sql2 = "update productoporfarmacia set stock= ? where idproducto=? and idfarmacia="+idFarmacia+";";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt2 = connection.prepareStatement(sql2);) {
+
+            pstmt2.setInt(1, stock);
+            pstmt2.setInt(2, idproducto);
+
+            pstmt2.executeUpdate();
+
+
+        }
+    }
+
+
+
+
     public void listarImg (int idFarmacia,String prod, HttpServletResponse response){
         String url = "jdbc:mysql://localhost:3306/mydb?serverTimezone=America/Lima"; //ojo con el nombre
         InputStream inputStream=null;

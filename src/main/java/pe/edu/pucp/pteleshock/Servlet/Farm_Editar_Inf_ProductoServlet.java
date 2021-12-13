@@ -48,6 +48,20 @@ public class Farm_Editar_Inf_ProductoServlet extends HttpServlet {
                 RequestDispatcher view2 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
                 view2.forward(request,response);
                 break;
+            case "errorNeg":
+                request.setAttribute("val","errorNeg");
+                request.setAttribute("idp",prod);
+                request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
+                RequestDispatcher view4 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
+                view4.forward(request,response);
+                break;
+            case "muchoTxt":
+                request.setAttribute("val","muchoTxt");
+                request.setAttribute("idp",prod);
+                request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
+                RequestDispatcher view5 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
+                view5.forward(request,response);
+                break;
             case "reg":
 
                 request.setAttribute("idp",prod);
@@ -71,10 +85,20 @@ public class Farm_Editar_Inf_ProductoServlet extends HttpServlet {
         RegistrarProDao registrarProDao = new RegistrarProDao();
 
 
-        String stockStr= request.getParameter("stock").strip() != "" ? request.getParameter("stock") : "a";
-        String precioUnitarioStr= request.getParameter("precioUnitario").strip() != "" ? request.getParameter("precioUnitario") : "a";
-        String descripcion=request.getParameter("descripcion").strip() != "" ? request.getParameter("descripcion") : "a";
+        //String stockStr= request.getParameter("stock").strip() != "" ? request.getParameter("stock") : "a";
+        //String precioUnitarioStr= request.getParameter("precioUnitario").strip() != "" ? request.getParameter("precioUnitario") : "a";
+        //String descripcion=request.getParameter("descripcion").strip() != "" ? request.getParameter("descripcion") : "a";
+        //String recetamedica=request.getParameter("recetamedica").strip() != "" ? request.getParameter("recetamedica") : "a";
+        String stockStr=request.getParameter("stock").strip() != "" ? request.getParameter("stock") : "a";
+        String stockTemp= stockStr.equals("a")? "0": request.getParameter("stock");
+        String stockPosi= Integer.parseInt(stockTemp) >=0 ? "": "neg";
+        String precioUnitarioStr=request.getParameter("precioUnitario").strip() != "" ? request.getParameter("precioUnitario") : "a";
+        String precioUnitarioTemp= precioUnitarioStr.equals("a")? "0": request.getParameter("precioUnitario");
+        String precioPosi= Double.parseDouble(precioUnitarioTemp) >=0 ? "": "neg";
+        String descripcion=request.getParameter("descripcion").strip() != "" ? request.getParameter("descripcion") : "";
+        String descripcionLeght=descripcion.length() >500 ? "muchoTxt": "";
         String recetamedica=request.getParameter("recetamedica").strip() != "" ? request.getParameter("recetamedica") : "a";
+
 
         String idprodstr = request.getParameter("prod").strip();
 
@@ -83,10 +107,18 @@ public class Farm_Editar_Inf_ProductoServlet extends HttpServlet {
         InputStream inputStream=part.getInputStream();
 
 
-        if( stockStr.equals("a") || precioUnitarioStr.equals("a") || descripcion.equals("a") || recetamedica.equals("a")){
+        if( stockStr.equals("a") || precioUnitarioStr.equals("a") || descripcion.equals("") || recetamedica.equals("a")){
             response.sendRedirect(request.getContextPath() + "/Farm_Editar_Inf_Producto?msg=error&prod="+idprodstr);
 
-        }else{
+        }else if( descripcionLeght.equals("muchoTxt")){
+            response.sendRedirect(request.getContextPath() + "/Farm_Editar_Inf_Producto?msg=muchoTxt&prod="+idprodstr);
+        }else if( stockPosi.equals("neg") || precioPosi.equals("neg")){
+            response.sendRedirect(request.getContextPath() + "/Farm_Editar_Inf_Producto?msg=errorNeg&prod="+idprodstr);
+
+
+
+        }
+        else{
             int idprod= Integer.parseInt(idprodstr);
 
             int stock=Integer.parseInt(stockStr);
