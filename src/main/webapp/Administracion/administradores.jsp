@@ -117,20 +117,26 @@
                     </ol>
                     <div class="row">
                         <%
+                            int i = 0;
                             for (BUsuario bUsuario : listaAdministradores) {
+                                i++;
                         %>
                         <div class="col-xl-3 col-md-8">
                             <div class="card bg-primary text-white mb-4"
                                  style="color:#FFFFFF; background: #38B6FF;border-color: #FFFFFF">
                                 <div class="texto-navbar"
                                      style="text-align:center;padding-top: 10px;padding-bottom: 20px;color: #00152D;font-size: 25px">
-                                    <u>Administrador</u></div>
+                                    <u>Administrador <%=i%>
+                                    </u></div>
                                 <div class="row" style="text-align:center;padding-left: 10px">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-user-circle fa-8x"></i></div>
+                                    <div>
+                                        <img src="img/perfilAdmin<%=i%>.png" width="170" height="170">
+                                    </div>
                                 </div>
                                 <div class="row" style="text-align:left;padding-left: 10px">
                                     <p style="height: 10px"></p>
-                                    <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Nombre: <%=bUsuario.getNombre()%>
+                                    <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">*
+                                        Nombre: <%=bUsuario.getNombre()%>
                                     </div>
                                     <div class="texto-navbar" style="padding-bottom: 5px;color:#00152D">* Apellido:
                                         <%=bUsuario.getApellido()%>
@@ -146,7 +152,7 @@
                     </div>
                     <div class="row">
                         <br><br><br><br><br><br>
-                        <div class="col" style="position: absolute; bottom: 0; right: 0;" >
+                        <div class="col" style="position: absolute; bottom: 0; right: 0;">
                             <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
                                href="<%= request.getContextPath()%>/Admin_Index">
                                 <div class="boton_añadir_escape"><i class="fas fa-door-open fs-3"></i></div>

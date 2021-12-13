@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="adminSession" scope="session" class="pe.edu.pucp.pteleshock.Beans.BUsuario"/>
 <jsp:useBean id="farmaciaEncontrada" scope="request" type="pe.edu.pucp.pteleshock.Beans.BFarmacia"/>
+<jsp:useBean id="distritoFarmaciaEncontrada" scope="request" type="java.lang.String"/>
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
@@ -133,7 +134,7 @@
                                                             <%=farmaciaEncontrada.getNombre()%>
                                                         </div>
                                                         <div class="texto-navbar" style="padding-bottom: 5px">*
-                                                            Distrito: FALTAAAAAA
+                                                            Distrito: <%=distritoFarmaciaEncontrada%>
                                                         </div>
                                                         <div class="texto-navbar" style="padding-bottom: 5px">*
                                                             Dirrección: <%=farmaciaEncontrada.getDireccion()%>

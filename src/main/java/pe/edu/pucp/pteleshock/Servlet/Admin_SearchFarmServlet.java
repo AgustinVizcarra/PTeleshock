@@ -55,8 +55,9 @@ public class Admin_SearchFarmServlet extends HttpServlet {
                 mensaje = "El RUC introducido no existe o se ha introducido un nombre incorrecto";
                 response.sendRedirect(request.getContextPath() + "/Admin_SearchFarm?mensaje=" + mensaje + "&ruc=" + ruc);
             }
+        } else {
+            response.sendRedirect(request.getContextPath() + "/Admin_SearchFarm?mensaje=" + mensaje + "&ruc=" + ruc);
         }
-
         //System.out.println(mensaje);
 
 
