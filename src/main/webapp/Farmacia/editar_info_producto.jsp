@@ -145,7 +145,7 @@
                                 </div>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="stock" type="text" name="stock" value=<%=pdetalles.getStock() %> >
+                                <input class="form-control" id="stock" type="number" name="stock" value=<%=pdetalles.getStock() %> >
 
                             </div>
 
@@ -156,7 +156,7 @@
                                 </div>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="precioUnitario" type="text" name="precioUnitario" value=<%=pdetalles.getPreciounitario() %> >
+                                <input class="form-control" id="precioUnitario" type="number" name="precioUnitario" value=<%=pdetalles.getPreciounitario() %> >
 
                             </div>
 
