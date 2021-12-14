@@ -8,15 +8,11 @@ import java.util.ArrayList;
 
 public class UsuarioDao extends BaseDao {
 
-    public BUsuario validarUsuarioPassword(String correo, String password) {
-
+    public BUsuario validarUsuarioPasswordHashed(String correo, String password) {
         BUsuario usuario = null;
-
-        String sql = "Select * from usuario where correo = ? and contrasenia = ?;";
-
+        String sql = "Select * from usuario where correo = ? and contrasenia = SHA2(?,256);";
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
-
             pstmt.setString(1, correo);
             pstmt.setString(2, password);
 
@@ -24,14 +20,15 @@ public class UsuarioDao extends BaseDao {
                 if (rs.next()) {
                     int idUsuario = rs.getInt(1);
                     usuario = this.obtenerUsuario(idUsuario);
+                //   System.out.println("Validación correcta");
                 }
             }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-        return usuario;
 
+        return usuario;
     }
 
     public BUsuario obtenerUsuario(int idUsuario) {

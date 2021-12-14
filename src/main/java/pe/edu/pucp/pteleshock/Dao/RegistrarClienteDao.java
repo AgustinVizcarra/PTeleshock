@@ -19,8 +19,8 @@ import java.util.Properties;
 public class RegistrarClienteDao extends BaseDao{
 
         public void añadirCliente(int idDis, String nombre, String apellido, String correo,String dni, String contrasenia) {
-
-            String sql = "INSERT INTO usuario (idrol, iddistrito, nombre, apellido, correo, dni, contrasenia) VALUES (1,?,?,?,?,?,?)";
+            //introducir hash
+            String sql = "INSERT INTO usuario (idrol, iddistrito, nombre, apellido, correo, dni, contrasenia) VALUES (1,?,?,?,?,?,SHA2(?,256))";
 
             try (Connection conn = this.getConnection();
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {

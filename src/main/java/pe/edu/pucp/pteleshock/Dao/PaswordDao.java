@@ -17,8 +17,9 @@ import java.sql.*;
 import java.util.Properties;
 
 public class PaswordDao extends BaseDao{
+
     public void cambiarContra(int idUsuario,String pwd){
-        String sql = "update usuario set contrasenia= ? where idusuario= ?";
+        String sql = "update usuario set contrasenia= SHA2(?,256) where idusuario= ?";
         try(Connection connection = this.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);){
             preparedStatement.setString(1,pwd);

@@ -24,21 +24,12 @@ public class Login_SessionServlet extends HttpServlet {
         String mensaje = request.getParameter("mensaje") == null ? "" : request.getParameter("mensaje");
         String mail = request.getParameter("correo") == null ? "" : request.getParameter("correo");
         String pwd = request.getParameter("pwd") == null ? "" : request.getParameter("pwd");
-
         request.setAttribute("pwd", pwd);
         request.setAttribute("mail", mail);
         request.setAttribute("mensajealerta", mensaje);
 
-
-        BUsuario farm = (BUsuario) session_login.getAttribute("farmaciaSession");
-
-        if(farm!=null){
-            response.sendRedirect("Farm_Index");
-        }else{
-            RequestDispatcher view = request.getRequestDispatcher("/Login/login.jsp");
-            view.forward(request, response);
-        }
-
+        RequestDispatcher view = request.getRequestDispatcher("/Login/login.jsp");
+        view.forward(request, response);
 
 
     }
@@ -57,7 +48,8 @@ public class Login_SessionServlet extends HttpServlet {
                 String correo = request.getParameter("correo") != null ? request.getParameter("correo") : "";
                 String pass = request.getParameter("pass") != null ? request.getParameter("pass") : "";
 
-                BUsuario usuario = usuarioDao.validarUsuarioPassword(correo, pass);
+                //BUsuario usuario = usuarioDao.validarUsuarioPassword(correo, pass);
+                BUsuario usuario = usuarioDao.validarUsuarioPasswordHashed(correo,pass);
                 String mensaje = "";
 
                 if (usuario != null) {
@@ -98,6 +90,7 @@ public class Login_SessionServlet extends HttpServlet {
 
                 request.getSession().invalidate();
                 response.sendRedirect(request.getContextPath() + "/Login");
+
                 break;
 
 
