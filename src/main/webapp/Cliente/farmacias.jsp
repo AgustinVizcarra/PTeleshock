@@ -1,6 +1,7 @@
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BFarmaciaPorDistrito" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BDistristos" %>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean type="java.lang.Integer" scope="request" id="totalPag"/>
 <jsp:useBean type="java.lang.Integer" scope="request" id="pag"/>
@@ -40,10 +41,7 @@
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
-                           aria-describedby="btnNavbarSearch"/>
-                    <button class="btn btn-primary" type="button"><i
-                            class="fas fa-search"></i></button>
+
                     <!-- al button le quité esta linea dentro de sus parámetros  id="btnNavbarSearch" -->
                 </div>
             </form>
@@ -85,7 +83,8 @@
                     </div>
                     <div class="sb-sidenav-footer" style="color: gray">
                         <div class="small">Logged in as:</div>
-                        Nombre Apellido
+                        <%BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");%>
+                        <%=cliente.getNombre()+" "+cliente.getApellido()%>
                     </div>
                 </nav>
             </div>
