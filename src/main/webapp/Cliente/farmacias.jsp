@@ -243,12 +243,16 @@
         </div>
 
         <nav id="salir" class="overlay">
-            <div class=" popup card text-center ">
-                <h5 class="card-header text-center text-light">Teleshock</h5>
+            <div class=" popup card text-center " style="background-color: white">
+                <h5 class="card-header text-center">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
                     <a href="#" class="btn btn-primary mb-2">Cancelar</a>
-                    <a href="<%= request.getContextPath()%>/Login_Exit" class="btn btn-danger mb-2">Salir</a>
+                    <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                        <button class="btn btn-danger mb-2" type="submit">
+                            Salir
+                        </button>
+                    </form>
 
                 </div>
             </div>

@@ -4,7 +4,8 @@
 <%@ page import="java.sql.Time" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.text.ParseException" %><%--
+<%@ page import="java.text.ParseException" %>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %><%--
   Created by IntelliJ IDEA.
   User: casa
   Date: 5/11/2021
@@ -44,10 +45,7 @@
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
-                           aria-describedby="btnNavbarSearch"/>
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                            class="fas fa-search"></i></button>
+
                 </div>
             </form>
             <!-- Navbar-->
@@ -88,7 +86,8 @@
                     </div>
                     <div class="sb-sidenav-footer" style="color: gray">
                         <div class="small">Logged in as:</div>
-                        Nombre Apellido
+                        <%BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");%>
+                        <%=cliente.getNombre() + " " + cliente.getApellido()%>
                     </div>
                 </nav>
             </div>
@@ -175,7 +174,7 @@
                                                     <div class="card-group">
 
                                                         <div class="card-body justify-content-start">
-                                                            <a><img  src="<%= request.getContextPath()%>/ImgServlet?prod=<%=pedidoE.getIdProducto()%>"
+                                                            <a><img src="<%= request.getContextPath()%>/ImgServlet?prod=<%=pedidoE.getIdProducto()%>"
                                                                     class="img-thumbnail"
                                                                     alt="..."
                                                                     style="width: 100px; height: 100px"></a>
@@ -247,7 +246,8 @@
 
                                 <%if (sePuedeCancelar) {%>
                                 <div class="d-md-block mt-3 mb-3 text-center font-weight-light my-5">
-                                    <a class="btn btn-danger me-md-4" href="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=cancelar&idP=<%=listaPedidoE.get(0).getPedido().getBoletaVenta()%>">Cancelar</a>
+                                    <a class="btn btn-danger me-md-4"
+                                       href="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=cancelar&idP=<%=listaPedidoE.get(0).getPedido().getBoletaVenta()%>">Cancelar</a>
                                     <!--lo mismo que en la pestaña anterior-->
                                 </div>
                                 <%} else {%>
@@ -277,6 +277,23 @@
                 </footer>
             </div>
         </div>
+
+        <nav id="salir" class="overlay">
+            <div class=" popup card text-center " style="background-color: white">
+                <h5 class="card-header text-center">Teleshock</h5>
+                <div class="card-body">
+                    <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
+                    <a href="#" class="btn btn-primary mb-2">Cancelar</a>
+                    <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                        <button class="btn btn-danger mb-2" type="submit">
+                            Salir
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </nav>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
                 crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
