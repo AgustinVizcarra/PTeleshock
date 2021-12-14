@@ -9,6 +9,7 @@
 <jsp:useBean type="java.lang.String" scope="request" id="correo" class="java.lang.String"/>
 <jsp:useBean type="java.lang.String" scope="request" id="direccion" class="java.lang.String"/>
 <jsp:useBean type="java.lang.String" scope="request" id="id_distrito" class="java.lang.String"/>
+
 <html lang="en">
     <head>
         <meta charset="utf-8"/>

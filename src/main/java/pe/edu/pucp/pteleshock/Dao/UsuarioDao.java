@@ -6,6 +6,8 @@ import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import java.sql.*;
 import java.util.ArrayList;
 
+
+
 public class UsuarioDao extends BaseDao {
 
     public BUsuario validarUsuarioPasswordHashed(String correo, String password) {
