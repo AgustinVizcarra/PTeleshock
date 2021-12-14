@@ -1,11 +1,6 @@
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BPedido" %>
-<%@ page import="java.util.ArrayList" %><%--
-  Created by IntelliJ IDEA.
-  User: casa
-  Date: 5/11/2021
-  Time: 18:47
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean type="java.lang.Integer" scope="request" id="totalPag"/>
 <jsp:useBean type="java.lang.Integer" scope="request" id="pag"/>
@@ -39,10 +34,7 @@
     <!-- Navbar Search-->
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
         <div class="input-group">
-            <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
-                   aria-describedby="btnNavbarSearch"/>
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                    class="fas fa-search"></i></button>
+
         </div>
     </form>
     <!-- Navbar-->
@@ -81,7 +73,8 @@
             </div>
             <div class="sb-sidenav-footer" style="color: gray">
                 <div class="small">Logged in as:</div>
-                Nombre Apellido
+                <%BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");%>
+                <%=cliente.getNombre()+" "+cliente.getApellido()%>
             </div>
         </nav>
     </div>

@@ -1,4 +1,5 @@
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BDistristos" %>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <jsp:useBean id="cliente" type="pe.edu.pucp.pteleshock.Beans.BCliente" scope="request"/>
@@ -33,10 +34,7 @@
     <!-- Navbar Search-->
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
         <div class="input-group">
-            <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
-                   aria-describedby="btnNavbarSearch"/>
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                    class="fas fa-search"></i></button>
+
         </div>
     </form>
     <!-- Navbar-->
@@ -75,7 +73,7 @@
             </div>
             <div class="sb-sidenav-footer" style="color: gray">
                 <div class="small">Logged in as:</div>
-                Nombre Apellido
+                <%=cliente.getNombre()+" "+cliente.getApellido()%>
             </div>
         </nav>
     </div>
