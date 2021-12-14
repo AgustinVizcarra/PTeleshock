@@ -104,10 +104,10 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
 
         String stockStr=request.getParameter("stock").strip() != "" ? request.getParameter("stock") : "a";
         String stockTemp= stockStr.equals("a")? "0": request.getParameter("stock");
-        String stockPosi= Integer.parseInt(stockTemp) >=0 ? "": "neg";
+        String stockPosi= Integer.parseInt(stockTemp) >0 ? "": "neg";
         String precioUnitarioStr=request.getParameter("precioUnitario").strip() != "" ? request.getParameter("precioUnitario") : "a";
         String precioUnitarioTemp= precioUnitarioStr.equals("a")? "0": request.getParameter("precioUnitario");
-        String precioPosi= Double.parseDouble(precioUnitarioTemp) >=0 ? "": "neg";
+        String precioPosi= Double.parseDouble(precioUnitarioTemp) >0 ? "": "neg";
         String descripcion=request.getParameter("descripcion").strip() != "" ? request.getParameter("descripcion") : "";
         String descripcionLeght=descripcion.length() >500 ? "muchoTxt": "";
         String recetamedica=request.getParameter("recetamedica").strip() != "" ? request.getParameter("recetamedica") : "a";
