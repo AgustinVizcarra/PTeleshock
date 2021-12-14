@@ -36,6 +36,30 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
             case "borrar":
                 BListaPFarmacia exProd = dpdao.existeProParaEliminar(idF,prod);
 
+//                int idproducto= Integer.parseInt(prod);
+//                if (exProd != null) {
+//                    request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
+//                    request.setAttribute("idp",prod);
+//                    request.setAttribute("valor","noborr");
+//                    RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_producto.jsp");
+//                    view.forward(request,response);
+//                } else {
+//                    try {
+//
+//                        dpdao.borrarProducto(idF,idproducto);
+//
+////                        response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
+//                        request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
+//                        request.setAttribute("idp",prod);
+//                        request.setAttribute("valor","borr");
+//                        RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_producto.jsp");
+//                        view.forward(request,response);
+//                    } catch (SQLException e) {
+//                        response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
+//                        e.printStackTrace();
+//                    }
+//
+//                }
                 int idproducto= Integer.parseInt(prod);
                 if (exProd != null) {
                     request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
@@ -46,7 +70,7 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
                 } else {
                     try {
 
-                        dpdao.borrarProducto(idF,idproducto);
+                        dpdao.productoeliminadologico(idF,idproducto);
 
 //                        response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
                         request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
@@ -60,22 +84,6 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
                     }
 
                 }
-
-
-//                try {
-//
-//                    int idproducto= Integer.parseInt(prod);
-//                    dpdao.productoeliminadostock0(idF,idproducto,0);
-//
-//                    request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
-//                    request.setAttribute("idp",prod);
-//                    request.setAttribute("valor","borr");
-//                    RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_producto.jsp");
-//                    view.forward(request,response);
-//                } catch (SQLException e) {
-//                    response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
-//                    e.printStackTrace();
-//                }
 
                 break;
             case "detalles":

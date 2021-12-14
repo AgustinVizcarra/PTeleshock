@@ -58,7 +58,7 @@ public class GPedidoDao extends BaseDao {
                     "inner join usuario u on (p.idusuario=u.idusuario)\n" +
                     "where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+" #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
                     "group by dp.idpedido\n" +
-                    "order by p.fechapedido desc limit "+(pagint-1)*3 +",3;");
+                    "order by p.fechapedido desc limit "+(pagint-1)*6 +",6;");
 
 
             while (rs.next()) {
@@ -203,6 +203,68 @@ public class GPedidoDao extends BaseDao {
         }
         return listaPedidosD;
     }
+
+    public ArrayList<BPedidoD> listaProductospag(int idFarmacia,int id,String pag){
+        ArrayList<BPedidoD> listaPedidosD = new ArrayList<>();
+        int pagint =Integer.parseInt(pag);
+        try {
+            Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("select pr.nombre as 'Producto',\n" +
+                    "pf.descripcion, dp.cantidad as 'Unidades', pf.preciounitario,pf.recetamedica\n" +
+                    "from detallepedido dp\n" +
+                    "inner join pedido p on (dp.idpedido=p.idpedido)\n" +
+                    "inner join usuario u on (p.idusuario=u.idusuario)\n" +
+                    "inner join productoporfarmacia pf on (dp.idproducto=pf.idproducto and dp.idfarmacia=pf.idfarmacia)\n" +
+                    "inner join producto pr on (pf.idproducto=pr.idproducto)\n" +
+                    "inner join distrito d on(u.iddistrito=d.iddistrito)\n" +
+                    "inner join estatuspedido ep on (ep.idestatuspedido=p.idestatuspedido)\n" +
+                    "where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+"  and p.idpedido=? limit "+(pagint-1)*6 +",6;");
+
+            pstmt.setInt(1,id);
+            try(ResultSet rs=pstmt.executeQuery()){
+                while (rs.next()) {
+                    BPedidoD bpd = new BPedidoD();
+                    bpd.setProducto(rs.getString(1));
+                    bpd.setDescripcion(rs.getString(2));
+                    bpd.setUnidades(rs.getInt(3));
+                    bpd.setPrecioUnitario(rs.getDouble(4));
+                    bpd.setRecetamedica(rs.getBoolean(5));
+                    listaPedidosD.add(bpd);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaPedidosD;
+    }
+
+    public int cantidadProductos1(int idFarmacia,int id){
+        int cant =0;
+        try {
+            Connection connection = this.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("select count(*)\n" +
+                    "                    from detallepedido dp\n" +
+                    "                    inner join pedido p on (dp.idpedido=p.idpedido)\n" +
+                    "                    inner join usuario u on (p.idusuario=u.idusuario)\n" +
+                    "                    inner join productoporfarmacia pf on (dp.idproducto=pf.idproducto and dp.idfarmacia=pf.idfarmacia)\n" +
+                    "                    inner join producto pr on (pf.idproducto=pr.idproducto)\n" +
+                    "                    inner join distrito d on(u.iddistrito=d.iddistrito)\n" +
+                    "                    inner join estatuspedido ep on (ep.idestatuspedido=p.idestatuspedido)\n" +
+                    "                    where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+" and p.idpedido="+id+";");
+
+
+            while (rs.next()) {
+                cant=rs.getInt(1);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cant;
+    }
+
 
 
     public ArrayList<BEstado> listaEstados(){

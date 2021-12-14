@@ -133,7 +133,7 @@
                 <div class="card mb-4">
                     <div class="card-header  bg-warning">
                         <i class="fas fa-table me-1"></i>
-                        Ultimas ventas realizadas
+                        Ultimas 8 ventas realizadas
                     </div>
                     <div class="card-body">
                         <table class="table">
@@ -146,7 +146,7 @@
                             <tbody>
                             <% for (BVentasPorFecha ventfecha : listventfecha){ %>
                             <tr>
-                                <td class="text-end"><%=ventfecha.getFecha()%></td>
+                                <td class="text-center"><%=ventfecha.getFecha()%></td>
                                 <td class="text-center"><%=ventfecha.getNumventas()%></td>
 
                             </tr>

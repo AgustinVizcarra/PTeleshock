@@ -22,16 +22,19 @@ public class Farm_Detalles_Pedido_ModServlet extends HttpServlet {
 
         if (farmacia != null) {
             int idF = (Integer) session.getAttribute("idFarmacia");
-
+            String pag= request.getParameter("pag")!= null? request.getParameter("pag"):"1";
             GPedidoDao gPedidoDao = new GPedidoDao();
             String idStr = request.getParameter("id");
             String msg = request.getParameter("msg") != null ? request.getParameter("msg") :"defect";
             String r = request.getParameter("r") != null ? request.getParameter("r") : "";
             int idint = Integer.parseInt(idStr);
+            session.setAttribute("idpedido",idint);
             request.setAttribute("listaDPedido",gPedidoDao.listaPedidosD(idF,idint));
-            request.setAttribute("listaproducto",gPedidoDao.listaProductos(idF,idint));
+            request.setAttribute("listaproducto",gPedidoDao.listaProductospag(idF,idint,pag));
             request.setAttribute("listaEstados",gPedidoDao.listaEstados());
-
+            int cantPed=gPedidoDao.cantidadProductos1(idF,idint);
+            String cantPedStr= String.valueOf(cantPed);
+            request.setAttribute("cantPed",cantPedStr);
             request.setAttribute("msg",msg);
             //RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_pedido_modificado.jsp");
             //view.forward(request,response);

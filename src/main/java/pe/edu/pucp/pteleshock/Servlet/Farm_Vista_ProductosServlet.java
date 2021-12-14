@@ -52,21 +52,31 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
         String texto = request.getParameter("textoBuscar");
         String pag = request.getParameter("pag") !=null ? request.getParameter("pag"): "1";
 
-        int idF = (Integer) session.getAttribute("idFarmacia");
-        PxFarDao pxFarDao=new PxFarDao();
-        if (texto == null) {
-            response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
+        BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
+
+        if (farmacia != null) {
+            int idF = (Integer) session.getAttribute("idFarmacia");
+            PxFarDao pxFarDao=new PxFarDao();
+            if (texto == null) {
+                response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
+            } else {
+                int cant=pxFarDao.cantidadProductosBuscados(idF,texto);
+                String cantStr=String.valueOf(cant);
+                request.setAttribute("cantProd",cantStr);
+                request.setAttribute("textbuscar",texto);
+
+                request.setAttribute("listaxFarmacia", pxFarDao.buscarProductoPorNombre(idF,pag,texto));
+                RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productosFiltrados.jsp");
+                view.forward(request, response);
+
+            }
+
         } else {
-            int cant=pxFarDao.cantidadProductosBuscados(idF,texto);
-            String cantStr=String.valueOf(cant);
-            request.setAttribute("cantProd",cantStr);
-            request.setAttribute("textbuscar",texto);
-
-            request.setAttribute("listaxFarmacia", pxFarDao.buscarProductoPorNombre(idF,pag,texto));
-            RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productosFiltrados.jsp");
-            view.forward(request, response);
-
+            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
+            viewError.forward(request, response);
         }
+
+
 
     }
 

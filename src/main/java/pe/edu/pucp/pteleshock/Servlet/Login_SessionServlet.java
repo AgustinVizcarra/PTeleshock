@@ -30,9 +30,15 @@ public class Login_SessionServlet extends HttpServlet {
         request.setAttribute("mensajealerta", mensaje);
 
 
+        BUsuario farm = (BUsuario) session_login.getAttribute("farmaciaSession");
 
-        RequestDispatcher view = request.getRequestDispatcher("/Login/login.jsp");
-        view.forward(request, response);
+        if(farm!=null){
+            response.sendRedirect("Farm_Index");
+        }else{
+            RequestDispatcher view = request.getRequestDispatcher("/Login/login.jsp");
+            view.forward(request, response);
+        }
+
 
 
     }

@@ -144,6 +144,7 @@
 
 
                                 <% for (BListaPFarmacia plistaFarm : listaxFarmacia){ %>
+                                    <%if(plistaFarm.getEstadoproducto().equals("habilitado")){%>
                                     <div class="col mb-5">
                                         <div class="card h-100">
                                             <img src="<%= request.getContextPath()%>/ImgServlet?prod=<%=plistaFarm.getIdProducto()%>"
@@ -161,7 +162,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <%}%>
                                 <% } %>
 
 

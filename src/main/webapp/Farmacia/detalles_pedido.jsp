@@ -10,6 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% ArrayList<BPedidoD> listaDPedido=(ArrayList<BPedidoD>) request.getAttribute("listaDPedido");%>
 <% ArrayList<BPedidoD> listaproducto=(ArrayList<BPedidoD>) request.getAttribute("listaproducto");%>
+<jsp:useBean type="java.lang.String" scope="request" id="cantPed" class="java.lang.String"/>
 <html lang="en">
 <head>
 
@@ -175,7 +176,17 @@
                             <%}%>
                         </table>
                     </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-end">
+                            <% int cantPedInt=Integer.parseInt(cantPed);%>
+                            <% int resto= cantPedInt%6==0? 0:1; %>
+                            <%int idped= (int) session.getAttribute("idpedido");%>
+                            <% for(int i=1; i<Math.floor(cantPedInt/6)+resto+1; i++) { %>
+                            <li class="page-item"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Detalles_Pedido?id=<%=idped%>&pag=<%=i %>"><%=i%></a></li>
+                            <% } %>
 
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </main>

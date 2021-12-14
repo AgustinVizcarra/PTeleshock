@@ -20,54 +20,54 @@ public class Farm_Editar_Inf_ProductoServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
-        int idF = (Integer) session.getAttribute("idFarmacia");
+
 
         if (farmacia != null) {
+            int idF = (Integer) session.getAttribute("idFarmacia");
+            response.setContentType("text/html");
 
-        response.setContentType("text/html");
+            String prod = request.getParameter("prod");
 
-        String prod = request.getParameter("prod");
+            String msg = request.getParameter("msg") !=null ? request.getParameter("msg"): "reg";
 
-        String msg = request.getParameter("msg") !=null ? request.getParameter("msg"): "reg";
-
-        DetProdDao detProdDao= new DetProdDao();
+            DetProdDao detProdDao= new DetProdDao();
 
 
-        switch (msg){
-            case "ok":
-                request.setAttribute("val","ok");
-                request.setAttribute("idp",prod);
-                request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
-                RequestDispatcher view = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
-                view.forward(request,response);
-                break;
-            case "error":
-                request.setAttribute("val","error");
-                request.setAttribute("idp",prod);
-                request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
-                RequestDispatcher view2 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
-                view2.forward(request,response);
-                break;
-            case "errorNeg":
-                request.setAttribute("val","errorNeg");
-                request.setAttribute("idp",prod);
-                request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
-                RequestDispatcher view4 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
-                view4.forward(request,response);
-                break;
-            case "muchoTxt":
-                request.setAttribute("val","muchoTxt");
-                request.setAttribute("idp",prod);
-                request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
-                RequestDispatcher view5 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
-                view5.forward(request,response);
-                break;
-            case "reg":
+            switch (msg){
+                case "ok":
+                    request.setAttribute("val","ok");
+                    request.setAttribute("idp",prod);
+                    request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
+                    RequestDispatcher view = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
+                    view.forward(request,response);
+                    break;
+                case "error":
+                    request.setAttribute("val","error");
+                    request.setAttribute("idp",prod);
+                    request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
+                    RequestDispatcher view2 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
+                    view2.forward(request,response);
+                    break;
+                case "errorNeg":
+                    request.setAttribute("val","errorNeg");
+                    request.setAttribute("idp",prod);
+                    request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
+                    RequestDispatcher view4 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
+                    view4.forward(request,response);
+                    break;
+                case "muchoTxt":
+                    request.setAttribute("val","muchoTxt");
+                    request.setAttribute("idp",prod);
+                    request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
+                    RequestDispatcher view5 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
+                    view5.forward(request,response);
+                    break;
+                case "reg":
 
-                request.setAttribute("idp",prod);
-                request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
-                RequestDispatcher view3 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
-                view3.forward(request,response);
+                    request.setAttribute("idp",prod);
+                    request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
+                    RequestDispatcher view3 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
+                    view3.forward(request,response);
 
         }
 

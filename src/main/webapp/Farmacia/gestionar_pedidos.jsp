@@ -132,8 +132,8 @@
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-end">
                         <% int cantPedInt=Integer.parseInt(cantPed);%>
-                        <% int resto= cantPedInt%3==0? 0:1; %>
-                        <% for(int i=1; i<Math.floor(cantPedInt/3)+resto+1; i++) { %>
+                        <% int resto= cantPedInt%6==0? 0:1; %>
+                        <% for(int i=1; i<Math.floor(cantPedInt/6)+resto+1; i++) { %>
                         <li class="page-item"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Gestionar_Pedidos?pag=<%=i %>"><%=i%></a></li>
                         <% } %>
 

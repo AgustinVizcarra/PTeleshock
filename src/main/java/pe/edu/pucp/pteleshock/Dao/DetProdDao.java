@@ -54,7 +54,7 @@ public class DetProdDao extends BaseDao {
                 "inner join detallepedido dp on (dp.idproducto=pf.idproducto)\n" +
                 "inner join pedido p on (p.idpedido=dp.idpedido)\n" +
                 "inner join estatuspedido sp on (sp.idestatuspedido=p.idestatuspedido)\n" +
-                "where sp.idestatuspedido in (1,2) and pf.idfarmacia="+idFarmacia+") tb\n" +
+                "where sp.idestatuspedido =2 and pf.idfarmacia="+idFarmacia+") tb\n" +
                 "where tb.idproducto =(?)\n" +
                 "group by tb.idproducto;";
 
@@ -111,6 +111,20 @@ public class DetProdDao extends BaseDao {
 
             pstmt2.setInt(1, stock);
             pstmt2.setInt(2, idproducto);
+
+            pstmt2.executeUpdate();
+
+
+        }
+    }
+
+    public void productoeliminadologico(int idFarmacia,int idproducto) throws SQLException{
+        String sql2 = "update productoporfarmacia set estadoproducto= 'eliminado' where idproducto=? and idfarmacia="+idFarmacia+";";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt2 = connection.prepareStatement(sql2);) {
+
+            pstmt2.setInt(1, idproducto);
 
             pstmt2.executeUpdate();
 

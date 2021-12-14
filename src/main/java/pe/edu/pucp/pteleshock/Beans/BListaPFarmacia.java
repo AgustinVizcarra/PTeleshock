@@ -5,6 +5,8 @@ public class BListaPFarmacia {
     private String nombre;
     private String foto;
     private int stock;
+    private String estadoproducto;
+
 
     public String getNombre() {
         return nombre;
@@ -37,5 +39,13 @@ public class BListaPFarmacia {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getEstadoproducto() {
+        return estadoproducto;
+    }
+
+    public void setEstadoproducto(String estadoproducto) {
+        this.estadoproducto = estadoproducto;
     }
 }
