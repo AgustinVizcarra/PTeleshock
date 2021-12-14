@@ -16,17 +16,10 @@ public class Login_Password_RecoveryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        HttpSession session_login = request.getSession();
-        System.out.println("Id: "+session_login.getAttribute("logid"));
-        if(session_login.getAttribute("logid")!=null) {
-            request.setAttribute("idusuario",session_login.getAttribute("logid"));
-            RequestDispatcher view = request.getRequestDispatcher("/Login/recuperacion_contraseña.jsp");
-            //session_login.removeAttribute("logid");
-            view.forward(request, response);
-        }else{
-            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
-            viewError.forward(request, response);
-        }
+        //String correo = request.getParameter("correo")==null?"":request.getParameter("correo");
+        RequestDispatcher view = request.getRequestDispatcher("/Login/recuperacion_contraseña.jsp");
+        //session_login.removeAttribute("logid");
+        view.forward(request, response);
     }
 
     @Override

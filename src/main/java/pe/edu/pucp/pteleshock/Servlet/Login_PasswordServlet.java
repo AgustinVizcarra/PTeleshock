@@ -1,5 +1,6 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
+import pe.edu.pucp.pteleshock.Dao.PaswordDao;
 import pe.edu.pucp.pteleshock.Dao.ValidacionAdd_Dao;
 
 import javax.servlet.RequestDispatcher;
@@ -44,7 +45,13 @@ public class Login_PasswordServlet extends HttpServlet {
                 HttpSession session_login = request.getSession();
                 String idStr = String.valueOf(idusuario);
                 session_login.setAttribute("logid",idStr);
-                response.sendRedirect(request.getContextPath()+"/Login_Password_Recovery");
+                //response.sendRedirect(request.getContextPath()+"/Login_Password_Recovery");
+                //
+                PaswordDao paswordDao = new PaswordDao();
+                paswordDao.enviarCambioContra(correo);
+                //
+                mensaje = "Se le ha enviado un correo para actualizar sus credenciales";
+                response.sendRedirect(request.getContextPath()+"/Login_Password?mensaje="+mensaje);
             }else {
                 mensaje = "No se encuentra la ruta de correo especificada";
                 response.sendRedirect(request.getContextPath()+"/Login_Password?mensaje="+mensaje);

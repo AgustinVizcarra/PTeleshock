@@ -48,7 +48,7 @@
                                         <label for="inputPassword1" class="mb-3 text-muted">Confirmar contraseña</label>
                                     </div>
                                     <div class="d-grid gap-2 col-6 mx-auto mb-3">
-                                        <button class="btn btn-success" href="#popup1" type="submit">Actualizar</button>
+                                        <button class="btn btn-success" href="<%= request.getContextPath()%>/Login_Password_Recovery" type="submit">Actualizar</button>
                                         <a class="small text-center" href="<%= request.getContextPath()%>/Login">Volver</a>
                                     </div>
                                 </form>
