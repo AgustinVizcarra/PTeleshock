@@ -144,12 +144,7 @@
                         </div>
                     </div>
                     <div class="container" style="height: 50px;bottom: 10%;right: 5%;position: absolute">
-                        <div class="row">
-                            <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
-                               href="<%=request.getContextPath()%>/Admin_AddFarm">
-                                <div class="boton_añadir_escape"><i class="fas fa-plus-circle fs-3"></i></div>
-                            </a>
-                        </div>
+                            <a class="btn boton_añadir_escape" role="button" aria-expanded="false" href="<%=request.getContextPath()%>/Admin_AddFarm"><i class="fas fa-plus-circle fs-3"></i></a>
                     </div>
                 </main>
                 <footer class="py-4 bg-light" style="height: 7%">
