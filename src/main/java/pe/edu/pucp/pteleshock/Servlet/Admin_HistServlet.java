@@ -1,19 +1,14 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
-
-
-import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.Afarm_Dao;
 import pe.edu.pucp.pteleshock.Dao.Bfarm_Dao;
 import pe.edu.pucp.pteleshock.Dao.Dfarm_Dao;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "Admin_HistServlet", value = "/Admin_Hist")
@@ -26,20 +21,25 @@ public class Admin_HistServlet extends HttpServlet {
         Bfarm_Dao bfarm_dao = new Bfarm_Dao();
         Dfarm_Dao dfarm_dao = new Dfarm_Dao();
         String action = request.getParameter("action")==null?"":request.getParameter("action");
-        System.out.println("accion: "+action);
+        String pag = request.getParameter("pag")==null?"1":request.getParameter("pag");
+        System.out.println("accion: "+ action);
+        System.out.println("pag: "+ pag);
         switch (action){
             case "add":
-                request.setAttribute("anadidas", afarm_dao.listar_anadidas());
+                request.setAttribute("anadidas", afarm_dao.listar_anadidas(pag));
+                request.setAttribute("cantidad", afarm_dao.cantidadListaAnadidas());
                 RequestDispatcher viewAdd = request.getRequestDispatcher("/Administracion/historial_anadidas.jsp");
                 viewAdd.forward(request, response);
                 break;
             case "block":
-                request.setAttribute("bloqueadas", bfarm_dao.listar_bloqueadas());
+                request.setAttribute("bloqueadas", bfarm_dao.listar_bloqueadas(pag));
+                request.setAttribute("cantidad", bfarm_dao.cantidadListaBloqueadas());
                 RequestDispatcher viewBlock = request.getRequestDispatcher("/Administracion/historial_bloqueadas.jsp");
                 viewBlock.forward(request, response);
                 break;
             case "unlock":
-                request.setAttribute("desbloqueadas", dfarm_dao.listar_desbloqueadas());
+                request.setAttribute("desbloqueadas", dfarm_dao.listar_desbloqueadas(pag));
+                request.setAttribute("cantidad", dfarm_dao.cantidadListaDesbloquedas());
                 RequestDispatcher viewUnlock = request.getRequestDispatcher("/Administracion/historial_desbloqueadas.jsp");
                 viewUnlock.forward(request, response);
                 break;

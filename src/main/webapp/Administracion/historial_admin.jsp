@@ -113,7 +113,7 @@
             <div id="layoutSidenav_content">
                 <main class="clase_historial-farmacia" style="height: 92%">
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4 text-center texto-central" style="padding-top:10px;padding-bottom: 10px">
+                        <h1 class="mt-4 text-center texto-central" style="padding-top: 0px; padding-bottom: 5px">
                             Historial</h1>
                         <ol class="breadcrumb mb-4">
                         </ol>
@@ -195,7 +195,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <br><br><br>
+                            <br><br>
                             <div class="col" style="position: absolute; bottom: 0; right: 0;">
                                 <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
                                    href="<%= request.getContextPath()%>/Admin_Index">
@@ -226,12 +226,14 @@
                 <h5 class="card-header text-center">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
-                    <a href="#" class="btn btn-primary mb-2">Cancelar</a>
-                    <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
-                        <button class="btn btn-danger mb-2" style=" background-color: #5bc0de " type="submit">
-                            Salir
-                        </button>
-                    </form>
+                    <div class="row align-items-center" style="display: flex; justify-content: center">
+                        <a href="#" class="btn btn-primary my-auto col-3" role="button" aria-expanded="true">Cancelar</a>
+                        <form class="col-3 my-auto" method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                            <button class="btn btn-danger" style=" background-color: #5bc0de " type="submit">
+                                Salir
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </nav>

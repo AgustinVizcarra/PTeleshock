@@ -1,6 +1,7 @@
 <jsp:useBean id="adminSession" scope="session" class="pe.edu.pucp.pteleshock.Beans.BUsuario"/>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.Bdesbloqueadas" %>
+<jsp:useBean id="cantidad" scope="request" type="java.lang.Integer"/>
 <% ArrayList<Bdesbloqueadas> desbloqueadas = (ArrayList<Bdesbloqueadas>) request.getAttribute("desbloqueadas");%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
@@ -156,8 +157,22 @@
                             <div class="col-xl-1 ">
                             </div>
                         </div>
+                        <div class="col align-self-center">
+                            <a style="position: center">
+                                <nav aria-label="Page navigation example" style="align-content: center">
+                                    <ul class="pagination justify-content-center">
+                                        <% int resto = cantidad % 7 == 0 ? 0 : 1;%>
+                                        <% for (int i = 1; i < Math.floor(cantidad / 7) + resto + 1; i++) { %>
+                                        <li class="page-item"><a class="page-link"
+                                                                 href="<%= request.getContextPath()%>/Admin_Hist?action=unlock&pag=<%=i %>"><%=i%>
+                                        </a></li>
+                                        <% } %>
+                                    </ul>
+                                </nav>
+                            </a>
+                        </div>
                         <div class="row">
-                            <br><br><br>
+                            <br>
                             <div class="col" style="position: absolute; bottom: 0; right: 0;">
                                 <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
                                    href="<%= request.getContextPath()%>/Admin_Index">
@@ -188,12 +203,14 @@
                 <h5 class="card-header text-center">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
-                    <a href="#" class="btn btn-primary mb-2">Cancelar</a>
-                    <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
-                        <button class="btn btn-danger mb-2" style=" background-color: #5bc0de " type="submit">
-                            Salir
-                        </button>
-                    </form>
+                    <div class="row align-items-center" style="display: flex; justify-content: center">
+                        <a href="#" class="btn btn-primary my-auto col-3" role="button" aria-expanded="true">Cancelar</a>
+                        <form class="col-3 my-auto" method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                            <button class="btn btn-danger" style=" background-color: #5bc0de " type="submit">
+                                Salir
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </nav>

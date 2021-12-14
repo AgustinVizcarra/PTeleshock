@@ -112,9 +112,9 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-                <main class="clase_administradores">
+                <main class="clase_administradores" style="height: 91.5%">
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4 text-center texto-central" style="padding-top:50px">Administradores</h1>
+                        <h1 class="mt-4 text-center texto-central" style="padding-top: 25px">Administradores</h1>
                         <ol class="breadcrumb mb-4">
                         </ol>
                         <div class="row">
@@ -163,7 +163,7 @@
                         </div>
                     </div>
                 </main>
-                <footer class="py-4 bg-light mt-auto">
+                <footer class="py-4 bg-light mt-auto" style="height: 8.5%">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Teleshock.Inc &copy; 2021</div>
@@ -184,12 +184,14 @@
                 <h5 class="card-header text-center">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
-                    <a href="#" class="btn btn-primary mb-2">Cancelar</a>
-                    <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
-                        <button class="btn btn-danger mb-2" style=" background-color: #5bc0de " type="submit">
-                            Salir
-                        </button>
-                    </form>
+                    <div class="row align-items-center" style="display: flex; justify-content: center">
+                        <a href="#" class="btn btn-primary my-auto col-3" role="button" aria-expanded="true">Cancelar</a>
+                        <form class="col-3 my-auto" method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                            <button class="btn btn-danger" style=" background-color: #5bc0de " type="submit">
+                                Salir
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </nav>

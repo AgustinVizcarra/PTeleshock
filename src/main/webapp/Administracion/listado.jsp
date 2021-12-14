@@ -120,7 +120,7 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-                <main class="clase_principal" style="height:92%; position: relative">
+                <main class="clase_principal" style="height:93%; position: relative">
                     <div class="container-fluid px-4">
                         <div>
                             <%
@@ -275,9 +275,10 @@
                     <div class="col align-self-center">
                         <a style="position: center">
                             <nav aria-label="Page navigation example" style="align-content: center">
+                                <% int resto= cantidad%4==0? 0:1; %>
                                 <% if (filtrar == 0) {%>
                                 <ul class="pagination justify-content-center">
-                                    <% for (int i = 1; i < Math.floor(cantidad / 4) + 2; i++) { %>
+                                    <% for (int i = 1; i < Math.floor(cantidad / 4)+resto+1; i++) { %>
                                     <li class="page-item"><a class="page-link"
                                                              href="<%= request.getContextPath()%>/Admin_Farm_List?pag=<%=i %>"><%=i%>
                                     </a></li>
@@ -286,7 +287,7 @@
                                 <%
                                 } else {%>
                                 <ul class="pagination justify-content-center">
-                                    <% for (int i = 1; i < Math.floor(cantidad / 4) + 2; i++) { %>
+                                    <% for (int i = 1; i < Math.floor(cantidad / 4)+resto+1; i++) { %>
                                     <li class="page-item"><a class="page-link"
                                                              href="<%= request.getContextPath()%>/Admin_Farm_List?iddistrito=<%=distrito.getId_distrito()%>&pag=<%=i %>"><%=i%>
                                     </a></li>
@@ -305,7 +306,7 @@
                         </div>
                     </div>
                 </main>
-                <footer class="py-4 bg-light mt-auto" style="height: 8%">
+                <footer class="py-4 bg-light mt-auto" style="height: 7%">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Teleshock.Inc &copy; 2021</div>
@@ -326,12 +327,14 @@
                 <h5 class="card-header text-center">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
-                    <a href="#" class="btn btn-primary mb-2">Cancelar</a>
-                    <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
-                        <button class="btn btn-danger mb-2" style=" background-color: #5bc0de " type="submit">
-                            Salir
-                        </button>
-                    </form>
+                    <div class="row align-items-center" style="display: flex; justify-content: center">
+                        <a href="#" class="btn btn-primary my-auto col-3" role="button" aria-expanded="true">Cancelar</a>
+                        <form class="col-3 my-auto" method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                            <button class="btn btn-danger" style=" background-color: #5bc0de " type="submit">
+                                Salir
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </nav>

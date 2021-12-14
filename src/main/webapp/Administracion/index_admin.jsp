@@ -173,12 +173,14 @@
                 <h5 class="card-header text-center">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
-                    <a href="#" class="btn btn-primary mb-2" role="button" aria-expanded="true">Cancelar</a>
-                    <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
-                        <button class="btn btn-danger mb-2" style=" background-color: #5bc0de " type="submit">
-                            Salir
-                        </button>
-                    </form>
+                    <div class="row align-items-center" style="display: flex; justify-content: center">
+                        <a href="#" class="btn btn-primary my-auto col-3" role="button" aria-expanded="true">Cancelar</a>
+                        <form class="col-3 my-auto" method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                            <button class="btn btn-danger" style=" background-color: #5bc0de " type="submit">
+                                Salir
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </nav>

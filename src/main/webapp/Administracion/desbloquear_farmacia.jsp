@@ -138,11 +138,11 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-                <main class="clase_desbloquear-farmacia">
+                <main class="clase_desbloquear-farmacia" style="height:92%">
                     <div class="container-fluid px-4">
                         <div class="row">
                             <div class="container">
-                                <div class="row justify-content-center" style="padding-top: 45px">
+                                <div class="row justify-content-center" style="padding-top: 5px">
                                     <div class="col-lg-5">
                                         <div class="card shadow-lg border-0 rounded-lg mt-5" style="border-top-left-radius: 2rem; border-top-right-radius: 2rem;
                                 border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
@@ -225,7 +225,7 @@
                                                            name="admin">
                                                     <div class="mt-4 mb-0">
                                                         <div class="d-grid">
-                                                            <button class="btn btn-primary" type="submit" style="margin-top: 15px; margin-bottom: 15px; background-color: #8BC34A; width: fit-content;
+                                                            <button class="btn btn-primary" type="submit" style="margin-top: 5px; margin-bottom: 5px; background-color: #8BC34A; width: fit-content;
                                                        margin-left: auto; margin-right: auto" href="#popup1">GRABAR Y
                                                                 CONTINUAR
                                                             </button>
@@ -240,7 +240,7 @@
                             <div class="col-xl-3 col-md-8">
                             </div>
                             <div class="row">
-                                <br><br><br>
+                                <br><br>
                                 <div class="col" style="position: absolute; bottom: 0; right: 0;">
                                     <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
                                        href="<%= request.getContextPath()%>/Admin_Index">
@@ -251,7 +251,7 @@
                         </div>
                     </div>
                 </main>
-                <footer class="py-4 bg-light mt-auto" style="background: #7ED957">
+                <footer class="py-4 bg-light mt-auto" style="background: #7ED957; height: 8%">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Teleshock.Inc &copy; 2021</div>
@@ -301,12 +301,14 @@
                 <h5 class="card-header text-center">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
-                    <a href="#" class="btn btn-primary mb-2">Cancelar</a>
-                    <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
-                        <button class="btn btn-danger mb-2" style=" background-color: #5bc0de " type="submit">
-                            Salir
-                        </button>
-                    </form>
+                    <div class="row align-items-center" style="display: flex; justify-content: center">
+                        <a href="#" class="btn btn-primary my-auto col-3" role="button" aria-expanded="true">Cancelar</a>
+                        <form class="col-3 my-auto" method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                            <button class="btn btn-danger" style=" background-color: #5bc0de " type="submit">
+                                Salir
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </nav>

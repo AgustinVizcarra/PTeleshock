@@ -138,7 +138,7 @@
                     <div class="container-fluid px-4">
                         <div class="row">
                             <div class="container">
-                                <div class="row justify-content-center" style="padding-top: 45px">
+                                <div class="row justify-content-center" style="padding-top: 30px; padding-bottom: 10px">
                                     <div class="col-lg-5">
                                         <div class="card shadow-lg border-0 rounded-lg mt-5" style="border-top-left-radius: 2rem; border-top-right-radius: 2rem;
                                 border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem">
@@ -194,7 +194,7 @@
                             <div class="col-xl-3 col-md-8">
                             </div>
                             <div class="row">
-                                <br><br><br>
+                                <br>
                                 <div class="col" style="position: absolute; bottom: 0; right: 0;">
                                     <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
                                        href="<%= request.getContextPath()%>/Admin_Index">
@@ -205,7 +205,7 @@
                         </div>
                     </div>
                 </main>
-                <footer class="py-4 bg-light mt-auto" style="background: #FFD51E" style="height:8%">
+                <footer class="py-4 bg-light mt-auto" style="background: #FFD51E; height:8%">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Teleshock.Inc &copy; 2021</div>
@@ -227,12 +227,14 @@
                 <h5 class="card-header text-center">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
-                    <a href="#" class="btn btn-primary mb-2">Cancelar</a>
-                    <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
-                        <button class="btn btn-danger mb-2" style=" background-color: #5bc0de " type="submit">
-                            Salir
-                        </button>
-                    </form>
+                    <div class="row align-items-center" style="display: flex; justify-content: center">
+                        <a href="#" class="btn btn-primary my-auto col-3" role="button" aria-expanded="true">Cancelar</a>
+                        <form class="col-3 my-auto" method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                            <button class="btn btn-danger" style=" background-color: #5bc0de " type="submit">
+                                Salir
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </nav>
