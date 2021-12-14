@@ -8,14 +8,15 @@ import java.util.HashMap;
 
 public class BolsaCompraDao extends BaseDao {
 
-    public int generarPedidoCarrito(int idfarmacia) {
+    public int generarPedidoCarrito(int iduser) {
         int idPedido = -1;
 
-        String sql = "INSERT INTO pedido (idusuario, idestatuspedido, preciototal) VALUES (10,1,0)";
+        String sql = "INSERT INTO pedido (idusuario, idestatuspedido, preciototal) VALUES (?,1,0)";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
+            pstmt.setInt(1, iduser);
             pstmt.executeUpdate();
 
             ResultSet rsKeys = pstmt.getGeneratedKeys();
@@ -53,15 +54,17 @@ public class BolsaCompraDao extends BaseDao {
 
     }
 
-    ArrayList<BPedidoEstado> listaPedidosCarrito = new ArrayList<>();
+    public BPedidoEstado pedidosCarrito(int idP) {
 
-    public ArrayList<BPedidoEstado> listarPedidosCarrito(int idP) {
+        BPedidoEstado pedidoC = new BPedidoEstado();
 
-        String sql = "SELECT pe.idpedido, dp.idproducto, dp.idfarmacia, p.nombre,pxf.recetamedica, dp.cantidad, pxf.preciounitario, f.foto1 FROM pedido pe \n" +
-                "left join detallepedido dp on(pe.idpedido=dp.idpedido)\n" +
+        String sql = "SELECT pe.idpedido, dp.idproducto, dp.idfarmacia,u.nombre, p.nombre,pxf.recetamedica, dp.cantidad, pxf.preciounitario, f.foto1 FROM pedido pe\n" +
+                "join detallepedido dp on(pe.idpedido=dp.idpedido)\n" +
                 "left join productoporfarmacia pxf on (dp.idproducto = pxf.idproducto and dp.idfarmacia = pxf.idfarmacia)\n" +
                 "left join producto p on (p.idproducto = pxf.idproducto)\n" +
                 "left join foto f on (dp.idproducto = f.idproducto and dp.idfarmacia = f.idfarmacia)\n" +
+                "left join farmacia far on (dp.idfarmacia=far.idfarmacia) \n" +
+                "left join usuario u on (far.idusuario = u.idusuario)\n" +
                 "where pe.idestatuspedido = 1 and pe.idpedido = ?;";
 
         try (Connection conn = this.getConnection();
@@ -72,26 +75,18 @@ public class BolsaCompraDao extends BaseDao {
             try (ResultSet rs = pstmt.executeQuery()) {
 
                 while (rs.next()) {
-                    BPedidoEstado pedidoC = new BPedidoEstado();
-
                     BPedido pedido = new BPedido();
 
                     pedido.setIdPedido(rs.getInt(1));
                     pedido.setIdFarmacia(rs.getInt(3));
-
                     pedidoC.setPedido(pedido);
-
-                    pedidoC.setFotoProducto(rs.getString(8));
-                    pedidoC.setNombreProducto(rs.getString(4));
-                    pedidoC.setCantidad(rs.getInt(6));
-                    pedidoC.setPrecioUnitario(rs.getDouble(7));
+                    pedido.setNombreFarmacia(rs.getString(4));
+                    pedidoC.setFotoProducto(rs.getString(9));
+                    pedidoC.setNombreProducto(rs.getString(5));
+                    pedidoC.setCantidad(rs.getInt(7));
+                    pedidoC.setPrecioUnitario(rs.getDouble(8));
                     pedidoC.setIdProducto(rs.getInt(2));
-                    pedidoC.setRecetaMedica(rs.getBoolean(5));
-
-                    listaPedidosCarrito.add(pedidoC);
-                    for(int i=0;i<listaPedidosCarrito.size();i++){
-                        System.out.println(listaPedidosCarrito.get(i).getNombreProducto());
-                    }
+                    pedidoC.setRecetaMedica(rs.getBoolean(6));
 
                 }
             }
@@ -100,10 +95,10 @@ public class BolsaCompraDao extends BaseDao {
             System.out.println("No se pudo realizar la busqueda");
 
         }
-        return listaPedidosCarrito;
+        return pedidoC;
     }
 
-    public void realizarPedido(int idPedido, String fecha, String hora, boolean receta, String fotoReceta) {
+    public void realizarPedido(int idPedido, String fecha, String hora, boolean receta, String fotoReceta, int codigoVenta) {
 
 
         String sql = "UPDATE pedido set idestatuspedido = 2, fechapedido = now() , fechaentrega = ? , codigodeventa = ? where idpedido = ?";
@@ -111,9 +106,9 @@ public class BolsaCompraDao extends BaseDao {
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
-            pstmt.setString(1, (fecha +" "+ hora));
-            pstmt.setInt(2, (int) Math.floor(Math.random()*4000 + 1000));
-            pstmt.setInt(3, idPedido);
+            pstmt.setString(2, (fecha +" "+ hora));
+            pstmt.setInt(3, codigoVenta);
+            pstmt.setInt(4, idPedido);
 
             pstmt.executeUpdate();
 
@@ -155,5 +150,62 @@ public class BolsaCompraDao extends BaseDao {
 
     }
 
+    public void eliminarProdCarrito(int idProducto,int idPed, int idFarm){
+        System.out.println(idFarm);
+        System.out.println(idPed);
+        System.out.println(idProducto);
+        String sql="delete from detallepedido where idproducto=? and idpedido=? and idfarmacia=?;";
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1,idProducto);
+            pstmt.setInt(2, idPed);
+            pstmt.setInt(3,idFarm);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public BPedidoEstado obtenerProd(int idProducto,int idPed, int idFarm){
+        BPedidoEstado pedidoC = null;
+
+        String sql = "SELECT pe.idpedido, dp.idproducto, dp.idfarmacia,u.nombre, p.nombre,pxf.recetamedica, dp.cantidad, pxf.preciounitario, f.foto1 FROM pedido pe\n" +
+                "join detallepedido dp on(pe.idpedido=dp.idpedido)\n" +
+                "left join productoporfarmacia pxf on (dp.idproducto = pxf.idproducto and dp.idfarmacia = pxf.idfarmacia)\n" +
+                "left join producto p on (p.idproducto = pxf.idproducto)\n" +
+                "left join foto f on (dp.idproducto = f.idproducto and dp.idfarmacia = f.idfarmacia)\n" +
+                "left join farmacia far on (dp.idfarmacia=far.idfarmacia)\n" +
+                "left join usuario u on (far.idusuario = u.idusuario)\n" +
+                "where dp.idfarmacia = ? and pe.idpedido =? and dp.idproducto=?;";
+
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, idFarm);
+            pstmt.setInt(2, idPed);
+            pstmt.setInt(3, idProducto);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    pedidoC= new BPedidoEstado();
+                    BPedido pedido = new BPedido();
+
+                    pedido.setIdPedido(rs.getInt(1));
+                    pedido.setIdFarmacia(rs.getInt(3));
+                    pedidoC.setPedido(pedido);
+                    pedido.setNombreFarmacia(rs.getString(4));
+                    pedidoC.setFotoProducto(rs.getString(9));
+                    pedidoC.setNombreProducto(rs.getString(5));
+                    pedidoC.setCantidad(rs.getInt(7));
+                    pedidoC.setPrecioUnitario(rs.getDouble(8));
+                    pedidoC.setIdProducto(rs.getInt(2));
+                    pedidoC.setRecetaMedica(rs.getBoolean(6));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pedidoC;
+    }
 
 }

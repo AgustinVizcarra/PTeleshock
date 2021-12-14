@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import pe.edu.pucp.pteleshock.Dao.PaswordDao;
 
 import javax.servlet.*;
 import javax.servlet.annotation.*;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(filterName = "LoginFilter",urlPatterns = {"/Login_Password"})
+@WebFilter(filterName = "LoginFilter",urlPatterns = {"/Login_Password_Recovery"})
 public class LoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
@@ -37,7 +38,11 @@ public class LoginFilter implements Filter {
                         System.out.println("El emisor obtenido por decodificación es:"+originToken.getIssuer());
                         System.out.println("El correo obtenido por decodificación es:"+originToken.getClaim("correo").asString());
                         request.setAttribute("correo",originToken.getClaim("correo").asString());
-                        RequestDispatcher view = request.getRequestDispatcher("/Login/contraseña.jsp");
+                        //aqui debo obtener el id
+                        PaswordDao paswordDao = new PaswordDao();
+                        int id = paswordDao.obtenerid(originToken.getClaim("correo").asString());
+                        request.setAttribute("idusuario",String.valueOf(id));
+                        RequestDispatcher view = request.getRequestDispatcher("/Login/recuperacion_contraseña.jsp");
                         view.forward(request,response);
                     } catch (JWTDecodeException e){
                         e.printStackTrace();

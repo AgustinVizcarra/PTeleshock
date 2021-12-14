@@ -49,11 +49,16 @@
                                         <label for="inputEmail" class="mb-3 text-muted">Correo
                                             electrónico</label>
                                     </div>
-                                    <div class="text-danger" style="padding-bottom: 15px">
-                                        <%if(!mensaje.equalsIgnoreCase("")){%>
-                                        <%=mensaje%>
-                                        <%}%>
+                                    <%if(!mensaje.equalsIgnoreCase("")){
+                                    if(mensaje.equalsIgnoreCase("Se le ha enviado un correo para actualizar la contraseña")){%>
+                                    <div class="text-success" style="padding-bottom: 15px">
+
+                                    <%}else{%>
+                                            <div class="text-danger" style="padding-bottom: 15px">
+                                                <%}%>
+                                                <%=mensaje%>
                                     </div>
+                                            <%}%>
                                     <div class="d-grid gap-2 col-6 mx-auto mb-3">
                                         <button class="btn btn-success" type="submit">Solicitar</button>
                                         <a class="small text-center" href="<%= request.getContextPath()%>/Login">Inicio de sesión</a>

@@ -1,5 +1,6 @@
 <%@page import="java.util.ArrayList" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BDetProd" %>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="farmacia" type="pe.edu.pucp.pteleshock.Beans.BFarmaciaPorDistrito" scope="request"/>
 <jsp:useBean type="java.lang.Integer" scope="request" id="totalPag"/>
@@ -38,10 +39,7 @@
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Buscar..." aria-label="Buscar..."
-                           aria-describedby="btnNavbarSearch"/>
-                    <button class="btn btn-primary" type="button"><i
-                            class="fas fa-search"></i></button>
+
                     <!-- al button le quité esta linea dentro de sus parámetros  id="btnNavbarSearch" -->
                 </div>
             </form>
@@ -83,7 +81,8 @@
                     </div>
                     <div class="sb-sidenav-footer" style="color: gray">
                         <div class="small">Logged in as:</div>
-                        Nombre Apellido
+                        <%BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");%>
+                        <%=cliente.getNombre() + " " + cliente.getApellido()%>
                     </div>
                 </nav>
             </div>
@@ -274,12 +273,16 @@
         </nav>
 
         <nav id="salir" class="overlay">
-            <div class=" popup card text-center ">
-                <h5 class="card-header text-center text-light">Teleshock</h5>
+            <div class=" popup card text-center " style="background-color: white">
+                <h5 class="card-header text-center">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
                     <a href="#" class="btn btn-primary mb-2">Cancelar</a>
-                    <a href="<%= request.getContextPath()%>/Login_Exit" class="btn btn-danger mb-2">Salir</a>
+                    <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                        <button class="btn btn-danger mb-2" type="submit">
+                            Salir
+                        </button>
+                    </form>
 
                 </div>
             </div>

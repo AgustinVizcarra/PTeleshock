@@ -1,5 +1,6 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
+import pe.edu.pucp.pteleshock.Beans.BPedidoEstado;
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.UsuarioDao;
 
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 @WebServlet(name = "LoginServlet", value = "/Login")
 public class Login_SessionServlet extends HttpServlet {
@@ -59,6 +62,12 @@ public class Login_SessionServlet extends HttpServlet {
                     switch (rol) {
                         case 1:
                             session.setAttribute("clienteSession", usuario);
+                            session.setAttribute("bolsita",new ArrayList<BPedidoEstado>());
+                            int codigoVenta=0;
+                            session.setAttribute("codVenta",codigoVenta);
+                            HashMap<Integer, Integer> map= new HashMap<>();
+                            map.put(0,0);
+                            session.setAttribute("maps",map);
                             response.sendRedirect(request.getContextPath() + "/Client_Farmacias");
                             break;
                         case 2:
