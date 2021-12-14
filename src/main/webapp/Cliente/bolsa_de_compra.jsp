@@ -18,6 +18,94 @@
         <link href="css/style.css" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
                 crossorigin="anonymous"></script>
+        <style>
+            .number-input input[type="number"] {
+                -webkit-appearance: textfield;
+                -moz-appearance: textfield;
+                <%--appearance: textfield;--%>
+            }
+
+            .number-input input[type=number]::-webkit-inner-spin-button,
+            .number-input input[type=number]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+            }
+
+            .number-input {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+
+            .number-input button {
+                -webkit-appearance: none;
+                background-color: transparent;
+                border: none;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                margin: 0;
+                position: relative;
+            }
+
+            .number-input button:before,
+            .number-input button:after {
+                display: inline-block;
+                position: absolute;
+                content: '';
+                height: 2px;
+                transform: translate(-50%, -50%);
+            }
+
+            .number-input button.plus:after {
+                transform: translate(-50%, -50%) rotate(90deg);
+            }
+
+            .number-input input[type=number] {
+                text-align: center;
+            }
+
+            .number-input.number-input {
+                border: 1px solid #ced4da;
+                width: 10rem;
+                border-radius: .25rem;
+            }
+
+            .number-input.number-input button {
+                width: 2.6rem;
+                height: .7rem;
+            }
+
+            .number-input.number-input button.minus {
+                padding-left: 10px;
+            }
+
+            .number-input.number-input button:before,
+            .number-input.number-input button:after {
+                width: .7rem;
+                background-color: #495057;
+            }
+
+            .number-input.number-input input[type=number] {
+                max-width: 4rem;
+                padding: .5rem;
+                border: 1px solid #ced4da;
+                border-width: 0 1px;
+                font-size: 1rem;
+                height: 2rem;
+                color: #495057;
+            }
+
+            @media not all and (min-resolution:.001dpcm) {
+                @supports (-webkit-appearance: none) and (stroke-color:transparent) {
+
+                    .number-input.def-number-input.safari_only button:before,
+                    .number-input.def-number-input.safari_only button:after {
+                        margin-top: -.3rem;
+                    }
+                }
+            }
+
+        </style>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand" style="background-color: #00152D; opacity: 0.9;">
@@ -109,19 +197,6 @@
                                                                 <h6 class="card-title"><%=ee.getKey()%>
                                                                 </h6>
                                                             </div>
-                                                            <div class="col">
-                                                                <div>
-                                                                    <form method="post" action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=comprar">
-                                                                        <div>
-                                                                            <input id="party" type="datetime-local" name="partydate"
-                                                                                   value="<%=LocalDate.now()+"T"+"09:30"%>"
-                                                                                   min="<%=LocalDate.now()+"T"+"09:30"%>" max=""
-                                                                                   pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
-                                                                            <span class="validity"></span>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -150,18 +225,27 @@
                                                                 <td><small><%=ee.getValue().get(i).getNombreProducto()%>
                                                                 </small></td>
                                                                 <td>
-                                                                    <input class="form-control" id="unidadProd" type="number" name="unidadProd" min="1" value="1" max="10">
+                                                                    <form method="POST"
+                                                                          action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=actualizar&idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>">
+                                                                        <div class="def-number-input number-input safari_only">
+                                                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+                                                                            <input class="quantity" min="0" name="cant" value="<%=ee.getValue().get(i).getCantidad()%>" type="number">
+                                                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+                                                                        </div>
+                                                                    </form>
                                                                 </td>
-                                                                <td><%=(ee.getValue().get(i).getPrecioUnitario() * ee.getValue().get(i).getCantidad())%>
+                                                                <td><%="S/."+(ee.getValue().get(i).getPrecioUnitario() * ee.getValue().get(i).getCantidad())%>
                                                                 </td>
                                                                 <%subtotal = subtotal + (ee.getValue().get(i).getPrecioUnitario() * ee.getValue().get(i).getCantidad());
                                                                 %>
-
                                                                 <%if (ee.getValue().get(i).isRecetaMedica()) {%>
                                                                 <td>
-                                                                    <div class="mb-3">
-                                                                        <input class="form-control" name="fotoReceta" type="file" id="formFile1">
-                                                                    </div>
+                                                                    <form method="POST"
+                                                                          action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=actualizarFoto&idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>">
+                                                                        <div class="mb-3">
+                                                                            <input class="form-control" name="fotoReceta" type="file" id="formFile1">
+                                                                        </div>
+                                                                    </form>
                                                                 </td>
                                                                 <%} else {%>
                                                                 <td class="text-center">No requiere</td>
@@ -189,24 +273,41 @@
                                 <h5 class="card-title mb-4" >Resumen de compra</h5>
                                 <form method="POST" action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=comprar">
                                     <%double total = 0.0;%>
+                                    <%int i = 0;%>
                                     <%for (Map.Entry<String, Double> ee : map2.entrySet()) {
                                         String key = ee.getKey();
                                         Double values = ee.getValue();
+                                        i++;
                                     %>
                                     <div class="row">
                                         <div class="col"><h6><%=ee.getKey()%></h6></div>
-                                        <div class="col"><h6><%=ee.getValue()%></h6></div>
+                                        <div class="col"><h6>S/.<%=ee.getValue()%></h6></div>
                                         <%total=total+ee.getValue();
-                                        session.setAttribute("total",total);
                                         %>
                                     </div>
+                                    <div class="col">
+                                        <div>
+                                            <label class="me-2">Fecha de entrega:</label>
+                                            <input id="party" type="datetime-local" name="horaEnt<%=i%>"
+                                                   value="<%=LocalDate.now()+"T"+"09:30"%>"
+                                                   min="<%=LocalDate.now()+"T"+"09:30"%>" max=""
+                                                   pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
+                                            <span class="validity"></span>
+                                        </div>
+                                    </div>
+                                    <%
+                                        session.setAttribute("Subtotal",map2);
+                                    %>
                                     <%}%>
+                                    <%
+                                        session.setAttribute("contador",i);
+                                    %>
                                     <hr style="color: black; background-color: black; width:60%;" />
                                     <div class="row">
                                         <div class="col"><h6>Total</h6></div>
-                                        <div class="col"><h6><%=total%></h6></div>
+                                        <div class="col"><h6>S/.<%=total%></h6></div>
                                     </div>
-                                    <button type="submit" class="btn btn-warning">Realizar Pedido </button>
+                                    <button type="submit" class="btn btn-warning">Realizar Pedido</button>
                                 </form>
                             </div>
                         </div>

@@ -98,7 +98,7 @@ public class BolsaCompraDao extends BaseDao {
         return pedidoC;
     }
 
-    public void realizarPedido(int idPedido, String fecha, String hora, boolean receta, String fotoReceta, int codigoVenta) {
+    public void realizarPedido(int idPedido, String fecha, boolean receta, String fotoReceta, int codigoVenta) {
 
 
         String sql = "UPDATE pedido set idestatuspedido = 2, fechapedido = now() , fechaentrega = ? , codigodeventa = ? where idpedido = ?";
@@ -106,7 +106,7 @@ public class BolsaCompraDao extends BaseDao {
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
-            pstmt.setString(2, (fecha +" "+ hora));
+            pstmt.setString(2, (fecha));
             pstmt.setInt(3, codigoVenta);
             pstmt.setInt(4, idPedido);
 
@@ -206,6 +206,40 @@ public class BolsaCompraDao extends BaseDao {
             e.printStackTrace();
         }
         return pedidoC;
+    }
+
+    public void cantidad(int cantidad, int idFarm, int idPedido, int idProd){
+        String sql = "UPDATE detallepedido set cantidad=? where idfarmacia = ? and idpedido =? and idproducto=?;";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setInt(1,cantidad);
+            pstmt.setInt(2,idFarm);
+            pstmt.setInt(3,idPedido);
+            pstmt.setInt(4,idProd);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void foto(String foto, int idFarm, int idPedido, int idProd){
+        String sql = "UPDATE detallepedido set recetamedica=? where idfarmacia = ? and idpedido =? and idproducto=?;";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setString(1,foto);
+            pstmt.setInt(2,idFarm);
+            pstmt.setInt(3,idPedido);
+            pstmt.setInt(4,idProd);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

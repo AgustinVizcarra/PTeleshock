@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(name = "Client_Bolsa_CompraServlet", value = "/Client_Bolsa_Compra")
 public class Client_Bolsa_CompraServlet extends HttpServlet {
@@ -111,6 +112,45 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
         BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");
 
         switch (action) {
+            case "actualizarFoto":
+                String foto = request.getParameter("fotoReceta") != null ? request.getParameter("fotoReceta") : "";
+                String idFarmaciaStr2 = request.getParameter("idF") != null ? request.getParameter("idF") : "";
+                String idProd2= request.getParameter("idProd") != null ? request.getParameter("idProd") : "";
+                String idPedido3 = request.getParameter("idP") != null ? request.getParameter("idP") : "";
+                bolsaCompraDao.foto(foto,Integer.parseInt(idFarmaciaStr2),Integer.parseInt(idPedido3),Integer.parseInt(idProd2));
+                ArrayList<BPedidoEstado> listBolsa4 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
+                BPedidoEstado bped3=bolsaCompraDao.obtenerProd(Integer.parseInt(idProd2),Integer.parseInt(idPedido3),Integer.parseInt(idFarmaciaStr2));
+                for(int i = 0; i < listBolsa4.size(); i++){
+                    BPedidoEstado bped2 = listBolsa4.get(i);
+
+                    if (bped2.getNombreProducto().equals(bped3.getNombreProducto())) {
+                        listBolsa4.set(i,bped3);
+                        session.setAttribute("bolsita",listBolsa4);
+                        break;
+                    }
+                }
+                response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra");
+                break;
+            case "actualizar":
+                String cantidad = request.getParameter("cant") != null ? request.getParameter("cant") : "";
+                String idFarmaciaStr1 = request.getParameter("idF") != null ? request.getParameter("idF") : "";
+                String idProd= request.getParameter("idProd") != null ? request.getParameter("idProd") : "";
+                String idPedido1 = request.getParameter("idP") != null ? request.getParameter("idP") : "";
+                System.out.println(cantidad);
+                bolsaCompraDao.cantidad(Integer.parseInt(cantidad),Integer.parseInt(idFarmaciaStr1),Integer.parseInt(idPedido1),Integer.parseInt(idProd));
+                ArrayList<BPedidoEstado> listBolsa3 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
+                BPedidoEstado bped=bolsaCompraDao.obtenerProd(Integer.parseInt(idProd),Integer.parseInt(idPedido1),Integer.parseInt(idFarmaciaStr1));
+                for(int i = 0; i < listBolsa3.size(); i++) {
+                    BPedidoEstado bped1 = listBolsa3.get(i);
+
+                    if (bped1.getNombreProducto().equals(bped.getNombreProducto())) {
+                        listBolsa3.set(i,bped);
+                        session.setAttribute("bolsita",listBolsa3);
+                        break;
+                    }
+                }
+                response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra");
+                break;
             case "agregar":
                 String idProdStr = request.getParameter("idProd") != null ? request.getParameter("idProd") : "";
                 String cantidadPStr = request.getParameter("cantidad") != null ? request.getParameter("cantidad") : "";
@@ -139,7 +179,17 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
             case "comprar":
                 String idPedidoC = request.getParameter("idPedido") != null ? request.getParameter("idPedido") : "";
                 String fechaEnt = request.getParameter("fechaEnt") != null ? request.getParameter("fechaEnt") : "";
-                String horaEnt = request.getParameter("horaEnt") != null ? request.getParameter("horaEnt") : "";
+                int cont = (int)session.getAttribute("contador");
+                System.out.println(cont);
+                String horaEnt="";
+                if(cont!=0){
+                    HashMap<String,String> entrega= new HashMap<>();
+                    for(int i=1; i<=cont;i++){
+                        horaEnt = request.getParameter("horaEnt"+i) != null ? request.getParameter("horaEnt"+i) : "";
+
+                    }
+
+                }
                 String recetaStr = request.getParameter("receta") != null ? request.getParameter("receta") : "";
                 String fotoReceta = request.getParameter("fotoReceta") != null ? request.getParameter("fotoReceta") : "";
                 int codigoVenta= (Integer) session.getAttribute("codVenta");
@@ -149,7 +199,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                 }else{
                     codigoVenta= (Integer) session.getAttribute("codVenta");
                 }
-                bolsaCompraDao.realizarPedido(Integer.parseInt(idPedidoC), fechaEnt, horaEnt, Boolean.parseBoolean(recetaStr), fotoReceta,codigoVenta);
+                bolsaCompraDao.realizarPedido(Integer.parseInt(idPedidoC), fechaEnt, Boolean.parseBoolean(recetaStr), fotoReceta,codigoVenta);
                 response.sendRedirect(request.getContextPath() + "/Client_Listado_Producto");
 
                 break;
