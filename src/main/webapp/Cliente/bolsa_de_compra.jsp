@@ -4,9 +4,6 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.time.LocalDate" %>
-<%@ page import="java.time.LocalTime" %>
-<%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="java.time.LocalDateTime" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html lang="en">
@@ -26,8 +23,7 @@
         <nav class="sb-topnav navbar navbar-expand" style="background-color: #00152D; opacity: 0.9;">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" style="color: white"
-               href="<%= request.getContextPath()%><%!private class LocalDateTime { }
-%>/Client_Farmacias"><img margin-right class="icon"
+               href="<%= request.getContextPath()%>/Client_Farmacias"><img margin-right class="icon"
                           src="img/logo_final.png">eleshock</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" style="color: white" id="sidebarToggle"
