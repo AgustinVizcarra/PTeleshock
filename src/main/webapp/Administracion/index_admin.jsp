@@ -112,7 +112,7 @@
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-                <main class="clase_principal" style="height:90%">
+                <main class="clase_principal" style="height:93%">
                     <div class="container-fluid px-4">
                         <div>
                             <h1 class="mt-4 text-center texto-central">Distritos</h1>
@@ -132,7 +132,7 @@
                                         <div class="card-body"><%=distritos.get(i).getNombre()%>
                                         </div>
                                         <div class="card-footer d-flex align-items-center justify-content-between">
-                                            <a class="small text-white stretched-link"
+                                            <a class="small btn text-white" aria-expanded="false"
                                                href="<%=request.getContextPath()%>/Admin_Farm_List?iddistrito=<%=distritos.get(i).getId_distrito()%>">Ver
                                                 detalles</a>
                                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -152,7 +152,7 @@
                         </div>
                     </div>
                 </main>
-                <footer class="py-4 bg-light" style="height: 10%">
+                <footer class="py-4 bg-light" style="height: 7%">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Teleshock.Inc &copy; 2021</div>
@@ -173,7 +173,7 @@
                 <h5 class="card-header text-center">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
-                    <a href="#" class="btn btn-primary mb-2">Cancelar</a>
+                    <a href="#" class="btn btn-primary mb-2" role="button" aria-expanded="true">Cancelar</a>
                     <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
                         <button class="btn btn-danger mb-2" style=" background-color: #5bc0de " type="submit">
                             Salir

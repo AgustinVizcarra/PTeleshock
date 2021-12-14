@@ -92,7 +92,6 @@ public class Login_SessionServlet extends HttpServlet {
 
                 request.getSession().invalidate();
                 response.sendRedirect(request.getContextPath() + "/Login");
-
                 break;
 
 
