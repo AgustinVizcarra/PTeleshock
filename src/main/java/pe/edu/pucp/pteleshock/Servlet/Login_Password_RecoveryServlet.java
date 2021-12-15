@@ -20,6 +20,10 @@ public class Login_Password_RecoveryServlet extends HttpServlet {
         RequestDispatcher view = request.getRequestDispatcher("/Login/recuperacion_contraseña.jsp");
         //session_login.removeAttribute("logid");
         view.forward(request, response);
+        //System.out.println("Paso por acá");
+        HttpSession session = request.getSession();
+        session.setAttribute("validacion",0);
+        //System.out.println("Se cambio el valor");
     }
 
     @Override
@@ -35,6 +39,7 @@ public class Login_Password_RecoveryServlet extends HttpServlet {
         paswordDao.cambiarContra(id,pwd);
         paswordDao.confirmacionCambioContra(id);
         System.out.println("Cambio de contraseña exitoso");
+        System.out.println("Luego paso por aquí");
         response.sendRedirect(request.getContextPath()+"/Login_Password_Recovery#popup1");
     }
 }

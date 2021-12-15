@@ -12,7 +12,9 @@ import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 
 @WebFilter(filterName = "LoginFilter",urlPatterns = {"/Login_Password_Recovery"})
 public class LoginFilter implements Filter {
@@ -20,16 +22,13 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        String action = request.getParameter("action")==null?"desbloquear":"";
+        //System.out.println(request.getParameter("acc"));
+        //String action = request.getParameter("acc")==null?"":request.getParameter("acc");
         String token = request.getParameter("correo")==null?"":request.getParameter("correo");
-        System.out.println("token: "+token);
-        System.out.println("Accion: "+action);
-        //
-        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-        response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-        response.setDateHeader("Expires", 0);
-        //
-        if(!token.equalsIgnoreCase("")||!action.equalsIgnoreCase("")){
+        HttpSession session = request.getSession();
+        System.out.println("Valido: "+session.getAttribute("validacion"));
+        //System.out.println("Primero paso por el filtro");
+        if(!token.equalsIgnoreCase("")||(Integer) session.getAttribute("validacion")==1){
             //si alguno de los dos es distinto de nulo tenemos que ver cual es
             if(!token.equalsIgnoreCase("")){
                 String key = "TeleshockToken";
@@ -48,6 +47,8 @@ public class LoginFilter implements Filter {
                         int id = paswordDao.obtenerid(originToken.getClaim("correo").asString());
                         request.setAttribute("idusuario",String.valueOf(id));
                         RequestDispatcher view = request.getRequestDispatcher("/Login/recuperacion_contraseña.jsp");
+                        session = request.getSession();
+                        session.setAttribute("validacion",1);
                         view.forward(request,response);
                     } catch (JWTDecodeException e){
                         e.printStackTrace();
@@ -62,6 +63,10 @@ public class LoginFilter implements Filter {
                     viewError.forward(request, response);
                 }
             } else {
+                //
+                response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+                response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+                response.setDateHeader("Expires", 0);
                 chain.doFilter(request, response);
                 //flujo normal
             }
