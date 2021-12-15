@@ -45,6 +45,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     String idPedidoStr = request.getParameter("idPed") != null ? request.getParameter("idPed") : "";
                     FarmaciaDao farmaciaDao = new FarmaciaDao();
                     ArrayList<BFarmacia> listaFarmacia=farmaciaDao.getListaTodasFarmacias("");
+                    int cantFarm=listaFarmacia.size();
                     request.setAttribute("listaFarmacia",listaFarmacia);
                     if(!idPedidoStr.equals("")) {
                         listBolsa1.add(bolsaCompraDao.pedidosCarrito(Integer.parseInt(idPedidoStr)));
@@ -52,7 +53,8 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     }
                     HashMap<Integer, ArrayList<BPedidoEstado>> map = new HashMap<>();
                     session.setAttribute("map",map);
-                    for(int i=1;i<=100;i++){
+
+                    for(int i=1;i<=cantFarm;i++){
                         ArrayList<BPedidoEstado> lista=new ArrayList<>();
                         for(BPedidoEstado bp: listBolsa1){
                             if(bp.getPedido().getIdFarmacia()==i){
@@ -61,6 +63,9 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                             }
                         }
                         session.setAttribute("map",map);
+                    }
+                    if(map.isEmpty()){
+                       session.setAttribute("msg","No tiene productos agregados a su bolsa de compras");
                     }
 
                     RequestDispatcher view = request.getRequestDispatcher("/Cliente/bolsa_de_compra.jsp");
@@ -85,7 +90,6 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                                 break;
                             }
                         }
-                       System.out.println(listBolsa2.get(listBolsa2.size()-1).getNombreProducto());
                        session.setAttribute("bolsita",listBolsa2);
                    }else{
                         System.out.println("es nulo");

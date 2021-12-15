@@ -168,6 +168,32 @@ public class BolsaCompraDao extends BaseDao {
         }
     }
 
+    public void eliminarCarritoBaseDatos(int idProducto,int idPed, int idFarm){
+
+        String sql="delete from detallepedido where idproducto=? and idpedido=? and idfarmacia=?;";
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1,idProducto);
+            pstmt.setInt(2, idPed);
+            pstmt.setInt(3,idFarm);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String sql1="delete from pedido where idpedido=?;";
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql1)) {
+            pstmt.setInt(1,idPed);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public BPedidoEstado obtenerProd(int idProducto,int idPed, int idFarm){
         BPedidoEstado pedidoC = null;
 

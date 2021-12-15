@@ -2,6 +2,7 @@ package pe.edu.pucp.pteleshock.Servlet;
 
 import pe.edu.pucp.pteleshock.Beans.BPedidoEstado;
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
+import pe.edu.pucp.pteleshock.Dao.BolsaCompraDao;
 import pe.edu.pucp.pteleshock.Dao.UsuarioDao;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(name = "LoginServlet", value = "/Login")
 public class Login_SessionServlet extends HttpServlet {
@@ -95,10 +97,19 @@ public class Login_SessionServlet extends HttpServlet {
                 }
                 break;
             case "logout":
-
+                HttpSession session = request.getSession();
+                ArrayList<BPedidoEstado> listBolsa1 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
+                BolsaCompraDao bolsaCompraDao = new BolsaCompraDao();
+                if(!listBolsa1.isEmpty()){
+                    for(int i = 0; i < listBolsa1.size(); i++) {
+                        int idPed= listBolsa1.get(i).getPedido().getIdPedido();
+                        int idProd= listBolsa1.get(i).getIdProducto();
+                        int idFarm=listBolsa1.get(i).getPedido().getIdFarmacia();
+                        bolsaCompraDao.eliminarCarritoBaseDatos(idProd,idPed,idFarm);
+                    }
+                }
                 request.getSession().invalidate();
                 response.sendRedirect(request.getContextPath() + "/Login");
-
                 break;
 
 

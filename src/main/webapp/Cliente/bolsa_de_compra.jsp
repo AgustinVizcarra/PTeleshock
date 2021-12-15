@@ -186,90 +186,95 @@
                                     <div class="accordion" id="accordionExample">
                                         <%HashMap<Integer, ArrayList<BPedidoEstado>> map=(HashMap<Integer, ArrayList<BPedidoEstado>>) session.getAttribute("map");
                                             HashMap<Integer, Double> map2 = new HashMap<>();%>
-                                        <%for (Map.Entry<Integer, ArrayList<BPedidoEstado>> ee : map.entrySet()) {
-                                            int key = ee.getKey();
-                                            ArrayList<BPedidoEstado> values = ee.getValue();
-                                        %>
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingOne">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                            <div class="col">
-                                                                <%for(BFarmacia bf:listaFarmacia){
-                                                                    if(bf.getIdfarmacia()==key){
-                                                                %>
-                                                                <h6 class="card-title"><%=bf.getNombre()%>
-                                                                </h6>
-                                                                <%}%>
-                                                                <%}%>
-                                                            </div>
-                                                        </button>
+                                        <%if(map.isEmpty()){%>
+                                            <div class="alert alert-warning" role="alert"><%=(String) session.getAttribute("msg")%></div>
+                                            <%session.removeAttribute("msg");%>
+                                        <%}else{%>
+                                            <%for (Map.Entry<Integer, ArrayList<BPedidoEstado>> ee : map.entrySet()) {
+                                                int key = ee.getKey();
+                                                ArrayList<BPedidoEstado> values = ee.getValue();
+                                            %>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingOne">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                <div class="col">
+                                                                    <%for(BFarmacia bf:listaFarmacia){
+                                                                        if(bf.getIdfarmacia()==key){
+                                                                    %>
+                                                                    <h6 class="card-title"><%=bf.getNombre()%>
+                                                                    </h6>
+                                                                    <%}%>
+                                                                    <%}%>
+                                                                </div>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </h2>
+                                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                    <div class="accordion-body">
+                                                        <table class="table align-content-center">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Producto</th>
+                                                                    <th scope="col"></th>
+                                                                    <th scope="col">Unidad</th>
+                                                                    <th scope="col">Precio</th>
+                                                                    <th scope="col" style="text-align:center">Receta</th>
+                                                                    <th scope="col"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <%double subtotal = 0.0;%>
+                                                            <% for(int i=0;i<values.size();i++) {%>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th scope="row"><img  src="<%= request.getContextPath()%>/ImgServlet?prod=<%=ee.getValue().get(i).getFotoProducto()%>"
+                                                                                          class="img-thumbnail"
+                                                                                          alt="..."
+                                                                                          style="width: 100px; height: 100px"></th>
+                                                                    <td><small><%=ee.getValue().get(i).getNombreProducto()%>
+                                                                    </small></td>
+                                                                    <td>
+                                                                        <form method="POST"
+                                                                              action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=actualizar&idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>">
+                                                                            <div class="def-number-input number-input safari_only">
+                                                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+                                                                                <input class="quantity" min="1" max="7" name="cant" value="<%=ee.getValue().get(i).getCantidad()%>" type="number">
+                                                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </td>
+                                                                    <td><%="S/."+(ee.getValue().get(i).getPrecioUnitario() * ee.getValue().get(i).getCantidad())%>
+                                                                    </td>
+                                                                    <%subtotal = subtotal + (ee.getValue().get(i).getPrecioUnitario() * ee.getValue().get(i).getCantidad());
+                                                                    %>
+                                                                    <%if (ee.getValue().get(i).isRecetaMedica()) {%>
+                                                                    <td>
+                                                                        <form method="POST"
+                                                                              action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=actualizarFoto&idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>">
+                                                                            <div class="mb-3">
+                                                                                <input class="form-control" name="fotoReceta" type="file" id="formFile1">
+                                                                            </div>
+                                                                        </form>
+                                                                    </td>
+                                                                    <%} else {%>
+                                                                    <td class="text-center">No requiere</td>
+                                                                    <%}%>
+                                                                    <td class="align-content-md-center">
+                                                                        <a class="btn btn-danger" href="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=borrar&idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>"><span class="fa fa-trash"></span></a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <%}%>
+                                                            <%
+                                                                map2.put(ee.getKey(),subtotal);
+                                                            %>
+                                                        </table>
                                                     </div>
                                                 </div>
-                                            </h2>
-                                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <table class="table align-content-center">
-                                                        <thead>
-                                                            <tr>
-                                                                <th scope="col">Producto</th>
-                                                                <th scope="col"></th>
-                                                                <th scope="col">Unidad</th>
-                                                                <th scope="col">Precio</th>
-                                                                <th scope="col" style="text-align:center">Receta</th>
-                                                                <th scope="col"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <%double subtotal = 0.0;%>
-                                                        <% for(int i=0;i<values.size();i++) {%>
-                                                        <tbody>
-                                                            <tr>
-                                                                <th scope="row"><img  src="<%= request.getContextPath()%>/ImgServlet?prod=<%=ee.getValue().get(i).getFotoProducto()%>"
-                                                                                      class="img-thumbnail"
-                                                                                      alt="..."
-                                                                                      style="width: 100px; height: 100px"></th>
-                                                                <td><small><%=ee.getValue().get(i).getNombreProducto()%>
-                                                                </small></td>
-                                                                <td>
-                                                                    <form method="POST"
-                                                                          action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=actualizar&idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>">
-                                                                        <div class="def-number-input number-input safari_only">
-                                                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-                                                                            <input class="quantity" min="0" max="7" name="cant" value="<%=ee.getValue().get(i).getCantidad()%>" type="number">
-                                                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
-                                                                        </div>
-                                                                    </form>
-                                                                </td>
-                                                                <td><%="S/."+(ee.getValue().get(i).getPrecioUnitario() * ee.getValue().get(i).getCantidad())%>
-                                                                </td>
-                                                                <%subtotal = subtotal + (ee.getValue().get(i).getPrecioUnitario() * ee.getValue().get(i).getCantidad());
-                                                                %>
-                                                                <%if (ee.getValue().get(i).isRecetaMedica()) {%>
-                                                                <td>
-                                                                    <form method="POST"
-                                                                          action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=actualizarFoto&idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>">
-                                                                        <div class="mb-3">
-                                                                            <input class="form-control" name="fotoReceta" type="file" id="formFile1">
-                                                                        </div>
-                                                                    </form>
-                                                                </td>
-                                                                <%} else {%>
-                                                                <td class="text-center">No requiere</td>
-                                                                <%}%>
-                                                                <td class="align-content-md-center">
-                                                                    <a class="btn btn-danger" href="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=borrar&idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>"><span class="fa fa-trash"></span></a>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                        <%}%>
-                                                        <%
-                                                            map2.put(ee.getKey(),subtotal);
-                                                        %>
-                                                    </table>
-                                                </div>
                                             </div>
-                                        </div>
+                                            <%}%>
                                         <%}%>
                                     </div>
                                 </div>
@@ -319,7 +324,11 @@
                                         <div class="col"><h6>Total</h6></div>
                                         <div class="col"><h6>S/.<%=total%></h6></div>
                                     </div>
+                                    <%if(map2.isEmpty()){%>
+                                    <a class="disabled btn btn-dark btn- me-md-4" href="#">Realizar Pedido</a>
+                                    <%}else{%>
                                     <button type="submit" class="btn btn-warning">Realizar Pedido</button>
+                                    <%}%>
                                 </form>
                             </div>
                         </div>
