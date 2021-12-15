@@ -88,15 +88,24 @@ public class FarmaciaDao extends BaseDao {
     public ArrayList<BFarmacia> getListaTodasFarmacias(String pag) {
 
         ArrayList<BFarmacia> listaFarmacias = new ArrayList<>();
-        int pagint = Integer.parseInt(pag);
+        String sql="";
+        if(pag.equals("")) {
+            sql = "select a.idusuario, a.idfarmacia, b.nombre, b.ruc, a.direccion, b.correo, a.estatus\n" +
+                    "from farmacia a\n" +
+                    "inner join usuario b on a.idusuario=b.idusuario\n" +
+                    "inner join distrito c on c.iddistrito=b.iddistrito\n";
+        }else {
+            int pagint = Integer.parseInt(pag);
+            sql="select a.idusuario, a.idfarmacia, b.nombre, b.ruc, a.direccion, b.correo, a.estatus\n" +
+                    "from farmacia a\n" +
+                    "inner join usuario b on a.idusuario=b.idusuario\n" +
+                    "inner join distrito c on c.iddistrito=b.iddistrito\n" +
+                    "order by b.nombre limit " + (pagint - 1) * 4 + ",4;";
+        }
 
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("select a.idusuario, a.idfarmacia, b.nombre, b.ruc, a.direccion, b.correo, a.estatus\n" +
-                     "from farmacia a\n" +
-                     "inner join usuario b on a.idusuario=b.idusuario\n" +
-                     "inner join distrito c on c.iddistrito=b.iddistrito\n" +
-                     "order by b.nombre limit " + (pagint - 1) * 4 + ",4;")) {
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
 
