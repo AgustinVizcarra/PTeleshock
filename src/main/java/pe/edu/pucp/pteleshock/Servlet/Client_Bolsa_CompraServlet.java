@@ -42,7 +42,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
             switch(action){
                 case "listar":
                     ArrayList<BPedidoEstado> listBolsa1 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
-                    String idPedidoStr = request.getParameter("idPed") != null ? request.getParameter("idPed") : "";
+                    String idPedidoStr = session.getAttribute("idPed") != null ? (String) session.getAttribute("idPed") : "";
                     FarmaciaDao farmaciaDao = new FarmaciaDao();
                     ArrayList<BFarmacia> listaFarmacia=farmaciaDao.getListaTodasFarmacias("");
                     int cantFarm=listaFarmacia.size();
@@ -50,6 +50,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     if(!idPedidoStr.equals("")) {
                         listBolsa1.add(bolsaCompraDao.pedidosCarrito(Integer.parseInt(idPedidoStr)));
                         session.setAttribute("bolsita", listBolsa1);
+                        session.removeAttribute("idPed");
                     }
                     HashMap<Integer, ArrayList<BPedidoEstado>> map = new HashMap<>();
                     session.setAttribute("map",map);
@@ -179,8 +180,9 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     System.out.println(key+ " = " + map.get(key));
                 }
 
+                session.setAttribute("idPed",Integer.toString(idPedido));
                 bolsaCompraDao.agregarProductoCarrito(idPedido, Integer.parseInt(idProdStr), Integer.parseInt(cantidadPStr), Integer.parseInt(idFarmaciaStr));
-                response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra?idPed=" + idPedido); //+ "&idF=" + idFarmacia);
+                response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra"); //+ "&idF=" + idFarmacia);
                 break;
 
             case "comprar":
