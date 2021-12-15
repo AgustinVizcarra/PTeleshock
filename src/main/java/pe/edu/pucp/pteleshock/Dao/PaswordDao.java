@@ -121,8 +121,8 @@ public class PaswordDao extends BaseDao{
             BodyPart imagen = new MimeBodyPart();
             //añadir la ruta de manera dinamica
             try {
-                InputStream iStream = getClass().getClassLoader().getResource("img/confirmacion_imagen.png").openStream();//aquí se tiene que hacer el cambio
-                DataSource fds =  new InputStreamDataSource(iStream,"confirmacion_imagen","image/png");
+                InputStream iStream = getClass().getClassLoader().getResource("img/cambio_pwd.png").openStream();//aquí se tiene que hacer el cambio
+                DataSource fds =  new InputStreamDataSource(iStream,"cambio_pwd","image/png");
                 imagen.setDataHandler(new DataHandler(fds));
                 imagen.setHeader("Content-ID","<image>");
                 multipart.addBodyPart(imagen);
