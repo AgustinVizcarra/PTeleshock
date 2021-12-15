@@ -50,7 +50,7 @@
                                             electrónico</label>
                                     </div>
                                     <%if(!mensaje.equalsIgnoreCase("")){
-                                    if(mensaje.equalsIgnoreCase("Se le ha enviado un correo para actualizar la contraseña")){%>
+                                    if(mensaje.equalsIgnoreCase("Se le ha enviado un correo para actualizar sus credenciales.")){%>
                                     <div class="text-success" style="padding-bottom: 15px">
 
                                     <%}else{%>
