@@ -20,6 +20,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:200,100,400" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="css/styles_desplegable.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
           rel="stylesheet" crossorigin="anonymous"
@@ -45,7 +46,41 @@
             opacity: 1;
 
         }
+        .lightbox {
+            /* Default to hidden */
+            display: none;
 
+            /* Overlay entire screen */
+            position: fixed;
+            z-index: 999;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            /* A bit of padding around image */
+            padding: 1em;
+
+            /* Translucent background */
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Unhide the lightbox when it's the target */
+        .lightbox:target {
+            display: block;
+        }
+
+        .lightbox span {
+            /* Full width and height */
+            display: block;
+            width: 100%;
+            height: 100%;
+
+            /* Size and position background image */
+            background-position: center;
+            background-repeat: no-repeat;
+            /*background-size: contain;*/
+        }
     </style>
 
 </head>
@@ -194,7 +229,14 @@
                                 <%if(!bPedidoD.isRecetamedica()){%>
                                 <td>No</td>
                                 <%}else{%>
-                                <td>Si</td>
+                                <td><a href="#img1">
+                                    <img src="<%= request.getContextPath()%>/ImgRecetaServlet?prod=<%=bPedidoD.getIdproducto()%>&idped=<%=session.getAttribute("idpedido")%>" width="100px">
+                                </a>
+
+                                    <!-- lightbox container hidden with CSS -->
+                                    <a href="#" class="lightbox" id="img1">
+                                        <span style="background-image: url('<%= request.getContextPath()%>/ImgRecetaServlet?prod=<%=bPedidoD.getIdproducto()%>&idped=<%=session.getAttribute("idpedido")%>')"></span>
+                                    </a></td>
                                 <%}%>
                             </tr>
                             </tbody>

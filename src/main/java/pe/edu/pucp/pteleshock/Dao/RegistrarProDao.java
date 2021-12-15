@@ -148,7 +148,7 @@ public class RegistrarProDao extends BaseDao{
     }
 
 
-    public void actualizarProducto(int idFarmacia,int idproducto,int stock, double preciounitario , String descripcion,String recetamedica, InputStream inputstream){
+    public void actualizarProducto(int idFarmacia,int idproducto,int stock, double preciounitario , String descripcion,String recetamedica){
         String sql2 = "update productoporfarmacia set stock= ?, preciounitario= ?, descripcion= ?,recetamedica= ?  where idproducto=? and idfarmacia="+idFarmacia+";";
 
         try (Connection connection = this.getConnection();
@@ -167,6 +167,34 @@ public class RegistrarProDao extends BaseDao{
             e.printStackTrace();
         }
 
+//        String sql3 = "update foto set foto1=?  where idproducto=? and idfarmacia="+idFarmacia+";";
+//
+//        try (Connection connection = this.getConnection();
+//             PreparedStatement pstmt3 = connection.prepareStatement(sql3);) {
+//
+//            pstmt3.setBlob(1,inputstream);
+//            pstmt3.setInt(2, idproducto);
+//            pstmt3.executeUpdate();
+//
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+
+
+    }
+
+
+    public void actualizarFoto(int idproducto,int idFarmacia,InputStream inputstream){
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String url = "jdbc:mysql://localhost:3306/mydb?serverTimezone=America/Lima"; //ojo con el nombre
+
         String sql3 = "update foto set foto1=?  where idproducto=? and idfarmacia="+idFarmacia+";";
 
         try (Connection connection = this.getConnection();
@@ -180,9 +208,8 @@ public class RegistrarProDao extends BaseDao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
+
 
 
 }

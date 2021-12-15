@@ -239,7 +239,10 @@
 
                             <div>
                                 <img src="<%= request.getContextPath()%>/ImgServlet?prod=<%=idp%>" class="circular--square" width="400px">
-                                <input class="form-control" type="file" name="foto" style="width: 60% "  id="formFile1">
+<%--                                <input class="form-control" type="file" name="foto" style="width: 60% "  id="formFile1">--%>
+                                <div class="mt-3" style="display: flex;justify-content: center">
+                                    <a type="button" href="#popup123"  class="btn btn-secondary btn-sm">Editar foto</a>
+                                </div>
                             </div>
                         </div>
 
@@ -351,7 +354,25 @@
 <% } %>
 
 
+    <nav id="popup123" class="overlay" style="display: flex; justify-content: center ; align-items: center">
+        <div class=" popup card text-center " style="background-color: white">
+            <h5 class="card-header text-center">Teleshock</h5>
+            <div class="card-body">
+                <form method="post" action="<%=request.getContextPath()%>/ImgServlet?prod=<%=idp%>" enctype="multipart/form-data">
+                    <img src="<%= request.getContextPath()%>/ImgServlet?prod=<%=idp%>" class="circular--square" width="400px">
+                    <div  class="my-3" style="display: flex; justify-content: center">
+                        <input class="form-control" type="file" name="foto" style="width: 60% "  id="formFile1">
+                    </div>
 
+                    <a href="#" class="btn btn-danger mb-2">Cancelar</a>
+                    <button class="btn btn-primary mb-2"  style="margin-left: 80px; background-color: #5bc0de" type="submit">Actualizar</button>
+
+                </form>
+
+
+            </div>
+        </div>
+    </nav>
 
 
 <nav id="popup2" class="overlay" style="display: flex; justify-content: center ; align-items: center">
