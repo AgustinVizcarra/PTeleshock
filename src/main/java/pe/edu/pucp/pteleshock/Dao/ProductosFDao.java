@@ -21,7 +21,7 @@ public class ProductosFDao extends BaseDao {
         String sql = "Select  p.idproducto,p.nombre, f.foto1,pf.stock,pf.preciounitario,pf.recetamedica from productoporfarmacia pf\n" +
                 "inner join producto p on (pf.idproducto=p.idproducto)\n" +
                 "left join foto f on (pf.idproducto=f.idproducto and pf.idfarmacia=f.idfarmacia)\n" +
-                "where lower(p.nombre) like lower(?) and pf.idfarmacia=? and pf.stock > 0 limit " + inicio + ",6 ;";
+                "where lower(p.nombre) like lower(?) and pf.idfarmacia=? and pf.stock > 0 limit " + inicio + ",8 ;";
 
         if (inicio == -1) {
             sql = "Select  p.idproducto,p.nombre, f.foto1,pf.stock,pf.preciounitario,pf.recetamedica from productoporfarmacia pf\n" +

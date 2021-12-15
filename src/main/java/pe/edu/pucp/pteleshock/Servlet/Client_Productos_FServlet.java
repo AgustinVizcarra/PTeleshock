@@ -33,7 +33,7 @@ public class Client_Productos_FServlet extends HttpServlet {
 
         // Listar pedidos general | Validación de páginas
         int inicio = 0;
-        int pedidosxPag = 6;
+        int pedidosxPag = 8;
         int totalPag = (int) Math.ceil((double) productosFDao.obtenerNumProductos(idFarmaciaStr, nombreProductoBuscar) / (double) pedidosxPag);
         if (0 < pag & pag <= totalPag) {
             inicio = pag * pedidosxPag - pedidosxPag;
