@@ -7,6 +7,8 @@
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BFarmacia" %>
 <%@ page import="java.text.DecimalFormat" %>
 <%@ page import="pe.edu.pucp.pteleshock.Dao.PxFarDao" %>
+<%@ page import="java.time.LocalTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BFarmacia>" scope="request" id="listaFarmacia"/>
 
@@ -318,8 +320,12 @@
                                         <div>
                                             <label class="me-2">Fecha de entrega:</label>
                                             <input id="party" type="datetime-local" name="horaEnt<%=i%>"
-                                                   value="<%=LocalDate.now()+"T"+"09:30"%>"
-                                                   min="<%=LocalDate.now()+"T"+"09:30"%>" max=""
+                                                   <% LocalTime time=LocalTime.now();
+                                                        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm");
+                                                        System.out.println(time.format(formatter2));
+                                                   %>
+                                                   value="<%=LocalDate.now()+"T"+time.format(formatter2)%>"
+                                                   min="<%=LocalDate.now()+"T"+time.format(formatter2)%>" max=""
                                                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
                                             <span class="validity"></span>
                                         </div>
