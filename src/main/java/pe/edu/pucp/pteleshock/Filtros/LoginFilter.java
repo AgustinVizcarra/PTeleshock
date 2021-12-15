@@ -24,6 +24,11 @@ public class LoginFilter implements Filter {
         String token = request.getParameter("correo")==null?"":request.getParameter("correo");
         System.out.println("token: "+token);
         System.out.println("Accion: "+action);
+        //
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+        response.setDateHeader("Expires", 0);
+        //
         if(!token.equalsIgnoreCase("")||!action.equalsIgnoreCase("")){
             //si alguno de los dos es distinto de nulo tenemos que ver cual es
             if(!token.equalsIgnoreCase("")){

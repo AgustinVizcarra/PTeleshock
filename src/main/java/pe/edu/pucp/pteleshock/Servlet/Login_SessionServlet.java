@@ -98,23 +98,22 @@ public class Login_SessionServlet extends HttpServlet {
                 break;
             case "logout":
                 HttpSession session = request.getSession();
-                ArrayList<BPedidoEstado> listBolsa1 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
-                BolsaCompraDao bolsaCompraDao = new BolsaCompraDao();
-                if(!listBolsa1.isEmpty()){
-                    for(int i = 0; i < listBolsa1.size(); i++) {
-                        int idPed= listBolsa1.get(i).getPedido().getIdPedido();
-                        int idProd= listBolsa1.get(i).getIdProducto();
-                        int idFarm=listBolsa1.get(i).getPedido().getIdFarmacia();
-                        bolsaCompraDao.eliminarCarrito(idProd,idPed,idFarm);
+                if(session.getAttribute("clienteSession")!=null) {//corrección by Agustin
+                    ArrayList<BPedidoEstado> listBolsa1 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
+                    BolsaCompraDao bolsaCompraDao = new BolsaCompraDao();
+                    if (!listBolsa1.isEmpty()) {
+                        for (int i = 0; i < listBolsa1.size(); i++) {
+                            int idPed = listBolsa1.get(i).getPedido().getIdPedido();
+                            int idProd = listBolsa1.get(i).getIdProducto();
+                            int idFarm = listBolsa1.get(i).getPedido().getIdFarmacia();
+                            bolsaCompraDao.eliminarCarrito(idProd, idPed, idFarm);
+                        }
                     }
                 }
                 request.getSession().invalidate();
                 response.sendRedirect(request.getContextPath() + "/Login");
                 break;
-
-
         }
-
 
     }
 }
