@@ -236,7 +236,7 @@
                                                                           action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=actualizar&idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>">
                                                                         <div class="def-number-input number-input safari_only">
                                                                             <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-                                                                            <input class="quantity" min="0" name="cant" value="<%=ee.getValue().get(i).getCantidad()%>" type="number">
+                                                                            <input class="quantity" min="0" max="7" name="cant" value="<%=ee.getValue().get(i).getCantidad()%>" type="number">
                                                                             <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
                                                                         </div>
                                                                     </form>

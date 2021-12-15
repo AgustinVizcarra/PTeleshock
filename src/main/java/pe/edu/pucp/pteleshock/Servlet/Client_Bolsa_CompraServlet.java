@@ -82,7 +82,6 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                             if (bped1.getNombreProducto().equals(bped.getNombreProducto())) {
                                 //found, delete.
                                 listBolsa2.remove(i);
-                                ;
                                 break;
                             }
                         }
@@ -213,6 +212,20 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                         Double subTotal= mapSubtotal.get(key);
                         bolsaCompraDao.realizarPedido(idPed, Ent, Boolean.parseBoolean(recetaStr), fotoReceta,codigoVenta,subTotal);
                     }
+
+                    session.removeAttribute("bolsita");
+                    session.removeAttribute("maps");
+                    session.removeAttribute("map");
+                    session.removeAttribute("Subtotal");
+                    session.removeAttribute("hora-min");
+                    session.removeAttribute("codVenta");
+                    session.removeAttribute("contador");
+                    session.setAttribute("bolsita",new ArrayList<BPedidoEstado>());
+                    int codigoVenta1=0;
+                    session.setAttribute("codVenta",codigoVenta1);
+                    HashMap<Integer, Integer> map1= new HashMap<>();
+                    map1.put(0,0);
+                    session.setAttribute("maps",map1);
 
                 }
                 response.sendRedirect(request.getContextPath() + "/Client_Listado_Producto");
