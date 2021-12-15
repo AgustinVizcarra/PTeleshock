@@ -1,7 +1,6 @@
 package pe.edu.pucp.pteleshock.Dao;
 
 
-
 import pe.edu.pucp.pteleshock.Beans.BPedido;
 
 import java.sql.Connection;
@@ -10,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class PedidoDao extends BaseDao{
+public class PedidoDao extends BaseDao {
 
     public ArrayList<BPedido> listarPedidos(String idPG, int inicio) {
 
@@ -27,7 +26,7 @@ public class PedidoDao extends BaseDao{
                 "where ((p.codigodeventa = ?) and e.idestatuspedido not in (1) )\n" +
                 "group by p.idpedido ,fechaentrega order by fechaentrega limit " + inicio + ",3 ;";
 
-        try (Connection conn =this.getConnection();
+        try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setString(1, idPG);
 
@@ -56,11 +55,11 @@ public class PedidoDao extends BaseDao{
         return listaPedidos;
     }
 
-    public int obtenerNumPedidos(String idPG) {
+    public int obtenerNumPedidos(String idPG, int idCliente) {
 
         int numPedidos = 0;
 
-        String sql = "SELECT count(*) FROM (SELECT idpedido, codigodeventa FROM pedido where (codigodeventa is not null and idusuario = 10 and codigodeventa =?)) as `pedidos`;";
+        String sql = "SELECT count(*) FROM (SELECT idpedido, codigodeventa FROM pedido where (codigodeventa is not null and idusuario = " + idCliente + " and codigodeventa =?)) as `pedidos`;";
 
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {

@@ -36,7 +36,7 @@ public class Client_Listado_ProductoServlet extends HttpServlet {
         PedidosGeneralDao pedidosGDao = new PedidosGeneralDao();
         int inicio = 0;
         int pedidosxPag = 5;
-        int totalPag = (int) Math.ceil((double)pedidosGDao.obtenerNumFilasPG()/(double) pedidosxPag);
+        int totalPag = (int) Math.ceil((double)pedidosGDao.obtenerNumFilasPG(cliente.getIdUsuario())/(double) pedidosxPag);
 
         if (0<pag & pag <= totalPag ) {
             inicio = pag*pedidosxPag - pedidosxPag;

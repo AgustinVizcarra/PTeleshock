@@ -49,11 +49,11 @@ public class PedidosGeneralDao extends BaseDao {
 
     }
 
-    public int obtenerNumFilasPG() {
+    public int obtenerNumFilasPG(int idCliente) {
 
         int numFilasPG = 0;
 
-        String sql = "SELECT count(*) FROM (SELECT * FROM pedido where (codigodeventa is not null and idusuario = 10) group by codigodeventa,fechapedido order by fechapedido) as `numPedidosG`;";
+        String sql = "SELECT count(*) FROM (SELECT * FROM pedido where (codigodeventa is not null and idusuario = "+ idCliente +") group by codigodeventa,fechapedido order by fechapedido) as `numPedidosG`;";
 
         try {
             Connection connection = this.getConnection();
