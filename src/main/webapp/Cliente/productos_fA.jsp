@@ -1,6 +1,7 @@
 <%@page import="java.util.ArrayList" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BDetProd" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BPedidoEstado" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="farmacia" type="pe.edu.pucp.pteleshock.Beans.BFarmaciaPorDistrito" scope="request"/>
 <jsp:useBean type="java.lang.Integer" scope="request" id="totalPag"/>

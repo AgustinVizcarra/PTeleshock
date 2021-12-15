@@ -66,6 +66,30 @@ public class PxFarDao extends BaseDao {
         return listaProductosF;
     }
 
+    public int obtenerStock(int idFarm, int idProd){
+        BListaPFarmacia prod=null;
+        String sql = "Select  pf.stock from productoporfarmacia pf\n" +
+                "inner join producto p on (pf.idproducto=p.idproducto)\n" +
+                "left join foto f on (pf.idproducto=f.idproducto and pf.idfarmacia=f.idfarmacia)\n" +
+                "where pf.idfarmacia=? and p.idproducto=?;";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            pstmt.setInt(1,idFarm );
+            pstmt.setInt(2,idProd );
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    prod=new BListaPFarmacia();
+                    prod.setStock(rs.getInt(1));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return prod.getStock();
+    }
+
     public int cantidadProductosF(int idFarmacia){
         int cant =0;
         try {

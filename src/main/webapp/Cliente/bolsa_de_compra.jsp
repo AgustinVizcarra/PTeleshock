@@ -6,6 +6,7 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BFarmacia" %>
 <%@ page import="java.text.DecimalFormat" %>
+<%@ page import="pe.edu.pucp.pteleshock.Dao.PxFarDao" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BFarmacia>" scope="request" id="listaFarmacia"/>
 
@@ -242,7 +243,14 @@
                                                                               action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=actualizar&idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>">
                                                                             <div class="def-number-input number-input safari_only">
                                                                                 <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-                                                                                <input class="quantity" min="1" max="7" name="cant" value="<%=ee.getValue().get(i).getCantidad()%>" type="number">
+                                                                                <% PxFarDao pxf=new PxFarDao();
+                                                                                int stock= pxf.obtenerStock(ee.getKey(),ee.getValue().get(i).getIdProducto());
+                                                                                if(stock>11){
+                                                                                %>
+                                                                                <input class="quantity" min="1" max="11" name="cant" value="<%=ee.getValue().get(i).getCantidad()%>" type="number">
+                                                                                <%} else {%>
+                                                                                <input class="quantity" min="1" max="<%=stock%>" name="cant" value="<%=ee.getValue().get(i).getCantidad()%>" type="number">
+                                                                                <%}%>
                                                                                 <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
                                                                             </div>
                                                                         </form>
