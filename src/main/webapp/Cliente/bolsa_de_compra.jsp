@@ -345,8 +345,17 @@
                                     </div>
                                     <%if(map2.isEmpty()){%>
                                     <a class="disabled btn btn-dark btn- me-md-4" href="#">Realizar Pedido</a>
+                                    <a class="btn btn-primary btn- me-md-4"
+                                       href="<%=request.getContextPath()%>/Client_Farmacias">Ir a Farmacias</a>
                                     <%}else{%>
+                                    <%ArrayList<BPedidoEstado> bolsita = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");%>
                                     <button type="submit" class="btn btn-warning">Realizar Pedido</button>
+                                    <%if (!bolsita.isEmpty()){%>
+                                    <a class="btn btn-primary btn- me-md-4"
+                                       href="<%=request.getContextPath()%>/Client_Productos_F?idF=<%=bolsita.get(bolsita.size()-1).getPedido().getIdFarmacia()%>">Seguir
+                                        comprando</a>
+                                    <%}%>
+
                                     <%}%>
                                 </form>
                             </div>
