@@ -5,6 +5,7 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BFarmacia" %>
+<%@ page import="java.text.DecimalFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BFarmacia>" scope="request" id="listaFarmacia"/>
 
@@ -226,6 +227,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <%double subtotal = 0.0;%>
+                                                            <%DecimalFormat df = new DecimalFormat("##.##"); %>
                                                             <% for(int i=0;i<values.size();i++) {%>
                                                             <tbody>
                                                                 <tr>
@@ -245,7 +247,8 @@
                                                                             </div>
                                                                         </form>
                                                                     </td>
-                                                                    <td><%="S/."+(ee.getValue().get(i).getPrecioUnitario() * ee.getValue().get(i).getCantidad())%>
+                                                                    <td>
+                                                                    <%="S/."+ df.format((ee.getValue().get(i).getPrecioUnitario()) * ee.getValue().get(i).getCantidad())%>
                                                                     </td>
                                                                     <%subtotal = subtotal + (ee.getValue().get(i).getPrecioUnitario() * ee.getValue().get(i).getCantidad());
                                                                     %>
@@ -298,7 +301,8 @@
                                         <div class="col"><h6><%=bf.getNombre()%></h6></div>
                                         <%}%>
                                         <%}%>
-                                        <div class="col"><h6>S/.<%=ee.getValue()%></h6></div>
+                                        <%DecimalFormat df = new DecimalFormat("##.##"); %>
+                                        <div class="col"><h6>S/.<%=df.format(ee.getValue())%></h6></div>
                                         <%total=total+ee.getValue();
                                         %>
                                     </div>
@@ -322,7 +326,8 @@
                                     <hr style="color: black; background-color: black; width:60%;" />
                                     <div class="row">
                                         <div class="col"><h6>Total</h6></div>
-                                        <div class="col"><h6>S/.<%=total%></h6></div>
+                                        <%DecimalFormat df = new DecimalFormat("##.##"); %>
+                                        <div class="col"><h6>S/.<%=df.format(total)%></h6></div>
                                     </div>
                                     <%if(map2.isEmpty()){%>
                                     <a class="disabled btn btn-dark btn- me-md-4" href="#">Realizar Pedido</a>
