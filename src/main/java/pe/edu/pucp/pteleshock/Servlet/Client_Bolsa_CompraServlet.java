@@ -76,7 +76,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                 case "borrar":
                     String idPedido = request.getParameter("idP") != null ? request.getParameter("idP") : "";
                     BPedidoEstado bped=bolsaCompraDao.obtenerProd(Integer.parseInt(idProd),Integer.parseInt(idPedido),Integer.parseInt(idFarmaciaStr));
-                    bolsaCompraDao.eliminarProdCarrito(Integer.parseInt(idProd),Integer.parseInt(idPedido),Integer.parseInt(idFarmaciaStr));
+                    bolsaCompraDao.eliminarCarrito(Integer.parseInt(idProd),Integer.parseInt(idPedido),Integer.parseInt(idFarmaciaStr));
                     ArrayList <BPedidoEstado> listBolsa2= (ArrayList <BPedidoEstado>) session.getAttribute("bolsita");
 
                     if(bped != null){

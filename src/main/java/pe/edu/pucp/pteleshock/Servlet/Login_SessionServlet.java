@@ -105,7 +105,7 @@ public class Login_SessionServlet extends HttpServlet {
                         int idPed= listBolsa1.get(i).getPedido().getIdPedido();
                         int idProd= listBolsa1.get(i).getIdProducto();
                         int idFarm=listBolsa1.get(i).getPedido().getIdFarmacia();
-                        bolsaCompraDao.eliminarCarritoBaseDatos(idProd,idPed,idFarm);
+                        bolsaCompraDao.eliminarCarrito(idProd,idPed,idFarm);
                     }
                 }
                 request.getSession().invalidate();
