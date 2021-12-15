@@ -2,6 +2,7 @@ package pe.edu.pucp.pteleshock.Servlet;
 
 
 
+import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.PedidosGeneralDao;
 
 import javax.servlet.RequestDispatcher;
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "Client_Listado_ProductoServlet", value = "/Client_Listado_Producto")
@@ -18,6 +20,9 @@ public class Client_Listado_ProductoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // Cambiar nombre del servlet --> ListaPedidoGeneral
+
+        HttpSession session = request.getSession();
+        BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");
 
         String pagStr = request.getParameter("pag") != null ? request.getParameter("pag") : "1";
         int pag = 1;
@@ -37,7 +42,7 @@ public class Client_Listado_ProductoServlet extends HttpServlet {
             inicio = pag*pedidosxPag - pedidosxPag;
         }
 
-        request.setAttribute("listaPedidosG", pedidosGDao.listarPedidosGeneral(inicio));
+        request.setAttribute("listaPedidosG", pedidosGDao.listarPedidosGeneral(inicio, cliente.getIdUsuario()));
         request.setAttribute("totalPag", totalPag);
         request.setAttribute("pag", pag);
 

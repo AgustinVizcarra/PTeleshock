@@ -1,7 +1,6 @@
 package pe.edu.pucp.pteleshock.Dao;
 
 
-
 import pe.edu.pucp.pteleshock.Beans.BPedidoGeneral;
 
 import java.sql.Connection;
@@ -12,13 +11,13 @@ import java.util.ArrayList;
 
 public class PedidosGeneralDao extends BaseDao {
 
-    public ArrayList<BPedidoGeneral> listarPedidosGeneral(int inicio) {
+    public ArrayList<BPedidoGeneral> listarPedidosGeneral(int inicio, int idCliente) {
         //msql
 
         ArrayList<BPedidoGeneral> listaPedidosGeneral = new ArrayList<>();
 
         try {
-            Connection connection = this.getConnection() ;
+            Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("select un.idusuario,p.idpedido, p.codigodeventa, p.fechapedido, sum(round((d.cantidad*pxf.preciounitario),2)) as 'Precio total c/producto' from usuario un\n" +
                     "left join pedido p on (un.idusuario = p.idusuario)\n" +
@@ -28,8 +27,8 @@ public class PedidosGeneralDao extends BaseDao {
                     "left join producto pro on (pxf.idproducto = pro.idproducto)\n" +
                     "left join farmacia f on (pxf.idfarmacia = f.idfarmacia)\n" +
                     "left join usuario u on (f.idusuario = u.idusuario)\n" +
-                    "where un.idusuario = '10' and e.idestatuspedido not in (1)\n" +
-                    "group by p.codigodeventa, p.fechapedido order by p.fechapedido desc limit "+ inicio + ",5 ;");
+                    "where un.idusuario = " + idCliente + " and e.idestatuspedido not in (1)\n" +
+                    "group by p.codigodeventa, p.fechapedido order by p.fechapedido desc limit " + inicio + ",5 ;");
 
 
             while (rs.next()) {
@@ -56,7 +55,8 @@ public class PedidosGeneralDao extends BaseDao {
 
         String sql = "SELECT count(*) FROM (SELECT * FROM pedido where (codigodeventa is not null and idusuario = 10) group by codigodeventa,fechapedido order by fechapedido) as `numPedidosG`;";
 
-        try {Connection connection = this.getConnection();
+        try {
+            Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
 
@@ -70,7 +70,6 @@ public class PedidosGeneralDao extends BaseDao {
         }
         return numFilasPG;
     }
-
 
 
 }
