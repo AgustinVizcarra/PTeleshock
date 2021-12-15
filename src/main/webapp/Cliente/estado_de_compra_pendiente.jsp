@@ -239,15 +239,12 @@
                                 <div class="d-md-block mt-3 mb-3 text-center font-weight-light my-5">
                                     <a class="btn btn-danger me-md-4"
                                        href="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=cancelar&idPG=<%=listaPedidoE.get(0).getPedido().getBoletaVenta()%>&idF=<%=listaPedidoE.get(0).getPedido().getIdFarmacia()%>&idP=<%=listaPedidoE.get(0).getPedido().getIdPedido()%>">Cancelar</a>
-                                    <!--lo mismo que en la pestaña anterior-->
                                 </div>
                                 <%} else {%>
                                 <div class="d-md-block mt-3 mb-3 text-center font-weight-light my-5">
                                     <a class="disabled btn btn-dark btn- me-md-4" href="mensajes_emergentes7.html">Cancelar</a>
-                                    <!--Ojo fijense a que hace referencia mensajes_emergentes_by_Agustin-->
                                 </div>
                                 <%}%>
-
 
                             </div>
 
