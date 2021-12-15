@@ -110,7 +110,16 @@
 
                                 </ol>
 
+                                <%if (totalPag == 0) {%>
+                                <div class="text-center">
+                                    <div class="alert alert-warning text-center" role="alert">
+                                        No se han encontrado productos disponibles :(
+                                    </div>
+                                    <a class="btn btn-primary me-md-4 text-center"
+                                       href="<%=request.getContextPath()%>/Client_Farmacias">Ir a Farmacias</a>
+                                </div>
 
+                                <%} else {%>
                                 <div class="row  row-cols-4">
                                     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
                                           method="post"
@@ -236,7 +245,7 @@
                                         </li>
                                     </ul>
                                 </nav>
-
+                                <%}%>
                             </div>
 
                         </div>
