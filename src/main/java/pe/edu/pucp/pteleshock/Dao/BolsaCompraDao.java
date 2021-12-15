@@ -98,15 +98,16 @@ public class BolsaCompraDao extends BaseDao {
         return pedidoC;
     }
 
-    public void realizarPedido(int idPedido, String fecha, boolean receta, String fotoReceta, int codigoVenta) {
+    public void realizarPedido(int idPedido, String fecha, boolean receta, String fotoReceta, int codigoVenta,Double Subtotal) {
 
 
-        String sql = "UPDATE pedido set idestatuspedido = 2, fechapedido = now() , fechaentrega = ? , codigodeventa = ? where idpedido = ?";
+        String sql = "UPDATE pedido set idestatuspedido = 2, fechapedido = now() , preciototal=?, fechaentrega = ? , codigodeventa = ? where idpedido = ?";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
-            pstmt.setString(2, (fecha));
+            pstmt.setDouble(1, Subtotal);
+            pstmt.setString(2, fecha);
             pstmt.setInt(3, codigoVenta);
             pstmt.setInt(4, idPedido);
 

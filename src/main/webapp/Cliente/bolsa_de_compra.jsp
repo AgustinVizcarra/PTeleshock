@@ -4,7 +4,9 @@
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.time.LocalDate" %>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BFarmacia" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BFarmacia>" scope="request" id="listaFarmacia"/>
 
 <html lang="en">
     <head>
@@ -182,10 +184,10 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Bolsa de Compras</h5>
                                     <div class="accordion" id="accordionExample">
-                                        <%HashMap<String, ArrayList<BPedidoEstado>> map=(HashMap<String, ArrayList<BPedidoEstado>>) session.getAttribute("map");
-                                            HashMap<String, Double> map2 = new HashMap<>();%>
-                                        <%for (Map.Entry<String, ArrayList<BPedidoEstado>> ee : map.entrySet()) {
-                                            String key = ee.getKey();
+                                        <%HashMap<Integer, ArrayList<BPedidoEstado>> map=(HashMap<Integer, ArrayList<BPedidoEstado>>) session.getAttribute("map");
+                                            HashMap<Integer, Double> map2 = new HashMap<>();%>
+                                        <%for (Map.Entry<Integer, ArrayList<BPedidoEstado>> ee : map.entrySet()) {
+                                            int key = ee.getKey();
                                             ArrayList<BPedidoEstado> values = ee.getValue();
                                         %>
                                         <div class="accordion-item">
@@ -194,8 +196,13 @@
                                                     <div class="col">
                                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                                             <div class="col">
-                                                                <h6 class="card-title"><%=ee.getKey()%>
+                                                                <%for(BFarmacia bf:listaFarmacia){
+                                                                    if(bf.getIdfarmacia()==key){
+                                                                %>
+                                                                <h6 class="card-title"><%=bf.getNombre()%>
                                                                 </h6>
+                                                                <%}%>
+                                                                <%}%>
                                                             </div>
                                                         </button>
                                                     </div>
@@ -274,13 +281,18 @@
                                 <form method="POST" action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=comprar">
                                     <%double total = 0.0;%>
                                     <%int i = 0;%>
-                                    <%for (Map.Entry<String, Double> ee : map2.entrySet()) {
-                                        String key = ee.getKey();
+                                    <%for (Map.Entry<Integer, Double> ee : map2.entrySet()) {
+                                        int key = ee.getKey();
                                         Double values = ee.getValue();
                                         i++;
                                     %>
                                     <div class="row">
-                                        <div class="col"><h6><%=ee.getKey()%></h6></div>
+                                        <%for(BFarmacia bf:listaFarmacia){
+                                            if(bf.getIdfarmacia()==key){
+                                        %>
+                                        <div class="col"><h6><%=bf.getNombre()%></h6></div>
+                                        <%}%>
+                                        <%}%>
                                         <div class="col"><h6>S/.<%=ee.getValue()%></h6></div>
                                         <%total=total+ee.getValue();
                                         %>
