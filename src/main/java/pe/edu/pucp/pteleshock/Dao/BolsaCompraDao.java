@@ -139,7 +139,7 @@ public class BolsaCompraDao extends BaseDao {
 
     public void cancelarPedido(int idPedido){
 
-        String sql = "UPDATE pedido set fechastatus=now(),idestatuspedido=3 where idpedido=?;";
+        String sql = "UPDATE pedido set fechastatus=now(),idestatuspedido=4 where idpedido=?;";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {

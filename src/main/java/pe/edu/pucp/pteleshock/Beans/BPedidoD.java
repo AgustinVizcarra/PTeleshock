@@ -15,6 +15,7 @@ public class BPedidoD {
     private int unidades;
     private double precioUnitario;
     private boolean recetamedica;
+    private int idproducto;
 
     public String getFecha() {
         return fecha;
@@ -126,5 +127,13 @@ public class BPedidoD {
 
     public void setIdpedido(int idpedido) {
         this.idpedido = idpedido;
+    }
+
+    public int getIdproducto() {
+        return idproducto;
+    }
+
+    public void setIdproducto(int idproducto) {
+        this.idproducto = idproducto;
     }
 }

@@ -170,6 +170,35 @@ public class DetProdDao extends BaseDao {
     }
 
 
+    public void listarImgReceta (int idFarmacia,String prod,int idPedido, HttpServletResponse response){
+        InputStream inputStream=null;
+        OutputStream outputStream = null;
+        BufferedInputStream bufferedInputStream=null;
+        BufferedOutputStream bufferedOutputStream=null;
+        response.setContentType("image/*");
+        try {
+            outputStream=response.getOutputStream();
+            Connection connection = this.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM mydb.detallepedido\n" +
+                    "where idpedido="+idPedido+" and idfarmacia="+idFarmacia+" and idproducto="+prod+";");//Ojo es dinamico el idproducto
+
+
+            if(rs.next()){
+                inputStream=rs.getBinaryStream("recetamedica");
+            }
+            bufferedInputStream=new BufferedInputStream(inputStream);
+            bufferedOutputStream=new BufferedOutputStream(outputStream);
+            int i =0;
+            while ((i=bufferedInputStream.read())!=-1){
+                bufferedOutputStream.write(i);
+            }
+            bufferedOutputStream.flush();
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

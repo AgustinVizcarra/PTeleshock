@@ -43,8 +43,9 @@ public class PedidoEstadoDao extends BaseDao{
                     BPedidoEstado pedidoE = new BPedidoEstado();
 
                     BPedido pedido = new BPedido();
-
+                    pedido.setIdPedido(rs.getInt(1));
                     pedido.setBoletaVenta(rs.getString(2));
+                    pedido.setIdFarmacia(rs.getInt(3));
                     pedido.setNombreFarmacia(rs.getString(4));
                     pedido.setFechaEntrega(rs.getString(8));
                     pedido.setEstadoPedido(rs.getString(5));
@@ -82,8 +83,9 @@ public class PedidoEstadoDao extends BaseDao{
 
         Boolean seCancela = false;
 
-        String sql = "SELECT p.idpedido, dp.idfarmacia, timestampdiff(hour,now(),fechaentrega) as `tiempoRestante` FROM  pedido p left join detallepedido dp on (p.idpedido = dp.idpedido) \n" +
-                "where (p.codigodeventa = ? and dp.idfarmacia = ?) group by dp.idfarmacia;";
+        String sql = "SELECT p.idpedido, dp.idfarmacia, p.fechastatus , timestampdiff(hour,now(),fechaentrega) as `tiempoRestante` FROM  pedido p \n" +
+                "left join detallepedido dp on (p.idpedido = dp.idpedido)\n" +
+                "where (p.codigodeventa =? and dp.idfarmacia = ?) group by dp.idfarmacia;";
 
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -93,10 +95,14 @@ public class PedidoEstadoDao extends BaseDao{
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 int tiempoRestante;
+                String status="";
                 if (rs.next()) {
-                    tiempoRestante = rs.getInt(3);
+                    status=rs.getString(3);
+                    tiempoRestante = rs.getInt(4);
                     if (tiempoRestante>=1){
-                        seCancela = true;
+                        if(status==null){
+                            seCancela = true;
+                        }
                     }
                 }
             }

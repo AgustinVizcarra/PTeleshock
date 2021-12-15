@@ -8,7 +8,6 @@ import pe.edu.pucp.pteleshock.Dao.FarmaciaDao;
 import pe.edu.pucp.pteleshock.Dao.ProductosFDao;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -103,8 +101,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     int idP= Integer.parseInt(idPedidoStr1);
                     int cod= Integer.parseInt(codVenta);
                     bolsaCompraDao.cancelarPedido(idP);
-                    RequestDispatcher view1 = request.getRequestDispatcher("/Cliente/Client_Estado_Pendiente?idPG="+cod+"&idFPd="+idF);
-                    view1.forward(request, response);
+                    response.sendRedirect(request.getContextPath() + "/Client_Estado_Pendiente?idPG="+cod+"&idFPd="+idF);
                     break;
             }
 

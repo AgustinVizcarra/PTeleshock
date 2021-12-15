@@ -103,8 +103,8 @@ public class Farm_Editar_Inf_ProductoServlet extends HttpServlet {
         String idprodstr = request.getParameter("prod").strip();
 
 
-        Part part=request.getPart("foto");
-        InputStream inputStream=part.getInputStream();
+//        Part part=request.getPart("foto");
+//        InputStream inputStream=part.getInputStream();
 
 
         if( stockStr.equals("a") || precioUnitarioStr.equals("a") || descripcion.equals("") || recetamedica.equals("a")){
@@ -126,7 +126,7 @@ public class Farm_Editar_Inf_ProductoServlet extends HttpServlet {
 
             int idF = (Integer) session.getAttribute("idFarmacia");
 
-            registrarProDao.actualizarProducto(idF,idprod,stock,precioUnitario,descripcion,recetamedica,inputStream);
+            registrarProDao.actualizarProducto(idF,idprod,stock,precioUnitario,descripcion,recetamedica);
 
             //hace una nueva solicitud
 //            response.sendRedirect(request.getContextPath()+"/Farm_Detalles_Producto?prod="+idprod);

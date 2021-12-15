@@ -210,7 +210,7 @@ public class GPedidoDao extends BaseDao {
         try {
             Connection connection = this.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("select pr.nombre as 'Producto',\n" +
-                    "pf.descripcion, dp.cantidad as 'Unidades', pf.preciounitario,pf.recetamedica\n" +
+                    "pf.descripcion, dp.cantidad as 'Unidades', pf.preciounitario,pf.recetamedica,pf.idproducto\n" +
                     "from detallepedido dp\n" +
                     "inner join pedido p on (dp.idpedido=p.idpedido)\n" +
                     "inner join usuario u on (p.idusuario=u.idusuario)\n" +
@@ -229,6 +229,7 @@ public class GPedidoDao extends BaseDao {
                     bpd.setUnidades(rs.getInt(3));
                     bpd.setPrecioUnitario(rs.getDouble(4));
                     bpd.setRecetamedica(rs.getBoolean(5));
+                    bpd.setIdproducto(rs.getInt(6));
                     listaPedidosD.add(bpd);
                 }
             }
@@ -294,7 +295,7 @@ public class GPedidoDao extends BaseDao {
     public void actualizarestado(int idEstado,int idPedido) {
 
         System.out.println("actu:"+idEstado+"ped:"+idPedido);
-        String sql="UPDATE pedido SET `idestatuspedido` = ? WHERE (`idpedido` = ?);";
+        String sql="UPDATE pedido SET `idestatuspedido` = ?,`fechastatus`= now() WHERE (`idpedido` = ?);";
         try (Connection conn = this.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setInt(1,idEstado);
             pstmt.setInt(2,idPedido);

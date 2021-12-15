@@ -1,7 +1,6 @@
 package pe.edu.pucp.pteleshock.Dao;
 
 
-
 import pe.edu.pucp.pteleshock.Beans.BFarmaciaPorDistrito;
 
 import java.sql.Connection;
@@ -11,11 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FarmaciasPorDistritoDao extends BaseDao {
-
-    private static String user = "root";
-    private static String pass = "root";
-    String url = "jdbc:mysql://localhost:3306/mydb";
-
 
     public ArrayList<BFarmaciaPorDistrito> listarFarmaciasPorDistrito(int iddistrito, int inicio) {
         //msql
@@ -64,7 +58,7 @@ public class FarmaciasPorDistritoDao extends BaseDao {
 
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
-            pstmt.setString(1,  "%" + nombreFarmaciaBuscar + "%");
+            pstmt.setString(1, "%" + nombreFarmaciaBuscar + "%");
             pstmt.setInt(2, iddistrito);
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
@@ -96,7 +90,7 @@ public class FarmaciasPorDistritoDao extends BaseDao {
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setString(1, iddistrito);
-            pstmt.setString(2,  "%" + nombreFarmaciaBuscar + "%");
+            pstmt.setString(2, "%" + nombreFarmaciaBuscar + "%");
 
             try (ResultSet rs = pstmt.executeQuery()) {
 
