@@ -1,16 +1,7 @@
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BPedido" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BPedidoEstado" %>
-<%@ page import="java.sql.Time" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.text.ParseException" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %><%--
-  Created by IntelliJ IDEA.
-  User: casa
-  Date: 5/11/2021
-  Time: 18:45
-  To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -245,9 +236,10 @@
                                 </table>
 
                                 <%if (sePuedeCancelar) {%>
+                                <% ArrayList<BPedidoEstado> bped=(ArrayList<BPedidoEstado>) session.getAttribute()%>
                                 <div class="d-md-block mt-3 mb-3 text-center font-weight-light my-5">
                                     <a class="btn btn-danger me-md-4"
-                                       href="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=cancelar&idP=<%=listaPedidoE.get(0).getPedido().getBoletaVenta()%>">Cancelar</a>
+                                       href="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=cancelar&idPG=<%=listaPedidoE.get(0).getPedido().getBoletaVenta()%>&idF=<%=listaPedidoE.get(0).getPedido().getIdFarmacia()%>&idP=<%=listaPedidoE.get(0).getPedido().getIdPedido()%>">Cancelar</a>
                                     <!--lo mismo que en la pestaña anterior-->
                                 </div>
                                 <%} else {%>

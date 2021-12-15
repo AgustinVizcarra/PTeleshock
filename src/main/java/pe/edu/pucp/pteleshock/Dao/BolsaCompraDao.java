@@ -22,6 +22,7 @@ public class BolsaCompraDao extends BaseDao {
             ResultSet rsKeys = pstmt.getGeneratedKeys();
             if (rsKeys.next()) {
                 idPedido = rsKeys.getInt(1);
+                System.out.println("entró a generar pedido");
             }
 
         } catch (SQLException e) {
@@ -46,6 +47,7 @@ public class BolsaCompraDao extends BaseDao {
                 pstmt.setInt(4, cantidad);
 
                 pstmt.executeUpdate();
+                System.out.println("entró a agregar pedido");
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -137,7 +139,7 @@ public class BolsaCompraDao extends BaseDao {
 
     public void cancelarPedido(int idPedido){
 
-        String sql = "UPDATE pedido set fechastatus=now() where idpedido=?;";
+        String sql = "UPDATE pedido set fechastatus=now(),idestatuspedido=3 where idpedido=?;";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
