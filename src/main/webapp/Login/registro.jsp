@@ -57,7 +57,7 @@
                                         <label for="correo" class="col-sm-4 col-form-label">Correo
                                             : </label>
                                         <div class="col-sm-8">
-                                            <input type="email" class="form-control" name="correo" id="correo">
+                                            <input type="email" class="form-control" name="correo" id="correo" pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$" title="Debe especificar una ruta de correo valida">
                                         </div>
                                     </div>
                                     <div class="row mb-4">
@@ -70,7 +70,8 @@
                                         <label for="contrasenia" class="col-sm-4 col-form-label">Contraseña
                                             : </label>
                                         <div class="col-sm-8">
-                                            <input type="password" class="form-control" name="contrasenia" id="contrasenia" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contraseña debe contener como mínimo 8 caracteres, 1 número y una letra mayúscula."
+                                            <input type="password" class="form-control" name="contrasenia" id="contrasenia" pattern="(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[a-z])(?=.*[A-Z]).{5,}" title="La contraseña debe contener como mínimo 5 caracteres. Incluye mayúsculas, minúsculas,
+                                                números y un caracter especial."
                                             >
                                             <%--
                                             <input type="password" class="form-control is-invalid"
