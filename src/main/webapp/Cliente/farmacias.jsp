@@ -126,14 +126,14 @@
                                 <div class="row  row-cols-4">
                                     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
                                           method="post"
-                                          action="<%=request.getContextPath()%>/Client_Farmacias">
+                                          action="<%=request.getContextPath()%>/Client_Farmacias?pag=1">
                                         <div class="input-group">
                                             <input class="form-control" type="text" name="nombreFarmacia"
                                                    placeholder="Buscar..." aria-label="Buscar..."
                                                    aria-describedby="btnNavbarSearch"
-                                                    <% if (nombreFarmacia != null) {%>
+                                                    <% if (nombreFarmacia != null){%>
                                                    value="<%=nombreFarmacia%>"
-                                                    <% } %> />
+                                                    <% } %>/>
                                             <input class="form-control" type="text" name="idD"
                                                    hidden aria-describedby="btnNavbarSearch"
                                                    value="<%=distrito.getIdDistrito()%>"/>
@@ -148,81 +148,88 @@
                                     </form>
                                 </div>
                                 <br><br>
-
-                                <%if (listaxFarmacias.isEmpty()) {%>
+                                <%if (!nombreFarmacia.equals("") && listaxFarmacias.isEmpty()){%>
                                 <div class="text-center">
                                     <div class="alert alert-warning text-center" role="alert">
-                                        No se han encontrado farmacias disponibles :(
+                                        <p><em>No se han encontrado resultados para "<%=nombreFarmacia%>"</em></p>
                                     </div>
                                 </div>
-                                <%} else {%>
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-end text-primary">
-                                        <li class="page-item  <%=pag==1?"disabled":""%>  ">
-                                            <a class="page-link"
-                                               href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>&pag=<%=pag-1%>">Anterior</a>
-                                        </li>
-                                        <%for (int i = 1; i <= totalPag; i++) {%>
-                                        <li class="page-item <%=pag==i?"active":""%>">
-                                            <a class="page-link"
-                                               href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>&pag=<%=i%>"><%=i%>
-                                            </a></li>
-                                        <%}%>
-                                        <li class="page-item <%=pag.equals(totalPag)?"disabled":""%>  ">
-                                            <a class="page-link"
-                                               href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>&pag=<%=pag+1%>">Siguiente</a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                <%}else{%>
+                                    <%if (nombreFarmacia.equals("") && listaxFarmacias.isEmpty()){%>
+                                    <div class="text-center">
+                                        <div class="alert alert-warning text-center" role="alert">
+                                            <p><em>No se han encontrado farmacias disponibles para el distrito de <%=distrito.getNombre()%></em></p>
+                                        </div>
+                                    </div>
+                                    <%}else{%>
+                                    <%---
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-end text-primary">
+                                            <li class="page-item  <%=pag==1?"disabled":""%>  ">
+                                                <a class="page-link"
+                                                   href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>&pag=<%=pag-1%>">Anterior</a>
+                                            </li>
+                                            <%for (int i = 1; i <= totalPag; i++) {%>
+                                            <li class="page-item <%=pag==i?"active":""%>">
+                                                <a class="page-link"
+                                                   href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>&pag=<%=i%>"><%=i%>
+                                                </a></li>
+                                            <%}%>
+                                            <li class="page-item <%=pag.equals(totalPag)?"disabled":""%>  ">
+                                                <a class="page-link"
+                                                   href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>&pag=<%=pag+1%>">Siguiente</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    --%>
+
+                                    <!-- Farmacias -->
+                                    <section class="py-0">
+                                        <div class="container px-4 px-lg-5 mt-1">
 
 
-                                <!-- Farmacias -->
-                                <section class="py-0">
-                                    <div class="container px-4 px-lg-5 mt-1">
+                                            <div class="row">
 
-
-                                        <div class="row">
-
-                                            <%for (BFarmaciaPorDistrito fxD : listaxFarmacias) {%>
-                                            <div class="col-sm-6 p-3">
-                                                <div class="card border-primary border-3 border-start-0 border-top-0">
-                                                    <div class="card-body text-center">
-                                                        <h5 class="card-title fw-bolder"><%=fxD.getNombreFarmacia()%>
-                                                        </h5>
-                                                        <p class="card-text"><%=fxD.getDireccionFarmacia()%>
-                                                            <br><%=fxD.getDistritoFarmacia()%>
-                                                        </p>
-                                                        <a href="<%=request.getContextPath()%>/Client_Productos_F?idF=<%=fxD.getIdFarmacia()%>"
-                                                           class="btn btn-primary">Ir a la farmacia</a>
+                                                <%for (BFarmaciaPorDistrito fxD : listaxFarmacias) {%>
+                                                <div class="col-sm-6 p-3">
+                                                    <div class="card border-primary border-3 border-start-0 border-top-0">
+                                                        <div class="card-body text-center">
+                                                            <h5 class="card-title fw-bolder"><%=fxD.getNombreFarmacia()%>
+                                                            </h5>
+                                                            <p class="card-text"><%=fxD.getDireccionFarmacia()%>
+                                                                <br><%=fxD.getDistritoFarmacia()%>
+                                                            </p>
+                                                            <a href="<%=request.getContextPath()%>/Client_Productos_F?idF=<%=fxD.getIdFarmacia()%>"
+                                                               class="btn btn-primary">Ir a la farmacia</a>
+                                                        </div>
                                                     </div>
                                                 </div>
+
+                                                <%}%>
                                             </div>
 
-                                            <%}%>
                                         </div>
+                                    </section>
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-end text-primary">
+                                            <li class="page-item  <%=pag==1?"disabled":""%>  ">
+                                                <a class="page-link"
+                                                   href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>&pag=<%=pag-1%>">Anterior</a>
+                                            </li>
+                                            <%for (int i = 1; i <= totalPag; i++) {%>
+                                            <li class="page-item <%=pag==i?"active":""%>">
+                                                <a class="page-link"
+                                                   href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>&pag=<%=i%>"><%=i%>
+                                                </a></li>
+                                            <%}%>
 
-                                    </div>
-                                </section>
-
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-end text-primary">
-                                        <li class="page-item  <%=pag==1?"disabled":""%>  ">
-                                            <a class="page-link"
-                                               href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>&pag=<%=pag-1%>">Anterior</a>
-                                        </li>
-                                        <%for (int i = 1; i <= totalPag; i++) {%>
-                                        <li class="page-item <%=pag==i?"active":""%>">
-                                            <a class="page-link"
-                                               href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>&pag=<%=i%>"><%=i%>
-                                            </a></li>
-                                        <%}%>
-
-                                        <li class="page-item <%=pag.equals(totalPag)?"disabled":""%>  ">
-                                            <a class="page-link"
-                                               href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>&pag=<%=pag+1%>">Siguiente</a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                            <li class="page-item <%=pag.equals(totalPag)?"disabled":""%>  ">
+                                                <a class="page-link"
+                                                   href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>&pag=<%=pag+1%>">Siguiente</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    <%}%>
                                 <%}%>
                             </div>
 

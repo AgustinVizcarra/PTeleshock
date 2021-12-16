@@ -113,16 +113,7 @@
 
                                 </ol>
 
-                                <%if (totalPag == 0) {%>
-                                <div class="text-center">
-                                    <div class="alert alert-warning text-center" role="alert">
-                                        No se han encontrado productos disponibles :(
-                                    </div>
-                                    <a class="btn btn-primary me-md-4 text-center"
-                                       href="<%=request.getContextPath()%>/Client_Farmacias">Ir a Farmacias</a>
-                                </div>
-
-                                <%} else {%>
+                                <%--Buscador--%>
                                 <div class="row  row-cols-4">
                                     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
                                           method="post"
@@ -149,7 +140,16 @@
                                 </div>
                                 <br><br>
 
-
+                                <%if (totalPag == 0) {%>
+                                <div class="text-center">
+                                    <div class="alert alert-warning text-center" role="alert">
+                                        <p><em>No se han encontrado productos disponibles con el nombre de "<%=nombreProducto%>"</em></p>
+                                    </div>
+                                    <a class="btn btn-primary me-md-4 text-center"
+                                       href="<%=request.getContextPath()%>/Client_Farmacias">Ir a Farmacias</a>
+                                </div>
+                                <%} else {%>
+                                <%--
                                 <nav aria-label="Page navigation">
                                     <ul class="pagination justify-content-end text-primary">
                                         <li class="page-item  <%=pag==1?"disabled":""%>  ">
@@ -169,7 +169,7 @@
                                         </li>
                                     </ul>
                                 </nav>
-
+                                ---%>
                                 <section class="py-0">
                                     <div class="container px-4 px-lg-5 mt-5">
                                         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -248,6 +248,7 @@
                                         </li>
                                     </ul>
                                 </nav>
+
                                 <%}%>
                             </div>
 
