@@ -3,10 +3,7 @@ package pe.edu.pucp.pteleshock.Dao;
 
 import pe.edu.pucp.pteleshock.Beans.BDistristos;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ListaDistritosDao extends BaseDao {
@@ -57,6 +54,31 @@ public class ListaDistritosDao extends BaseDao {
             e.printStackTrace();
         }
         return listaTotalDistritos;
+    }
+
+    public BDistristos obtenerDistritoPorId(int idDistrito) {
+
+        BDistristos distrito = null;
+
+
+        String sql = "select * from distrito where iddistrito = ?";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+
+            preparedStatement.setInt(1, idDistrito);
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    distrito = new BDistristos();
+                    distrito.setIdDistrito(idDistrito);
+                    distrito.setNombre(rs.getString(2));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return distrito;
     }
 
 

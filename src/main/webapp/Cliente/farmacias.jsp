@@ -5,7 +5,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean type="java.lang.Integer" scope="request" id="totalPag"/>
 <jsp:useBean type="java.lang.Integer" scope="request" id="pag"/>
+
 <jsp:useBean type="java.lang.String" scope="request" id="nombreFarmacia" class="java.lang.String"/>
+<jsp:useBean type="pe.edu.pucp.pteleshock.Beans.BDistristos" scope="request" id="distrito"/>
 <jsp:useBean id="listaxFarmacias" scope="request"
              type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BFarmaciaPorDistrito>" class="java.util.ArrayList"/>
 <jsp:useBean id="listaDistritos" scope="request" type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BDistristos>"
@@ -84,7 +86,7 @@
                     <div class="sb-sidenav-footer" style="color: gray">
                         <div class="small">Logged in as:</div>
                         <%BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");%>
-                        <%=cliente.getNombre()+" "+cliente.getApellido()%>
+                        <%=cliente.getNombre() + " " + cliente.getApellido()%>
                     </div>
                 </nav>
             </div>
@@ -95,19 +97,18 @@
 
                 <main>
                     <div class="container-fluid px-4">
-
+                        <p></p>
                         <div class="card mb-4" style="opacity: 0.90;">
                             <div class="card-body">
-                                <h1 class=" mt-4 ms-3">Farmacias</h1>
-
+                                <h1 class=" mt-4 ms-3">Farmacias - <%=distrito.getNombre()%></h1>
 
                                 <form method="POST" action="<%=request.getContextPath()%>/Client_Farmacias">
                                     <div class="row mb-3 ms-3">
-                                        <label class=" breadcrumb-item active">Distrito:</label>
+                                        <label class=" breadcrumb-item active">Seleccione un distrito:</label>
                                         <div class="col">
                                             <select class="form-select" aria-label="Default select example" name="idD">
                                                 <%for (BDistristos dis : listaDistritos) {%>
-                                                <option value="<%=dis.getIdDistrito()%>" <%=dis.getNombre().equalsIgnoreCase(listaxFarmacias.get(0).getDistritoFarmacia()) ? "selected" : ""%>><%=dis.getNombre()%>
+                                                <option value="<%=dis.getIdDistrito()%>" <%=dis.getIdDistrito() == distrito.getIdDistrito() ? "selected" : ""%>><%=dis.getNombre()%>
                                                 </option>
                                                 <%}%>
                                             </select>
@@ -132,12 +133,12 @@
                                                     <% } %> />
                                             <input class="form-control" type="text" name="idD"
                                                    hidden aria-describedby="btnNavbarSearch"
-                                                   value="<%=listaxFarmacias.get(0).getIdDistritoF()%>"/>
+                                                   value="<%=distrito.getIdDistrito()%>"/>
                                             <button class="btn btn-primary" id="btnNavbarSearch" type="submit"
                                                     style="background-color: #00152D;border-color: #00152D">
                                                 <i class="fas fa-search"></i></button>
                                             <a class="input-group-text"
-                                               href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=listaxFarmacias.get(0).getIdDistritoF()%>">
+                                               href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=distrito.getIdDistrito()%>">
                                                 <i class="fas fa-undo"></i>
                                             </a>
                                         </div>
@@ -145,7 +146,13 @@
                                 </div>
                                 <br><br>
 
-
+                                <%if (listaxFarmacias.isEmpty()) {%>
+                                <div class="text-center">
+                                    <div class="alert alert-warning text-center" role="alert">
+                                        No se han encontrado farmacias disponibles :(
+                                    </div>
+                                </div>
+                                <%} else {%>
                                 <nav aria-label="Page navigation">
                                     <ul class="pagination justify-content-end text-primary">
                                         <li class="page-item  <%=pag==1?"disabled":""%>  ">
@@ -213,7 +220,7 @@
                                         </li>
                                     </ul>
                                 </nav>
-
+                                <%}%>
                             </div>
 
                         </div>
