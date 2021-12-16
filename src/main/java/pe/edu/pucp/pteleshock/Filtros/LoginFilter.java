@@ -22,14 +22,9 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        //System.out.println(request.getParameter("acc"));
-        //String action = request.getParameter("acc")==null?"":request.getParameter("acc");
         String token = request.getParameter("correo")==null?"":request.getParameter("correo");
         HttpSession session = request.getSession();
         System.out.println("Valido: "+session.getAttribute("validacion"));
-        //System.out.println("action: "+action);
-        //System.out.println("Primero paso por el filtro");
-        //!action.equalsIgnoreCase("")
         if(!token.equalsIgnoreCase("")|| (Integer) session.getAttribute("validacion")==1){
             //si alguno de los dos es distinto de nulo tenemos que ver cual es
             if(!token.equalsIgnoreCase("")){
@@ -47,11 +42,20 @@ public class LoginFilter implements Filter {
                         //aqui debo obtener el id
                         PaswordDao paswordDao = new PaswordDao();
                         int id = paswordDao.obtenerid(originToken.getClaim("correo").asString());
-                        request.setAttribute("idusuario",String.valueOf(id));
-                        RequestDispatcher view = request.getRequestDispatcher("/Login/recuperacion_contraseña.jsp");
-                        session = request.getSession();
-                        session.setAttribute("validacion",1);
-                        view.forward(request,response);
+                        if(paswordDao.verificarToken(originToken.getClaim("correo").asString())) {
+                            //System.out.println("El token es valido");
+                            request.setAttribute("idusuario", String.valueOf(id));
+                            RequestDispatcher view = request.getRequestDispatcher("/Login/recuperacion_contraseña.jsp");
+                            session = request.getSession();
+                            session.setAttribute("validacion", 1);
+                            session.setAttribute("correo", originToken.getClaim("correo").asString());
+                            view.forward(request, response);
+                        }
+                        else{
+                            //System.out.println("El token es invalido");
+                            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
+                            viewError.forward(request, response);
+                        }
                     } catch (JWTDecodeException e){
                         e.printStackTrace();
                         System.out.println("Ocurrio un error en la decodificacion del token");
@@ -66,10 +70,19 @@ public class LoginFilter implements Filter {
                 }
             } else {
                 //
-                response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-                response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-                response.setDateHeader("Expires", 0);
-                chain.doFilter(request, response);
+                PaswordDao paswordDao = new PaswordDao();
+                HttpSession session1 = request.getSession();
+                if(paswordDao.verificarToken((String) session1.getAttribute("correo"))) {
+                    //System.out.println("El token aún es válido");
+                    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+                    response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+                    response.setDateHeader("Expires", 0);
+                    chain.doFilter(request, response);
+                }else{
+                    //System.out.println("El token ya no es válido");
+                    RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
+                    viewError.forward(request, response);
+                }
                 //flujo normal
             }
         }else{

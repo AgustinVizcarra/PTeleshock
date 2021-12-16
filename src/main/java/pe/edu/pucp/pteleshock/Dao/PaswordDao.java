@@ -1,5 +1,8 @@
 package pe.edu.pucp.pteleshock.Dao;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Beans.InputStreamDataSource;
 
@@ -111,6 +114,7 @@ public class PaswordDao extends BaseDao{
         String asunto = "Cambio de contraseña";
         String mensaje = "<p><b> Estimada(o) "+nombre+": </b></p><div>Usted ha solicitado un cambio de contraseña</div><p></p><div><img src=\"cid:image\"></div><p></p><div><p><b>Para ingresar su nueva " +
                 "contraseña ingrese al siguiente enlace:</b></p><p><b><a href=\"http://localhost:8080/PTeleshock_war_exploded/Login_Password_Recovery?correo="+token+"\">Ingrese su nueva contraseña</a></b></p></div><p></p><div><br>Saludos Cordiales</br><br><FONT COLOR=\"gray\">El equipo técnico de Teleshock</FONT></br></div>";
+        this.validarToken(dest);//se valida el token
         MimeMessage mail = new MimeMessage(session);
         try {
             mail.setFrom(new InternetAddress(owner_cuenta));
@@ -155,5 +159,40 @@ public class PaswordDao extends BaseDao{
             throwables.printStackTrace();
         }
         return id;
+    }
+    public void validarToken(String destinatario){
+        String sql = "update usuario set token = 1 where correo=?";
+        try(Connection connection = this.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1,destinatario);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void invalidarToken(String destinatario){
+        String sql = "update usuario set token = 0 where correo=?";
+        try(Connection connection = this.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1,destinatario);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public boolean verificarToken(String destinatario){
+        boolean validez = false;
+        String sql="select token from usuario where correo=?";
+        try(Connection connection = this.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);){
+            preparedStatement.setString(1,destinatario);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                validez = resultSet.getInt(1)==1;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return validez;
     }
 }

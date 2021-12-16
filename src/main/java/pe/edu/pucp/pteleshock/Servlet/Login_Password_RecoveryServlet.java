@@ -23,6 +23,9 @@ public class Login_Password_RecoveryServlet extends HttpServlet {
         //System.out.println("Paso por acá");
         HttpSession session = request.getSession();
         session.setAttribute("validacion",0);
+        PaswordDao paswordDao = new PaswordDao();
+        paswordDao.invalidarToken((String) session.getAttribute("correo"));
+        System.out.println(paswordDao.verificarToken((String) session.getAttribute("correo"))?"Token valido":"Token invalido");
         //System.out.println("Se cambio el valor");
     }
 
