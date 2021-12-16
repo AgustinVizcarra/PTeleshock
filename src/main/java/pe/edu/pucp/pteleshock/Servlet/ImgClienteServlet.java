@@ -1,3 +1,4 @@
+
 package pe.edu.pucp.pteleshock.Servlet;
 
 import pe.edu.pucp.pteleshock.Dao.DetProdDao;
@@ -10,15 +11,15 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.InputStream;
 
-@WebServlet(name = "ImgServlet", value = "/ImgServlet")
+@WebServlet(name = "ImgClienteServlet", value = "/ImgClienteServlet")
 @MultipartConfig
-public class ImgServlet extends HttpServlet {
+public class ImgClienteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
 
-        HttpSession session = request.getSession();
-        int idF = (Integer) session.getAttribute("idFarmacia");
+        String idFstr = request.getParameter("idfarm");
+        int idF = Integer.parseInt(idFstr);
         String prod = request.getParameter("prod");
         DetProdDao detprodao = new DetProdDao();
         detprodao.listarImg(idF,prod,response);
@@ -27,18 +28,6 @@ public class ImgServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        request.setCharacterEncoding("UTF-8");
-        RegistrarProDao registrarProDao = new RegistrarProDao();
 
-        String idprodstr = request.getParameter("prod").strip();
-
-        int idprod= Integer.parseInt(idprodstr);
-        int idF = (Integer) session.getAttribute("idFarmacia");
-        Part part=request.getPart("foto");
-        InputStream inputStream=part.getInputStream();
-
-        registrarProDao.actualizarFoto(idprod,idF,inputStream);
-        response.sendRedirect(request.getContextPath() + "/Farm_Editar_Inf_Producto?prod="+idprodstr);
     }
 }

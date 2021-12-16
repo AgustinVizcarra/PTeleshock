@@ -18,7 +18,7 @@ public class PedidoEstadoDao extends BaseDao{
 
         ArrayList<BPedidoEstado> listaPedidosE = new ArrayList<>();
 
-        String sql = "select p.idpedido, p.codigodeventa, f.idfarmacia,u.nombre as 'Farmacia' , e.nombre as 'Estado', f.direccion ,dis.nombre as `distrito`, p.fechaentrega, p.fechastatus, foto.foto1 as 'Foto', pro.nombre as 'Producto', d.cantidad, pxf.preciounitario,round((d.cantidad*pxf.preciounitario),2) as 'Precio total c/producto' from usuario un\n" +
+        String sql = "select p.idpedido, p.codigodeventa, f.idfarmacia,u.nombre as 'Farmacia' , e.nombre as 'Estado', f.direccion ,dis.nombre as `distrito`, p.fechaentrega, p.fechastatus, foto.foto1 as 'Foto', pro.nombre as 'Producto', d.cantidad, pxf.preciounitario,round((d.cantidad*pxf.preciounitario),2) as 'Precio total c/producto',pxf.idproducto from usuario un\n" +
                 "left join pedido p on (un.idusuario = p.idusuario)\n" +
                 "left join estatuspedido e on (p.idestatuspedido = e.idestatuspedido)\n" +
                 "left join detallepedido d on (p.idpedido = d.idpedido)\n" +
@@ -64,7 +64,7 @@ public class PedidoEstadoDao extends BaseDao{
                     pedidoE.setNombreProducto(rs.getString(11));
                     pedidoE.setCantidad(rs.getInt(12));
                     pedidoE.setPrecioUnitario(rs.getDouble(13));
-
+                    pedidoE.setIdProducto(rs.getInt(15));
 
 
                     listaPedidosE.add(pedidoE);

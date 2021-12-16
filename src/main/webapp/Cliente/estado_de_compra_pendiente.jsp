@@ -174,10 +174,9 @@
                                                     <div class="card-group">
 
                                                         <div class="card-body justify-content-start">
-                                                            <a><img src="<%= request.getContextPath()%>/ImgServlet?prod=<%=pedidoE.getIdProducto()%>"
-                                                                    class="img-thumbnail"
-                                                                    alt="..."
-                                                                    style="width: 100px; height: 100px"></a>
+                                                            <img src="<%= request.getContextPath()%>/ImgClienteServlet?prod=<%=pedidoE.getIdProducto()%>&idfarm=<%=listaPedidoE.get(0).getPedido().getIdFarmacia()%>"
+<%--                                                                    class="img-thumbnail"--%>
+                                                                    style="width: 100px; height: 100px">
 
                                                         </div>
                                                         <div class="card-body mt-lg-4 mt-md-4 justify-content-center">

@@ -194,8 +194,7 @@
 
                                                     <!-- Product image-->
                                                     <img class="card-img-top"
-                                                         src="<%= request.getContextPath()%>/ImgServlet?prod=<%=listaProd.getIdProducto()%>"
-                                                         alt="...">
+                                                         src="<%= request.getContextPath()%>/ImgClienteServlet?prod=<%=listaProd.getIdProducto()%>&idfarm=<%=farmacia.getIdFarmacia()%>">
                                                     <!-- Product details-->
                                                     <div class="card-body p-2">
                                                         <div class="text-center">

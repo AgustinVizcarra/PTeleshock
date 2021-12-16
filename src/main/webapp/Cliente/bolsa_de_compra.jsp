@@ -253,7 +253,7 @@
                                                         <tbody>
                                                             <tr>
                                                                 <th scope="row"><img
-                                                                        src="<%= request.getContextPath()%>/ImgServlet?prod=<%=ee.getValue().get(i).getFotoProducto()%>"
+                                                                        src="<%= request.getContextPath()%>/ImgClienteServlet?prod=<%=ee.getValue().get(i).getIdProducto()%>&idfarm=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>"
                                                                         class="img-thumbnail"
                                                                         alt="..."
                                                                         style="width: 100px; height: 100px"></th>
