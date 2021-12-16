@@ -90,7 +90,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-lock-open"></i></div>
                                 Desbloquear farmacias
                             </a>
-                            <a class="nav-link" href="<%= request.getContextPath()%>/Admin_Admins">
+                            <a class="nav-link active bg-secondary" href="<%= request.getContextPath()%>/Admin_Admins">
                                 <div class="sb-nav-link-icon"><i class="fas fa-user-shield"></i></div>
                                 Ver administradores
                             </a>
@@ -154,12 +154,9 @@
                         </div>
                         <div class="row">
                             <br><br>
-                            <div class="col" style="position: absolute; bottom: 0; right: 0;">
-                                <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
-                                   href="<%= request.getContextPath()%>/Admin_Index">
-                                    <div class="boton_añadir_escape"><i class="fas fa-door-open fs-3"></i></div>
-                                </a>
-                            </div>
+                            <a class="btn btn-primary"
+                               href="<%=request.getContextPath()%>/Admin_Index"
+                               style="width: fit-content; margin-left: auto; margin-right: auto;height: 38px;background-color: #00152D;border-color: #00152D">Regresar</a>
                         </div>
                     </div>
                 </main>

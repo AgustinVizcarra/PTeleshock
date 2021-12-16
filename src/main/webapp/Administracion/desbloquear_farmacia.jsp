@@ -112,7 +112,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
                                 <font>Bloquear farmacias</font>
                             </a>
-                            <a class="nav-link" href="<%= request.getContextPath()%>/Admin_UnlockFarm">
+                            <a class="nav-link active bg-secondary" href="<%= request.getContextPath()%>/Admin_UnlockFarm">
                                 <div class="sb-nav-link-icon"><i class="fas fa-lock-open"></i></div>
                                 Desbloquear farmacias
                             </a>
@@ -151,7 +151,7 @@
                                                      style="border-top-left-radius: 2rem; border-top-right-radius: 2rem">
                                             </div>
                                             <div class="card-body" ;
-                                                 style="background-color: #7ED957; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
+                                                 style="background-color: #7ED957; border-bottom-left-radius: 1rem; border-bottom-right-radius: 2rem">
                                                 <form method="post"
                                                       action="<%= request.getContextPath()%>/Admin_UnlockFarm">
                                                     <br>
@@ -223,12 +223,16 @@
                                                     </div>
                                                     <input type="hidden" value="<%=adminSession.getNombre()%>"
                                                            name="admin">
-                                                    <div class="mt-4 mb-0">
-                                                        <div class="d-grid">
+                                                    <div class="mt-4 mb-0" style="align-content: center">
+                                                        <div class="row align-items-center"
+                                                             style="display: flex; justify-content: center">
                                                             <button class="btn btn-primary" type="submit" style="margin-top: 5px; margin-bottom: 5px; background-color: #8BC34A; width: fit-content;
-                                                       margin-left: auto; margin-right: auto" href="#popup1">GRABAR Y
+                                                       margin-left: auto; margin-right: auto;border-color: #7ed957" href="#popup1">GRABAR Y
                                                                 CONTINUAR
                                                             </button>
+                                                            <a class="btn btn-primary"
+                                                               href="<%=request.getContextPath()%>/Admin_Index"
+                                                               style="width: fit-content; margin-left: auto; margin-right: auto;">Cancelar</a>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -237,16 +241,10 @@
                                     </div>
                                 </div>
                             </div>
+                            <br>
+                            <br>
                             <div class="col-xl-3 col-md-8">
-                            </div>
-                            <div class="row">
-                                <br><br>
-                                <div class="col" style="position: absolute; bottom: 0; right: 0;">
-                                    <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
-                                       href="<%= request.getContextPath()%>/Admin_Index">
-                                        <div class="boton_añadir_escape"><i class="fas fa-door-open fs-3"></i></div>
-                                    </a>
-                                </div>
+
                             </div>
                         </div>
                     </div>

@@ -298,12 +298,10 @@
                         </a>
                     </div>
                     <div class="row">
-                        <div class="col" style="position: absolute; bottom: 0; right: 0;">
-                            <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
-                               href="<%= request.getContextPath()%>/Admin_Index">
-                                <div class="boton_añadir_escape"><i class="fas fa-door-open fs-3"></i></div>
-                            </a>
-                        </div>
+                        <br><br>
+                        <a class="btn btn-primary"
+                           href="<%=request.getContextPath()%>/Admin_Index"
+                           style="width: fit-content; margin-left: auto; margin-right: auto;height: 38px;background-color: #00152D;border-color: #00152D">Regresar</a>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto" style="height: 7%">

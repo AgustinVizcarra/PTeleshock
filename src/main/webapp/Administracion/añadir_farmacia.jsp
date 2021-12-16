@@ -128,7 +128,7 @@
                                 <div class="sb-nav-link-icon"><i class="far fa-clipboard"></i></div>
                                 Ver historial
                             </a>
-                            <a class="nav-link" href="<%= request.getContextPath()%>/Admin_AddFarm">
+                            <a class="nav-link active bg-secondary" href="<%= request.getContextPath()%>/Admin_AddFarm">
                                 <div class="sb-nav-link-icon"><i class="fas fa-plus-circle"></i></div>
                                 Añadir farmacias
                             </a>
@@ -197,18 +197,16 @@
                                                         <label for="inputDireccion">Dirección</label>
                                                     </div>
                                                     <div class="mt-4 mb-0" style="align-content: center">
-                                                        <div class="d-grid" style="align-content: center">
-                                                            <!--
-                                                            <a class="btn btn-primary" type="submit"
-                                                               style="background-color: #454582;
-                                                             width: fit-content; margin-left: auto; margin-right: auto;">GRABAR
-                                                                Y CONTINUAR</a>
-                                                              -->
-                                                            <!--href="#popup1"-->
-                                                            <button class="btn btn-success" href="#popup1" type="submit"
-                                                                    style="background-color: #454582">
-                                                                Grabar y continuar
-                                                            </button>
+                                                        <div class="row align-items-center"
+                                                             style="display: flex; justify-content: center">
+                                                        <button class="btn btn-success" href="#popup1" type="submit"
+                                                                style="margin-top: 15px; margin-bottom: 15px; background-color: #454582; width: fit-content;
+                                                            margin-left: auto; margin-right: auto;border-color:#9ab0e0 ">
+                                                            Grabar y continuar
+                                                        </button>
+                                                        <a class="btn btn-primary"
+                                                           href="<%=request.getContextPath()%>/Admin_Index"
+                                                           style="width: fit-content; margin-left: auto; margin-right: auto;">Cancelar</a>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -218,15 +216,6 @@
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-8">
-                            </div>
-                            <div class="row">
-                                <br>
-                                <div class="col" style="position: absolute; bottom: 0; right: 0;">
-                                    <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
-                                       href="<%= request.getContextPath()%>/Admin_Index">
-                                        <div class="boton_añadir_escape"><i class="fas fa-door-open fs-3"></i></div>
-                                    </a>
-                                </div>
                             </div>
                         </div>
                     </div>

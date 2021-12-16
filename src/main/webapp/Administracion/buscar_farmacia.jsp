@@ -93,7 +93,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav texto-navbar">
                             <div class="sb-sidenav-menu-heading">Lista de opciones</div>
-                            <a class="nav-link" href="<%= request.getContextPath()%>/Admin_SearchFarm">
+                            <a class="nav-link active bg-secondary" href="<%= request.getContextPath()%>/Admin_SearchFarm">
                                 <div class="sb-nav-link-icon"><i class="fas fa-clinic-medical"></i></div>
                                 Buscar farmacia
                             </a>
@@ -164,30 +164,23 @@
                                                         <label for="inputRUC">RUC</label>
                                                     </div>
                                                     <div class="mt-4 mb-0" style="align-content: center">
-                                                        <div class="d-grid" style="align-content: center">
+                                                        <div class="row align-items-center"
+                                                             style="display: flex; justify-content: center">
                                                             <button class="btn btn-primary" type="submit" style="margin-top: 15px; margin-bottom: 15px; background-color: #E24E34; width: fit-content;
-                                                            margin-left: auto; margin-right: auto" href="#popup1">
+                                                            margin-left: auto; margin-right: auto;border-color: #fa9f9f" href="#popup1">
                                                                 BUSCAR
                                                             </button>
+                                                            <a class="btn btn-primary"
+                                                               href="<%=request.getContextPath()%>/Admin_Index"
+                                                               style="width: fit-content; margin-left: auto; margin-right: auto;">Cancelar</a>
                                                         </div>
                                                     </div>
-
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <br>
-                            </div>
-                            <div class="row">
-                                <br>
-                                <div class="col" style="position: absolute; bottom: 0; right: 0;">
-                                    <a class="stretched-link;nav-link dropdown toogle" role="button"
-                                       aria-expanded="false"
-                                       href="<%= request.getContextPath()%>/Admin_Index">
-                                        <div class="boton_añadir_escape"><i class="fas fa-door-open fs-3"></i></div>
-                                    </a>
-                                </div>
                             </div>
                         </div>
                     </div>

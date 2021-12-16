@@ -104,7 +104,7 @@
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
                                  data-bs-parent="#sidenavAccordion">
                             </div>
-                            <a class="nav-link" href="<%= request.getContextPath()%>/Admin_BloqFarm">
+                            <a class="nav-link active bg-secondary" href="<%= request.getContextPath()%>/Admin_BloqFarm">
                                 <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
                                 <font>Bloquear farmacias</font>
                             </a>
@@ -171,18 +171,16 @@
                                                         <%}%>
                                                         <label for="inputRUC">RUC</label>
                                                     </div>
-                                                    <div class="mt-4 mb-0">
-                                                        <div class="d-grid">
-                                                            <%---
-                                                            <a type="submit" class="btn btn-primary"
-                                                               href="#popup1"
-                                                               style="margin-top: 15px; margin-bottom: 15px; background-color: #F2AC34; width: fit-content;
-                                                       margin-left: auto; margin-right: auto;">GRABAR Y CONTINUAR</a>
-                                                            --%>
+                                                    <div class="mt-4 mb-0" style="align-content: center">
+                                                        <div class="row align-items-center"
+                                                             style="display: flex; justify-content: center">
                                                             <button class="btn btn-primary" type="submit" style="margin-top: 15px; margin-bottom: 15px; background-color: #F2AC34; width: fit-content;
-                                                            margin-left: auto; margin-right: auto" href="#popup1">GRABAR
+                                                            margin-left: auto; margin-right: auto;border-color: #ffc107" href="#popup1">GRABAR
                                                                 Y CONTINUAR
                                                             </button>
+                                                            <a class="btn btn-primary"
+                                                               href="<%=request.getContextPath()%>/Admin_Index"
+                                                               style="width: fit-content; margin-left: auto; margin-right: auto;">Cancelar</a>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -192,15 +190,6 @@
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-8">
-                            </div>
-                            <div class="row">
-                                <br>
-                                <div class="col" style="position: absolute; bottom: 0; right: 0;">
-                                    <a class="stretched-link;nav-link dropdown toogle" role="button" aria-expanded="false"
-                                       href="<%= request.getContextPath()%>/Admin_Index">
-                                        <div class="boton_añadir_escape"><i class="fas fa-door-open fs-3"></i></div>
-                                    </a>
-                                </div>
                             </div>
                         </div>
                     </div>
