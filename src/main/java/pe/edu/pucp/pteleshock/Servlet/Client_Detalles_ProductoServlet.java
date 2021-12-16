@@ -19,16 +19,30 @@ public class Client_Detalles_ProductoServlet extends HttpServlet {
         response.setContentType("text/html");
         String idProductoStr = request.getParameter("idP")!=null?request.getParameter("idP"):"";
         String idFarmaciaStr = request.getParameter("idF")!=null?request.getParameter("idF"):"";
-        int idProducto = Integer.parseInt(idProductoStr);
-        int idFarmacia = Integer.parseInt(idFarmaciaStr);
+        int idProducto;
+        int idFarmacia;
 
-        ProductosFDao productosFDao = new ProductosFDao();
+        try {
+            idProducto = Integer.parseInt(idProductoStr);
+            idFarmacia = Integer.parseInt(idFarmaciaStr);
+            ProductosFDao productosFDao = new ProductosFDao();
 
-        request.setAttribute("detProd",productosFDao.detalleProductoF(idFarmacia,idProducto));
-        request.setAttribute("farmacia",productosFDao.obtenerFarmacia(idFarmacia));
+            if (productosFDao.detalleProductoF(idFarmacia,idProducto) == null || productosFDao.obtenerFarmacia(idFarmacia)==null){
+                response.sendRedirect(request.getContextPath() + "/Client_Productos_F?idF" + idFarmacia);
+            }else {
+                request.setAttribute("detProd",productosFDao.detalleProductoF(idFarmacia,idProducto));
+                request.setAttribute("farmacia",productosFDao.obtenerFarmacia(idFarmacia));
+                RequestDispatcher view = request.getRequestDispatcher("/Cliente/detalles_producto.jsp");
+                view.forward(request,response);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            response.sendRedirect(request.getContextPath() + "/Client_Productos_F?idF=" + idFarmaciaStr);
+        }
 
-        RequestDispatcher view = request.getRequestDispatcher("/Cliente/detalles_producto.jsp");
-        view.forward(request,response);
+
+
+
     }
 
     @Override

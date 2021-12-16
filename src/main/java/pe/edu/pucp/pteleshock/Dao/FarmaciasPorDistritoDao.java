@@ -107,4 +107,34 @@ public class FarmaciasPorDistritoDao extends BaseDao {
         return numFarm;
     }
 
+    public BFarmaciaPorDistrito obtenerFarmacia(int idFarmacia) {
+
+        BFarmaciaPorDistrito farmacia=null;
+
+        String sql = "SELECT f.idfarmacia, u.nombre,u.iddistrito,d.nombre,f.direccion FROM farmacia f \n" +
+                "inner join usuario u on (f.idusuario = u.idusuario) \n" +
+                "inner join distrito d on (u.iddistrito=d.iddistrito) where f.idfarmacia = ?;";
+
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);) {
+            pstmt.setInt(1, idFarmacia);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    farmacia=new BFarmaciaPorDistrito();
+                    farmacia.setIdFarmacia(rs.getInt(1));
+                    farmacia.setNombreFarmacia(rs.getString(2));
+                    farmacia.setIdDistritoF(rs.getString(3));
+                    farmacia.setDistritoFarmacia(rs.getString(4));
+                    farmacia.setDireccionFarmacia(rs.getString(5));
+                    return farmacia;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("No se pudo hallar la farmacias");
+
+        }
+        return farmacia;
+    }
 }

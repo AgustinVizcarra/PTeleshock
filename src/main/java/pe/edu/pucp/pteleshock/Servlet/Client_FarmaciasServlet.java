@@ -1,6 +1,7 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
 
+import pe.edu.pucp.pteleshock.Beans.BDistristos;
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.FarmaciasPorDistritoDao;
 import pe.edu.pucp.pteleshock.Dao.ListaDistritosDao;
@@ -38,29 +39,36 @@ public class Client_FarmaciasServlet extends HttpServlet {
 
         // Listar farmacias por distrito
         FarmaciasPorDistritoDao fxDao = new FarmaciasPorDistritoDao();
-
-        // Listar pedidos general | Validación de páginas
-        int inicio = 0;
-        int pedidosxPag = 6;
-        int totalPag = (int) Math.ceil((double) fxDao.obtenerNumFarmacias(idDistritoStr, nombreFarmaciaBuscar) / (double) pedidosxPag);
-        if (0 < pag & pag <= totalPag) {
-            inicio = pag * pedidosxPag - pedidosxPag;
-        }
-
-        request.setAttribute("listaxFarmacias", fxDao.listarFarmaciasPorDistritoConBusqueda(idDistrito, inicio, nombreFarmaciaBuscar));
-        request.setAttribute("nombreFarmacia", nombreFarmaciaBuscar);
-        request.setAttribute("totalPag", totalPag);
-        request.setAttribute("pag", pag);
         // Listar distritos
         ListaDistritosDao listaDistritosDao = new ListaDistritosDao();
 
-        //Enviar datos al servlet
-        request.setAttribute("listaDistritos", listaDistritosDao.listarDistritos());
-        request.setAttribute("distrito", listaDistritosDao.obtenerDistritoPorId(idDistrito));
-        System.out.println(listaDistritosDao.obtenerDistritoPorId(idDistrito));
+        BDistristos distrito =listaDistritosDao.obtenerDistritoPorId(idDistrito);
+        if (distrito == null){
+            response.sendRedirect(request.getContextPath() + "/Client_Farmacias");
+        }else {
 
-        RequestDispatcher view = request.getRequestDispatcher("/Cliente/farmacias.jsp");
-        view.forward(request, response);
+            // Listar pedidos general | Validación de páginas
+            int inicio = 0;
+            int pedidosxPag = 6;
+            int totalPag = (int) Math.ceil((double) fxDao.obtenerNumFarmacias(idDistritoStr, nombreFarmaciaBuscar) / (double) pedidosxPag);
+            if (0 < pag & pag <= totalPag) {
+                inicio = pag * pedidosxPag - pedidosxPag;
+            }
+
+            request.setAttribute("listaxFarmacias", fxDao.listarFarmaciasPorDistritoConBusqueda(idDistrito, inicio, nombreFarmaciaBuscar));
+            request.setAttribute("nombreFarmacia", nombreFarmaciaBuscar);
+            request.setAttribute("totalPag", totalPag);
+            request.setAttribute("pag", pag);
+
+
+            //Enviar datos al servlet
+            request.setAttribute("listaDistritos", listaDistritosDao.listarDistritos());
+            request.setAttribute("distrito", listaDistritosDao.obtenerDistritoPorId(idDistrito));
+            System.out.println(listaDistritosDao.obtenerDistritoPorId(idDistrito));
+
+            RequestDispatcher view = request.getRequestDispatcher("/Cliente/farmacias.jsp");
+            view.forward(request, response);
+        }
 
     }
 

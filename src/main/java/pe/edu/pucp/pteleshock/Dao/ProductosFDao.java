@@ -120,7 +120,7 @@ public class ProductosFDao extends BaseDao {
 
     public BDetProd detalleProductoF(int idFarmacia, int idProducto) {
         //msql
-        BDetProd detProd = new BDetProd();
+        BDetProd detProd = null;
 
         String sql = "Select  p.idproducto,p.nombre, f.foto1,pf.stock, pf.descripcion,pf.preciounitario from productoporfarmacia pf\n" +
                 "inner join producto p on (pf.idproducto=p.idproducto)\n" +
@@ -133,14 +133,17 @@ public class ProductosFDao extends BaseDao {
             pstmt.setInt(2, idProducto);
 
             try (ResultSet rs = pstmt.executeQuery()) {
+                detProd = new BDetProd();
+                if (rs.next()) {
 
-                while (rs.next()) {
-                    detProd.setIdProducto(rs.getInt(1));
-                    detProd.setNombre(rs.getString(2));
-                    detProd.setFoto(rs.getString(3));
-                    detProd.setStock(rs.getInt(4));
-                    detProd.setDescripcion(rs.getString(5));
-                    detProd.setPreciounitario(rs.getDouble(6));
+                    if (rs.getInt(1) !=0){
+                        detProd.setIdProducto(rs.getInt(1));
+                        detProd.setNombre(rs.getString(2));
+                        detProd.setFoto(rs.getString(3));
+                        detProd.setStock(rs.getInt(4));
+                        detProd.setDescripcion(rs.getString(5));
+                        detProd.setPreciounitario(rs.getDouble(6));
+                    }
 
                 }
 

@@ -41,7 +41,6 @@
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
 
-                    <!-- al button le quité esta linea dentro de sus parámetros  id="btnNavbarSearch" -->
                 </div>
             </form>
             <!-- Navbar-->
@@ -65,6 +64,12 @@
                                 <a class="nav-link text-white" href="<%=request.getContextPath()%>/Client_Perfil">
                                     <div class="sb-nav-link-icon"><i class="fas fa-user-alt"></i></div>
                                     Mi perfil
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-white bg-secondary" href="<%=request.getContextPath()%>/Client_Farmacias">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-clinic-medical"></i></div>
+                                    Farmacias
                                 </a>
                             </li>
                             <li>
@@ -114,6 +119,7 @@
                                 </ol>
 
                                 <%--Buscador--%>
+
                                 <div class="row  row-cols-4">
                                     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
                                           method="post"
@@ -140,7 +146,7 @@
                                 </div>
                                 <br><br>
 
-                                <%if (totalPag == 0) {%>
+                                <%if (listaProductosF.isEmpty()) {%>
                                 <div class="text-center">
                                     <div class="alert alert-warning text-center" role="alert">
                                         <p><em>No se han encontrado productos disponibles con el nombre de "<%=nombreProducto%>"</em></p>
@@ -172,6 +178,12 @@
                                 ---%>
                                 <section class="py-0">
                                     <div class="container px-4 px-lg-5 mt-5">
+
+                                        <%if (session.getAttribute("proAgregado")!=null){%>
+                                        <div class="alert alert-info" role="alert"><%=(String) session.getAttribute("proAgregado")%>
+                                        </div>
+                                        <%session.removeAttribute("proAgregado");%>
+                                        <%}%>
                                         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                                             <% for (BDetProd listaProd : listaProductosF) {%>
                                             <div class="col mb-5">
@@ -248,7 +260,6 @@
                                         </li>
                                     </ul>
                                 </nav>
-
                                 <%}%>
                             </div>
 

@@ -31,7 +31,11 @@
                     href="#!"><i
                     class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
 
+                </div>
+            </form>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item">
@@ -53,6 +57,13 @@
                                 <a class="nav-link text-white" href="<%=request.getContextPath()%>/Client_Perfil">
                                     <div class="sb-nav-link-icon"><i class="fas fa-user-alt"></i></div>
                                     Mi perfil
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-white bg-secondary"
+                                   href="<%=request.getContextPath()%>/Client_Farmacias">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-clinic-medical"></i></div>
+                                    Farmacias
                                 </a>
                             </li>
                             <li>
@@ -109,10 +120,22 @@
                                                 <p class="lead"><%=detProd.getDescripcion()%>
                                                 </p>
                                                 <div class="d-flex">
-                                                    <div class="card-footer p-2 pt-0 border-top-0 bg-transparent">
-                                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                                                    href="#popup1">Agregar</a>
-                                                        </div>
+                                                    <!-- Product actions-->
+                                                    <div class="card-footer p-2 pt-0 border-top-0 bg-transparent text-center">
+                                                        <form method="POST"
+                                                              action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=agregar">
+                                                            <input type="hidden" class="form-control" name="idProd"
+                                                                   value="<%=detProd.getIdProducto()%>">
+                                                            <input type="hidden" class="form-control" name="cantidad"
+                                                                   value="1">
+                                                            <input type="hidden" class="form-control" name="idFarmacia"
+                                                                   value="<%=farmacia.getIdFarmacia()%>">
+                                                            <input type="hidden" class="form-control" name="receta"
+                                                                   value="<%=detProd.isRecetaMedicaB()?"1":"0"%>">
+                                                            <button class="btn btn-outline-dark mt-auto" href="#popup1"
+                                                                    type="submit">Agregar
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                     <div class="card-footer p-2 pt-0 border-top-0 bg-transparent">
                                                         <div class="text-center"><a class="btn btn-outline-dark "

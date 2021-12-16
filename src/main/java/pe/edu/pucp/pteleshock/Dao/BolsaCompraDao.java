@@ -56,7 +56,7 @@ public class BolsaCompraDao extends BaseDao {
 
     }
 
-    public BPedidoEstado pedidosCarrito(int idP) {
+    public BPedidoEstado pedidosCarrito(int idP,int idProd) {
 
         BPedidoEstado pedidoC = new BPedidoEstado();
 
@@ -67,11 +67,13 @@ public class BolsaCompraDao extends BaseDao {
                 "left join foto f on (dp.idproducto = f.idproducto and dp.idfarmacia = f.idfarmacia)\n" +
                 "left join farmacia far on (dp.idfarmacia=far.idfarmacia) \n" +
                 "left join usuario u on (far.idusuario = u.idusuario)\n" +
-                "where pe.idestatuspedido = 1 and pe.idpedido = ?;";
+                "where pe.idestatuspedido = 1 and pe.idpedido = ? and dp.idproducto = ?;";
 
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
             pstmt.setInt(1, idP);
+            pstmt.setInt(2, idProd);
+
 
 
             try (ResultSet rs = pstmt.executeQuery()) {

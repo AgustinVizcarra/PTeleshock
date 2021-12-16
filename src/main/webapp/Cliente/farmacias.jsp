@@ -71,6 +71,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a class="nav-link text-white bg-secondary" href="<%=request.getContextPath()%>/Client_Farmacias">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-clinic-medical"></i></div>
+                                    Farmacias
+                                </a>
+                            </li>
+                            <li>
                                 <a class="nav-link text-white"
                                    href="<%=request.getContextPath()%>/Client_Bolsa_Compra">
                                     <div class="active sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
