@@ -94,6 +94,7 @@ public class RegistrarClienteDao extends BaseDao{
         propiedad.setProperty("mail.smtp.starttls.enable","true");
         propiedad.setProperty("mail.smtp.port","587");
         propiedad.setProperty("mail.smtp.auth","true");
+        propiedad.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
         Session session = Session.getDefaultInstance(propiedad);
         String owner_cuenta = "TeleshockInc@gmail.com";
         String pswd = "ProyectoTeleshock2021";
