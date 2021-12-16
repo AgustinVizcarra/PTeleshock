@@ -88,15 +88,18 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     BPedidoEstado bped = bolsaCompraDao.obtenerProd(Integer.parseInt(idProd), Integer.parseInt(idPedido), Integer.parseInt(idFarmaciaStr));
                     bolsaCompraDao.eliminarCarrito(Integer.parseInt(idProd), Integer.parseInt(idPedido), Integer.parseInt(idFarmaciaStr));
                     ArrayList<BPedidoEstado> listBolsa2 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
+                    HashMap<Integer, Integer> map1 = (HashMap<Integer, Integer>) session.getAttribute("maps");
                     if (bped != null) {
                         for (int i = 0; i < listBolsa2.size(); i++) {
                             BPedidoEstado bped1 = listBolsa2.get(i);
                             if (bped1.getNombreProducto().equals(bped.getNombreProducto())) {
                                 //found, delete.
                                 listBolsa2.remove(i);
+                                map1.remove(bped1.getPedido().getIdFarmacia());
                                 break;
                             }
                         }
+                        session.setAttribute("maps",map1);
                         session.setAttribute("bolsita", listBolsa2);
                     } else {
                         System.out.println("es nulo");
@@ -183,14 +186,17 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                 HashMap<Integer, Integer> map = (HashMap<Integer, Integer>) session.getAttribute("maps");
 
                 if (map.containsKey(idFarmacia)) {
+                    System.out.println("entró al if de generar pedido");
                     idPedido = map.get(idFarmacia);
                     if (listaBolsa4.isEmpty()) {
                         HashMap<Integer, Integer> map2 = new HashMap<>();
+                        System.out.println("entró al if empty");
                         idPedido = bolsaCompraDao.generarPedidoCarrito(cliente.getIdUsuario());
                         map2.put(idFarmacia, idPedido);
                         session.setAttribute("maps", map2);
                     }
                 } else {
+                    System.out.println("entró al else de generar pedido");
                     idPedido = bolsaCompraDao.generarPedidoCarrito(cliente.getIdUsuario());
                     map.put(idFarmacia, idPedido);
                     session.setAttribute("maps", map);
@@ -200,8 +206,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
 
                 if (producto == null) {
                     session.setAttribute("idPed", Integer.toString(idPedido));
-                    session.setAttribute("idProd", Integer.toString(Integer.parseInt(idProdStr)));
-
+                    session.setAttribute("idProd",idProdStr);
                     bolsaCompraDao.agregarProductoCarrito(idPedido, Integer.parseInt(idProdStr), Integer.parseInt(cantidadPStr), Integer.parseInt(idFarmaciaStr));
                     response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra"); //+ "&idF=" + idFarmacia);
 

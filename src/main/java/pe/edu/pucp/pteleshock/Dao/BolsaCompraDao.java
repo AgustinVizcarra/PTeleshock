@@ -45,9 +45,7 @@ public class BolsaCompraDao extends BaseDao {
                 pstmt.setInt(2, idProd);
                 pstmt.setInt(3, idFarmacia);
                 pstmt.setInt(4, cantidad);
-
                 pstmt.executeUpdate();
-                System.out.println("entró a agregar pedido");
 
             } catch (SQLException e) {
                 e.printStackTrace();
