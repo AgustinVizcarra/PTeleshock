@@ -8,8 +8,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean type="java.lang.Integer" scope="request" id="totalPag"/>
-<jsp:useBean type="java.lang.Integer" scope="request" id="pag"/>
+
+
+<jsp:useBean type="java.lang.String" scope="request" id="textbuscar" class="java.lang.String"/>
+<jsp:useBean type="java.lang.String" scope="request" id="cantPed" class="java.lang.String"/>
 
 
 <%
@@ -63,28 +65,25 @@
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion" style="background-color: #00152D; opacity: 0.9" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
-                        <ul class="nav">
-                            <li>
-                                <a class="nav-link text-white" href="<%=request.getContextPath()%>/Client_Perfil">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-user-alt"></i></div>
-                                    Mi perfil
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-link text-white"
-                                   href="<%=request.getContextPath()%>/Client_Bolsa_Compra">
-                                    <div class="active sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
-                                    Bolsa de Compras
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-link text-white bg-secondary"
-                                   href="<%=request.getContextPath()%>/Client_Listado_Producto">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-clipboard-list"></i></div>
-                                    Historial de pedidos
-                                </a>
-                            </li>
-                        </ul>
+                        <div class="nav">
+                            <a class="nav-link" style="color: white" href="<%=request.getContextPath()%>/Client_Perfil">
+                                <div class="sb-nav-link-icon"><i class="fas fa-user-alt"></i></div>
+                                Mi perfil
+                            </a>
+
+                            <a class="nav-link" style="color: white"
+                               href="<%=request.getContextPath()%>/Client_Bolsa_Compra">
+                                <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
+                                Bolsa de Compras
+                            </a>
+                            <a class="nav-link" style="color: white"
+                               href="<%=request.getContextPath()%>/Client_Listado_Producto">
+                                <div class="sb-nav-link-icon"><i class="fas fa-clipboard-list"></i></div>
+                                Historial de pedidos
+                            </a>
+
+
+                        </div>
                     </div>
                     <div class="sb-sidenav-footer" style="color: gray">
                         <div class="small">Logged in as:</div>
@@ -103,9 +102,9 @@
                             <li class="breadcrumb-item active">Lista de Pedidos</li>
                         </ol> -->
                         <div class="row   row-cols-4">
-                            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="post" action="<%=request.getContextPath()%>/Client_Listado_Producto?pag=1" >
+                            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="post" action="<%=request.getContextPath()%>/Client_Listado_Producto" >
                                 <div class="input-group">
-                                    <input class="form-control" type="text" name="textoBuscar" placeholder="Buscar..." aria-label="Buscar..."
+                                    <input class="form-control" type="text" name="textoBuscar" value="<%=textbuscar%>" placeholder="Buscar..." aria-label="Buscar..."
                                            aria-describedby="btnNavbarSearch"/>
                                     <button class="btn btn-primary" id="btnNavbarSearch" type="submit">
                                         <i class="fas fa-search"></i></button>
@@ -161,23 +160,22 @@
                             </div>
                         </div>
 
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-end text-primary">
-                                <li class="page-item  <%=pag==1?"disabled":""%>  ">
-                                    <a class="page-link"
-                                       href="<%=request.getContextPath()%>/Client_Listado_Producto?pag=<%=pag-1%>">Anterior</a>
-                                </li>
-                                <%for (int i = 1; i <= totalPag; i++) {%>
-                                <li class="page-item <%=pag==i?"active":""%>">
-                                    <a class="page-link"
-                                       href="<%=request.getContextPath()%>/Client_Listado_Producto?pag=<%=i%>"><%=i%>
-                                    </a></li>
-                                <%}%>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end">
+                                <% int cantPedInt=Integer.parseInt(cantPed);%>
+                                <% int resto= cantPedInt%3==0? 0:1; %>
+                                <% for(int i=1; i<Math.floor(cantPedInt/5)+resto+1; i++) { %>
 
-                                <li class="page-item <%=pag.equals(totalPag)?"disabled":""%>  ">
-                                    <a class="page-link"
-                                       href="<%=request.getContextPath()%>/Client_Listado_Producto?pag=<%=pag+1%>">Siguiente</a>
-                                </li>
+                                <form method="post"   action="<%=request.getContextPath()%>/Client_Listado_Producto?pag=<%=i%>&textoBuscar=<%=textbuscar %> ">
+                                    <!-- <input class="form-control" type="hidden"   value="" placeholder="Buscar..." aria-label="Buscar..."
+                                            aria-describedby="btnNavbarSearch" /> -->
+                                    <button class="page-item"><a class="page-link" type="submit"><%=i%></a></button>
+
+                                </form>
+
+
+                                <% } %>
+
                             </ul>
                         </nav>
                     </div>

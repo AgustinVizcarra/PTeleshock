@@ -3,6 +3,7 @@ package pe.edu.pucp.pteleshock.Servlet;
 
 
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
+import pe.edu.pucp.pteleshock.Dao.GPedidoDao;
 import pe.edu.pucp.pteleshock.Dao.PedidosGeneralDao;
 
 import javax.servlet.RequestDispatcher;
@@ -57,6 +58,31 @@ public class Client_Listado_ProductoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");
+
+        String texto = request.getParameter("textoBuscar").trim();
+        String pag = request.getParameter("pag") !=null ? request.getParameter("pag"): "1";
+        int idCliente = cliente.getIdUsuario();
+
+
+        PedidosGeneralDao pedidosGDao = new PedidosGeneralDao();
+
+
+        if (texto == null) {
+            response.sendRedirect(request.getContextPath() + "/Client_Listado_Producto");
+        } else {
+            int cantPed= pedidosGDao.cantidadPedidosBuscados(idCliente,texto);
+            String cantPedStr= String.valueOf(cantPed);
+            request.setAttribute("textbuscar",texto);
+            request.setAttribute("cantPed",cantPedStr);
+            request.setAttribute("listaPedidosG", pedidosGDao.listaPedidosPorPag(idCliente,pag,texto));
+            RequestDispatcher view = request.getRequestDispatcher("/Cliente/listado_de_productosFiltrado.jsp");
+            view.forward(request, response);
+
+
+        }
 
     }
 }
