@@ -44,6 +44,7 @@ public class Client_PedidoServlet extends HttpServlet {
         request.setAttribute("listaPedidos", pedidoDao.listarPedidos(idPG,inicio));
         request.setAttribute("totalPag", totalPag);
         request.setAttribute("pag", pag);
+        request.setAttribute("idPG", idPG);
 
         response.setContentType("text/html");
         RequestDispatcher view = request.getRequestDispatcher("/Cliente/pedido.jsp");

@@ -4,6 +4,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean type="java.lang.Integer" scope="request" id="totalPag"/>
 <jsp:useBean type="java.lang.Integer" scope="request" id="pag"/>
+<jsp:useBean type="java.lang.String" scope="request" id="idPG"/>
+
 <%
     ArrayList<BPedido> listaPedido = (ArrayList<BPedido>) request.getAttribute("listaPedidos");
 %>
@@ -85,22 +87,31 @@
             <!-- Main -->
             <div id="layoutSidenav_content">
                 <main>
+
+
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Pedido #<%=listaPedido.get(0).getBoletaVenta()%>
+                        <h1 class="mt-4">Pedido #<%=idPG%>
                         </h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a
                                     href="<%= request.getContextPath()%>/Client_Listado_Producto">Lista de Pedidos</a>
                             </li>
-                            <li class="breadcrumb-item active">Pedido #<%=listaPedido.get(0).getBoletaVenta()%>
+                            <li class="breadcrumb-item active">Pedido #<%=idPG%>
                             </li>
                         </ol>
+
+                        <%if (listaPedido.isEmpty()){%>
+                        <div class="alert alert-warning" role="alert">
+                            No se han encontrado resultados
+                        </div>
+                        <%}else{%>
                         <div class="card mb-4">
                             <div class="card-body">
                                 A continuación, se mostrarán los pedidos realizados por farmacia del pedido
-                                #<%=listaPedido.get(0).getBoletaVenta()%>!
+                                #<%=idPG%>!
                             </div>
                         </div>
+
                         <div class="card mb-4">
                             <div class="card-header bg-warning">
                                 <i class="fas fa-table me-1"></i>
@@ -160,8 +171,10 @@
                                 </li>
                             </ul>
                         </nav>
-
+                        <%}%>
                     </div>
+
+
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
