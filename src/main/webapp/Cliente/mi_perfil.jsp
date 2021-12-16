@@ -46,25 +46,28 @@
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion" style="background-color: #00152D; opacity: 0.9" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <a class="nav-link" style="color: white" href="<%=request.getContextPath()%>/Client_Perfil">
-                                <div class="sb-nav-link-icon"><i class="fas fa-user-alt"></i></div>
-                                Mi perfil
-                            </a>
-
-                            <a class="nav-link" style="color: white"
-                               href="<%=request.getContextPath()%>/Client_Bolsa_Compra">
-                                <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
-                                Bolsa de Compras
-                            </a>
-                            <a class="nav-link" style="color: white"
-                               href="<%=request.getContextPath()%>/Client_Listado_Producto">
-                                <div class="sb-nav-link-icon"><i class="fas fa-clipboard-list"></i></div>
-                                Historial de pedidos
-                            </a>
-
-
-                        </div>
+                        <ul class="nav">
+                            <li>
+                                <a class="nav-link text-white bg-secondary" href="<%=request.getContextPath()%>/Client_Perfil">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user-alt"></i></div>
+                                    Mi perfil
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-white"
+                                   href="<%=request.getContextPath()%>/Client_Bolsa_Compra">
+                                    <div class="active sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
+                                    Bolsa de Compras
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-white"
+                                   href="<%=request.getContextPath()%>/Client_Listado_Producto">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-clipboard-list"></i></div>
+                                    Historial de pedidos
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                     <div class="sb-sidenav-footer" style="color: gray">
                         <div class="small">Logged in as:</div>
