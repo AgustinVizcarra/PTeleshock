@@ -45,19 +45,12 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
             switch (action) {
                 case "listar":
                     ArrayList<BPedidoEstado> listBolsa1 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
-                    System.out.println("------ listBolsa1 -----------");
-                    for (int n = 0; n < listBolsa1.size(); n++) {
-                        System.out.println( listBolsa1.get(n).getNombreProducto());
-                    }
-                    System.out.println("-----------------");
 
                     String idPedidoStr = session.getAttribute("idPed") != null ? (String) session.getAttribute("idPed") : "";
                     String idProductoStr = session.getAttribute("idProd") != null ? (String) session.getAttribute("idProd") : "";
 
-                    System.out.println(idPedidoStr);
                     session.removeAttribute("idPed");
                     session.removeAttribute("idProd");
-                    System.out.println(idPedidoStr);
 
                     FarmaciaDao farmaciaDao = new FarmaciaDao();
                     ArrayList<BFarmacia> listaFarmacia = farmaciaDao.getListaTodasFarmacias("");
@@ -65,28 +58,11 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     request.setAttribute("listaFarmacia", listaFarmacia);
                     if (!idPedidoStr.equals("")) {
                         listBolsa1.add(bolsaCompraDao.pedidosCarrito(Integer.parseInt(idPedidoStr),Integer.parseInt(idProductoStr)));
-                        System.out.println(bolsaCompraDao.pedidosCarrito(Integer.parseInt(idPedidoStr),Integer.parseInt(idProductoStr)).getNombreProducto());
                         session.setAttribute("bolsita", listBolsa1);
                     }
+
                     HashMap<Integer, ArrayList<BPedidoEstado>> map = new HashMap<>();
                     session.setAttribute("map", map);
-
-                    System.out.println("----------- map ------------");
-                    System.out.println("lista bolsa 1: ");
-                    for (int k = 0; k < listBolsa1.size(); k++) {
-                        System.out.println( listBolsa1.get(k).getNombreProducto());
-
-                    }
-                    System.out.println("----------- -- ------------");
-
-
-                    System.out.println("------------------ map antes ------------------");
-                    for (Map.Entry<Integer, ArrayList<BPedidoEstado>> ee : map.entrySet()) {
-                        System.out.println(ee.getKey());
-                        for (int m = 0; m < ee.getValue().size(); m++) {
-                            System.out.println( ee.getValue().get(m).getNombreProducto());
-                        }
-                    }
 
                     for (int i = 1; i <= cantFarm; i++) {
                         ArrayList<BPedidoEstado> lista = new ArrayList<>();
@@ -97,14 +73,6 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                             }
                         }
                         session.setAttribute("map", map);
-                    }
-                    System.out.println("------------------ map despues ------------------");
-
-                    for (Map.Entry<Integer, ArrayList<BPedidoEstado>> aa : map.entrySet()) {
-                        System.out.println(aa.getKey());
-                        for (int m = 0; m < aa.getValue().size(); m++) {
-                            System.out.println( aa.getValue().get(m).getNombreProducto());
-                        }
                     }
 
                     if (map.isEmpty()) {
@@ -186,7 +154,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                 String idFarmaciaStr1 = request.getParameter("idF") != null ? request.getParameter("idF") : "";
                 String idProd = request.getParameter("idProd") != null ? request.getParameter("idProd") : "";
                 String idPedido1 = request.getParameter("idP") != null ? request.getParameter("idP") : "";
-                System.out.println(cantidad);
+
                 bolsaCompraDao.cantidad(Integer.parseInt(cantidad), Integer.parseInt(idFarmaciaStr1), Integer.parseInt(idPedido1), Integer.parseInt(idProd));
                 ArrayList<BPedidoEstado> listBolsa3 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
                 BPedidoEstado bped = bolsaCompraDao.obtenerProd(Integer.parseInt(idProd), Integer.parseInt(idPedido1), Integer.parseInt(idFarmaciaStr1));
@@ -207,8 +175,6 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                 String idFarmaciaStr = request.getParameter("idFarmacia") != null ? request.getParameter("idFarmacia") : "";
                 String receta = request.getParameter("receta") != null ? request.getParameter("receta") : "";
 
-                System.out.println(idProdStr + " | " + cantidadPStr + " | " + idFarmaciaStr);
-
                 ArrayList<BPedidoEstado> listaBolsa4 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
 
                 int idFarmacia = Integer.parseInt(idFarmaciaStr);
@@ -219,36 +185,22 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                 if (map.containsKey(idFarmacia)) {
                     idPedido = map.get(idFarmacia);
                     if (listaBolsa4.isEmpty()) {
-                        System.out.println("entró a nuevo map");
                         HashMap<Integer, Integer> map2 = new HashMap<>();
                         idPedido = bolsaCompraDao.generarPedidoCarrito(cliente.getIdUsuario());
                         map2.put(idFarmacia, idPedido);
                         session.setAttribute("maps", map2);
                     }
-                    System.out.println("entró al primer if");
                 } else {
-                    System.out.println("entró al segundo if");
                     idPedido = bolsaCompraDao.generarPedidoCarrito(cliente.getIdUsuario());
-                    System.out.println("hizo generar pedido");
                     map.put(idFarmacia, idPedido);
                     session.setAttribute("maps", map);
                 }
 
-                for (Integer key : map.keySet()) {
-                    System.out.println(key + " = " + map.get(key));
-                }
-
-
                 BPedidoEstado producto = bolsaCompraDao.obtenerProd(Integer.parseInt(idProdStr), idPedido, Integer.parseInt(idFarmaciaStr));
 
                 if (producto == null) {
-                    System.out.println("el producto no ha sido agregado");
                     session.setAttribute("idPed", Integer.toString(idPedido));
                     session.setAttribute("idProd", Integer.toString(Integer.parseInt(idProdStr)));
-
-
-                    System.out.println("idPedido" + "" + idPedido);
-                    System.out.println("idPed Session: " + (String) session.getAttribute("idPed"));
 
                     bolsaCompraDao.agregarProductoCarrito(idPedido, Integer.parseInt(idProdStr), Integer.parseInt(cantidadPStr), Integer.parseInt(idFarmaciaStr));
                     response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra"); //+ "&idF=" + idFarmacia);
@@ -256,13 +208,12 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                 } else {
                     response.sendRedirect(request.getContextPath() + "/Client_Productos_F?idF=" + idFarmacia); //+ "&idF=" + idFarmacia);
                     session.setAttribute("proAgregado", "El producto ya se encuentra en su bolsa de compras");
-                    System.out.println("el producto ya fue agregado");
                 }
                 break;
 
             case "comprar":
                 int cont = (int) session.getAttribute("contador");
-                System.out.println(cont);
+
                 if (cont != 0) {
                     String recetaStr = request.getParameter("receta") != null ? request.getParameter("receta") : "";
                     String fotoReceta = request.getParameter("fotoReceta") != null ? request.getParameter("fotoReceta") : "";
@@ -278,12 +229,10 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     HashMap<Integer, ArrayList<BPedidoEstado>> mapKey = (HashMap<Integer, ArrayList<BPedidoEstado>>) session.getAttribute("map");
                     ArrayList<Integer> keys = new ArrayList<>();
                     for (Map.Entry<Integer, ArrayList<BPedidoEstado>> ee : mapKey.entrySet()) {
-                        System.out.println(ee.getKey());
                         keys.add(ee.getKey());
                     }
                     for (int i = 1; i <= cont; i++) {
                         String Ent = request.getParameter("horaEnt" + i) != null ? request.getParameter("horaEnt" + i) : "";
-                        System.out.println(keys.get(i - 1));
                         entrega.put(keys.get(i - 1), Ent);
                     }
                     for (Map.Entry<Integer, ArrayList<BPedidoEstado>> es : mapKey.entrySet()) {

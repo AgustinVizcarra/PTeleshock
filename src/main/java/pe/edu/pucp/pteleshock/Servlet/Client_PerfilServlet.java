@@ -1,10 +1,7 @@
 package pe.edu.pucp.pteleshock.Servlet;
 import pe.edu.pucp.pteleshock.Beans.BCliente;
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
-import pe.edu.pucp.pteleshock.Dao.ListaDistritosDao;
-import pe.edu.pucp.pteleshock.Dao.PerfilClientDao;
-import pe.edu.pucp.pteleshock.Dao.RegistrarClienteDao;
-import pe.edu.pucp.pteleshock.Dao.RegistrarProDao;
+import pe.edu.pucp.pteleshock.Dao.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -75,6 +72,10 @@ public class Client_PerfilServlet extends HttpServlet {
         System.out.println(action);
         PerfilClientDao perfilClientDao = new PerfilClientDao();
         RegistrarClienteDao registrarClienteDao = new RegistrarClienteDao();
+        UsuarioDao usuarioDao = new UsuarioDao();
+
+        HttpSession session = request.getSession();
+        BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");
 
         switch (action){
 
@@ -92,6 +93,7 @@ public class Client_PerfilServlet extends HttpServlet {
 
                 }else{
                     perfilClientDao.editarCliente(idCliente,nombreStr,apellidoStr,idDis);
+                    session.setAttribute("clienteSession",(BUsuario) usuarioDao.obtenerUsuario(idCliente));
                     response.sendRedirect(request.getContextPath() + "/Client_Perfil?valor=edit");
                 }
                 break;
