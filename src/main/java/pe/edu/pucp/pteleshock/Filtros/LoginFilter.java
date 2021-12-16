@@ -27,8 +27,10 @@ public class LoginFilter implements Filter {
         String token = request.getParameter("correo")==null?"":request.getParameter("correo");
         HttpSession session = request.getSession();
         System.out.println("Valido: "+session.getAttribute("validacion"));
+        //System.out.println("action: "+action);
         //System.out.println("Primero paso por el filtro");
-        if(!token.equalsIgnoreCase("")||(Integer) session.getAttribute("validacion")==1){
+        //!action.equalsIgnoreCase("")
+        if(!token.equalsIgnoreCase("")|| (Integer) session.getAttribute("validacion")==1){
             //si alguno de los dos es distinto de nulo tenemos que ver cual es
             if(!token.equalsIgnoreCase("")){
                 String key = "TeleshockToken";

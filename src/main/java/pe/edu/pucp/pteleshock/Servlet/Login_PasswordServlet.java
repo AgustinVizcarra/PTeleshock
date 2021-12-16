@@ -50,10 +50,10 @@ public class Login_PasswordServlet extends HttpServlet {
                 PaswordDao paswordDao = new PaswordDao();
                 paswordDao.enviarCambioContra(correo);
                 //
-                mensaje = "Se le ha enviado un correo para actualizar sus credenciales";
+                mensaje = "Se le ha enviado un correo para actualizar sus credenciales.";
                 response.sendRedirect(request.getContextPath()+"/Login_Password?mensaje="+mensaje);
             }else {
-                mensaje = "No se encuentra la ruta de correo especificada";
+                mensaje = "No se encuentra la ruta de correo especificada.";
                 response.sendRedirect(request.getContextPath()+"/Login_Password?mensaje="+mensaje);
             }
         }else{
