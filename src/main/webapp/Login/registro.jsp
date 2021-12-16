@@ -43,14 +43,14 @@
                                         <label for="nombreC" class="col-sm-4 col-form-label">Nombre
                                             : </label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="nombreC" id="nombreC">
+                                            <input type="text" class="form-control" name="nombreC" id="nombreC" required pattern="([a-zA-Z]).{0,254}" title="Ingrese datos correctos.">
                                         </div>
                                     </div>
                                     <div class="row mb-4">
                                         <label for="apellidoC" class="col-sm-4 col-form-label">Apellido
                                             : </label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="apellidoC" id="apellidoC">
+                                            <input type="text" class="form-control" name="apellidoC" id="apellidoC" required pattern="([a-zA-Z]).{0,254}" title="Ingrese datos correctos.">
                                         </div>
                                     </div>
                                     <div class="row mb-4">

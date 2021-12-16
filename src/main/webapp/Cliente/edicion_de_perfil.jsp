@@ -121,15 +121,14 @@
                                             <div class="row mb-3">
                                                 <label class="col-sm-3 col-form-label text-white">Nombre : </label>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control" type="text" name="nombreC" id="nombreC"
+                                                    <input class="form-control" type="text" name="nombreC" required id="nombreC" pattern="([a-zA-Z]).{0,254}" title="Ingrese datos correctos."
                                                            value="<%=cliente.getNombre()%>">
-                                                    <%--<input class="form-control" type="text" name="nombreEst" id="nombreEst" value="<%=estudiante.getNombreParticipante()%>">---%>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <label class="col-sm-3 col-form-label text-white">Apellido : </label>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control" type="text" name="apellidoC"
+                                                    <input class="form-control" type="text" name="apellidoC" required pattern="([a-zA-Z]).{0,254}" title="Ingrese datos correctos."
                                                            id="apellidoC" value="<%=cliente.getApellido()%>">
 
                                                 </div>
