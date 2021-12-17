@@ -13,7 +13,6 @@
 <%@ page import="java.util.Calendar" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BFarmacia>" scope="request" id="listaFarmacia"/>
-
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
@@ -333,6 +332,14 @@
                             </div>
 
                             <div class=" col-5 my-3">
+                                <% String msgr= (String) session.getAttribute("msg1");
+                                    System.out.println("msg"+msgr);
+                                    if(msgr!=null){
+                                %>
+                                <div class="alert alert-danger text-center" role="alert">
+                                    <p><em><%=msgr%></em></p>
+                                </div>
+                                <%}%>
                                 <h5 class="card-title mb-4">Resumen de compra</h5>
                                 <form method="POST"
                                       action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=comprar">

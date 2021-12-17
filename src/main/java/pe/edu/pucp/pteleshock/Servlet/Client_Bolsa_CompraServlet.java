@@ -79,6 +79,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                         session.setAttribute("msg", "No tiene productos agregados a su bolsa de compras");
                     }
 
+                    System.out.println("msg1"+session.getAttribute("msg1"));
                     RequestDispatcher view = request.getRequestDispatcher("/Cliente/bolsa_de_compra.jsp");
                     view.forward(request, response);
 
@@ -170,6 +171,9 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                         break;
                     }
                 }
+                String msg1="Debe ingresar la fecha de entrega";
+                session.setAttribute("msg1",msg1);
+                System.out.println("msg1"+session.getAttribute("msg1"));
                 response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra");
                 break;
             case "agregar":
