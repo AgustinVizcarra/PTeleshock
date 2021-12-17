@@ -130,15 +130,6 @@
                             </div>
                         </div>
                         <div class="card mb-4">
-                            <div class="card-body">
-                                Estados de los Pedidos:
-                                P => Pendientes
-                                E => Entregados
-                                C => Cancelados
-                            </div>
-                        </div>
-
-                        <div class="card mb-4">
                             <div class="card-header  bg-warning">
                                 <i class="fas fa-table me-1"></i>
                                 Lista de pedidos
@@ -147,8 +138,10 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Número de pedido</th>
-                                            <th>N° P-E-C</th>
+                                            <th class="text-center">Número de pedido</th>
+                                            <th class="text-center">Pendientes</th>
+                                            <th class="text-center">Entregados</th>
+                                            <th class="text-center">Cancelados</th>
                                             <th class="text-center">Fecha del pedido</th>
                                             <th class="text-center">Monto Total</th>
                                             <th class="text-center">Detalles</th>
@@ -157,10 +150,17 @@
                                     <tbody>
                                         <% for (BPedidoGeneral pedidoG : listaPedidosG) {%>
                                         <tr>
-                                            <td><%=pedidoG.getCodigoVenta()%>
+                                            <td class="text-center">
+                                                <%=pedidoG.getCodigoVenta()%>
                                             </td>
                                             <td class="text-center">
-                                                <%=pedidoG.getPendientesT()%>-<%=pedidoG.getEntregadosT()%>-<%=pedidoG.getCanceladosT()%>
+                                                <%=pedidoG.getPendientesT()%>
+                                            </td>
+                                            <td class="text-center">
+                                                <%=pedidoG.getEntregadosT()%>
+                                            </td>
+                                            <td class="text-center">
+                                                <%=pedidoG.getCanceladosT()%>
                                             </td>
                                             <td class="text-center"><%=pedidoG.getFechaPedido()%>
                                             </td>
