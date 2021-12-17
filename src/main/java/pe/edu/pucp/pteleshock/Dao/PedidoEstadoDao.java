@@ -16,7 +16,7 @@ public class PedidoEstadoDao extends BaseDao{
 
     public ArrayList<BPedidoEstado> listarPedidosEstado(String idPG, int idPFd) {
 
-        ArrayList<BPedidoEstado> listaPedidosE = new ArrayList<>();
+        ArrayList<BPedidoEstado> listaPedidosE = null;
 
         String sql = "select p.idpedido, p.codigodeventa, f.idfarmacia,u.nombre as 'Farmacia' , e.nombre as 'Estado', f.direccion ,dis.nombre as `distrito`, p.fechaentrega, p.fechastatus, foto.foto1 as 'Foto', pro.nombre as 'Producto', d.cantidad, pxf.preciounitario,round((d.cantidad*pxf.preciounitario),2) as 'Precio total c/producto',pxf.idproducto from usuario un\n" +
                 "left join pedido p on (un.idusuario = p.idusuario)\n" +
@@ -38,7 +38,7 @@ public class PedidoEstadoDao extends BaseDao{
 
 
             try (ResultSet rs = pstmt.executeQuery()) {
-
+                listaPedidosE = new ArrayList<>();
                 while (rs.next()) {
                     BPedidoEstado pedidoE = new BPedidoEstado();
 

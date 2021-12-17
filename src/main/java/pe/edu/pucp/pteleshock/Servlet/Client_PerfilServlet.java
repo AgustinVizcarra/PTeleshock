@@ -38,10 +38,18 @@ public class Client_PerfilServlet extends HttpServlet {
                     //Mensaje
                     String er1 = request.getParameter("er") == null ? "" : request.getParameter("er");
                     //Editar Perfil
-                    request.setAttribute("listaDistritos", listaDistritosDao.listarTotalDistritos());
+
                     //Se recibe idC de boton "editar"
                     String idClienteStr = request.getParameter("idC") != null ? request.getParameter("idC") : "";
-                    int idC = Integer.parseInt(idClienteStr);
+
+                    int idC = 0;
+                    try {
+                        idC = Integer.parseInt(idClienteStr);
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+
+                    request.setAttribute("listaDistritos", listaDistritosDao.listarTotalDistritos());
 
                     BCliente bCliente = perfilClientDao.clientePerfil(idC);
                     //System.out.println("nombre Part"+bCliente.getNombre());
@@ -61,6 +69,8 @@ public class Client_PerfilServlet extends HttpServlet {
                         view.forward(request, response);
                     }
                     break;
+                default:
+                    response.sendRedirect(request.getContextPath() + "/Client_Perfil");
             }
         }
     }
