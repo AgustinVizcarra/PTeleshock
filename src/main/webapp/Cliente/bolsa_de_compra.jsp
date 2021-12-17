@@ -226,8 +226,8 @@
                                                                     for (BFarmacia bf : listaFarmacia) {
                                                                         if (bf.getIdfarmacia() == key) {
                                                                 %>
-                                                                <h6 class="card-title"><%=bf.getNombre()%>
-                                                                </h6>
+                                                                <h6 class="card-title"><%=bf.getNombre()%>-<%=bf.getNombreDistrito()%></h6>
+                                                                <p><em><%=bf.getDireccion()%></em></p>
                                                                 <%}%>
                                                                 <%}%>
                                                             </div>

@@ -1,15 +1,12 @@
 package pe.edu.pucp.pteleshock.Dao;
-
-
-
 import pe.edu.pucp.pteleshock.Beans.BFarmacia;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FarmaciaDao extends BaseDao {
 
+    //FarmaciaDao - Consultar (Admi)
     public ArrayList<BFarmacia> getListaFarmaciasPorDistrito(String iddistrito, String pag) {
 
         ArrayList<BFarmacia> listaFarmacias = new ArrayList<>();
@@ -84,19 +81,19 @@ public class FarmaciaDao extends BaseDao {
         return listaFarmacias;
     }
 
-
+    //FarmaciaDao - Consultar(Admi)
     public ArrayList<BFarmacia> getListaTodasFarmacias(String pag) {
 
         ArrayList<BFarmacia> listaFarmacias = new ArrayList<>();
         String sql="";
         if(pag.equals("")) {
-            sql = "select a.idusuario, a.idfarmacia, b.nombre, b.ruc, a.direccion, b.correo, a.estatus\n" +
+            sql = "select a.idusuario, a.idfarmacia, b.nombre, b.ruc, a.direccion, b.correo, a.estatus, c.nombre\n" +
                     "from farmacia a\n" +
                     "inner join usuario b on a.idusuario=b.idusuario\n" +
                     "inner join distrito c on c.iddistrito=b.iddistrito\n";
         }else {
             int pagint = Integer.parseInt(pag);
-            sql="select a.idusuario, a.idfarmacia, b.nombre, b.ruc, a.direccion, b.correo, a.estatus\n" +
+            sql="select a.idusuario, a.idfarmacia, b.nombre, b.ruc, a.direccion, b.correo, a.estatus, c.nombre\n" +
                     "from farmacia a\n" +
                     "inner join usuario b on a.idusuario=b.idusuario\n" +
                     "inner join distrito c on c.iddistrito=b.iddistrito\n" +
@@ -116,6 +113,7 @@ public class FarmaciaDao extends BaseDao {
                 String direccion = rs.getString(5);
                 String correo = rs.getString(6);
                 String estado = rs.getString(7);
+                String nDistrito = rs.getString(8);
                 int pedEntregados = 0;
                 int pedPendientes = 0;
                 int pedCancelados = 0;
@@ -152,7 +150,7 @@ public class FarmaciaDao extends BaseDao {
                     }
                 }
 
-                BFarmacia bFarmacia = new BFarmacia(idusuario, idfarmacia, nombre, ruc, direccion, correo, estado, pedEntregados, pedPendientes, pedCancelados, pedDeseados);
+                BFarmacia bFarmacia = new BFarmacia(idusuario, idfarmacia, nombre, ruc, direccion, correo, estado,nDistrito, pedEntregados, pedPendientes, pedCancelados, pedDeseados);
                 listaFarmacias.add(bFarmacia);
             }
 
@@ -163,6 +161,8 @@ public class FarmaciaDao extends BaseDao {
         }
         return listaFarmacias;
     }
+
+    //FarmaciaDao - Consultar(Admi)
 
     public BFarmacia getFarmacia(String ruc) {
         BFarmacia farmacia = new BFarmacia();
@@ -219,6 +219,7 @@ public class FarmaciaDao extends BaseDao {
         return farmacia;
     }
 
+    //FarmaciaDao - Consultar (Admi)
     public BFarmacia getFarmaciaCompleta(String rucBuscar) {
 
         BFarmacia bFarmacia = null;
@@ -290,7 +291,7 @@ public class FarmaciaDao extends BaseDao {
         return bFarmacia;
     }
 
-
+    //FarmaciaDao
     public void actualizarFarmaciaBloqueada(BFarmacia farmacia, String razon, String nAdmi) {
 
         String sql1 = "UPDATE farmacia SET estatus='bloqueado' where idfarmacia = ? ;";
@@ -690,7 +691,7 @@ public class FarmaciaDao extends BaseDao {
 
     }
 
-
+    //EstadisticasDao
     public HashMap<Integer, Integer> estadisticasventasmeses(String year,int idfarmacia) {
         HashMap<Integer, Integer> arreglo = new HashMap<>();
 
@@ -722,7 +723,7 @@ public class FarmaciaDao extends BaseDao {
 
         return arreglo;
     }
-
+    //EstadisticasDao
     public HashMap<Integer, Integer> estadisticasproductosmeses(String year,int idfarmacia) {
         HashMap<Integer, Integer> arreglo1 = new HashMap<>();
 

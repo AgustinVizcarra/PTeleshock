@@ -11,7 +11,24 @@ public class BPedido {
     private double precioTotal;
     private int idPedido;
 
+    public String getDireccion() {
+        return direccion;
+    }
 
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getNombreDistrito() {
+        return nombreDistrito;
+    }
+
+    public void setNombreDistrito(String nombreDistrito) {
+        this.nombreDistrito = nombreDistrito;
+    }
+
+    private String direccion;
+    private String nombreDistrito;
 
     public String getBoletaVenta() {
         return boletaVenta;

@@ -15,7 +15,7 @@ public class PedidoDao extends BaseDao {
 
         ArrayList<BPedido> listaPedidos = new ArrayList<>();
 
-        String sql = "select p.idpedido, p.codigodeventa, f.idfarmacia,u.nombre as 'Farmacia' , e.nombre as 'Estado',p.fechapedido, p.fechaentrega, sum(round((d.cantidad*pxf.preciounitario),2)) as 'Precio total c/producto' from usuario un\n" +
+        String sql = "select p.idpedido, p.codigodeventa, f.idfarmacia,u.nombre as 'Farmacia' , e.nombre as 'Estado',p.fechapedido, p.fechaentrega, sum(round((d.cantidad*pxf.preciounitario),2)) as 'Precio total c/producto', dis.nombre,f.direccion from usuario un\n" +
                 "left join pedido p on (un.idusuario = p.idusuario)\n" +
                 "left join estatuspedido e on (p.idestatuspedido = e.idestatuspedido)\n" +
                 "left join detallepedido d on (p.idpedido = d.idpedido)\n" +
@@ -23,6 +23,7 @@ public class PedidoDao extends BaseDao {
                 "left join producto pro on (pxf.idproducto = pro.idproducto)\n" +
                 "left join farmacia f on (pxf.idfarmacia = f.idfarmacia)\n" +
                 "left join usuario u on (f.idusuario = u.idusuario)\n" +
+                "left join distrito dis on (dis.iddistrito = u.iddistrito)\n" +
                 "where ((p.codigodeventa = ?) and e.idestatuspedido not in (1) )\n" +
                 "group by p.idpedido ,fechaentrega order by fechaentrega limit " + inicio + ",3 ;";
 
@@ -42,7 +43,8 @@ public class PedidoDao extends BaseDao {
                     pedido.setFechaEntrega(rs.getString(7));
                     pedido.setEstadoPedido(rs.getString(5));
                     pedido.setPrecioTotal(rs.getDouble(8));
-
+                    pedido.setNombreDistrito(rs.getString(9));
+                    pedido.setDireccion(rs.getString(10));
                     listaPedidos.add(pedido);
 
                 }

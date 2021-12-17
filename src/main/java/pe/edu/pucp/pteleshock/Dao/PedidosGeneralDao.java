@@ -12,7 +12,6 @@ public class PedidosGeneralDao extends BaseDao {
         //msql
 
         ArrayList<BPedidoGeneral> listaPedidosGeneral = new ArrayList<>();
-
         try {
             Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
@@ -26,25 +25,77 @@ public class PedidosGeneralDao extends BaseDao {
                     "left join usuario u on (f.idusuario = u.idusuario)\n" +
                     "where un.idusuario = " + idCliente + " and e.idestatuspedido not in (1)\n" +
                     "group by p.codigodeventa, p.fechapedido order by p.fechapedido desc limit " + inicio + ",5 ;");
-
-
             while (rs.next()) {
                 BPedidoGeneral pedidoG = new BPedidoGeneral();
                 pedidoG.setIdCliente(rs.getInt(1));
                 pedidoG.setCodigoVenta(rs.getString(3));
                 pedidoG.setFechaPedido(rs.getString(4));
                 pedidoG.setMontoTotal(rs.getDouble(5));
+                try {
+                    Connection conn = this.getConnection();
+                    Statement stat = conn.createStatement();
+                    ResultSet rs1 = stat.executeQuery("select round(sum(p.preciototal),2) as 'Precio Total' from pedido p\n" +
+                            "inner join usuario u on (u.idusuario = p.idusuario)\n" +
+                            "where p.codigodeventa = " + pedidoG.getCodigoVenta() + " and u.idusuario = " + idCliente + " and p.idestatuspedido not in (1,4) ;");
+                    if (rs1.next()) {
+                        pedidoG.setTotal(rs1.getDouble(1));
 
+                    }
+
+                    try {
+                        Connection conn2 = this.getConnection();
+                        Statement stat2 = conn2.createStatement();
+                        ResultSet rs2 = stat2.executeQuery("select count(p.idestatuspedido) as 'cantidad' from pedido p\n" +
+                                "inner join usuario u on (u.idusuario = p.idusuario)\n" +
+                                "where p.codigodeventa = "+pedidoG.getCodigoVenta()+" and u.idusuario = "+idCliente+" and p.idestatuspedido = 4;");
+                        if (rs2.next()) {
+                            System.out.println(rs2.getInt(1));
+                            pedidoG.setCanceladosT(rs2.getInt(1));
+                        }
+                        try {
+                            Connection conn3 = this.getConnection();
+                            Statement stat3 = conn3.createStatement();
+                            ResultSet rs3 = stat3.executeQuery("select count(p.idestatuspedido) as 'cantidad' from pedido p\n" +
+                                    "inner join usuario u on (u.idusuario = p.idusuario)\n" +
+                                    "where p.codigodeventa = "+pedidoG.getCodigoVenta()+" and u.idusuario = "+idCliente+" and p.idestatuspedido = 3;");
+                            if (rs3.next()) {
+                                pedidoG.setEntregadosT(rs3.getInt(1));
+                            }
+                            try {
+                                Connection conn4 = this.getConnection();
+                                Statement stat4 = conn4.createStatement();
+                                ResultSet rs4 = stat4.executeQuery("select count(p.idestatuspedido) as 'cantidad' from pedido p\n" +
+                                        "inner join usuario u on (u.idusuario = p.idusuario)\n" +
+                                        "where p.codigodeventa = "+pedidoG.getCodigoVenta()+" and u.idusuario = "+idCliente+" and p.idestatuspedido = 2;");
+                                if (rs4.next()) {
+                                    pedidoG.setPendientesT(rs4.getInt(1));
+                                }
+
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    } catch(SQLException e){
+                        e.printStackTrace();
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 listaPedidosGeneral.add(pedidoG);
-
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return listaPedidosGeneral;
-
     }
+
+
+
+
 
     public int obtenerNumFilasPG(int idCliente) {
 

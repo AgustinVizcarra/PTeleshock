@@ -2,6 +2,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.text.DecimalFormat" %>
 <jsp:useBean type="java.lang.Integer" scope="request" id="totalPag"/>
 <jsp:useBean type="java.lang.Integer" scope="request" id="pag"/>
 <jsp:useBean type="java.lang.String" scope="request" id="idPG"/>
@@ -131,6 +132,7 @@
                                     <thead>
                                         <tr>
                                             <th>Farmacia</th>
+                                            <th class="text-center">Ubicación</th>
                                             <th class="text-center">Fecha del Pedido</th>
                                             <th class="text-center">Fecha de Entrega</th>
                                             <th>Estado</th>
@@ -143,13 +145,26 @@
                                         <tr>
                                             <td><%=pedido.getNombreFarmacia()%>
                                             </td>
+                                            <td class="text-center"><%=pedido.getDireccion()%> - <%=pedido.getNombreDistrito()%></td>
                                             <td class="text-center"><%=pedido.getFechaPedido()%>
                                             </td>
                                             <td class="text-center"><%=pedido.getFechaEntrega()%>
                                             </td>
-                                            <td><%=pedido.getEstadoPedido()%>
+                                            <td>
+                                                <%if(pedido.getEstadoPedido().equals("pendiente")){%>
+                                                <span class="badge bg-warning text-dark"><%=pedido.getEstadoPedido()%></span>
+                                                <%}else{%>
+                                                <%if(pedido.getEstadoPedido().equals("cancelado")){%>
+                                                <span class="badge bg-danger"><%=pedido.getEstadoPedido()%></span>
+                                                <%}else{%>
+                                                <%if(pedido.getEstadoPedido().equals("entregado"))%>
+                                                <span class="badge bg-success"><%=pedido.getEstadoPedido()%></span>
+                                                <%}%>
+                                                <%}%>
                                             </td>
-                                            <th><%=pedido.getPrecioTotal()%>
+                                            <th>
+                                                <%DecimalFormat df = new DecimalFormat("##.##"); %>
+                                                <%=df.format(pedido.getPrecioTotal())%>
                                             </th>
                                             <td><a class="btn btn-primary"
                                                    href="<%= request.getContextPath()%>/Client_Estado_Pendiente?idPG=<%=pedido.getBoletaVenta()%>&idFPd=<%=pedido.getIdFarmacia()%>">Ver
@@ -222,4 +237,3 @@
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     </body>
 </html>
-

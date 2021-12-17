@@ -1,6 +1,7 @@
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BPedidoGeneral" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %><%--
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BUsuario" %>
+<%@ page import="java.text.DecimalFormat" %><%--
   Created by IntelliJ IDEA.
   User: casa
   Date: 5/11/2021
@@ -128,6 +129,14 @@
                                 A continuación, se mostrarán los pedidos realizados por usted!
                             </div>
                         </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                Estados de los Pedidos:
+                                P => Pendientes
+                                E => Entregados
+                                C => Cancelados
+                            </div>
+                        </div>
 
                         <div class="card mb-4">
                             <div class="card-header  bg-warning">
@@ -139,9 +148,10 @@
                                     <thead>
                                         <tr>
                                             <th>Número de pedido</th>
+                                            <th>N° P-E-C</th>
                                             <th class="text-center">Fecha del pedido</th>
-                                            <th>Monto Total</th>
-                                            <th>Detalles</th>
+                                            <th class="text-center">Monto Total</th>
+                                            <th class="text-center">Detalles</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -149,19 +159,24 @@
                                         <tr>
                                             <td><%=pedidoG.getCodigoVenta()%>
                                             </td>
-
+                                            <td class="text-center">
+                                                <%=pedidoG.getPendientesT()%>-<%=pedidoG.getEntregadosT()%>-<%=pedidoG.getCanceladosT()%>
+                                            </td>
                                             <td class="text-center"><%=pedidoG.getFechaPedido()%>
                                             </td>
-                                            <td><%=pedidoG.getMontoTotal()%>
+                                            <td class="text-center">
+                                                <%DecimalFormat df = new DecimalFormat("##.##"); %>
+                                                <%if (pedidoG.getTotal()>0.0){%>
+                                                S/.<%=df.format(pedidoG.getTotal())%>
+                                                <%}else{%>
+                                                <span class="badge bg-secondary mt-2">Cancelado</span>
+                                                <%}%>
                                             </td>
-                                            <td><a class="btn btn-primary"
+                                            <td class="text-center"><a class="btn btn-primary"
                                                    href="<%= request.getContextPath()%>/Client_Pedido?idPG=<%=pedidoG.getCodigoVenta()%>">Ver
                                                 detalles</a></td>
-
                                         </tr>
                                         <%}%>
-
-
                                     </tbody>
                                 </table>
                             </div>
