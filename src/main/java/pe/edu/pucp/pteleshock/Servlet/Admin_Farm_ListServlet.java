@@ -45,15 +45,20 @@ Admin_Farm_ListServlet extends HttpServlet {
             cant = farmaciaDao.cantidadListaTodasFarmaciasPorDistrito(iddistrito);
             bDistrito = distrfarm_dao.obtenerDistritoPorId(iddistrito);
         }
+        //System.out.println("Cantidad de listadefarmaciassegundistrito: "+listaFarmacias.size());
+        if(listaFarmacias.size()>0) {
+            request.setAttribute("listaFarmacias", listaFarmacias);
+            request.setAttribute("filtrar", filtrar);
+            request.setAttribute("distrito", bDistrito);
+            request.setAttribute("cantidad", cant);
 
-        request.setAttribute("listaFarmacias", listaFarmacias);
-        request.setAttribute("filtrar", filtrar);
-        request.setAttribute("distrito", bDistrito);
-        request.setAttribute("cantidad", cant);
-
-        RequestDispatcher view = request.getRequestDispatcher("/Administracion/listado.jsp");
-        view.forward(request, response);
-
+            RequestDispatcher view = request.getRequestDispatcher("/Administracion/listado.jsp");
+            view.forward(request, response);
+        }else{
+            request.setAttribute("distritos", distrfarm_dao.listar_distritos());
+            RequestDispatcher view = request.getRequestDispatcher("/Administracion/index_admin.jsp");
+            view.forward(request, response);
+        }
     }
 
     @Override
