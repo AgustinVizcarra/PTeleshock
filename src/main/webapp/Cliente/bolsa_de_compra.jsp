@@ -326,7 +326,7 @@
                                                                                     <h5 class="card-title p-2">¿Está seguro que desea eliminar el producto de su bolsa de compras?</h5>
                                                                                 </div>
                                                                                 <div class="modal-footer">
-                                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
                                                                                     <a class="btn btn-danger"
                                                                                        href="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=borrar&idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>"
                                                                                     ><span class="fa fa-trash"></span></a>
