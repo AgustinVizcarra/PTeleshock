@@ -293,13 +293,17 @@
                                                                 <%if (ee.getValue().get(i).isRecetaMedica()) {%>
                                                                 <td>
                                                                     <form method="POST"
-                                                                          action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=actualizarFoto&idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>">
+                                                                          action="<%=request.getContextPath()%>/ImgRecetaServlet?idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>" enctype="multipart/form-data">
                                                                         <div class="mb-3">
+
                                                                             <input class="form-control"
                                                                                    name="fotoReceta" type="file"
                                                                                    id="formFile1">
+                                                                            <button type="submit" class="btn btn-secondary btn-sm">Subir receta</button>
                                                                         </div>
+
                                                                     </form>
+                                                                    <img src="<%=request.getContextPath()%>/ImgRecetaServlet?prod=<%=ee.getValue().get(i).getIdProducto()%>&idfarm=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idped=<%=ee.getValue().get(i).getPedido().getIdPedido()%>" width="100px">
                                                                 </td>
                                                                 <%} else {%>
                                                                 <td class="text-center">No requiere</td>
@@ -429,6 +433,9 @@
                 </div>
             </div>
         </nav>
+
+
+
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
                 crossorigin="anonymous"></script>

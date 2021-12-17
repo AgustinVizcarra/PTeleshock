@@ -2,6 +2,7 @@ package pe.edu.pucp.pteleshock.Dao;
 
 import pe.edu.pucp.pteleshock.Beans.*;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -248,6 +249,25 @@ public class BolsaCompraDao extends BaseDao {
             pstmt.setInt(3,idPedido);
             pstmt.setInt(4,idProd);
             pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void actualizarFotoreceta(int idFarm, int idPedido, int idProd, InputStream inputstream){
+
+        String sql = "UPDATE detallepedido set recetamedica=? where idfarmacia = ? and idpedido =? and idproducto=?;";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+
+            pstmt.setBlob(1,inputstream);
+            pstmt.setInt(2,idFarm);
+            pstmt.setInt(3,idPedido);
+            pstmt.setInt(4,idProd);
+            pstmt.executeUpdate();
+
 
         } catch (SQLException e) {
             e.printStackTrace();

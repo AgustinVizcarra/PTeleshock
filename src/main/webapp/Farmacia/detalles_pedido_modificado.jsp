@@ -219,6 +219,7 @@
                                 <th>Receta Médica:</th>
                             </tr>
                             </thead>
+                            <%int k = 1;%>
                             <%for(BPedidoD bPedidoD:listaproducto){%>
                             <tbody>
                             <tr>
@@ -229,14 +230,15 @@
                                 <%if(!bPedidoD.isRecetamedica()){%>
                                 <td>No</td>
                                 <%}else{%>
-                                <td><a href="#img1">
-                                    <img src="<%= request.getContextPath()%>/ImgRecetaServlet?prod=<%=bPedidoD.getIdproducto()%>&idped=<%=session.getAttribute("idpedido")%>" width="100px">
+                                <td><a href="#img<%=k%>">
+                                    <img src="<%= request.getContextPath()%>/ImgRecetaServlet?prod=<%=bPedidoD.getIdproducto()%>&idped=<%=session.getAttribute("idpedido")%>&idfarm=<%=session.getAttribute("idFarmacia")%>" width="100px">
                                 </a>
 
                                     <!-- lightbox container hidden with CSS -->
-                                    <a href="#" class="lightbox" id="img1">
-                                        <span style="background-image: url('<%= request.getContextPath()%>/ImgRecetaServlet?prod=<%=bPedidoD.getIdproducto()%>&idped=<%=session.getAttribute("idpedido")%>')"></span>
+                                    <a href="#" class="lightbox" id="img<%=k%>">
+                                        <span style="background-image: url('<%= request.getContextPath()%>/ImgRecetaServlet?prod=<%=bPedidoD.getIdproducto()%>&idped=<%=session.getAttribute("idpedido")%>&idfarm=<%=session.getAttribute("idFarmacia")%>')"></span>
                                     </a></td>
+                                <%k++;%>
                                 <%}%>
                             </tr>
                             </tbody>
