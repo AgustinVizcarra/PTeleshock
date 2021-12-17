@@ -2,7 +2,6 @@ package pe.edu.pucp.pteleshock.Servlet;
 import pe.edu.pucp.pteleshock.Beans.BCliente;
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.*;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +15,7 @@ import java.io.IOException;
 public class Client_PerfilServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");
         if(cliente != null) {
@@ -78,7 +77,7 @@ public class Client_PerfilServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ?"actualizar" : request.getParameter("action");
-
+        request.setCharacterEncoding("UTF-8");
         System.out.println(action);
         PerfilClientDao perfilClientDao = new PerfilClientDao();
         RegistrarClienteDao registrarClienteDao = new RegistrarClienteDao();
@@ -100,7 +99,6 @@ public class Client_PerfilServlet extends HttpServlet {
 
                 if(nombreStr.equals("a") || apellidoStr.equals("a")){
                     response.sendRedirect(request.getContextPath() + "/Client_Perfil?action=editar&er=1&idC=" + idCliente);
-
                 }else{
                     perfilClientDao.editarCliente(idCliente,nombreStr,apellidoStr,idDis);
                     session.setAttribute("clienteSession",(BUsuario) usuarioDao.obtenerUsuario(idCliente));

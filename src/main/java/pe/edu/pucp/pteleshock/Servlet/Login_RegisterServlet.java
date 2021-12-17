@@ -16,7 +16,7 @@ import java.io.IOException;
 public class Login_RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action") == null ? "anadir" : request.getParameter("action");
         RequestDispatcher view;
 
@@ -47,7 +47,7 @@ public class Login_RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action") == null ? "actualizar" : request.getParameter("action");
         RegistrarClienteDao registrarClienteDao = new RegistrarClienteDao();
 
