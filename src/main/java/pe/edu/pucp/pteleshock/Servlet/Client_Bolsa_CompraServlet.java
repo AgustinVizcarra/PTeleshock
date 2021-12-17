@@ -106,6 +106,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                         System.out.println("es nulo");
                     }
                     response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra");
+                    session.removeAttribute("msg1");
                     break;
                 case "cancelar":
                     String codVenta = request.getParameter("idPG") != null ? request.getParameter("idPG") : "";
