@@ -118,7 +118,7 @@ public class PedidoEstadoDao extends BaseDao{
 
         Boolean ent = false;
 
-        String sql = "SELECT p.idpedido, dp.idfarmacia, p.fechastatus , timestampdiff(hour,now(),fechaentrega) as `tiempoRestante`, p.idestatuspedido FROM  pedido p \n" +
+        String sql = "SELECT p.idpedido, dp.idfarmacia, p.fechastatus , timestampdiff(hour,now(),fechaentrega) as `tiempominutos`, p.idestatuspedido, timestampdiff(minute,now(),fechaentrega) FROM  pedido p \n" +
                 "left join detallepedido dp on (p.idpedido = dp.idpedido)\n" +
                 "where (p.codigodeventa =? and dp.idfarmacia = ?) group by dp.idfarmacia;";
 
@@ -129,14 +129,16 @@ public class PedidoEstadoDao extends BaseDao{
 
 
             try (ResultSet rs = pstmt.executeQuery()) {
-                int tiempoRestante;
+                int tiempoHoras;
+                int tiempoMinutos;
                 String status="";
                 int nomStatus=0;
                 if (rs.next()) {
                     status=rs.getString(3);
                     nomStatus=rs.getInt(5);
-                    tiempoRestante = rs.getInt(4);
-                    if (tiempoRestante<1){
+                    tiempoHoras = rs.getInt(4);
+                    tiempoMinutos=rs.getInt(6);
+                    if (tiempoHoras<0 || tiempoMinutos<0){
                         if(nomStatus==2){
                             ent = true;
                         }
