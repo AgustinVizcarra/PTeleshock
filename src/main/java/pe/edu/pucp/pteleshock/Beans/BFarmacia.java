@@ -8,12 +8,37 @@ public class BFarmacia {
     private String direccion;
     private String correo;
     private String estado;
+    private String nombreDistrito;
+
+    public BFarmacia(int idusuario, int idfarmacia, String nombre, String ruc, String direccion, String correo, String estado, String nombreFarmacia, int pedEntregados, int pedPendientes, int pedCancelados, int pedDeseados) {
+        this.idusuario = idusuario;
+        this.idfarmacia = idfarmacia;
+        this.nombre = nombre;
+        this.ruc = ruc;
+        this.direccion = direccion;
+        this.correo = correo;
+        this.estado = estado;
+        this.nombreDistrito = nombreFarmacia;
+        this.pedEntregados = pedEntregados;
+        this.pedPendientes = pedPendientes;
+        this.pedCancelados = pedCancelados;
+        this.pedDeseados = pedDeseados;
+    }
+
     private int pedEntregados;
     private int pedPendientes;
     private int pedCancelados;
     private int pedDeseados;
 
     public BFarmacia() {
+    }
+
+    public String getNombreDistrito() {
+        return nombreDistrito;
+    }
+
+    public void setNombreDistrito(String nombreDistrito) {
+        this.nombreDistrito = nombreDistrito;
     }
 
     public BFarmacia(int idusuario, int idfarmacia, String nombre, String ruc, String direccion, String correo, String estado, int pedEntregados, int pedPendientes, int pedCancelados, int pedDeseados) {
