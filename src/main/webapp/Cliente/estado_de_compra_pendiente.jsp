@@ -7,7 +7,7 @@
 <%
     ArrayList<BPedidoEstado> listaPedidoE = (ArrayList<BPedidoEstado>) request.getAttribute("listaPedidoE");
     Boolean sePuedeCancelar = (Boolean) request.getAttribute("sePuedeCancelar");
-
+    String  msg = (String) request.getAttribute("msg");
 %>
 
 <html lang="en">
@@ -22,6 +22,7 @@
         <link href="css/style.css" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
                 crossorigin="anonymous"></script>
+        <link />
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand" style="background-color: #00152D; opacity: 0.9;">
@@ -107,6 +108,11 @@
                                 </a></li>
                             <li class="breadcrumb-item active">Ver detalles</li>
                         </ol>
+                        <%if(!msg.equalsIgnoreCase("")){%>
+                        <div class="alert alert-danger text-center" role="alert">
+                            <p><em><%=msg%></em></p>
+                        </div>
+                        <%}%>
 
                         <div class="card mb-4">
                             <div class="card-body">
@@ -248,12 +254,22 @@
                                     <a class="btn btn-danger me-md-4"
                                        href="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=cancelar&idPG=<%=listaPedidoE.get(0).getPedido().getBoletaVenta()%>&idF=<%=listaPedidoE.get(0).getPedido().getIdFarmacia()%>&idP=<%=listaPedidoE.get(0).getPedido().getIdPedido()%>">Cancelar</a>
                                 </div>
-                                <%} else {%>
+                                <%} else {
+                                    if(listaPedidoE.get(0).getPedido().getEstadoPedido().equalsIgnoreCase("pendiente")){
+                                %>
                                 <div class="d-md-block mt-3 mb-3 text-center font-weight-light my-5">
-                                    <a class="disabled btn btn-dark btn- me-md-4" href="mensajes_emergentes7.html">Cancelar</a>
+                                    <a tabindex="0" class="btn btn-secondary me-md-4 d-inline-block" data-bs-trigger="hover focus" role="button" data-bs-toggle="popover" title="Teleshock" data-bs-placement="bottom" data-bs-content="No es posible cancelar el pedido porque venció fecha límite">Cancelar</a>
+                                </div>
+                                <%} else if(listaPedidoE.get(0).getPedido().getEstadoPedido().equalsIgnoreCase("cancelado")){%>
+                                <div class="d-md-block mt-3 mb-3 text-center font-weight-light my-5">
+                                    <a tabindex="0" class="btn btn-secondary me-md-4 d-inline-block" role="button" data-bs-trigger="hover focus" data-bs-toggle="popover" title="Teleshock" data-bs-placement="bottom" data-bs-content="El pedido ya se encuentra cancelado">Cancelar</a>
+                                </div>
+                                <%}else{%>
+                                <div class="d-md-block mt-3 mb-3 text-center font-weight-light my-5">
+                                    <a tabindex="0" class="btn btn-secondary me-md-4 d-inline-block" role="button" data-bs-trigger="hover focus" data-bs-toggle="popover" title="Teleshock" data-bs-placement="bottom" data-bs-content="Se hizo entrega del producto">Cancelar</a>
                                 </div>
                                 <%}%>
-
+                                <%}%>
                             </div>
 
                         </div>
@@ -289,11 +305,17 @@
                 </div>
             </div>
         </nav>
-
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
                 crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+        <script>
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl)
+            })
+        </script>
     </body>
 </html>
 
