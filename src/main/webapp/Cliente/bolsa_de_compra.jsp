@@ -9,6 +9,8 @@
 <%@ page import="pe.edu.pucp.pteleshock.Dao.PxFarDao" %>
 <%@ page import="java.time.LocalTime" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Calendar" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BFarmacia>" scope="request" id="listaFarmacia"/>
 
@@ -365,9 +367,14 @@
                                                 <% LocalTime time=LocalTime.now();
                                                         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm");
                                                         System.out.println(time.format(formatter2));
-                                                   %>
+                                                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                                                        SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
+                                                        Calendar cal = Calendar.getInstance();
+                                                        cal.add(Calendar.MONTH, +1);
+                                                        System.out.println(format.format(cal.getTime())+"T"+format1.format(cal.getTime()));
+                                                                                                   %>
                                                    value="<%=LocalDate.now()+"T"+time.format(formatter2)%>"
-                                                   min="<%=LocalDate.now()+"T"+time.format(formatter2)%>" max=""
+                                                   min="<%=LocalDate.now()+"T"+time.format(formatter2)%>" max="<%=format.format(cal.getTime())+"T"+format1.format(cal.getTime())%>"
                                                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
                                             <span class="validity"></span>
                                         </div>
