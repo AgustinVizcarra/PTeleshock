@@ -77,12 +77,13 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
 
                     if (map.isEmpty()) {
                         session.setAttribute("msg", "No tiene productos agregados a su bolsa de compras");
+                        session.removeAttribute("msg1");
                     }
 
                     System.out.println("msg1"+session.getAttribute("msg1"));
                     RequestDispatcher view = request.getRequestDispatcher("/Cliente/bolsa_de_compra.jsp");
                     view.forward(request, response);
-
+                    session.removeAttribute("msg1");
                     break;
                 case "borrar":
                     String idPedido = request.getParameter("idP") != null ? request.getParameter("idP") : "";
@@ -106,7 +107,6 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                         System.out.println("es nulo");
                     }
                     response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra");
-                    session.removeAttribute("msg1");
                     break;
                 case "cancelar":
                     String codVenta = request.getParameter("idPG") != null ? request.getParameter("idPG") : "";
