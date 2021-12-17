@@ -79,11 +79,11 @@ public class PedidoEstadoDao extends BaseDao{
         return listaPedidosE;
     }
 
-    public boolean sePuedeCancelar (String idPG,int idPFd){
+    public int sePuedeCancelar (String idPG,int idPFd){
 
-        Boolean seCancela = false;
+        int seCancela = 0;
 
-        String sql = "SELECT p.idpedido, dp.idfarmacia, p.fechastatus , timestampdiff(hour,now(),fechaentrega) as `tiempoRestante` FROM  pedido p \n" +
+        String sql = "SELECT p.idpedido, dp.idfarmacia, p.fechastatus ,  timestampdiff(hour,now(),fechaentrega) as `tiempominutos`, p.idestatuspedido, timestampdiff(minute,now(),fechaentrega) FROM  pedido p \n" +
                 "left join detallepedido dp on (p.idpedido = dp.idpedido)\n" +
                 "where (p.codigodeventa =? and dp.idfarmacia = ?) group by dp.idfarmacia;";
 
@@ -94,15 +94,24 @@ public class PedidoEstadoDao extends BaseDao{
 
 
             try (ResultSet rs = pstmt.executeQuery()) {
-                int tiempoRestante;
+                int tiempoHoras;
+                int tiempoMinutos;
                 String status="";
+                int nomStatus=0;
                 if (rs.next()) {
                     status=rs.getString(3);
-                    tiempoRestante = rs.getInt(4);
-                    if (tiempoRestante>=1){
+                    nomStatus=rs.getInt(5);
+                    tiempoHoras = rs.getInt(4);
+                    tiempoMinutos=rs.getInt(6);
+                    if (tiempoHoras>=1){
                         if(status==null){
-                            seCancela = true;
+                            seCancela = 1;
                         }
+                    }else if(tiempoHoras<0 || tiempoMinutos<0){
+                        if(nomStatus==2){
+                           seCancela =2;
+                        }
+
                     }
                 }
             }
@@ -114,7 +123,7 @@ public class PedidoEstadoDao extends BaseDao{
         return seCancela;
     }
 
-    public boolean mensajeEntregado (String idPG,int idPFd){
+    /*public boolean mensajeEntregado (String idPG,int idPFd){
 
         Boolean ent = false;
 
@@ -151,7 +160,7 @@ public class PedidoEstadoDao extends BaseDao{
 
         }
         return ent;
-    }
+    }*/
 
 
 

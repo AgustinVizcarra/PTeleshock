@@ -26,12 +26,6 @@ public class Client_Estado_PendienteServlet extends HttpServlet {
 
         request.setAttribute("listaPedidoE",pedidoEstadoDao.listarPedidosEstado(idPG,idFPd));
         request.setAttribute("sePuedeCancelar",pedidoEstadoDao.sePuedeCancelar(idPG,idFPd));
-        if(pedidoEstadoDao.mensajeEntregado(idPG,idFPd)){
-            request.setAttribute("msg","Usted se ha retrasado en el recojo de su pedido.");
-        }else{
-            request.setAttribute("msg","");
-        }
-
 
         RequestDispatcher view = request.getRequestDispatcher("/Cliente/estado_de_compra_pendiente.jsp");
         view.forward(request,response);

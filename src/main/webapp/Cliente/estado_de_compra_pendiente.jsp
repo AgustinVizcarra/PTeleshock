@@ -6,8 +6,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     ArrayList<BPedidoEstado> listaPedidoE = (ArrayList<BPedidoEstado>) request.getAttribute("listaPedidoE");
-    Boolean sePuedeCancelar = (Boolean) request.getAttribute("sePuedeCancelar");
-    String  msg = (String) request.getAttribute("msg");
+    int sePuedeCancelar = (int) request.getAttribute("sePuedeCancelar");
 %>
 
 <html lang="en">
@@ -108,9 +107,9 @@
                                 </a></li>
                             <li class="breadcrumb-item active">Ver detalles</li>
                         </ol>
-                        <%if(!msg.equalsIgnoreCase("")){%>
+                        <%if(sePuedeCancelar==2){%>
                         <div class="alert alert-danger text-center" role="alert">
-                            <p><em><%=msg%></em></p>
+                            <p><em><%="Usted se encuentra atrasado en el recojo de su pedido"%></em></p>
                         </div>
                         <%}%>
 
@@ -249,12 +248,12 @@
                                     </tbody>
                                 </table>
 
-                                <%if (sePuedeCancelar) {%>
+                                <%if (sePuedeCancelar==1) {%>
                                 <div class="d-md-block mt-3 mb-3 text-center font-weight-light my-5">
                                     <a class="btn btn-danger me-md-4"
                                        href="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=cancelar&idPG=<%=listaPedidoE.get(0).getPedido().getBoletaVenta()%>&idF=<%=listaPedidoE.get(0).getPedido().getIdFarmacia()%>&idP=<%=listaPedidoE.get(0).getPedido().getIdPedido()%>">Cancelar</a>
                                 </div>
-                                <%} else {
+                                <%} else if(sePuedeCancelar==0){
                                     if(listaPedidoE.get(0).getPedido().getEstadoPedido().equalsIgnoreCase("pendiente")){
                                 %>
                                 <div class="d-md-block mt-3 mb-3 text-center font-weight-light my-5">
@@ -269,6 +268,10 @@
                                     <a tabindex="0" class="btn btn-secondary me-md-4 d-inline-block" role="button" data-bs-trigger="hover focus" data-bs-toggle="popover" title="Teleshock" data-bs-placement="bottom" data-bs-content="Se hizo entrega del producto">Cancelar</a>
                                 </div>
                                 <%}%>
+                                <%}else{%>
+                                <div class="d-md-block mt-3 mb-3 text-center font-weight-light my-5">
+                                    <a tabindex="0" class="btn btn-secondary me-md-4 d-inline-block" data-bs-trigger="hover focus" role="button" data-bs-toggle="popover" title="Teleshock" data-bs-placement="bottom" data-bs-content="No es posible cancelar el pedido porque venció fecha límite">Cancelar</a>
+                                </div>
                                 <%}%>
                             </div>
 
