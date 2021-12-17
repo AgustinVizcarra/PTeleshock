@@ -21,17 +21,18 @@ public class Login_SessionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         HttpSession session_login = request.getSession();
         session_login.removeAttribute("logid");
         String mensaje = request.getParameter("mensaje") == null ? "" : request.getParameter("mensaje");
         String mail = request.getParameter("correo") == null ? "" : request.getParameter("correo");
         String pwd = request.getParameter("pwd") == null ? "" : request.getParameter("pwd");
+        if(mensaje.equals("a")){
+            mensaje = "Se ha ingresado una contraseña o dirección de correo invalidos.";
+        }
         request.setAttribute("pwd", pwd);
         request.setAttribute("mail", mail);
         request.setAttribute("mensajealerta", mensaje);
-
         RequestDispatcher view = request.getRequestDispatcher("/Login/login.jsp");
         view.forward(request, response);
 
@@ -41,13 +42,12 @@ public class Login_SessionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-
         String action = request.getParameter("action") != null ? request.getParameter("action") : "";
 
         UsuarioDao usuarioDao = new UsuarioDao();
 
         switch (action) {
+
             case "login":
                 String correo = request.getParameter("correo") != null ? request.getParameter("correo") : "";
                 String pass = request.getParameter("pass") != null ? request.getParameter("pass") : "";
@@ -91,9 +91,8 @@ public class Login_SessionServlet extends HttpServlet {
 
                     System.out.println("tracer 1");
                 } else {
-                    mensaje = "Contraseña o Dirección de correo invalidos";
+                    mensaje = "a";
                     response.sendRedirect(request.getContextPath() + "/Login?mensaje=" + mensaje + "&correo=" + correo + "&pwd=" + pass);
-                    System.out.println("tracer 2");
                 }
                 break;
             case "logout":

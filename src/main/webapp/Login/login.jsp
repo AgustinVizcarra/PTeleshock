@@ -1,16 +1,11 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: casa
-  Date: 5/11/2021
-  Time: 18:43
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="mensajealerta" scope="request" class="java.lang.String" type="java.lang.String"/>
 <jsp:useBean id="mail" scope="request" class="java.lang.String" type="java.lang.String"/>
 <jsp:useBean id="pwd" scope="request" class="java.lang.String" type="java.lang.String"/>
 <html lang="en" xmlns:background-color="http://www.w3.org/1999/xhtml" xmlns: xmlns:>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -111,7 +106,7 @@
 <%if(!mensajealerta.equalsIgnoreCase("")){%>
 <nav id="popup" class="overlay1">
     <div class=" popup card text-center ">
-        <h5 class="card-header text-center text-light">Teleshock</h5>
+        <h5 class="card-header text-center">Teleshock</h5>
         <div class="card-body">
             <h5 class="card-title p-2"><%=mensajealerta%></h5>
             <!--<p>Se ha enviado un correo para confirmar el cambio de contraseña</p>-->
