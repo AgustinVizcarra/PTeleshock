@@ -7,6 +7,9 @@ public class BDistrito {
         this.id_distrito = id_distrito;
     }
 
+    public BDistrito() {
+    }
+
     private String nombre;
     private int id_distrito;
 
