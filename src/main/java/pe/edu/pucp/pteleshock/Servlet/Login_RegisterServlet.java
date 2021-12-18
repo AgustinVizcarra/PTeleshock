@@ -17,7 +17,7 @@ public class Login_RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
-        String action = request.getParameter("action") == null ? "anadir" : request.getParameter("action");
+        String action = request.getParameter("action") == null ? "" : request.getParameter("action");
         RequestDispatcher view;
 
         ListaDistritosDao listaDistritosDao = new ListaDistritosDao();
@@ -41,6 +41,8 @@ public class Login_RegisterServlet extends HttpServlet {
                 view = request.getRequestDispatcher("/Login/registro.jsp");
                 view.forward(request, response);
                 break;
+            default:
+                response.sendRedirect(request.getContextPath() + "/Login_Register?action=anadir");
 
         }
     }
