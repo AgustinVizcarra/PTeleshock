@@ -333,7 +333,7 @@ public class GPedidoDao extends BaseDao {
                 "                    inner join usuario u on (p.idusuario=u.idusuario)\n" +
                 "                    where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+"  and (lower(u.nombre) like ? or lower(u.apellido) like ? or u.dni like ?)  #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
                 "                    group by dp.idpedido\n" +
-                "                    order by p.fechapedido desc limit "+(pagint-1)*3 +",3;";
+                "                    order by p.fechapedido desc limit "+(pagint-1)*6 +",6;";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
