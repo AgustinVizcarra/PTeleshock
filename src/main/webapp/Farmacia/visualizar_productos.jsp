@@ -117,7 +117,7 @@
                         <div class="row   row-cols-4">
                             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="post" action="<%=request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=1" >
                                 <div class="input-group">
-                                    <input class="form-control" type="text" name="textoBuscar" placeholder="Buscar..." aria-label="Buscar..."
+                                    <input class="form-control"  type="text" name="textoBuscar" placeholder="Buscar..." aria-label="Buscar..."
                                            aria-describedby="btnNavbarSearch"/>
                                     <button class="btn btn-primary" id="btnNavbarSearch" type="submit">
                                         <i class="fas fa-search"></i></button>

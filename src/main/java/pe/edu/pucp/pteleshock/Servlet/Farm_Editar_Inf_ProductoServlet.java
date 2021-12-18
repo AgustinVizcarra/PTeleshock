@@ -62,13 +62,11 @@ public class Farm_Editar_Inf_ProductoServlet extends HttpServlet {
                     RequestDispatcher view5 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
                     view5.forward(request,response);
                     break;
-                case "reg":
-
+                default:
                     request.setAttribute("idp",prod);
                     request.setAttribute("listadetallesP",detProdDao.listadetallesP(idF,prod));
-                    RequestDispatcher view3 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
-                    view3.forward(request,response);
-
+                    RequestDispatcher view6 = request.getRequestDispatcher("/Farmacia/editar_info_producto.jsp");
+                    view6.forward(request,response);
         }
 
 

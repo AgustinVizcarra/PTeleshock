@@ -45,7 +45,7 @@ public class Farm_Gestionar_PedidosServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-
+        request.setCharacterEncoding("UTF-8");
         String texto = request.getParameter("textoBuscar").trim();
         String pag = request.getParameter("pag") !=null ? request.getParameter("pag"): "1";
         int idF = (Integer) session.getAttribute("idFarmacia");
