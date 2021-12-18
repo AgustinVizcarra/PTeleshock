@@ -200,7 +200,7 @@
                                                         <div class="row align-items-center"
                                                              style="display: flex; justify-content: center">
                                                         <button class="btn btn-success" href="#popup1" type="submit"
-                                                                style="margin-top: 15px; margin-bottom: 15px; background-color: #454582; width: fit-content;
+                                                                style="margin-top: 0px; margin-bottom: 0px; background-color: #454582; width: fit-content;
                                                             margin-left: auto; margin-right: auto;border-color:#9ab0e0 ">
                                                             Grabar y continuar
                                                         </button>
@@ -216,6 +216,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-8">
+                                <br>
                             </div>
                         </div>
                     </div>
@@ -272,7 +273,7 @@
                     <div class="row align-items-center" style="display: flex; justify-content: center">
                         <a href="#" class="btn btn-primary my-auto col-3" role="button" aria-expanded="true">Cancelar</a>
                         <form class="col-3 my-auto" method="post" action="<%=request.getContextPath()%>/Login?action=logout">
-                            <button class="btn btn-danger" style=" background-color: #5bc0de " type="submit">
+                            <button class="btn btn-danger" type="submit">
                                 Salir
                             </button>
                         </form>
