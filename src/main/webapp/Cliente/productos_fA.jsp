@@ -23,14 +23,6 @@
         <link href="css/style.css" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
                 crossorigin="anonymous"></script>
-        <script>
-            function mandar(){
-                document.getElementById("popup1").submit();
-            }
-            document.getElementById("boton").onclick = function (){
-                mandar();
-            }
-        </script>
     </head>
 
     <body class="sb-nav-fixed"
