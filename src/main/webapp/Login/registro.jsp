@@ -43,14 +43,14 @@
                                         <label for="nombreC" class="col-sm-4 col-form-label">Nombre
                                             : </label>
                                         <div class="col-sm-8">
-                                            <input class="form-control" type="text" name="nombreC" required id="nombreC" pattern="(^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$+\\.?)" title="Ingrese datos correctos.">
+                                            <input class="form-control" type="text" name="nombreC" id="nombreC" pattern="(^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$+\\.?)" title="Ingrese datos correctos.">
                                         </div>
                                     </div>
                                     <div class="row mb-4">
                                         <label for="apellidoC" class="col-sm-4 col-form-label">Apellido
                                             : </label>
                                         <div class="col-sm-8">
-                                            <input class="form-control" type="text" name="apellidoC" required pattern="(^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$+\\.?)" title="Ingrese datos correctos." id="apellidoC">
+                                            <input class="form-control" type="text" name="apellidoC" pattern="(^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$+\\.?)" title="Ingrese datos correctos." id="apellidoC">
                                         </div>
                                     </div>
                                     <div class="row mb-4">
