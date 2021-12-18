@@ -363,7 +363,7 @@
             <div class=" popup card text-center ">
                 <h5 class="card-header text-center">Teleshock</h5>
                 <div class="card-body">
-                    <h5 class="card-title p-2">¿Desea cancelar el producto?</h5>
+                    <h5 class="card-title p-2">¿Desea cancelar el pedido?</h5>
                     <p>No podrá rehacer esta acción.</p>
                     <a href="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=cancelar&idPG=<%=listaPedidoE.get(0).getPedido().getBoletaVenta()%>&idF=<%=listaPedidoE.get(0).getPedido().getIdFarmacia()%>&idP=<%=listaPedidoE.get(0).getPedido().getIdPedido()%>" class="btn btn-danger mb-2">Sí</a>
                     <a href="#" class="btn btn-primary mb-2">No</a>
