@@ -1,7 +1,5 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
-
-
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.GPedidoDao;
 
@@ -27,15 +25,31 @@ public class Farm_Detalles_PedidoServlet extends HttpServlet {
             int idF = (Integer) session.getAttribute("idFarmacia");
             GPedidoDao gPedidoDao = new GPedidoDao();
             String id = request.getParameter("id");
-            int idInt = Integer.parseInt(id);
-            session.setAttribute("idpedido",idInt);
-            request.setAttribute("listaDPedido",gPedidoDao.listaPedidosD(idF,idInt));
-            request.setAttribute("listaproducto",gPedidoDao.listaProductospag(idF,idInt,pag));
-            int cantPed=gPedidoDao.cantidadProductos1(idF,idInt);
-            String cantPedStr= String.valueOf(cantPed);
-            request.setAttribute("cantPed",cantPedStr);
-            RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_pedido.jsp");
-            view.forward(request,response);
+
+            boolean isIdNumeric =  false;
+
+            if(!(id.equals(""))){
+                isIdNumeric =  id.matches("[+-]?\\d*(\\.\\d+)?");
+            }
+
+            if(isIdNumeric){
+                int idInt = Integer.parseInt(id);
+                session.setAttribute("idpedido",idInt);
+                request.setAttribute("listaDPedido",gPedidoDao.listaPedidosD(idF,idInt));
+                request.setAttribute("listaproducto",gPedidoDao.listaProductospag(idF,idInt,pag));
+                int cantPed=gPedidoDao.cantidadProductos1(idF,idInt);
+                String cantPedStr= String.valueOf(cantPed);
+                request.setAttribute("cantPed",cantPedStr);
+                RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_pedido.jsp");
+                view.forward(request,response);
+
+            }else{
+
+
+                response.sendRedirect(request.getContextPath() + "/Farm_Gestionar_Pedidos");
+
+            }
+
 
         } else {
             RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
