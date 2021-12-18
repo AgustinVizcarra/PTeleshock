@@ -221,8 +221,7 @@
                                                                    value="<%=farmacia.getIdFarmacia()%>">
                                                             <input type="hidden" class="form-control" name="receta"
                                                                    value="<%=listaProd.isRecetaMedicaB()?"1":"0"%>">
-                                                           <%-- <input type="button" value="Agregar" onclick="closeSelf();">-- <button class="btn btn-outline-dark mt-auto" type="submit">Agregar</button> --%>
-                                                            <button id="boton" class="btn btn-outline-dark mt-auto" type="submit">Agregar</button>
+                                                            <button class="btn btn-outline-dark mt-auto" type="submit">Agregar</button>
                                                         </form>
                                                     </div>
                                                     <div class="card-footer p-4 pt-0 border-top-0  bg-transparent">
