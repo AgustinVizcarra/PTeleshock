@@ -21,7 +21,7 @@ public class ProductosFDao extends BaseDao {
         String sql = "Select  p.idproducto,p.nombre, f.foto1,pf.stock,pf.preciounitario,pf.recetamedica from productoporfarmacia pf\n" +
                 "inner join producto p on (pf.idproducto=p.idproducto)\n" +
                 "left join foto f on (pf.idproducto=f.idproducto and pf.idfarmacia=f.idfarmacia)\n" +
-                "where lower(p.nombre) like lower(?) and pf.idfarmacia=? and pf.stock > 0 limit " + inicio + ",8 ;";
+                "where lower(p.nombre) like lower(?) and pf.idfarmacia=? and pf.stock >= 0 limit " + inicio + ",8 ;";
 
         if (inicio == -1) {
             sql = "Select  p.idproducto,p.nombre, f.foto1,pf.stock,pf.preciounitario,pf.recetamedica from productoporfarmacia pf\n" +
@@ -64,7 +64,7 @@ public class ProductosFDao extends BaseDao {
     public int obtenerNumProductos(String idFarmacia, String nombreProducto) {
         int numProductos = 0;
 
-        String sql = "select count(*) from (SELECT a.*,b.nombre FROM productoporfarmacia a inner join producto b on a.idproducto=b.idproducto where idfarmacia = ? and lower(b.nombre) like lower(?) and a.stock>0) as `productos`;";
+        String sql = "select count(*) from (SELECT a.*,b.nombre FROM productoporfarmacia a inner join producto b on a.idproducto=b.idproducto where idfarmacia = ? and lower(b.nombre) like lower(?) and a.stock>=0) as `productos`;";
 
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {

@@ -114,13 +114,20 @@
                                                 <h1 class="display-5 fw-bolder"><%=detProd.getNombre()%>
                                                 </h1>
                                                 <div class="fs-5 mb-5">
-                                                    <span>S/.<%=detProd.getPreciounitario()%></span>
+                                                    <span class="my-4">Stock: <%=detProd.getStock()%></span>
+                                                    <br>
+                                                    <span class="my-4">S/.<%=detProd.getPreciounitario()%></span>
+                                                    <br>
+                                                    <h5 class="mt-3" >Descripción:</h5>
+                                                    <p class="lead mt-3"><%=detProd.getDescripcion()%></p>
                                                 </div>
-                                                <h5>Descripción:</h5>
-                                                <p class="lead"><%=detProd.getDescripcion()%>
-                                                </p>
-                                                <div class="d-flex">
+                                                <div class="card border-0 d-flex">
                                                     <!-- Product actions-->
+                                                    <%if (detProd.getStock() == 0) {%>
+                                                    <div class="alert alert-danger" role="alert">
+                                                        El producto está agotado.
+                                                    </div>
+                                                    <%} else {%>
                                                     <div class="card-footer p-2 pt-0 border-top-0 bg-transparent text-center">
                                                         <form method="POST"
                                                               action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=agregar">
@@ -136,7 +143,9 @@
                                                                     type="submit">Agregar
                                                             </button>
                                                         </form>
+
                                                     </div>
+                                                    <%}%>
                                                     <div class="card-footer p-2 pt-0 border-top-0 bg-transparent">
                                                         <div class="text-center"><a class="btn btn-outline-dark "
                                                                                     href="<%= request.getContextPath()%>/Client_Productos_F?idF=<%=farmacia.getIdFarmacia()%>">Seguir
@@ -145,6 +154,7 @@
 
 
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>

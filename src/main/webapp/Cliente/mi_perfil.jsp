@@ -169,8 +169,8 @@
                 <h5 class="card-header text-center">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea eliminar su cuenta?</h5>
-                    <a href="#popup2" class="btn btn-danger mb-2">Sí</a>
-                    <a href="#" class="btn btn-primary mb-2">No</a>
+                    <a href="<%= request.getContextPath()%>/Client_Perfil?action=elimLogico&idC=<%=cliente.getIdCliente()%>" class="btn btn-danger mb-2">Aceptar</a>
+                    <a href="#" class="btn btn-primary mb-2">Cancelar</a>
                 </div>
             </div>
         </nav>

@@ -307,12 +307,12 @@
                                                                                 if (stock > 11) {
                                                                             %>
                                                                             <input class="quantity" min="1" max="11"
-                                                                                   name="cant"
+                                                                                   name="cant" readonly
                                                                                    value="<%=ee.getValue().get(i).getCantidad()%>"
                                                                                    type="number">
                                                                             <%} else {%>
                                                                             <input class="quantity" min="1"
-                                                                                   max="<%=stock%>" name="cant"
+                                                                                   max="<%=stock%>" readonly name="cant"
                                                                                    value="<%=ee.getValue().get(i).getCantidad()%>"
                                                                                    type="number">
                                                                             <%}%>
@@ -427,7 +427,6 @@
                                                         SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
                                                         Calendar cal = Calendar.getInstance();
                                                         cal.add(Calendar.MONTH, +1);
-                                                        System.out.println(format.format(cal.getTime())+"T"+format1.format(cal.getTime()));
                                                                                                    %>
                                                    value="<%=LocalDate.now()+"T"+time.format(formatter2)%>"
                                                    min="<%=LocalDate.now()+"T"+time.format(formatter2)%>" max="<%=format.format(cal.getTime())+"T"+format1.format(cal.getTime())%>"
@@ -481,6 +480,18 @@
                 </footer>
             </div>
         </div>
+
+        <nav id="popup1" class="overlay">
+            <div class=" popup card text-center ">
+                <h5 class="card-header text-center text-light">Teleshock</h5>
+                <div class="card-body">
+                    <h5 class="card-title p-2">¡Pedido realizado!</h5>
+                    <p>No podrá rehacer esta acción.</p>
+                    <a href="<%= request.getContextPath()%>/Client_Bolsa_Compra" class="btn btn-warning mb-2">Ir a la
+                        bolsa de compras</a>
+                </div>
+            </div>
+        </nav>
 
         <nav id="salir" class="overlay">
             <div class=" popup card text-center " style="background-color: white">
