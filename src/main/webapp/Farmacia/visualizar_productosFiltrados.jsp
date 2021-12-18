@@ -194,7 +194,8 @@
                         <ul class="pagination justify-content-end">
 
                             <% int cantProdInt=Integer.parseInt(cantProd);%>
-                            <% for(int i=1; i<Math.floor(cantProdInt/12)+2; i++) { %>
+                            <% int resto= cantProdInt%12==0? 0:1; %>
+                            <% for(int i=1; i<Math.floor(cantProdInt/12)+resto+1; i++) { %>
 
 
 

@@ -27,14 +27,18 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
 
         String prod = request.getParameter("prod");
 
-        DetProdDao dpdao = new DetProdDao();
+        if(prod==null || prod.isEmpty() || prod.equals("") ){
+            response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
 
-        int idF = (Integer) session.getAttribute("idFarmacia");
+        }else{
+            DetProdDao dpdao = new DetProdDao();
 
-        String action = request.getParameter("action") !=null ? request.getParameter("action"): "detalles";
-        switch (action){
-            case "borrar":
-                BListaPFarmacia exProd = dpdao.existeProParaEliminar(idF,prod);
+            int idF = (Integer) session.getAttribute("idFarmacia");
+
+            String action = request.getParameter("action") !=null ? request.getParameter("action"): "detalles";
+            switch (action){
+                case "borrar":
+                    BListaPFarmacia exProd = dpdao.existeProParaEliminar(idF,prod);
 
 //                int idproducto= Integer.parseInt(prod);
 //                if (exProd != null) {
@@ -60,39 +64,43 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
 //                    }
 //
 //                }
-                int idproducto= Integer.parseInt(prod);
-                if (exProd != null) {
-                    request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
-                    request.setAttribute("idp",prod);
-                    request.setAttribute("valor","noborr");
-                    RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_producto.jsp");
-                    view.forward(request,response);
-                } else {
-                    try {
-
-                        dpdao.productoeliminadologico(idF,idproducto);
-
-//                        response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
+                    int idproducto= Integer.parseInt(prod);
+                    if (exProd != null) {
                         request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
                         request.setAttribute("idp",prod);
-                        request.setAttribute("valor","borr");
+                        request.setAttribute("valor","noborr");
                         RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_producto.jsp");
                         view.forward(request,response);
-                    } catch (SQLException e) {
-                        response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
-                        e.printStackTrace();
+                    } else {
+                        try {
+
+                            dpdao.productoeliminadologico(idF,idproducto);
+
+//                        response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
+                            request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
+                            request.setAttribute("idp",prod);
+                            request.setAttribute("valor","borr");
+                            RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_producto.jsp");
+                            view.forward(request,response);
+                        } catch (SQLException e) {
+                            response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
+                            e.printStackTrace();
+                        }
+
                     }
 
-                }
+                    break;
+                case "detalles":
 
-                break;
-            case "detalles":
-                request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
-                request.setAttribute("idp",prod);
-                RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_producto.jsp");
-                view.forward(request,response);
-                break;
+                    request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
+                    request.setAttribute("idp",prod);
+                    RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_producto.jsp");
+                    view.forward(request,response);
+                    break;
+            }
         }
+
+
 
 
 
