@@ -83,7 +83,7 @@
                         </ul>
                     </div>
                     <div class="sb-sidenav-footer" style="color: gray">
-                        <div class="small">Logged in as:</div>
+                        <div class="small">Logeado como:</div>
                         <%BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");%>
                         <%=cliente.getNombre() + " " + cliente.getApellido()%>
                     </div>

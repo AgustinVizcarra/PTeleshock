@@ -212,7 +212,7 @@
                         </ul>
                     </div>
                     <div class="sb-sidenav-footer" style="color: gray">
-                        <div class="small">Logged in as:</div>
+                        <div class="small">Logeado como:</div>
                         <%BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");%>
                         <%=cliente.getNombre() + " " + cliente.getApellido()%>
                     </div>
@@ -331,13 +331,14 @@
                                                                 <td>
                                                                     <form method="POST"
                                                                           action="<%=request.getContextPath()%>/ImgRecetaServlet?idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>" enctype="multipart/form-data">
-                                                                        <div class="mb-3">
+                                                                        <div class="row">
 
-                                                                            <input class="form-control"
-                                                                                   name="fotoReceta" type="file"
-                                                                                   id="formFile1">
-                                                                            <button type="submit" class="btn btn-secondary btn-sm">Subir receta</button>
-                                                                            <a href="#popup<%=i%>" class="btn btn-secondary btn-sm">Ver foto</a>
+                                                                            <div class="col-6"><input class="form-control"
+                                                                                                      name="fotoReceta" type="file"
+                                                                                                      id="formFile1"></div>
+                                                                            <div class="col-2"><button type="submit" class="btn btn-secondary btn-sm"><i class="fas fa-upload"></i></button></div>
+                                                                            <div class="col-1"><a href="#popup<%=i%>" class="btn btn-secondary btn-sm"><i class="fas fa-eye"></i></a></div>
+
                                                                             <div id="popup<%=i%>" class="overlay">
                                                                                 <div id="popupBody<%=i%>">
                                                                                     <h2>Título de la ventana</h2>
