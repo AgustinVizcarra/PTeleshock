@@ -77,7 +77,7 @@ public class Farm_Registro_ProductoServlet extends HttpServlet {
                 RequestDispatcher view6 = request.getRequestDispatcher("/Farmacia/registro_producto.jsp");
                 view6.forward(request,response);
                 break;
-            case "reg":
+            default:
                 request.setAttribute("val","reg");
                 request.setAttribute("listDatos",datosProd);
                 RequestDispatcher view3 = request.getRequestDispatcher("/Farmacia/registro_producto.jsp");
