@@ -67,10 +67,11 @@
         <nav class="sb-sidenav accordion " style="background-color:#00152D ; opacity: 0.9" id="sidenavAccordion" >
             <div class="sb-sidenav-menu" >
                 <div class="nav" style="margin-top: 30px">
-                    <a class="nav-link"  style="color: white" href="<%= request.getContextPath()%>/Farm_Pefil">
+                    <a class=" nav-link bg-secondary"  style="color: white" href="<%= request.getContextPath()%>/Farm_Pefil">
                         <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
                         Mi perfil
                     </a>
+
                     <a class="nav-link" style="color: white" href="<%= request.getContextPath()%>/Farm_Registro_Producto">
                         <div class="sb-nav-link-icon"><i class="fas fa-clipboard-list" style="color: #ffffff"></i></div>
                         Registrar Producto
@@ -80,6 +81,7 @@
                         <div class="sb-nav-link-icon"><i class="far fa-eye" style="color: #ffffff"></i></div>
                         Visualizar Producto
                     </a>
+
                     <a class="nav-link" style="color: white" href="<%= request.getContextPath()%>/Farm_Gestionar_Pedidos">
                         <div class="sb-nav-link-icon"><i class="fas fa-people-arrows" style="color: #ffffff"></i></div>
                         Gestionar Pedidos
