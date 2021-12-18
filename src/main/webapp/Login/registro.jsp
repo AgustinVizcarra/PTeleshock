@@ -43,27 +43,27 @@
                                         <label for="nombreC" class="col-sm-4 col-form-label">Nombre
                                             : </label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="nombreC" id="nombreC" required pattern="([a-zA-Z]).{0,254}" title="Ingrese datos correctos.">
+                                            <input type="text" class="form-control" name="nombreC" id="nombreC" required pattern="([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]).{0,254}" title="Ingrese datos correctos.">
                                         </div>
                                     </div>
                                     <div class="row mb-4">
                                         <label for="apellidoC" class="col-sm-4 col-form-label">Apellido
                                             : </label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="apellidoC" id="apellidoC" required pattern="([a-zA-Z]).{0,254}" title="Ingrese datos correctos.">
+                                            <input type="text" class="form-control" name="apellidoC" id="apellidoC" required pattern="([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]).{0,254}" title="Ingrese datos correctos.">
                                         </div>
                                     </div>
                                     <div class="row mb-4">
                                         <label for="correo" class="col-sm-4 col-form-label">Correo
                                             : </label>
                                         <div class="col-sm-8">
-                                            <input type="email" class="form-control" name="correo" id="correo" pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$" title="Debe especificar una ruta de correo valida">
+                                            <input type="email" class="form-control" name="correo" id="correo" required pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$" title="Debe especificar una ruta de correo valida">
                                         </div>
                                     </div>
                                     <div class="row mb-4">
                                         <label for="dni" class="col-sm-4 col-form-label">DNI : </label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="dni" id="dni" pattern="[0-9]{8}" title="El DNI debe contener 8 dígitos.">
+                                            <input type="text" class="form-control" name="dni" id="dni" required pattern="[0-9]{8}" title="El DNI debe contener 8 dígitos.">
                                         </div>
                                     </div>
                                     <div class="row mb-4">
