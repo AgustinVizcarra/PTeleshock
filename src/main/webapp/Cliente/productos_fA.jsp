@@ -295,7 +295,7 @@
 
         <nav id="popup1" class="overlay">
             <div class=" popup card text-center ">
-                <h5 class="card-header text-center text-light">Teleshock</h5>
+                <h5 class="card-header text-center text-dark">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¡Producto Añadido!</h5>
                     <a href="#" class="btn btn-success mb-2">Seguir Comprando</a>
