@@ -76,8 +76,13 @@ public class Login_SessionServlet extends HttpServlet {
                         case 3:
                             //debemos verificar que la farmacia no se encuentra bloqueada
                             if (usuarioDao.farmaciaBloqueada(usuario.getIdUsuario())) {
-                                mensaje = "La farmacia se encuentra bloqueada, por favor ponerse en contacto con el Administrador";
-                                response.sendRedirect(request.getContextPath() + "/Login?mensaje=" + mensaje + "&correo=" + correo + "&pwd=" + pass);
+                                mensaje = "b";
+                                //La farmacia se encuentra bloqueada, por favor ponerse en contacto con el Administrador.
+                                HttpSession session_e = request.getSession();
+                                session_e.setAttribute("mensajealerta",mensaje);
+                                session_e.setAttribute("mail",correo);
+                                session_e.setAttribute("pwd",pass);
+                                response.sendRedirect(request.getContextPath() + "/Login");
                             } else {
                                 session.setAttribute("farmaciaSession", usuario);
                                 response.sendRedirect(request.getContextPath() + "/Farm_Index");

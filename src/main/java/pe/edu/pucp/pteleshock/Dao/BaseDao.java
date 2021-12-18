@@ -3,6 +3,7 @@ package pe.edu.pucp.pteleshock.Dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public abstract class BaseDao {
 
@@ -14,7 +15,9 @@ public abstract class BaseDao {
         }
         String user = "root";
         String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/mydb?serverTimezone=America/Lima";
+        String option = "mydb";
+        String option2 = "teleshock_bd_oficial";
+        String url = "jdbc:mysql://localhost:3306/"+option2+"?serverTimezone=America/Lima";
         return DriverManager.getConnection(url,user,pass);
     }
 }
