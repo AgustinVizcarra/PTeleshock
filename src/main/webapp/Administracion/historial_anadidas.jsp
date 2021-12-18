@@ -116,67 +116,79 @@
             <div id="layoutSidenav_content">
                 <main class="clase_historial-farmacia" style="height: 92%">
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4 text-center texto-central" style="padding-top:10px;padding-bottom: 10px">
-                            Historial</h1>
-                        <ol class="breadcrumb mb-4">
-                        </ol>
-                        <div class="row">
-                            <div class="col-xl-1 ">
-                            </div>
-                            <div class="col-xl-10 ">
-                                <div class="card bg-primary text-white mb-4"
-                                     style="color:#FFFFFF; background: #BEE5E6;border-color: #FFFFFF">
-                                    <div class="texto-navbar"
-                                         style="text-align:left;padding-top: 10px;padding-bottom: 20px;color: #00152D;font-size: 25px;padding-left: 2%">
-                                        <u>Farmacias Añadidas</u></div>
-                                    <div style="background-color: #BEE5E6">
-                                        <table class="table table-striped" style="border-color: #BEE5E6">
-                                            <tr style="color: #00152D">
-                                                <th class="text-center">Administrador</th>
-                                                <th class="text-center">Farmacia</th>
-                                                <th class="text-center">RUC</th>
-                                                <th class="text-center">Fecha</th>
-                                            </tr>
-                                            <%for (BAnadidas anadida : anadidas) {%>
-                                            <tr style="color: #00152D">
-                                                <td class="text-center">
-                                                    <%= anadida.getAdministrador_nombre()%>
-                                                </td>
-                                                <td class="text-center"><%= anadida.getFarmacia_nombre()%>
-                                                </td>
-                                                <td class="text-center"><%= anadida.getRuc()%>
-                                                </td>
-                                                <td class="text-center"><%= anadida.getFecha()%>
-                                                </td>
-                                            </tr>
-                                            <% }%>
-                                        </table>
+                        <br>
+                        <br>
+                        <div class="card mb-4" style="opacity: 0.80;">
+                            <div class="card-body">
+                                <h1 class="mt-4 text-center texto-central"
+                                    style="padding-top:10px;padding-bottom: 10px">
+                                    Historial</h1>
+                                <ol class="breadcrumb mb-2">
+                                    <li class="breadcrumb-item">
+                                        <a href="<%= request.getContextPath()%>/Admin_Hist">Historial</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">Farmacias Añadidas</li>
+                                </ol>
+                                <div class="row">
+                                    <div class="col-xl-1 ">
+                                    </div>
+                                    <div class="col-xl-10 ">
+                                        <div class="card bg-primary text-white mb-4"
+                                             style="color:#FFFFFF; background: #BEE5E6;border-color: #FFFFFF">
+                                            <div class="texto-navbar"
+                                                 style="text-align:left;padding-top: 10px;padding-bottom: 20px;color: #00152D;font-size: 25px;padding-left: 2%">
+                                                <u>Farmacias Añadidas</u></div>
+                                            <div style="background-color: #BEE5E6">
+                                                <table class="table table-striped" style="border-color: #BEE5E6">
+                                                    <tr style="color: #00152D">
+                                                        <th class="text-center">Administrador</th>
+                                                        <th class="text-center">Farmacia</th>
+                                                        <th class="text-center">RUC</th>
+                                                        <th class="text-center">Fecha</th>
+                                                    </tr>
+                                                    <%for (BAnadidas anadida : anadidas) {%>
+                                                    <tr style="color: #00152D">
+                                                        <td class="text-center">
+                                                            <%= anadida.getAdministrador_nombre()%>
+                                                        </td>
+                                                        <td class="text-center"><%= anadida.getFarmacia_nombre()%>
+                                                        </td>
+                                                        <td class="text-center"><%= anadida.getRuc()%>
+                                                        </td>
+                                                        <td class="text-center"><%= anadida.getFecha()%>
+                                                        </td>
+                                                    </tr>
+                                                    <% }%>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-1 ">
                                     </div>
                                 </div>
+                                <div class="col align-self-center">
+                                    <a style="position: center">
+                                        <nav aria-label="Page navigation example" style="align-content: center">
+                                            <ul class="pagination justify-content-center">
+                                                <% int resto = cantidad % 7 == 0 ? 0 : 1;%>
+                                                <% for (int i = 1; i < Math.floor(cantidad / 7) + resto + 1; i++) { %>
+                                                <li class="page-item"><a class="page-link"
+                                                                         href="<%= request.getContextPath()%>/Admin_Hist?action=add&pag=<%=i %>"><%=i%>
+                                                </a></li>
+                                                <% } %>
+                                            </ul>
+                                        </nav>
+                                    </a>
+                                </div>
+                                <div class="row">
+                                    <br><br>
+                                    <a class="btn btn-primary" href="/PTeleshock_war/Admin_Index"
+                                       style="width: fit-content; position: absolute; right: 15px; height: 38px; background-color: #00152D; border-color: #00152D">Regresar</a>
+                                </div>
                             </div>
-                            <div class="col-xl-1 ">
-                            </div>
+
                         </div>
-                        <div class="col align-self-center">
-                            <a style="position: center">
-                                <nav aria-label="Page navigation example" style="align-content: center">
-                                    <ul class="pagination justify-content-center">
-                                        <% int resto = cantidad % 7 == 0 ? 0 : 1;%>
-                                        <% for (int i = 1; i < Math.floor(cantidad / 7) + resto + 1; i++) { %>
-                                        <li class="page-item"><a class="page-link"
-                                                                 href="<%= request.getContextPath()%>/Admin_Hist?action=add&pag=<%=i %>"><%=i%>
-                                        </a></li>
-                                        <% } %>
-                                    </ul>
-                                </nav>
-                            </a>
-                        </div>
-                        <div class="row">
-                            <br><br>
-                            <a class="btn btn-primary"
-                               href="<%=request.getContextPath()%>/Admin_Hist"
-                               style="width: fit-content; margin-left: auto; margin-right: auto;height: 38px;background-color: #00152D;border-color: #00152D">Regresar</a>
-                        </div>
+
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto" style="height:8%">
@@ -201,9 +213,11 @@
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
                     <div class="row align-items-center" style="display: flex; justify-content: center">
-                        <a href="#" class="btn btn-primary my-auto col-3" role="button" aria-expanded="true">Cancelar</a>
-                        <form class="col-3 my-auto" method="post" action="<%=request.getContextPath()%>/Login?action=logout">
-                            <button class="btn btn-danger" style=" background-color: #5bc0de " type="submit">
+                        <a href="#" class="btn btn-primary my-auto col-3" role="button"
+                           aria-expanded="true">Cancelar</a>
+                        <form class="col-3 my-auto" method="post"
+                              action="<%=request.getContextPath()%>/Login?action=logout">
+                            <button class="btn btn-danger" type="submit">
                                 Salir
                             </button>
                         </form>

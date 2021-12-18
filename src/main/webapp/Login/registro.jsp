@@ -43,14 +43,14 @@
                                         <label for="nombreC" class="col-sm-4 col-form-label">Nombre
                                             : </label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="nombreC" id="nombreC" required pattern="([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]).{0,254}" title="Ingrese datos correctos.">
+                                            <input class="form-control" type="text" name="nombreC" required id="nombreC" pattern="(^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$+\\.?)" title="Ingrese datos correctos.">
                                         </div>
                                     </div>
                                     <div class="row mb-4">
                                         <label for="apellidoC" class="col-sm-4 col-form-label">Apellido
                                             : </label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="apellidoC" id="apellidoC" required pattern="([a-zA-ZñÑáéíóúÁÉÍÓÚ\s]).{0,254}" title="Ingrese datos correctos.">
+                                            <input class="form-control" type="text" name="apellidoC" required pattern="(^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$+\\.?)" title="Ingrese datos correctos." id="apellidoC">
                                         </div>
                                     </div>
                                     <div class="row mb-4">
@@ -90,7 +90,8 @@
                                         <label for="contrasenia2" class="col-sm-4 col-form-label">Confirmar
                                             contraseña : </label>
                                         <div class="col-sm-8">
-                                            <input type="password" class="form-control" name="contrasenia2"  id="contrasenia2" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contraseña debe contener como mínimo 8 caracteres, 1 número y una letra mayúscula"
+                                            <input type="password" class="form-control" name="contrasenia2"  id="contrasenia2" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}" title="La contraseña debe contener como mínimo 5 caracteres. Incluye mayúsculas, minúsculas,
+                                                números y un caracter especial."
                                             >
                                         </div>
                                     </div>

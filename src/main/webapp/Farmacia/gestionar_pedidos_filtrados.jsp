@@ -61,9 +61,35 @@
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav" >
             <nav class="sb-sidenav accordion " style="background-color:#00152D ; opacity: 0.9" id="sidenavAccordion" >
-                <jsp:include page="/includes/despegable.jsp">
-                    <jsp:param name="page" value="pedidos"/>
-                </jsp:include>
+<%--                <jsp:include page="/includes/despegable.jsp">--%>
+<%--                    <jsp:param name="page" value="pedidos"/>--%>
+<%--                </jsp:include>--%>
+                <div class="sb-sidenav-menu" >
+                    <div class="nav" style="margin-top: 30px">
+                        <a class=" nav-link "  style="color: white" href="<%= request.getContextPath()%>/Farm_Pefil">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                            Mi perfil
+                        </a>
+
+                        <a class="nav-link" style="color: white" href="<%= request.getContextPath()%>/Farm_Registro_Producto">
+                            <div class="sb-nav-link-icon"><i class="fas fa-clipboard-list" style="color: #ffffff"></i></div>
+                            Registrar Producto
+                        </a>
+
+                        <a class="nav-link" style="color: white" href="<%= request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=1">
+                            <div class="sb-nav-link-icon"><i class="far fa-eye" style="color: #ffffff"></i></div>
+                            Visualizar Producto
+                        </a>
+
+                        <a class="nav-link bg-secondary" style="color: white" href="<%= request.getContextPath()%>/Farm_Gestionar_Pedidos">
+                            <div class="sb-nav-link-icon"><i class="fas fa-people-arrows" style="color: #ffffff"></i></div>
+                            Gestionar Pedidos
+                        </a>
+
+
+
+                    </div>
+                </div>
                 <div class="sb-sidenav-footer" style="color: darkgrey">
                     <div class="small">Logged in as:</div>
                     <%BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");%>
@@ -80,7 +106,7 @@
                     <div class="row   row-cols-4">
                         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="post" action="<%=request.getContextPath()%>/Farm_Gestionar_Pedidos" >
                             <div class="input-group">
-                                <input class="form-control" type="text" name="textoBuscar" value="<%=textbuscar%>" placeholder="Buscar..." aria-label="Buscar..."
+                                <input class="form-control"  type="text" name="textoBuscar" value="<%=textbuscar%>" placeholder="Buscar..." aria-label="Buscar..."
                                        aria-describedby="btnNavbarSearch"/>
                                 <button class="btn btn-primary" id="btnNavbarSearch" type="submit">
                                     <i class="fas fa-search"></i></button>
