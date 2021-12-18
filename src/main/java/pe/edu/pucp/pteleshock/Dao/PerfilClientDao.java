@@ -57,6 +57,17 @@ public class PerfilClientDao extends BaseDao {
         }
     }
 
+    public void elimLogicoCliente(int idCliente){
+        String sql ="UPDATE usuario SET elimLogico='deshabilitado' WHERE (idusuario=? and idrol=1);";
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, idCliente);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
