@@ -3,6 +3,7 @@ package pe.edu.pucp.pteleshock.Servlet;
 import pe.edu.pucp.pteleshock.Dao.Afarm_Dao;
 import pe.edu.pucp.pteleshock.Dao.Bfarm_Dao;
 import pe.edu.pucp.pteleshock.Dao.Dfarm_Dao;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,40 +21,43 @@ public class Admin_HistServlet extends HttpServlet {
         Afarm_Dao afarm_dao = new Afarm_Dao();
         Bfarm_Dao bfarm_dao = new Bfarm_Dao();
         Dfarm_Dao dfarm_dao = new Dfarm_Dao();
-        String action = request.getParameter("action")==null?"":request.getParameter("action");
-        String pag = request.getParameter("pag")==null?"1":request.getParameter("pag");
-        System.out.println("accion: "+ action);
-        System.out.println("pag: "+ pag);
-        switch (action){
+        String action = request.getParameter("action") == null ? "" : request.getParameter("action");
+        String pag = request.getParameter("pag") == null ? "1" : request.getParameter("pag");
+        System.out.println("accion: " + action);
+        System.out.println("pag: " + pag);
+        switch (action) {
             case "add":
                 try {
+                    request.setAttribute("pag", pag);
                     request.setAttribute("anadidas", afarm_dao.listar_anadidas(pag));
                     request.setAttribute("cantidad", afarm_dao.cantidadListaAnadidas());
                     RequestDispatcher viewAdd = request.getRequestDispatcher("/Administracion/historial_anadidas.jsp");
                     viewAdd.forward(request, response);
-                }catch (Exception e){
+                } catch (Exception e) {
                     RequestDispatcher viewAdd = request.getRequestDispatcher("/Administracion/historial_admin.jsp");
                     viewAdd.forward(request, response);
                 }
                 break;
             case "block":
                 try {
+                    request.setAttribute("pag", pag);
                     request.setAttribute("bloqueadas", bfarm_dao.listar_bloqueadas(pag));
                     request.setAttribute("cantidad", bfarm_dao.cantidadListaBloqueadas());
                     RequestDispatcher viewBlock = request.getRequestDispatcher("/Administracion/historial_bloqueadas.jsp");
                     viewBlock.forward(request, response);
-                }catch (Exception e){
+                } catch (Exception e) {
                     RequestDispatcher viewAdd = request.getRequestDispatcher("/Administracion/historial_admin.jsp");
                     viewAdd.forward(request, response);
                 }
                 break;
             case "unlock":
                 try {
+                    request.setAttribute("pag", pag);
                     request.setAttribute("desbloqueadas", dfarm_dao.listar_desbloqueadas(pag));
                     request.setAttribute("cantidad", dfarm_dao.cantidadListaDesbloquedas());
                     RequestDispatcher viewUnlock = request.getRequestDispatcher("/Administracion/historial_desbloqueadas.jsp");
                     viewUnlock.forward(request, response);
-                }catch (Exception e){
+                } catch (Exception e) {
                     RequestDispatcher viewAdd = request.getRequestDispatcher("/Administracion/historial_admin.jsp");
                     viewAdd.forward(request, response);
                 }
