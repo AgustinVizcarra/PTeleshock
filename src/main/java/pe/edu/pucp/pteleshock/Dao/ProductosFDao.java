@@ -89,7 +89,7 @@ public class ProductosFDao extends BaseDao {
     public BFarmaciaPorDistrito obtenerFarmacia(int idFarmacia) {
         //msql
         BFarmaciaPorDistrito farmacia = new BFarmaciaPorDistrito();
-        String sql = "select u.nombre as 'Farmacias', dis.nombre as 'Distrito', f.direccion, f.idfarmacia from farmacia f\n" +
+        String sql = "select u.nombre as 'Farmacias', dis.nombre as 'Distrito', f.direccion, f.idfarmacia,dis.iddistrito from farmacia f\n" +
                 "inner join usuario u on (f.idusuario = u.idusuario)\n" +
                 "inner join distrito dis on (u.iddistrito = dis.iddistrito)\n" +
                 "where f.idfarmacia = ?;";
@@ -105,6 +105,7 @@ public class ProductosFDao extends BaseDao {
                     farmacia.setDistritoFarmacia(rs.getString(2));
                     farmacia.setDireccionFarmacia(rs.getString(3));
                     farmacia.setIdFarmacia(rs.getInt(4));
+                    farmacia.setIdDistritoF(rs.getString(5));
                 }
 
             }

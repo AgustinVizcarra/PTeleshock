@@ -23,6 +23,14 @@
         <link href="css/style.css" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
                 crossorigin="anonymous"></script>
+        <script>
+            function mandar(){
+                document.getElementById("popup1").submit();
+            }
+            document.getElementById("boton").onclick = function (){
+                mandar();
+            }
+        </script>
     </head>
 
     <body class="sb-nav-fixed"
@@ -112,7 +120,7 @@
 
                                 <ol class="breadcrumb mb-2">
                                     <li class="breadcrumb-item"><a
-                                            href="<%= request.getContextPath()%>/Client_Farmacias">Farmacias</a></li>
+                                            href="<%= request.getContextPath()%>/Client_Farmacias?idD=<%=farmacia.getIdDistritoF()%>">Farmacias</a></li>
                                     <li class="breadcrumb-item active"><%=farmacia.getNombreFarmacia()%>
                                     </li>
 
@@ -221,9 +229,8 @@
                                                                    value="<%=farmacia.getIdFarmacia()%>">
                                                             <input type="hidden" class="form-control" name="receta"
                                                                    value="<%=listaProd.isRecetaMedicaB()?"1":"0"%>">
-                                                            <button class="btn btn-outline-dark mt-auto" href="#popup1"
-                                                                    type="submit">Agregar
-                                                            </button>
+                                                           <%-- <input type="button" value="Agregar" onclick="closeSelf();">-- <button class="btn btn-outline-dark mt-auto" type="submit">Agregar</button> --%>
+                                                            <button id="boton" class="btn btn-outline-dark mt-auto" type="submit">Agregar</button>
                                                         </form>
                                                     </div>
                                                     <div class="card-footer p-4 pt-0 border-top-0  bg-transparent">
@@ -238,7 +245,9 @@
                                         </div>
                                     </div>
                                 </section>
-
+                                <div>
+                                    <a class="btn btn-secondary" href="<%= request.getContextPath()%>/Client_Farmacias?idD=<%=farmacia.getIdDistritoF()%>">Regresar a farmacias</a>
+                                </div>
 
                                 <nav aria-label="Page navigation">
                                     <ul class="pagination justify-content-end text-primary">
@@ -313,12 +322,15 @@
         </nav>
 
 
+
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
                 crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
                 crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+
     </body>
 
 </html>
