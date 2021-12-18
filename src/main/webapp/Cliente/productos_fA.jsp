@@ -147,13 +147,22 @@
                                 <br><br>
 
                                 <%if (listaProductosF.isEmpty()) {%>
+                                <%if (nombreProducto == null) {%>
                                 <div class="text-center">
                                     <div class="alert alert-warning text-center" role="alert">
-                                        <p><em>No se han encontrado productos disponibles con el nombre de "<%=nombreProducto%>"</em></p>
+                                        <p><em>No se han encontrado productos disponibles"</em></p>
                                     </div>
                                     <a class="btn btn-primary me-md-4 text-center"
-                                       href="<%=request.getContextPath()%>/Client_Farmacias">Ir a Farmacias</a>
+                                       href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=farmacia.getIdFarmacia()%>">Regresar</a>
                                 </div>
+                                <%} else {%>
+                                <div class="text-center">
+                                    <div class="alert alert-warning text-center" role="alert">
+                                        <p><em>No se han encontrado productos disponibles con el nombre de
+                                            "<%=nombreProducto%>"</em></p>
+                                    </div>
+                                </div>
+                                <%}%>
                                 <%} else {%>
                                 <%--
                                 <nav aria-label="Page navigation">
@@ -179,8 +188,9 @@
                                 <section class="py-0">
                                     <div class="container px-4 px-lg-5 mt-5">
 
-                                        <%if (session.getAttribute("proAgregado")!=null){%>
-                                        <div class="alert alert-info" role="alert"><%=(String) session.getAttribute("proAgregado")%>
+                                        <%if (session.getAttribute("proAgregado") != null) {%>
+                                        <div class="alert alert-info"
+                                             role="alert"><%=(String) session.getAttribute("proAgregado")%>
                                         </div>
                                         <%session.removeAttribute("proAgregado");%>
                                         <%}%>
