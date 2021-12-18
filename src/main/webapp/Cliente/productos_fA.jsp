@@ -220,6 +220,9 @@
                                                         </div>
                                                     </div>
                                                     <!-- Product actions-->
+                                                    <%if(listaProd.getStock()==0){%>
+                                                    <p class="text-center text-danger mt-auto disabled">Agotado</p>
+                                                    <%}else {%>
                                                     <div class="card-footer p-2 pt-0 border-top-0 bg-transparent text-center">
                                                         <form method="POST"
                                                               action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=agregar">
@@ -234,6 +237,7 @@
                                                             <button class="btn btn-outline-dark mt-auto" type="submit">Agregar</button>
                                                         </form>
                                                     </div>
+                                                    <%}%>
                                                     <div class="card-footer p-4 pt-0 border-top-0  bg-transparent">
                                                         <div class="text-center"><a class="btn btn-outline-dark mt-auto"
                                                                                     href="<%= request.getContextPath()%>/Client_Detalles_Producto?idF=<%=farmacia.getIdFarmacia()%>&idP=<%=listaProd.getIdProducto()%>">Ver
