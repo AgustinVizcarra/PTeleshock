@@ -17,7 +17,7 @@ public class PxFarDao extends BaseDao {
             ResultSet rs = statement.executeQuery("Select  p.idproducto,p.nombre, f.foto1,pf.stock,pf.estadoproducto  from productoporfarmacia pf\n" +
                     " inner join producto p on (pf.idproducto=p.idproducto)\n" +
                     " left join foto f on (pf.idproducto=f.idproducto and pf.idfarmacia=f.idfarmacia)\n" +
-                    "where pf.idfarmacia="+idFarmacia+" limit "+(pagint-1)*12 +",12;");
+                    "where pf.idfarmacia="+idFarmacia+" and pf.estadoproducto='habilitado' limit "+(pagint-1)*12 +",12;");
 
 
             while (rs.next()) {
@@ -43,7 +43,7 @@ public class PxFarDao extends BaseDao {
         String sql = "Select  p.idproducto,p.nombre, f.foto1,pf.stock,pf.estadoproducto  from productoporfarmacia pf\n" +
                 " inner join producto p on (pf.idproducto=p.idproducto)\n" +
                 " left join foto f on (pf.idproducto=f.idproducto and pf.idfarmacia=f.idfarmacia)\n" +
-                "where pf.idfarmacia="+idFarmacia+" and lower(p.nombre) like ? limit "+(pagint-1)*12 +",12";
+                "where pf.idfarmacia="+idFarmacia+" and lower(p.nombre) like ? and pf.estadoproducto='habilitado' limit "+(pagint-1)*12 +",12";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {

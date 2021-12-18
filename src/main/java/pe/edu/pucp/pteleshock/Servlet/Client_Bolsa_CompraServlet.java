@@ -34,8 +34,6 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
         if (cliente != null) {
 
             String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
-            String idFarmaciaStr = request.getParameter("idF") != null ? request.getParameter("idF") : "";
-            String idProd = request.getParameter("idProd") != null ? request.getParameter("idProd") : "";
             LocalDateTime hora = LocalDateTime.now();
             DateTimeFormatter f = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -43,7 +41,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
             ProductosFDao productosFDao = new ProductosFDao();
 
             switch (action) {
-                case "listar":
+                case "anadir":
                     ArrayList<BPedidoEstado> listBolsa1 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
 
                     String idPedidoStr = session.getAttribute("idPed") != null ? (String) session.getAttribute("idPed") : "";
@@ -55,54 +53,68 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     FarmaciaDao farmaciaDao = new FarmaciaDao();
                     ArrayList<BFarmacia> listaFarmacia = farmaciaDao.getListaTodasFarmacias("");
                     int cantFarm = listaFarmacia.size();
-                    request.setAttribute("listaFarmacia", listaFarmacia);
                     if (!idPedidoStr.equals("")) {
                         listBolsa1.add(bolsaCompraDao.pedidosCarrito(Integer.parseInt(idPedidoStr),Integer.parseInt(idProductoStr)));
                         session.setAttribute("bolsita", listBolsa1);
                     }
-
-                    HashMap<Integer, ArrayList<BPedidoEstado>> map = new HashMap<>();
-                    session.setAttribute("map", map);
-
-                    for (int i = 1; i <= cantFarm; i++) {
+                    request.getRequestDispatcher("/Client_Productos_F").forward(request,response);
+                    break;
+                case "listar":
+                    ArrayList<BPedidoEstado> listBolsa3 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
+                    FarmaciaDao farmaciaDao1 = new FarmaciaDao();
+                    ArrayList<BFarmacia> listaFarmacia1 = farmaciaDao1.getListaTodasFarmacias("");
+                    request.setAttribute("listaFarmacia", listaFarmacia1);
+                    int cantFarm1 = listaFarmacia1.size();
+                    System.out.println(cantFarm1);
+                    HashMap<Integer, ArrayList<BPedidoEstado>> map5 = new HashMap<>();
+                    session.setAttribute("map",map5);
+                    for (int i = 1; i <= cantFarm1; i++) {
                         ArrayList<BPedidoEstado> lista = new ArrayList<>();
-                        for (BPedidoEstado bp : listBolsa1) {
+                        for (BPedidoEstado bp : listBolsa3) {
+                            System.out.println(bp.getNombreProducto());
+                            System.out.println(bp.getPedido().getIdFarmacia());
                             if (bp.getPedido().getIdFarmacia() == i) {
                                 lista.add(bp);
-                                map.put(bp.getPedido().getIdFarmacia(), lista);
+                                map5.put(bp.getPedido().getIdFarmacia(), lista);
                             }
                         }
-                        session.setAttribute("map", map);
+                        session.setAttribute("map", map5);
                     }
-
-                    if (map.isEmpty()) {
+                    if (map5.isEmpty()) {
                         session.setAttribute("msg", "No tiene productos agregados a su bolsa de compras");
                         session.removeAttribute("msg1");
                     }
-
                     System.out.println("msg1"+session.getAttribute("msg1"));
-                    RequestDispatcher view = request.getRequestDispatcher("/Cliente/bolsa_de_compra.jsp");
-                    view.forward(request, response);
+                    RequestDispatcher view1 = request.getRequestDispatcher("/Cliente/bolsa_de_compra.jsp");
+                    view1.forward(request, response);
                     session.removeAttribute("msg1");
                     break;
                 case "borrar":
+                    String idFarmaciaStr = request.getParameter("idF") != null ? request.getParameter("idF") : "";
+                    String idProd = request.getParameter("idProd") != null ? request.getParameter("idProd") : "";
+                    System.out.println(idFarmaciaStr);
+                    System.out.println(idProd);
                     String idPedido = request.getParameter("idP") != null ? request.getParameter("idP") : "";
                     BPedidoEstado bped = bolsaCompraDao.obtenerProd(Integer.parseInt(idProd), Integer.parseInt(idPedido), Integer.parseInt(idFarmaciaStr));
                     bolsaCompraDao.eliminarCarrito(Integer.parseInt(idProd), Integer.parseInt(idPedido), Integer.parseInt(idFarmaciaStr));
                     ArrayList<BPedidoEstado> listBolsa2 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
                     HashMap<Integer, Integer> map1 = (HashMap<Integer, Integer>) session.getAttribute("maps");
+                    System.out.println( bped.getNombreProducto());
                     if (bped != null) {
                         for (int i = 0; i < listBolsa2.size(); i++) {
                             BPedidoEstado bped1 = listBolsa2.get(i);
+                            System.out.println(bped1.getNombreProducto());
                             if (bped1.getNombreProducto().equals(bped.getNombreProducto())) {
                                 //found, delete.
                                 listBolsa2.remove(i);
+                                System.out.println(bped1.getNombreProducto());
                                 map1.remove(bped1.getPedido().getIdFarmacia());
                                 break;
                             }
                         }
-                        session.setAttribute("maps",map1);
+                        session.setAttribute("maps", map1);
                         session.setAttribute("bolsita", listBolsa2);
+                        System.out.println("validacion: "+listBolsa2.isEmpty());
                     } else {
                         System.out.println("es nulo");
                     }
@@ -213,7 +225,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     session.setAttribute("idPed", Integer.toString(idPedido));
                     session.setAttribute("idProd",idProdStr);
                     bolsaCompraDao.agregarProductoCarrito(idPedido, Integer.parseInt(idProdStr), Integer.parseInt(cantidadPStr), Integer.parseInt(idFarmaciaStr));
-                    response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra"); //+ "&idF=" + idFarmacia);
+                    response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra?action=anadir&idF=" + idFarmacia + "#popup1"); //+ "&idF=" + idFarmacia);
 
                 } else {
                     response.sendRedirect(request.getContextPath() + "/Client_Productos_F?idF=" + idFarmacia); //+ "&idF=" + idFarmacia);
@@ -266,6 +278,9 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     HashMap<Integer, Integer> map1 = new HashMap<>();
                     map1.put(0, 0);
                     session.setAttribute("maps", map1);
+                    //HashMap<Integer, Integer> map2 = new HashMap<>();
+                    //session.setAttribute("map", map2);
+
 
                 }
                 response.sendRedirect(request.getContextPath() + "/Client_Listado_Producto");

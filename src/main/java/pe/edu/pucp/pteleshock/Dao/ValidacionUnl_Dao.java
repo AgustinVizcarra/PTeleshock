@@ -51,6 +51,7 @@ public class ValidacionUnl_Dao extends BaseDao{
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            System.out.println("Error en el registro de desbloquear farmacia como historial");
         }
 
     }

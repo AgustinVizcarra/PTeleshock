@@ -24,19 +24,17 @@ public class Login_SessionServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         HttpSession session_login = request.getSession();
         session_login.removeAttribute("logid");
-        String mensaje = request.getParameter("mensaje") == null ? "" : request.getParameter("mensaje");
-        String mail = request.getParameter("correo") == null ? "" : request.getParameter("correo");
-        String pwd = request.getParameter("pwd") == null ? "" : request.getParameter("pwd");
-        if(mensaje.equals("a")){
-            mensaje = "Se ha ingresado una contraseña o dirección de correo invalidos.";
-        }
-        request.setAttribute("pwd", pwd);
-        request.setAttribute("mail", mail);
-        request.setAttribute("mensajealerta", mensaje);
+        //String mensaje = request.getParameter("mensaje") == null ? "" : request.getParameter("mensaje");
+        //String mail = request.getParameter("correo") == null ? "" : request.getParameter("correo");
+        //String pwd = request.getParameter("pwd") == null ? "" : request.getParameter("pwd");
+        //if(mensaje.equals("a")){
+          //  mensaje = "Se ha ingresado una contraseña o dirección de correo invalidos.";
+        //}
+        //request.setAttribute("pwd", pwd);
+        //request.setAttribute("mail", mail);
+        //request.setAttribute("mensajealerta", mensaje);
         RequestDispatcher view = request.getRequestDispatcher("/Login/login.jsp");
         view.forward(request, response);
-
-
     }
 
     @Override
@@ -92,7 +90,11 @@ public class Login_SessionServlet extends HttpServlet {
                     System.out.println("tracer 1");
                 } else {
                     mensaje = "a";
-                    response.sendRedirect(request.getContextPath() + "/Login?mensaje=" + mensaje + "&correo=" + correo + "&pwd=" + pass);
+                    HttpSession session_e = request.getSession();
+                    session_e.setAttribute("mensajealerta",mensaje);
+                    session_e.setAttribute("mail",correo);
+                    session_e.setAttribute("pwd",pass);
+                    response.sendRedirect(request.getContextPath() + "/Login");
                 }
                 break;
             case "logout":

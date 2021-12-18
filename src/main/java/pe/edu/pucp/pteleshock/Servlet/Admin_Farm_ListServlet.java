@@ -31,6 +31,9 @@ Admin_Farm_ListServlet extends HttpServlet {
         BDistrito bDistrito;
         String iddistrito = request.getParameter("iddistrito");
         String pag = request.getParameter("pag") != null ? request.getParameter("pag") : "1";
+        if (pag.equalsIgnoreCase("")){
+            pag = "1";
+        }
         int filtrar;
         int cant;
         try {
@@ -45,20 +48,21 @@ Admin_Farm_ListServlet extends HttpServlet {
                 cant = farmaciaDao.cantidadListaTodasFarmaciasPorDistrito(iddistrito);
                 bDistrito = distrfarm_dao.obtenerDistritoPorId(iddistrito);
             }
-            if(listaFarmacias.size()>0) {
+            if (listaFarmacias.size() > 0) {
                 request.setAttribute("listaFarmacias", listaFarmacias);
+                request.setAttribute("pag", pag);
                 request.setAttribute("filtrar", filtrar);
                 request.setAttribute("distrito", bDistrito);
                 request.setAttribute("cantidad", cant);
 
                 RequestDispatcher view = request.getRequestDispatcher("/Administracion/listado.jsp");
                 view.forward(request, response);
-            }else{
+            } else {
                 request.setAttribute("distritos", distrfarm_dao.listar_distritos());
                 RequestDispatcher view = request.getRequestDispatcher("/Administracion/index_admin.jsp");
                 view.forward(request, response);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             request.setAttribute("distritos", distrfarm_dao.listar_distritos());
             RequestDispatcher view = request.getRequestDispatcher("/Administracion/index_admin.jsp");
             view.forward(request, response);
@@ -73,6 +77,9 @@ Admin_Farm_ListServlet extends HttpServlet {
         String texto = request.getParameter("textoBuscar");
         String iddistrito = request.getParameter("iddistrito");
         String pag = request.getParameter("pag") != null ? request.getParameter("pag") : "1";
+        if (pag.equalsIgnoreCase("")){
+            pag = "1";
+        }
         int filtrar;
         int cant;
 
@@ -100,7 +107,7 @@ Admin_Farm_ListServlet extends HttpServlet {
                 cant = farmaciaDao.cantidadListaTodasFarmaciasPorDistritoConBusqueda(iddistrito, texto);
                 bDistrito = distrfarm_dao.obtenerDistritoPorId(iddistrito);
             }
-
+            request.setAttribute("pag", pag);
             request.setAttribute("listaFarmacias", listaFarmacias);
             request.setAttribute("filtrar", filtrar);
             request.setAttribute("distrito", bDistrito);
@@ -108,9 +115,7 @@ Admin_Farm_ListServlet extends HttpServlet {
             request.setAttribute("textoBusqueda", texto);
             RequestDispatcher view = request.getRequestDispatcher("/Administracion/listado.jsp");
             view.forward(request, response);
-
         }
-
     }
 }
 

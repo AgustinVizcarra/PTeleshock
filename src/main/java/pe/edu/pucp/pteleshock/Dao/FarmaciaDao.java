@@ -319,11 +319,11 @@ public class FarmaciaDao extends BaseDao {
         }
 
         try (Connection conn3 = this.getConnection();
-             PreparedStatement pstmt = conn3.prepareStatement("Insert into historialadmin(idusuario, idfarmacia, idaccion, razon, fechahora) values (?,?,'1',?,now());")) {
-            pstmt.setInt(1, admin_id);
-            pstmt.setInt(2, farmacia.getIdfarmacia());
-            pstmt.setString(3, razon);
-            pstmt.executeUpdate();
+             PreparedStatement pstmt2 = conn3.prepareStatement("Insert into historialadmin(idusuario, idfarmacia, idaccion, razon, fechahora) values (?,?,'1',?,now());")) {
+            pstmt2.setInt(1, admin_id);
+            pstmt2.setInt(2, farmacia.getIdfarmacia());
+            pstmt2.setString(3, razon);
+            pstmt2.executeUpdate();
 
         } catch (SQLException e) {
             System.out.println("Error en el insert");

@@ -19,21 +19,24 @@ public class Admin_ResultServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         request.setCharacterEncoding("UTF-8");
+        try {
+            FarmaciaDao farmaciaDao = new FarmaciaDao();
+            UsuarioDao usuarioDao = new UsuarioDao();
+            Distrfarm_Dao distrfarm_dao = new Distrfarm_Dao();
+            String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
+            BFarmacia farmaciaEncontrada = farmaciaDao.getFarmaciaCompleta(ruc);
 
-        FarmaciaDao farmaciaDao = new FarmaciaDao();
-        UsuarioDao usuarioDao = new UsuarioDao();
-        Distrfarm_Dao distrfarm_dao = new Distrfarm_Dao();
-        String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
-        BFarmacia farmaciaEncontrada = farmaciaDao.getFarmaciaCompleta(ruc);
-
-        int idDistritoInt = usuarioDao.obtenerUsuario(farmaciaEncontrada.getIdusuario()).getIdDistrito();
-        String idDistritoStr = String.valueOf(idDistritoInt);
-        String distritoFarmaciaEncontrada = distrfarm_dao.obtenerDistritoPorId(idDistritoStr).getNombre();
-        request.setAttribute("distritoFarmaciaEncontrada", distritoFarmaciaEncontrada);
-        request.setAttribute("farmaciaEncontrada", farmaciaEncontrada);
-        RequestDispatcher view = request.getRequestDispatcher("/Administracion/resultado_farmacia.jsp");
-        view.forward(request, response);
-
+            int idDistritoInt = usuarioDao.obtenerUsuario(farmaciaEncontrada.getIdusuario()).getIdDistrito();
+            String idDistritoStr = String.valueOf(idDistritoInt);
+            String distritoFarmaciaEncontrada = distrfarm_dao.obtenerDistritoPorId(idDistritoStr).getNombre();
+            request.setAttribute("distritoFarmaciaEncontrada", distritoFarmaciaEncontrada);
+            request.setAttribute("farmaciaEncontrada", farmaciaEncontrada);
+            RequestDispatcher view = request.getRequestDispatcher("/Administracion/resultado_farmacia.jsp");
+            view.forward(request, response);
+        }catch(Exception e){
+            RequestDispatcher view = request.getRequestDispatcher("/Administracion/buscar_farmacia.jsp");
+            view.forward(request, response);
+        }
     }
 
     @Override

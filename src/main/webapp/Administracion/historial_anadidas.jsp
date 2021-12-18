@@ -2,6 +2,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.BAnadidas" %>
 <jsp:useBean id="cantidad" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="pag" scope="request" type="java.lang.String"/>
 <% ArrayList<BAnadidas> anadidas = (ArrayList<BAnadidas>) request.getAttribute("anadidas");%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
@@ -118,7 +119,7 @@
                     <div class="container-fluid px-4">
                         <br>
                         <br>
-                        <div class="card mb-4" style="opacity: 0.80;">
+                        <div class="card mb-4" style="opacity: 0.75">
                             <div class="card-body">
                                 <h1 class="mt-4 text-center texto-central"
                                     style="padding-top:10px;padding-bottom: 10px">
@@ -128,6 +129,7 @@
                                         <a href="<%= request.getContextPath()%>/Admin_Hist">Historial</a>
                                     </li>
                                     <li class="breadcrumb-item active">Farmacias Añadidas</li>
+                                    <li class="breadcrumb-item active">Pág. <%=pag%></li>
                                 </ol>
                                 <div class="row">
                                     <div class="col-xl-1 ">
@@ -182,13 +184,11 @@
                                 </div>
                                 <div class="row">
                                     <br><br>
-                                    <a class="btn btn-primary" href="/PTeleshock_war/Admin_Index"
+                                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/Admin_Index"
                                        style="width: fit-content; position: absolute; right: 15px; height: 38px; background-color: #00152D; border-color: #00152D">Regresar</a>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto" style="height:8%">

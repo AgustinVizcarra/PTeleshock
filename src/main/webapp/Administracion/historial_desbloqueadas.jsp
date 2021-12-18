@@ -2,6 +2,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="pe.edu.pucp.pteleshock.Beans.Bdesbloqueadas" %>
 <jsp:useBean id="cantidad" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="pag" scope="request" type="java.lang.String"/>
 <% ArrayList<Bdesbloqueadas> desbloqueadas = (ArrayList<Bdesbloqueadas>) request.getAttribute("desbloqueadas");%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
@@ -115,67 +116,77 @@
             <div id="layoutSidenav_content">
                 <main class="clase_historial-farmacia" style="height: 92%">
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4 text-center texto-central" style="padding-top:10px;padding-bottom: 10px">
-                            Historial</h1>
-                        <ol class="breadcrumb mb-4">
-                        </ol>
-                        <div class="row">
-                            <div class="col-xl-1 ">
-                            </div>
-                            <div class="col-xl-10 ">
-                                <div class="card bg-primary text-white mb-4"
-                                     style="color:#FFFFFF; background: #8BC34A;border-color: #FFFFFF">
-                                    <div class="texto-navbar"
-                                         style="text-align:left;padding-top: 10px;padding-bottom: 20px;color: #00152D;font-size: 25px;padding-left: 2%">
-                                        <u>Farmacias desbloqueadas</u></div>
-                                    <div style="background-color: #8BC34A">
-                                        <table class="table table-striped" style="border-color: #8BC34A">
-                                            <tr style="color: #00152D">
-                                                <th class="text-center">Administrador</th>
-                                                <th class="text-center">Farmacia</th>
-                                                <th class="text-center">Razón</th>
-                                                <th class="text-center">Fecha</th>
-                                            </tr>
-                                            <% for (Bdesbloqueadas desbloqueada : desbloqueadas) {%>
-                                            <tr style="color: #00152D">
-                                                <td class="text-center">
-                                                    <%= desbloqueada.getAdministrador_nombre()%>
-                                                </td>
-                                                <td class="text-center"><%= desbloqueada.getFarmacia_nombre()%>
-                                                </td>
-                                                <td class="text-center"
-                                                    style="font-size:1vw"><%= desbloqueada.getRazon_motivo()%>
-                                                </td>
-                                                <td class="text-center"><%= desbloqueada.getFecha()%>
-                                                </td>
-                                            </tr>
-                                            <%}%>
-                                        </table>
+                        <br>
+                        <br>
+                        <div class="card mb-4" style="opacity: 0.75">
+                            <div class="card-body">
+                                <h1 class="mt-4 text-center texto-central" style="padding-top:10px;padding-bottom: 10px">
+                                    Historial</h1>
+                                <ol class="breadcrumb mb-2">
+                                    <li class="breadcrumb-item">
+                                        <a href="<%= request.getContextPath()%>/Admin_Hist">Historial</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">Farmacias Desbloqueadas</li>
+                                    <li class="breadcrumb-item active">Pág. <%=pag%></li>
+                                </ol>
+                                <div class="row">
+                                    <div class="col-xl-1 ">
+                                    </div>
+                                    <div class="col-xl-10 ">
+                                        <div class="card bg-primary text-white mb-4"
+                                             style="color:#FFFFFF; background: #8BC34A;border-color: #FFFFFF">
+                                            <div class="texto-navbar"
+                                                 style="text-align:left;padding-top: 10px;padding-bottom: 20px;color: #00152D;font-size: 25px;padding-left: 2%">
+                                                <u>Farmacias desbloqueadas</u></div>
+                                            <div style="background-color: #8BC34A">
+                                                <table class="table table-striped" style="border-color: #8BC34A">
+                                                    <tr style="color: #00152D">
+                                                        <th class="text-center">Administrador</th>
+                                                        <th class="text-center">Farmacia</th>
+                                                        <th class="text-center">Razón</th>
+                                                        <th class="text-center">Fecha</th>
+                                                    </tr>
+                                                    <% for (Bdesbloqueadas desbloqueada : desbloqueadas) {%>
+                                                    <tr style="color: #00152D">
+                                                        <td class="text-center">
+                                                            <%= desbloqueada.getAdministrador_nombre()%>
+                                                        </td>
+                                                        <td class="text-center"><%= desbloqueada.getFarmacia_nombre()%>
+                                                        </td>
+                                                        <td class="text-center"
+                                                            style="font-size:1vw"><%= desbloqueada.getRazon_motivo()%>
+                                                        </td>
+                                                        <td class="text-center"><%= desbloqueada.getFecha()%>
+                                                        </td>
+                                                    </tr>
+                                                    <%}%>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-8">
                                     </div>
                                 </div>
+                                <div class="col align-self-center">
+                                    <a style="position: center">
+                                        <nav aria-label="Page navigation example" style="align-content: center">
+                                            <ul class="pagination justify-content-center">
+                                                <% int resto = cantidad % 7 == 0 ? 0 : 1;%>
+                                                <% for (int i = 1; i < Math.floor(cantidad / 7) + resto + 1; i++) { %>
+                                                <li class="page-item"><a class="page-link"
+                                                                         href="<%= request.getContextPath()%>/Admin_Hist?action=unlock&pag=<%=i %>"><%=i%>
+                                                </a></li>
+                                                <% } %>
+                                            </ul>
+                                        </nav>
+                                    </a>
+                                </div>
+                                <div class="row">
+                                    <br><br>
+                                    <a class="btn btn-primary" href="<%=request.getContextPath()%>/Admin_Index"
+                                       style="width: fit-content; position: absolute; right: 15px; height: 38px; background-color: #00152D; border-color: #00152D">Regresar</a>
+                                </div>
                             </div>
-                            <div class="col-xl-3 col-md-8">
-                            </div>
-                        </div>
-                        <div class="col align-self-center">
-                            <a style="position: center">
-                                <nav aria-label="Page navigation example" style="align-content: center">
-                                    <ul class="pagination justify-content-center">
-                                        <% int resto = cantidad % 7 == 0 ? 0 : 1;%>
-                                        <% for (int i = 1; i < Math.floor(cantidad / 7) + resto + 1; i++) { %>
-                                        <li class="page-item"><a class="page-link"
-                                                                 href="<%= request.getContextPath()%>/Admin_Hist?action=unlock&pag=<%=i %>"><%=i%>
-                                        </a></li>
-                                        <% } %>
-                                    </ul>
-                                </nav>
-                            </a>
-                        </div>
-                        <div class="row">
-                            <br><br>
-                            <a class="btn btn-primary"
-                               href="<%=request.getContextPath()%>/Admin_Hist"
-                               style="width: fit-content; margin-left: auto; margin-right: auto;height: 38px;background-color: #00152D;border-color: #00152D">Regresar</a>
                         </div>
                     </div>
                 </main>

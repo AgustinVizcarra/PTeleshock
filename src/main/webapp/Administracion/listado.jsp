@@ -5,6 +5,7 @@
 <!--Bfarmacia-->
 <jsp:useBean id="filtrar" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="cantidad" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="pag" scope="request" type="java.lang.String"/>
 <jsp:useBean id="distrito" scope="request" type="pe.edu.pucp.pteleshock.Beans.BDistrito"/>
 <!--BDistrito-->
 <jsp:useBean id="textoBusqueda" scope="request" type="java.lang.String" class="java.lang.String"/>
@@ -134,6 +135,7 @@
                             %>
                         </div>
                         <div class="container-fluid px-4">
+                            <br>
                             <div class="row  row-cols-4">
                                 <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
                                       method="post"
@@ -164,11 +166,23 @@
                                             <i class="fas fa-undo"></i>
                                         </a>
                                         <% } %>
-
                                     </div>
                                 </form>
                             </div>
                             <br>
+
+                            <ol class="breadcrumb mb-2">
+                                <li class="breadcrumb-item">
+                                    <a href="<%= request.getContextPath()%>/Admin_Index">Distritos</a>
+                                </li>
+                                <% if (filtrar == 1) {%>
+                                <li class="breadcrumb-item active"><%=distrito.getNombre()%></li>
+                                <% } else { %>
+                                <li class="breadcrumb-item active">Todas las Farmacias</li>
+                                <% } %>
+                                <li class="breadcrumb-item active">Pág. <%=pag%></li>
+                            </ol>
+
                             <div class="row">
                                 <%
                                     for (BFarmacia bFarmacia : listaFarmacias) {
@@ -299,7 +313,7 @@
                     </div>
                     <div class="row" style="margin-right: 0">
                         <br><br>
-                        <a class="btn btn-primary" href="/PTeleshock_war/Admin_Index"
+                        <a class="btn btn-primary" href="<%=request.getContextPath()%>/Admin_Index"
                            style="width: fit-content; position: absolute; right: 15px; height: 38px; background-color: #00152D; border-color: #00152D">Regresar</a>
                     </div>
                 </main>

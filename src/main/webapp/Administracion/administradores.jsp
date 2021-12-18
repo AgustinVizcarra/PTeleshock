@@ -154,7 +154,7 @@
                         </div>
                         <div class="row">
                             <br><br>
-                            <a class="btn btn-primary" href="/PTeleshock_war/Admin_Index"
+                            <a class="btn btn-primary" href="<%=request.getContextPath()%>/Admin_Index"
                                style="width: fit-content; position: absolute; right: 15px; height: 38px; background-color: #00152D; border-color: #00152D">Regresar</a>
                         </div>
                     </div>

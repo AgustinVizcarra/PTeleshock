@@ -164,7 +164,7 @@
                                             </td>
                                             <th>
                                                 <%DecimalFormat df = new DecimalFormat("##.##"); %>
-                                                <%=df.format(pedido.getPrecioTotal())%>
+                                                S/.<%=df.format(pedido.getPrecioTotal())%>
                                             </th>
                                             <td><a class="btn btn-primary"
                                                    href="<%= request.getContextPath()%>/Client_Estado_Pendiente?idPG=<%=pedido.getBoletaVenta()%>&idFPd=<%=pedido.getIdFarmacia()%>">Ver

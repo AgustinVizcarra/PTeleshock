@@ -112,7 +112,7 @@
 
                                 <ol class="breadcrumb mb-2">
                                     <li class="breadcrumb-item"><a
-                                            href="<%= request.getContextPath()%>/Client_Farmacias">Farmacias</a></li>
+                                            href="<%= request.getContextPath()%>/Client_Farmacias?idD=<%=farmacia.getIdDistritoF()%>">Farmacias</a></li>
                                     <li class="breadcrumb-item active"><%=farmacia.getNombreFarmacia()%>
                                     </li>
 
@@ -147,13 +147,22 @@
                                 <br><br>
 
                                 <%if (listaProductosF.isEmpty()) {%>
+                                <%if (nombreProducto == null) {%>
                                 <div class="text-center">
                                     <div class="alert alert-warning text-center" role="alert">
-                                        <p><em>No se han encontrado productos disponibles con el nombre de "<%=nombreProducto%>"</em></p>
+                                        <p><em>No se han encontrado productos disponibles"</em></p>
                                     </div>
                                     <a class="btn btn-primary me-md-4 text-center"
-                                       href="<%=request.getContextPath()%>/Client_Farmacias">Ir a Farmacias</a>
+                                       href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=farmacia.getIdFarmacia()%>">Regresar</a>
                                 </div>
+                                <%} else {%>
+                                <div class="text-center">
+                                    <div class="alert alert-warning text-center" role="alert">
+                                        <p><em>No se han encontrado productos disponibles con el nombre de
+                                            "<%=nombreProducto%>"</em></p>
+                                    </div>
+                                </div>
+                                <%}%>
                                 <%} else {%>
                                 <%--
                                 <nav aria-label="Page navigation">
@@ -179,8 +188,9 @@
                                 <section class="py-0">
                                     <div class="container px-4 px-lg-5 mt-5">
 
-                                        <%if (session.getAttribute("proAgregado")!=null){%>
-                                        <div class="alert alert-info" role="alert"><%=(String) session.getAttribute("proAgregado")%>
+                                        <%if (session.getAttribute("proAgregado") != null) {%>
+                                        <div class="alert alert-info"
+                                             role="alert"><%=(String) session.getAttribute("proAgregado")%>
                                         </div>
                                         <%session.removeAttribute("proAgregado");%>
                                         <%}%>
@@ -221,9 +231,7 @@
                                                                    value="<%=farmacia.getIdFarmacia()%>">
                                                             <input type="hidden" class="form-control" name="receta"
                                                                    value="<%=listaProd.isRecetaMedicaB()?"1":"0"%>">
-                                                            <button class="btn btn-outline-dark mt-auto" href="#popup1"
-                                                                    type="submit">Agregar
-                                                            </button>
+                                                            <button class="btn btn-outline-dark mt-auto" type="submit">Agregar</button>
                                                         </form>
                                                     </div>
                                                     <div class="card-footer p-4 pt-0 border-top-0  bg-transparent">
@@ -238,7 +246,9 @@
                                         </div>
                                     </div>
                                 </section>
-
+                                <div>
+                                    <a class="btn btn-secondary" href="<%= request.getContextPath()%>/Client_Farmacias?idD=<%=farmacia.getIdDistritoF()%>">Regresar a farmacias</a>
+                                </div>
 
                                 <nav aria-label="Page navigation">
                                     <ul class="pagination justify-content-end text-primary">
@@ -285,7 +295,7 @@
 
         <nav id="popup1" class="overlay">
             <div class=" popup card text-center ">
-                <h5 class="card-header text-center text-light">Teleshock</h5>
+                <h5 class="card-header text-center text-dark">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¡Producto Añadido!</h5>
                     <a href="#" class="btn btn-success mb-2">Seguir Comprando</a>
@@ -313,12 +323,15 @@
         </nav>
 
 
+
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
                 crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
                 crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+
     </body>
 
 </html>
