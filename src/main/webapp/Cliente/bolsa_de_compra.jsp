@@ -26,6 +26,46 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
                 crossorigin="anonymous"></script>
         <style>
+            <%for(int l=0;l<50;l++){%>
+            .overlay {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.7);
+                transition: opacity 500ms;
+                visibility: hidden;
+                opacity: 0;
+            }
+            #popup<%=l%>:target{
+                visibility: visible; /* Se regresa a hidden para ocultar */
+                opacity: 1; /* Se regresa a o para hacerlo "invisible" */
+            }
+            #popupBody<%=l%>{
+                width: 46%;
+                padding: 2%;
+                border-radius: 15px;
+                box-shadow: 0 0 5px #CCC;
+                background: #FFF;
+                position: relative;
+                transition: all 5s ease-in-out;
+                margin: 20% auto;
+            }
+            #cerrar<%=l%>{
+                position: absolute;
+                top: 20px;
+                right: 30px;
+                transition: all 200ms;
+                font-size: 30px;
+                font-weight: bold;
+                text-decoration: none;
+                color: #F00;
+            }
+
+            <%}%>
+
+
             .number-input input[type="number"] {
                 -webkit-appearance: textfield;
                 -moz-appearance: textfield;
@@ -301,10 +341,20 @@
                                                                                    name="fotoReceta" type="file"
                                                                                    id="formFile1">
                                                                             <button type="submit" class="btn btn-secondary btn-sm">Subir receta</button>
+                                                                            <a href="#popup<%=i%>" class="btn btn-secondary btn-sm">Ver foto</a>
+                                                                            <div id="popup<%=i%>" class="overlay">
+                                                                                <div id="popupBody<%=i%>">
+                                                                                    <h2>Título de la ventana</h2>
+                                                                                    <a id="cerrar<%=i%>" href="#">&times;</a>
+                                                                                    <div class="popupContent" style="display: flex; justify-content: center">
+                                                                                        <img src="<%=request.getContextPath()%>/ImgRecetaServlet?prod=<%=ee.getValue().get(i).getIdProducto()%>&idfarm=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idped=<%=ee.getValue().get(i).getPedido().getIdPedido()%>" width="500px">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
 
                                                                     </form>
-                                                                    <img src="<%=request.getContextPath()%>/ImgRecetaServlet?prod=<%=ee.getValue().get(i).getIdProducto()%>&idfarm=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idped=<%=ee.getValue().get(i).getPedido().getIdPedido()%>" width="100px">
+<%--                                                                    <img src="<%=request.getContextPath()%>/ImgRecetaServlet?prod=<%=ee.getValue().get(i).getIdProducto()%>&idfarm=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idped=<%=ee.getValue().get(i).getPedido().getIdPedido()%>" width="100px">--%>
                                                                 </td>
                                                                 <%} else {%>
                                                                 <td class="text-center">No requiere</td>

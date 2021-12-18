@@ -22,6 +22,44 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
                 crossorigin="anonymous"></script>
         <link />
+        <style>
+            .lightbox {
+                /* Default to hidden */
+                display: none;
+
+                /* Overlay entire screen */
+                position: fixed;
+                z-index: 999;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+
+                /* A bit of padding around image */
+                padding: 1em;
+
+                /* Translucent background */
+                background: rgba(0, 0, 0, 0.8);
+            }
+
+            /* Unhide the lightbox when it's the target */
+            .lightbox:target {
+                display: block;
+            }
+
+            .lightbox span {
+                /* Full width and height */
+                display: block;
+                width: 100%;
+                height: 100%;
+
+                /* Size and position background image */
+                background-position: center;
+                background-repeat: no-repeat;
+                /*background-size: contain;*/
+            }
+        </style>
+
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand" style="background-color: #00152D; opacity: 0.9;">
@@ -164,11 +202,13 @@
                                             <th>Productos</th>
                                             <th>Detalles</th>
                                             <th>Costo</th>
+                                            <th>Receta Médica:</th>
                                         </tr>
                                     </thead>
 
 
                                     <tbody>
+                                        <%int k = 1;%>
                                         <%double subtotal = 0.0;%>
                                         <%for (BPedidoEstado pedidoE : listaPedidoE) {%>
 
@@ -210,6 +250,22 @@
                                                 <div style=" margin-top: 30px;margin-left: 12px"><%=pedidoE.getPrecioProducto()%>
                                                 </div>
                                             </td>
+                                            <%if(pedidoE.isRecetaMedica()){%>
+
+                                            <td>
+                                                <a href="#img<%=k%>">
+                                                    <img src="<%= request.getContextPath()%>/ImgRecetaServlet?prod=<%=pedidoE.getIdProducto()%>&idped=<%=listaPedidoE.get(0).getPedido().getIdPedido()%>&idfarm=<%=listaPedidoE.get(0).getPedido().getIdFarmacia()%>" width="100px">
+                                                </a>
+
+                                                <!-- lightbox container hidden with CSS -->
+                                                <a href="#" class="lightbox" id="img<%=k%>">
+                                                    <span style="background-image: url('<%= request.getContextPath()%>/ImgRecetaServlet?prod=<%=pedidoE.getIdProducto()%>&idped=<%=listaPedidoE.get(0).getPedido().getIdPedido()%>&idfarm=<%=listaPedidoE.get(0).getPedido().getIdFarmacia()%>')"></span>
+                                                </a>
+                                                <%k++;%>
+                                            </td>
+                                            <%}else{%>
+                                            <td class="text-center">No requiere</td>
+                                            <%}%>
                                         </tr>
 
                                         <%subtotal = subtotal + pedidoE.getPrecioProducto();%>
