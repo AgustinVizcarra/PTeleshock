@@ -9,6 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <title>Mi Perfil</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
         <link href="css/style.css" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
                 crossorigin="anonymous"></script>
@@ -165,19 +166,18 @@
 
         <nav id="popup1" class="overlay">
             <div class=" popup card text-center ">
-                <h5 class="card-header text-center text-light">Teleshock</h5>
+                <h5 class="card-header text-center">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea eliminar su cuenta?</h5>
                     <a href="#popup2" class="btn btn-danger mb-2">Sí</a>
                     <a href="#" class="btn btn-primary mb-2">No</a>
-
                 </div>
             </div>
         </nav>
 
         <nav id="popup2" class="overlay">
             <div class=" popup card text-center ">
-                <h5 class="card-header text-center text-light">Teleshock</h5>
+                <h5 class="card-header text-center">Teleshock</h5>
                 <div class="card-body">
                     <h5 class="card-title p-2">¡Su cuenta ha sido eliminada!</h5>
                     <img class="img" style="width: 50px; height: 50px;"
@@ -207,5 +207,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
                 crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     </body>
 </html>

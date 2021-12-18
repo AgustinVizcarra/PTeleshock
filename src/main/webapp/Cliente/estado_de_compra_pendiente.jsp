@@ -251,7 +251,7 @@
                                 <%if (sePuedeCancelar==1) {%>
                                 <div class="d-md-block mt-3 mb-3 text-center font-weight-light my-5">
                                     <a class="btn btn-danger me-md-4"
-                                       href="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=cancelar&idPG=<%=listaPedidoE.get(0).getPedido().getBoletaVenta()%>&idF=<%=listaPedidoE.get(0).getPedido().getIdFarmacia()%>&idP=<%=listaPedidoE.get(0).getPedido().getIdPedido()%>">Cancelar</a>
+                                       href="#popup1">Cancelar</a>
                                 </div>
                                 <%} else if(sePuedeCancelar==0){
                                     if(listaPedidoE.get(0).getPedido().getEstadoPedido().equalsIgnoreCase("pendiente")){
@@ -292,6 +292,18 @@
                 </footer>
             </div>
         </div>
+
+        <nav id="popup1" class="overlay">
+            <div class=" popup card text-center ">
+                <h5 class="card-header text-center">Teleshock</h5>
+                <div class="card-body">
+                    <h5 class="card-title p-2">¿Desea cancelar el producto?</h5>
+                    <p>No podrá rehacer esta acción.</p>
+                    <a href="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=cancelar&idPG=<%=listaPedidoE.get(0).getPedido().getBoletaVenta()%>&idF=<%=listaPedidoE.get(0).getPedido().getIdFarmacia()%>&idP=<%=listaPedidoE.get(0).getPedido().getIdPedido()%>" class="btn btn-danger mb-2">Sí</a>
+                    <a href="#" class="btn btn-primary mb-2">No</a>
+                </div>
+            </div>
+        </nav>
 
         <nav id="salir" class="overlay">
             <div class=" popup card text-center " style="background-color: white">
