@@ -98,14 +98,11 @@ public class UsuarioDao extends BaseDao {
 
                 listaAdministradores.add(bUsuario);
             }
-
         } catch (SQLException e) {
             System.out.println("Error en obtener la lista de administadores");
             e.printStackTrace();
         }
         return listaAdministradores;
-
-
     }
 
 

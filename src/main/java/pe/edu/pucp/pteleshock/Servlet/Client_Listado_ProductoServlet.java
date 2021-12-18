@@ -37,7 +37,7 @@ public class Client_Listado_ProductoServlet extends HttpServlet {
         PedidosGeneralDao pedidosGDao = new PedidosGeneralDao();
         int inicio = 0;
         int pedidosxPag = 5;
-        int totalPag = (int) Math.ceil((double)pedidosGDao.obtenerNumFilasPG(cliente.getIdUsuario())/(double) pedidosxPag);
+        int totalPag = (int) Math.ceil((double)pedidosGDao.obtenerNumFilasPG(cliente.getIdUsuario())  /(double) pedidosxPag);
 
         if (0<pag & pag <= totalPag ) {
             inicio = pag*pedidosxPag - pedidosxPag;
@@ -62,27 +62,41 @@ public class Client_Listado_ProductoServlet extends HttpServlet {
         HttpSession session = request.getSession();
         BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");
 
-        String texto = request.getParameter("textoBuscar").trim();
-        String pag = request.getParameter("pag") !=null ? request.getParameter("pag"): "1";
-        int idCliente = cliente.getIdUsuario();
+        String texto = request.getParameter("textoBuscar") != null? request.getParameter("textoBuscar").trim(): "" ;
 
 
-        PedidosGeneralDao pedidosGDao = new PedidosGeneralDao();
-
-
-        if (texto == null) {
-            response.sendRedirect(request.getContextPath() + "/Client_Listado_Producto");
-        } else {
-            int cantPed= pedidosGDao.cantidadPedidosBuscados(idCliente,texto);
-            String cantPedStr= String.valueOf(cantPed);
-            request.setAttribute("textbuscar",texto);
-            request.setAttribute("cantPed",cantPedStr);
-            request.setAttribute("listaPedidosG", pedidosGDao.listaPedidosPorPag(idCliente,pag,texto));
-            RequestDispatcher view = request.getRequestDispatcher("/Cliente/listado_de_productosFiltrado.jsp");
-            view.forward(request, response);
-
-
+        String pagStr = request.getParameter("pag") != null ? request.getParameter("pag") : "1";
+        int pag = 1;
+        try {
+            pag = Integer.parseInt(pagStr);
+        }catch ( NumberFormatException n){
+            n.printStackTrace();
         }
+
+        // Listar pedidos general
+        PedidosGeneralDao pedidosGDao = new PedidosGeneralDao();
+        int inicio = 0;
+        int pedidosxPag = 5;
+        int totalPag = (int) Math.ceil((double)pedidosGDao.obtenerNumFilasPGBuscador(cliente.getIdUsuario(), texto)/(double) pedidosxPag );
+
+        if (0<pag & pag <= totalPag ) {
+            inicio = pag*pedidosxPag - pedidosxPag;
+        }
+
+        request.setAttribute("listaPedidosG", pedidosGDao.buscarPedidosGeneral(inicio, cliente.getIdUsuario(),texto));
+        request.setAttribute("totalPag", totalPag);
+        request.setAttribute("pag", pag);
+
+
+
+        //Enviar datos al servlet
+
+        response.setContentType("text/html");
+        RequestDispatcher view = request.getRequestDispatcher("/Cliente/listado_de_productos.jsp");
+        view.forward(request, response);
+
+
+
 
     }
 }

@@ -76,8 +76,8 @@ public class Client_PerfilServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action") == null ?"actualizar" : request.getParameter("action");
         request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action") == null ?"actualizar" : request.getParameter("action");
         System.out.println(action);
         PerfilClientDao perfilClientDao = new PerfilClientDao();
         RegistrarClienteDao registrarClienteDao = new RegistrarClienteDao();
@@ -96,7 +96,6 @@ public class Client_PerfilServlet extends HttpServlet {
 
                 int idCliente = Integer.parseInt(idClienteStr);
                 int idDis = Integer.parseInt(idDisStr);
-
                 if(nombreStr.equals("a") || apellidoStr.equals("a")){
                     response.sendRedirect(request.getContextPath() + "/Client_Perfil?action=editar&er=1&idC=" + idCliente);
                 }else{

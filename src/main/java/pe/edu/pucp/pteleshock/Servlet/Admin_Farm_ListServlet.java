@@ -24,6 +24,7 @@ Admin_Farm_ListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         FarmaciaDao farmaciaDao = new FarmaciaDao();
         Distrfarm_Dao distrfarm_dao = new Distrfarm_Dao();
         ArrayList<BFarmacia> listaFarmacias;
@@ -68,6 +69,7 @@ Admin_Farm_ListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         String texto = request.getParameter("textoBuscar");
         String iddistrito = request.getParameter("iddistrito");
         String pag = request.getParameter("pag") != null ? request.getParameter("pag") : "1";
