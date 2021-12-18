@@ -1,8 +1,8 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="mensajealerta" scope="request" class="java.lang.String" type="java.lang.String"/>
-<jsp:useBean id="mail" scope="request" class="java.lang.String" type="java.lang.String"/>
-<jsp:useBean id="pwd" scope="request" class="java.lang.String" type="java.lang.String"/>
+<jsp:useBean id="mensajealerta" scope="session" class="java.lang.String" type="java.lang.String"/>
+<jsp:useBean id="mail" scope="session" class="java.lang.String" type="java.lang.String"/>
+<jsp:useBean id="pwd" scope="session" class="java.lang.String" type="java.lang.String"/>
 <html lang="en" xmlns:background-color="http://www.w3.org/1999/xhtml" xmlns: xmlns:>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -108,8 +108,11 @@
     <div class=" popup card text-center ">
         <h5 class="card-header text-center">Teleshock</h5>
         <div class="card-body">
-            <h5 class="card-title p-2"><%=mensajealerta%></h5>
+            <h5 class="card-title p-2"><%=mensajealerta.equalsIgnoreCase("a")?"Se ha ingresado una contraseña o dirección de correo invalidos.":""%></h5>
             <!--<p>Se ha enviado un correo para confirmar el cambio de contraseña</p>-->
+            <%HttpSession session1 = request.getSession();
+              session1.removeAttribute("mensajealerta");%>
+            <%System.out.println(mensajealerta);%>
             <a href="<%= request.getContextPath()%>/Login" class="btn btn-success mb-2">Intentar nuevamente</a>
         </div>
     </div>

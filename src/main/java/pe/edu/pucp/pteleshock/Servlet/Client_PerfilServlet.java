@@ -21,11 +21,8 @@ public class Client_PerfilServlet extends HttpServlet {
         if(cliente != null) {
             PerfilClientDao perfilClientDao = new PerfilClientDao();
             ListaDistritosDao listaDistritosDao = new ListaDistritosDao();
-
             String action = request.getParameter("action") == null ? "mostrar" : request.getParameter("action");
-
             switch (action) {
-
                 case "mostrar":
                     //Implementar cliente dinamico -> Sesiones
                     request.setAttribute("cliente", perfilClientDao.clientePerfil(cliente.getIdUsuario()));
@@ -90,8 +87,8 @@ public class Client_PerfilServlet extends HttpServlet {
 
             case "actualizar":
                 String idClienteStr = request.getParameter("idC") != null ? request.getParameter("idC") : "";
-                String nombreStr = request.getParameter("nombreC").strip() != "" ? request.getParameter("nombreC") : "a";
-                String apellidoStr = request.getParameter("apellidoC").strip() != "" ? request.getParameter("apellidoC") : "a";
+                String nombreStr = request.getParameter("nombreC").strip() != "" ? request.getParameter("nombreC").strip() : "a";
+                String apellidoStr = request.getParameter("apellidoC").strip() != "" ? request.getParameter("apellidoC").strip() : "a";
                 String idDisStr = request.getParameter("idDis") != null ? request.getParameter("idDis"): "";
 
                 int idCliente = Integer.parseInt(idClienteStr);
