@@ -17,7 +17,7 @@ public abstract class BaseDao {
         String pass = "root";
         String option = "mydb";
         String option2 = "teleshock_bd_oficial";
-        String url = "jdbc:mysql://localhost:3306/"+option2+"?serverTimezone=America/Lima";
+        String url = "jdbc:mysql://localhost:3306/"+option+"?serverTimezone=America/Lima";
         return DriverManager.getConnection(url,user,pass);
     }
 }

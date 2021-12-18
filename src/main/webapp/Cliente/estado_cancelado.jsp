@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="sb-sidenav-footer" style="color: gray">
-                <div class="small">Logeado como:</div>
+                <div class="small">Logueado como:</div>
                 Nombre Apellido
             </div>
         </nav>

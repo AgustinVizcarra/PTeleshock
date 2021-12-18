@@ -96,7 +96,7 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer" style="color: darkgrey">
-                        <div class="small">Logeado como:</div>
+                        <div class="small">Logueado como:</div>
                         <%BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");%>
                         <%=farmacia.getNombre()%>
                     </div>

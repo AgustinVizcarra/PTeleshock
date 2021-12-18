@@ -56,13 +56,15 @@
         .lightbox span {
             /* Full width and height */
             display: block;
-            width: 100%;
+            width: 800px;
             height: 100%;
 
             /* Size and position background image */
             background-position: center;
             background-repeat: no-repeat;
-            /*background-size: contain;*/
+            background-size: contain;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 </head>
@@ -128,7 +130,7 @@
                 </div>
             </div>
             <div class="sb-sidenav-footer" style="color: darkgrey">
-                <div class="small">Logeado como:</div>
+                <div class="small">Logueado como:</div>
                 <%BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");%>
                 <%=farmacia.getNombre()%>
             </div>

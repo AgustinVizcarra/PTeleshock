@@ -26,44 +26,82 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
                 crossorigin="anonymous"></script>
         <style>
-            <%for(int l=0;l<50;l++){%>
-            .overlay {
+<%--            <%for(int l=0;l<50;l++){%>--%>
+<%--            .overlay {--%>
+<%--                position: fixed;--%>
+<%--                top: 0;--%>
+<%--                bottom: 0;--%>
+<%--                left: 0;--%>
+<%--                right: 0;--%>
+<%--                background: rgba(0, 0, 0, 0.7);--%>
+<%--                transition: opacity 500ms;--%>
+<%--                visibility: hidden;--%>
+<%--                opacity: 0;--%>
+<%--            }--%>
+<%--            #popup<%=l%>:target{--%>
+<%--                visibility: visible; /* Se regresa a hidden para ocultar */--%>
+<%--                opacity: 1; /* Se regresa a o para hacerlo "invisible" */--%>
+<%--            }--%>
+<%--            #popupBody<%=l%>{--%>
+<%--                width: 46%;--%>
+<%--                padding: 2%;--%>
+<%--                border-radius: 15px;--%>
+<%--                box-shadow: 0 0 5px #CCC;--%>
+<%--                background: #FFF;--%>
+<%--                position: relative;--%>
+<%--                transition: all 5s ease-in-out;--%>
+<%--                margin: 20% auto;--%>
+<%--            }--%>
+<%--            #cerrar<%=l%>{--%>
+<%--                position: absolute;--%>
+<%--                top: 20px;--%>
+<%--                right: 30px;--%>
+<%--                transition: all 200ms;--%>
+<%--                font-size: 30px;--%>
+<%--                font-weight: bold;--%>
+<%--                text-decoration: none;--%>
+<%--                color: #F00;--%>
+<%--            }--%>
+
+<%--            <%}%>--%>
+
+            .lightbox {
+                /* Default to hidden */
+                display: none;
+
+                /* Overlay entire screen */
                 position: fixed;
+                z-index: 999;
                 top: 0;
-                bottom: 0;
                 left: 0;
                 right: 0;
-                background: rgba(0, 0, 0, 0.7);
-                transition: opacity 500ms;
-                visibility: hidden;
-                opacity: 0;
-            }
-            #popup<%=l%>:target{
-                visibility: visible; /* Se regresa a hidden para ocultar */
-                opacity: 1; /* Se regresa a o para hacerlo "invisible" */
-            }
-            #popupBody<%=l%>{
-                width: 46%;
-                padding: 2%;
-                border-radius: 15px;
-                box-shadow: 0 0 5px #CCC;
-                background: #FFF;
-                position: relative;
-                transition: all 5s ease-in-out;
-                margin: 20% auto;
-            }
-            #cerrar<%=l%>{
-                position: absolute;
-                top: 20px;
-                right: 30px;
-                transition: all 200ms;
-                font-size: 30px;
-                font-weight: bold;
-                text-decoration: none;
-                color: #F00;
+                bottom: 0;
+
+                /* A bit of padding around image */
+                padding: 1em;
+
+                /* Translucent background */
+                background: rgba(0, 0, 0, 0.8);
             }
 
-            <%}%>
+            /* Unhide the lightbox when it's the target */
+            .lightbox:target {
+                display: block;
+            }
+
+            .lightbox span {
+                /* Full width and height */
+                display: block;
+                width: 800px;
+                height: 100%;
+
+                /* Size and position background image */
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+                margin-left: auto;
+                margin-right: auto;
+            }
 
 
             .number-input input[type="number"] {
@@ -212,7 +250,7 @@
                         </ul>
                     </div>
                     <div class="sb-sidenav-footer" style="color: gray">
-                        <div class="small">Logeado como:</div>
+                        <div class="small">Logueado como:</div>
                         <%BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");%>
                         <%=cliente.getNombre() + " " + cliente.getApellido()%>
                     </div>
@@ -337,21 +375,30 @@
                                                                                                       name="fotoReceta" type="file"
                                                                                                       id="formFile1"></div>
                                                                             <div class="col-2"><button type="submit" class="btn btn-secondary btn-sm"><i class="fas fa-upload"></i></button></div>
-                                                                            <div class="col-1"><a href="#popup<%=i%>" class="btn btn-secondary btn-sm"><i class="fas fa-eye"></i></a></div>
 
-                                                                            <div id="popup<%=i%>" class="overlay">
-                                                                                <div id="popupBody<%=i%>">
-                                                                                    <h2>Título de la ventana</h2>
-                                                                                    <a id="cerrar<%=i%>" href="#">&times;</a>
-                                                                                    <div class="popupContent" style="display: flex; justify-content: center">
-                                                                                        <img src="<%=request.getContextPath()%>/ImgRecetaServlet?prod=<%=ee.getValue().get(i).getIdProducto()%>&idfarm=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idped=<%=ee.getValue().get(i).getPedido().getIdPedido()%>" width="500px">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
+
+<%--                                                                            <div class="col-1"><a href="#popup<%=i%>" class="btn btn-secondary btn-sm"><i class="fas fa-eye"></i></a></div>--%>
+                                                                            <div class="col-1"><a href="#img<%=i%>"><img src="<%=request.getContextPath()%>/ImgRecetaServlet?prod=<%=ee.getValue().get(i).getIdProducto()%>&idfarm=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idped=<%=ee.getValue().get(i).getPedido().getIdPedido()%>" width="50px"></a></div>
+                                                                            <!-- lightbox container hidden with CSS -->
+                                                                            <a href="#" class="lightbox" id="img<%=i%>">
+                                                                                <span style="background-image: url('<%=request.getContextPath()%>/ImgRecetaServlet?prod=<%=ee.getValue().get(i).getIdProducto()%>&idfarm=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idped=<%=ee.getValue().get(i).getPedido().getIdPedido()%>')"></span>
+                                                                            </a>
+                                                                            <%i++;%>
+
+
+<%--                                                                            <div id="popup<%=i%>" class="overlay">--%>
+<%--                                                                                <div id="popupBody<%=i%>">--%>
+<%--                                                                                    <h2>Título de la ventana</h2>--%>
+<%--                                                                                    <a id="cerrar<%=i%>" href="#">&times;</a>--%>
+<%--                                                                                    <div class="popupContent" style="display: flex; justify-content: center">--%>
+<%--                                                                                        <img src="<%=request.getContextPath()%>/ImgRecetaServlet?prod=<%=ee.getValue().get(i).getIdProducto()%>&idfarm=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idped=<%=ee.getValue().get(i).getPedido().getIdPedido()%>" width="500px">--%>
+<%--                                                                                    </div>--%>
+<%--                                                                                </div>--%>
+<%--                                                                            </div>--%>
                                                                         </div>
 
                                                                     </form>
-<%--                                                                    <img src="<%=request.getContextPath()%>/ImgRecetaServlet?prod=<%=ee.getValue().get(i).getIdProducto()%>&idfarm=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idped=<%=ee.getValue().get(i).getPedido().getIdPedido()%>" width="100px">--%>
+
                                                                 </td>
                                                                 <%} else {%>
                                                                 <td class="text-center">No requiere</td>
