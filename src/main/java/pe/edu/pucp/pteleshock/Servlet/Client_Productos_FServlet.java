@@ -33,7 +33,6 @@ public class Client_Productos_FServlet extends HttpServlet {
             idFarmacia = Integer.parseInt(idFarmaciaStr);
             pag = Integer.parseInt(pagStr);
             ProductosFDao productosFDao = new ProductosFDao();
-
             // Listar pedidos general | Validación de páginas
             int inicio = 0;
             int pedidosxPag = 8;
