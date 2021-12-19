@@ -12,7 +12,7 @@
 
 <% ArrayList<BListaPFarmacia> listaxFarmacia=(ArrayList<BListaPFarmacia>) request.getAttribute("listaxFarmacia"); %>
 <jsp:useBean type="java.lang.String" scope="request" id="cantProd" class="java.lang.String"/>
-
+<jsp:useBean type="java.lang.String" scope="request" id="el" class="java.lang.String"/>
 
 
 <html lang="en">
@@ -114,8 +114,11 @@
             <div class="card mb-4" style="opacity: 0.90;">
                 <div class="card-body">
                     <div>
+                        <%if(el.equals("eliminado")){%>
+                        <div class="row gx-4 gx-lg-5 row-cols-2">   <h1 class=" mt-4">Lista de Productos eliminados</h1> </div>
+                        <%}else{%>
                         <div class="row gx-4 gx-lg-5 row-cols-2">   <h1 class=" mt-4">Lista de Productos</h1> </div>
-
+                        <%}%>
                         <div class="row   row-cols-4">
                             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" method="post" action="<%=request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=1" >
                                 <div class="input-group">
@@ -128,6 +131,13 @@
                                     </a>
                                 </div>
                             </form>
+                        </div>
+                        <div style="display: flex;justify-content: end;margin-top: 15px;">
+                            <%if(el.equals("eliminado")){%>
+                            <a class="btn btn-primary" href="<%=request.getContextPath()%>/Farm_Vista_ProductosServlet">Ver productos disponibles</a>
+                            <%}else{%>
+                            <a class="btn btn-primary" href="<%=request.getContextPath()%>/Farm_Vista_ProductosServlet?verelim=elimi">Ver productos eliminados</a>
+                            <%}%>
                         </div>
 
                     </div>
@@ -151,7 +161,7 @@
 
 
                                 <% for (BListaPFarmacia plistaFarm : listaxFarmacia){ %>
-                                    <%if(plistaFarm.getEstadoproducto().equals("habilitado")){%>
+<%--                                    <%if(plistaFarm.getEstadoproducto().equals("habilitado")){%>--%>
                                     <div class="col mb-5">
                                         <div class="card h-100">
                                             <img src="<%= request.getContextPath()%>/ImgServlet?prod=<%=plistaFarm.getIdProducto()%>"
@@ -163,13 +173,18 @@
                                                     <%}else{%>
                                                     <h5 class="fw-bolder"> <%= plistaFarm.getNombre() %> </h5>
                                                     <%}%>
+                                                    <%if(el.equals("eliminado")){%>
+                                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                                                                href="<%= request.getContextPath()%>/Farm_Detalles_Producto?action=restaurar&prod=<%=plistaFarm.getIdProducto()%>">Restaurar producto</a></div>
+                                                    <%}else{%>
                                                     <div class="text-center"><a class="btn btn-outline-dark mt-auto"
                                                                                 href="<%= request.getContextPath()%>/Farm_Detalles_Producto?prod=<%= plistaFarm.getIdProducto() %>">Ver detalles</a></div>
+                                                    <%}%>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <%}%>
+<%--                                    <%}%>--%>
                                 <% } %>
 
 
@@ -204,8 +219,11 @@
                                 <% int cantProdInt=Integer.parseInt(cantProd);%>
                                 <% int resto= cantProdInt%12==0? 0:1; %>
                                 <% for(int i=1; i<Math.floor(cantProdInt/12)+resto+1; i++) { %>
-                                <li class="page-item"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=<%=i %>"><%=i%></a></li>
-
+                                    <%if(el.equals("eliminado")){%>
+                                        <li class="page-item"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Vista_ProductosServlet?verelim=elimi&pag=<%=i %>"><%=i%></a></li>
+                                    <%}else{%>
+                                        <li class="page-item"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=<%=i %>"><%=i%></a></li>
+                                    <%}%>
                                 <% } %>
 
                             </ul>
