@@ -141,6 +141,12 @@
                     </nav>
                     <section class="py-0">
                         <div class="container px-4 px-lg-5 mt-5">
+
+                            <% if(listaxFarmacia.isEmpty()){ %>
+                            <div class="alert alert-warning" role="alert">
+                                No se han encontrado resultados
+                            </div>
+                            <%}else{%>
                             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
 
@@ -189,9 +195,11 @@
 
 
                             </div>
+                            <%}%>
                         </div>
                     </section>
 
+                    <% if(!(listaxFarmacia.isEmpty())){ %>
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-end">
 
@@ -212,6 +220,7 @@
 
                         </ul>
                     </nav>
+                    <%}%>
 
                 </div>
 

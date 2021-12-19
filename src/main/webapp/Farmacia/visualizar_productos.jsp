@@ -141,6 +141,11 @@
                     </nav>
                     <section class="py-0">
                         <div class="container px-4 px-lg-5 mt-5">
+                            <% if(cantProd.equals("noExiste")){ %>
+                                <div class="alert alert-warning" role="alert">
+                                    No se han encontrado resultados
+                                </div>
+                            <%}else{%>
                             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
 
@@ -189,20 +194,26 @@
 
 
                             </div>
+                            <%}%>
                         </div>
                     </section>
 
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-end">
-                            <% int cantProdInt=Integer.parseInt(cantProd);%>
-                            <% int resto= cantProdInt%12==0? 0:1; %>
-                            <% for(int i=1; i<Math.floor(cantProdInt/12)+resto+1; i++) { %>
-                            <li class="page-item"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=<%=i %>"><%=i%></a></li>
+                    <% if(!(cantProd.equals("noExiste"))){ %>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end">
+                                <% int cantProdInt=Integer.parseInt(cantProd);%>
+                                <% int resto= cantProdInt%12==0? 0:1; %>
+                                <% for(int i=1; i<Math.floor(cantProdInt/12)+resto+1; i++) { %>
+                                <li class="page-item"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=<%=i %>"><%=i%></a></li>
 
-                            <% } %>
+                                <% } %>
 
-                        </ul>
-                    </nav>
+                            </ul>
+                        </nav>
+                    <%}%>
+
+
+
 
                 </div>
 

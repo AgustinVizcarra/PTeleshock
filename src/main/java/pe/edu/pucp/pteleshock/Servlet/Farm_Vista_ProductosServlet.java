@@ -36,17 +36,19 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
                 isNumeric =  pag.matches("[+-]?\\d*(\\.\\d+)?");
             }
 
-            if(isNumeric){
+            int lengthPag = pag.length();
+            if(isNumeric && lengthPag<10){
 
-                int resto = cant%12==0? 0:1;
                 int pagInt = Integer.parseInt(pag);
-                if(pagInt <= (Math.floor(cant/12)+resto)){
+                int resto = cant%12==0? 0:1;
+                if(pagInt <= (Math.floor(cant/12)+resto) && pagInt>0 ){
                     request.setAttribute("listaxFarmacia",pxFarDao.listarProductosF(idF,pag));
                     request.setAttribute("cantProd",cantStr);
                     RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
                     view.forward(request,response);
                 }else{
-                    request.setAttribute("listaxFarmacia",pxFarDao.listarProductosF(idF,"1"));
+                    String pagFinal = String.valueOf((int)(Math.floor(cant/12)+resto));
+                    request.setAttribute("listaxFarmacia",pxFarDao.listarProductosF(idF,pagFinal));
                     request.setAttribute("cantProd",cantStr);
                     RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
                     view.forward(request,response);
@@ -55,7 +57,7 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
 
 
             }else{
-
+                cantStr = "noExiste";
                 request.setAttribute("listaxFarmacia",pxFarDao.listarProductosF(idF,"1"));
                 request.setAttribute("cantProd",cantStr);
                 RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
@@ -90,6 +92,7 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
                 request.setAttribute("cantProd",cantStr);
                 request.setAttribute("textbuscar",texto);
 
+
                 boolean isNumeric =  false;
 
                 if(!(pag.equals(""))){
@@ -106,8 +109,6 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
                     RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productosFiltrados.jsp");
                     view.forward(request, response);
                 }
-
-
             }
 
         } else {
