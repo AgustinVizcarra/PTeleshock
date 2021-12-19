@@ -44,12 +44,15 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
                     int pagInt = Integer.parseInt(pag);
                     int resto = cant%12==0? 0:1;
                     if(pagInt <= (Math.floor(cant/12)+resto) && pagInt>0 ){
+                        request.setAttribute("pag",pag);
                         request.setAttribute("listaxFarmacia",pxFarDao.listarProductosFeliminado(idF,pag));
                         request.setAttribute("cantProd",cantStr);
                         request.setAttribute("el","eliminado");
                         RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
                         view.forward(request,response);
                     }else{
+                        pag=String.valueOf((int) (Math.floor(cant/12)+resto));
+                        request.setAttribute("pag",pag);
                         String pagFinal = String.valueOf((int)(Math.floor(cant/12)+resto));
                         request.setAttribute("listaxFarmacia",pxFarDao.listarProductosFeliminado(idF,pagFinal));
                         request.setAttribute("cantProd",cantStr);
@@ -90,11 +93,14 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
                     int pagInt = Integer.parseInt(pag);
                     int resto = cant%12==0? 0:1;
                     if(pagInt <= (Math.floor(cant/12)+resto) && pagInt>0 ){
+                        request.setAttribute("pag",pag);
                         request.setAttribute("listaxFarmacia",pxFarDao.listarProductosF(idF,pag));
                         request.setAttribute("cantProd",cantStr);
                         RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
                         view.forward(request,response);
                     }else{
+                        pag=String.valueOf((int) (Math.floor(cant/12)+resto));
+                        request.setAttribute("pag",pag);
                         String pagFinal = String.valueOf((int)(Math.floor(cant/12)+resto));
                         request.setAttribute("listaxFarmacia",pxFarDao.listarProductosF(idF,pagFinal));
                         request.setAttribute("cantProd",cantStr);

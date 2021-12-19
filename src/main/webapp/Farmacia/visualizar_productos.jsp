@@ -13,6 +13,7 @@
 <% ArrayList<BListaPFarmacia> listaxFarmacia=(ArrayList<BListaPFarmacia>) request.getAttribute("listaxFarmacia"); %>
 <jsp:useBean type="java.lang.String" scope="request" id="cantProd" class="java.lang.String"/>
 <jsp:useBean type="java.lang.String" scope="request" id="el" class="java.lang.String"/>
+<jsp:useBean type="java.lang.String" scope="request" id="pag" class="java.lang.String"/>
 
 
 <html lang="en">
@@ -216,15 +217,24 @@
                     <% if(!(cantProd.equals("noExiste"))){ %>
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-end">
+                                <li class="page-item  <%= Integer.parseInt(pag)==1?"disabled":""%>  ">
+                                    <a class="page-link"
+                                       href="<%= request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=<%=Integer.parseInt(pag)-1 %>">Anterior</a>
+                                </li>
+
                                 <% int cantProdInt=Integer.parseInt(cantProd);%>
                                 <% int resto= cantProdInt%12==0? 0:1; %>
                                 <% for(int i=1; i<Math.floor(cantProdInt/12)+resto+1; i++) { %>
                                     <%if(el.equals("eliminado")){%>
-                                        <li class="page-item"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Vista_ProductosServlet?verelim=elimi&pag=<%=i %>"><%=i%></a></li>
+                                        <li class="page-item <%= pag.equals(String.valueOf(i))?"active":""%>"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Vista_ProductosServlet?verelim=elimi&pag=<%=i %>"><%=i%></a></li>
                                     <%}else{%>
-                                        <li class="page-item"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=<%=i %>"><%=i%></a></li>
+                                        <li class="page-item <%= pag.equals(String.valueOf(i))?"active":""%>"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=<%=i %>"><%=i%></a></li>
                                     <%}%>
                                 <% } %>
+                                <li class="page-item <%=Integer.parseInt(pag)==Math.floor(cantProdInt/12)+resto?"disabled":""%>  ">
+                                    <a class="page-link"
+                                       href="<%=request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=<%=Integer.parseInt(pag)+1 %>">Siguiente</a>
+                                </li>
 
                             </ul>
                         </nav>
