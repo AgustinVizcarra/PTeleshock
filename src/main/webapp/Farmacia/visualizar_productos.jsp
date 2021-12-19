@@ -91,9 +91,6 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-people-arrows" style="color: #ffffff"></i></div>
                         Gestionar Pedidos
                     </a>
-
-
-
                 </div>
             </div>
             <div class="sb-sidenav-footer" style="color: darkgrey">
@@ -139,11 +136,7 @@
                             <a class="btn btn-primary" href="<%=request.getContextPath()%>/Farm_Vista_ProductosServlet?verelim=elimi">Ver productos eliminados</a>
                             <%}%>
                         </div>
-
                     </div>
-
-
-
 
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-end">

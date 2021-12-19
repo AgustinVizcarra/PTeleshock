@@ -70,7 +70,6 @@ public class FarmaciasPorDistritoDao extends BaseDao {
                     fxD.setIdDistritoF(rs.getString(5));
                     listaFarmaciasPorDistrito.add(fxD);
                 }
-
             }
         } catch (SQLException e) {
             e.printStackTrace();

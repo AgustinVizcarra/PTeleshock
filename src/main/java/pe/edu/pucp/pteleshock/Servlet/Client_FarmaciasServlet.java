@@ -22,8 +22,6 @@ public class Client_FarmaciasServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");
-
-
         String idDistritoStr = request.getParameter("idD") != null ? request.getParameter("idD") : String.valueOf(cliente.getIdDistrito());
         String pagStr = request.getParameter("pag") != null ? request.getParameter("pag") : "1";
         String nombreFarmaciaBuscar = request.getParameter("nombreFarmacia") != null ? request.getParameter("nombreFarmacia") : "";

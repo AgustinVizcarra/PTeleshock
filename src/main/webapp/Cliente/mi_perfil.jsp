@@ -183,7 +183,11 @@
                     <img class="img" style="width: 50px; height: 50px;"
                          src="https://cdn-icons-png.flaticon.com/512/142/142311.png">
                     <h5 class="card-title p-2">Esperamos volver a verlo pronto</h5>
-                    <a href="<%= request.getContextPath()%>/Login" class="btn btn-danger mb-2">Aceptar</a>
+                    <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                        <button class="btn btn-danger mb-2" type="submit">
+                            Aceptar
+                        </button>
+                    </form>
                 </div>
             </div>
         </nav>

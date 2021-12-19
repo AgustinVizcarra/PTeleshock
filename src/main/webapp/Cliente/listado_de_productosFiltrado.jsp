@@ -150,11 +150,8 @@
                                             <td><a class="btn btn-primary"
                                                    href="<%= request.getContextPath()%>/Client_Pedido?idPG=<%=pedidoG.getCodigoVenta()%>">Ver
                                                 detalles</a></td>
-
                                         </tr>
                                         <%}%>
-
-
                                     </tbody>
                                 </table>
                             </div>

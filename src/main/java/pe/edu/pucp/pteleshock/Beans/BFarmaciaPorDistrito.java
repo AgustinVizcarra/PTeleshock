@@ -1,8 +1,6 @@
 package pe.edu.pucp.pteleshock.Beans;
 
 public class BFarmaciaPorDistrito {
-
-
     private String nombreFarmacia;
     private String idDistritoF;
     private String distritoFarmacia;

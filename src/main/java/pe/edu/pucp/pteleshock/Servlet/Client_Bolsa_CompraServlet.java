@@ -39,6 +39,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
 
             session.setAttribute("hora-min", hora.format(f));
             ProductosFDao productosFDao = new ProductosFDao();
+            String msg1 = "Debe ingresar la fecha de entrega.";
 
             switch (action) {
                 case "anadir":
@@ -87,7 +88,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     System.out.println("msg1" + session.getAttribute("msg1"));
                     RequestDispatcher view1 = request.getRequestDispatcher("/Cliente/bolsa_de_compra.jsp");
                     view1.forward(request, response);
-                    session.removeAttribute("msg1");
+                    //session.removeAttribute("msg1");
                     break;
                 case "borrar":
                     String idFarmaciaStr = request.getParameter("idF") != null ? request.getParameter("idF") : "";
@@ -118,6 +119,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     } else {
                         System.out.println("es nulo");
                     }
+                    session.setAttribute("msg1", msg1);
                     response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra");
                     break;
                 case "cancelar":
@@ -150,6 +152,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
         BolsaCompraDao bolsaCompraDao = new BolsaCompraDao();
         HttpSession session = request.getSession();
         BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");
+        String msg1 = "Debe ingresar la fecha de entrega.";
 
         switch (action) {
             case "actualizarFoto":
@@ -169,6 +172,8 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                         break;
                     }
                 }
+                session.setAttribute("msg1", msg1);
+                System.out.println("msg1" + session.getAttribute("msg1"));
                 response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra");
                 break;
             case "actualizar":
@@ -189,7 +194,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                         break;
                     }
                 }
-                String msg1 = "Debe ingresar la fecha de entrega";
+                //Aviso de la fecha.
                 session.setAttribute("msg1", msg1);
                 System.out.println("msg1" + session.getAttribute("msg1"));
                 response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra");
@@ -289,6 +294,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
 
 
                 }
+                session.setAttribute("msg1", msg1);
                 response.sendRedirect(request.getContextPath() + "/Client_Listado_Producto");
                 break;
             default:
