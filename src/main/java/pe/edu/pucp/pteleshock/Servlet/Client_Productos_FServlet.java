@@ -39,6 +39,8 @@ public class Client_Productos_FServlet extends HttpServlet {
             int totalPag = (int) Math.ceil((double) productosFDao.obtenerNumProductos(idFarmaciaStr, nombreProductoBuscar) / (double) pedidosxPag);
             if (0 < pag & pag <= totalPag) {
                 inicio = pag * pedidosxPag - pedidosxPag;
+            }else {
+                pag = 1;
             }
 
             if (fxDDao.obtenerFarmacia(idFarmacia)== null){

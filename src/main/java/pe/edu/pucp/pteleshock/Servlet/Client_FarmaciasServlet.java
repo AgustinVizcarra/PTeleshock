@@ -53,6 +53,8 @@ public class Client_FarmaciasServlet extends HttpServlet {
             int totalPag = (int) Math.ceil((double) fxDao.obtenerNumFarmacias(idDistritoStr, nombreFarmaciaBuscar) / (double) pedidosxPag);
             if (0 < pag & pag <= totalPag) {
                 inicio = pag * pedidosxPag - pedidosxPag;
+            }else {
+                pag = 1;
             }
 
             request.setAttribute("listaxFarmacias", fxDao.listarFarmaciasPorDistritoConBusqueda(idDistrito, inicio, nombreFarmaciaBuscar));
