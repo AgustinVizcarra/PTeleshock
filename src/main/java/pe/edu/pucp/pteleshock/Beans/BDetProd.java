@@ -10,7 +10,7 @@ public class BDetProd {
     private String foto;
     private int idProducto;
     private boolean recetaMedicaB;
-
+    private String estadoproducto;
 
 
     public String getNombre() {
@@ -75,5 +75,13 @@ public class BDetProd {
 
     public void setRecetaMedicaB(boolean recetaMedicaB) {
         this.recetaMedicaB = recetaMedicaB;
+    }
+
+    public String getEstadoproducto() {
+        return estadoproducto;
+    }
+
+    public void setEstadoproducto(String estadoproducto) {
+        this.estadoproducto = estadoproducto;
     }
 }

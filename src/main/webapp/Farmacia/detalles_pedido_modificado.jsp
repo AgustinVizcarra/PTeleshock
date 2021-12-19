@@ -344,7 +344,7 @@
             <h5 class="card-header text-center ">Teleshock</h5>
             <div class="card-body">
                 <form>
-                    <h5 class="card-title p-2">No se puede actualizar el estado, el pedido está cancelado</h5>
+                    <h5 class="card-title p-2">No se puede actualizar el estado, el pedido se encuentra cancelado</h5>
                     <div class="btn-group" role="group" aria-label="Basic example" style="display: flex;justify-content: center">
 
 
@@ -355,7 +355,23 @@
             </div>
         </div>
     </nav>
+    <%}else if(msg.equals("entreg")){%>
+    <nav id="popup" class="overlay1" style="display: flex; justify-content: center ; align-items: center">
+        <div class=" popup card text-center " style="background-color: white">
+            <h5 class="card-header text-center ">Teleshock</h5>
+            <div class="card-body">
+                <form>
+                    <h5 class="card-title p-2">No se puede actualizar el estado, el pedido se encuentra entregado</h5>
+                    <div class="btn-group" role="group" aria-label="Basic example" style="display: flex;justify-content: center">
 
+
+                        <a href="<%= request.getContextPath()%>/Farm_Detalle_Pedido_Mod?id=<%=idped%>" class="btn btn-success mb-2">Aceptar</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
     <%}%>
 
 <nav id="popup2" class="overlay" style="display: flex; justify-content: center ; align-items: center">

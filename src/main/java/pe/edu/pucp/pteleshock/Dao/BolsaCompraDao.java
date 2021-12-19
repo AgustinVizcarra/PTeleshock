@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class BolsaCompraDao extends BaseDao {
 
@@ -273,5 +274,35 @@ public class BolsaCompraDao extends BaseDao {
             e.printStackTrace();
         }
     }
+
+    public void actualizarStockPendiente(HashMap<Integer, ArrayList<BPedidoEstado>> map){
+
+
+        for(Map.Entry<Integer, ArrayList<BPedidoEstado>> ee : map.entrySet()) {
+            System.out.println("###");
+            System.out.println(ee.getKey());
+            int idfarm=ee.getKey();
+            ArrayList<BPedidoEstado> values = ee.getValue();
+
+            for (BPedidoEstado value : values) {
+                System.out.println("#####");
+                System.out.println(value.getCantidad());
+                System.out.println(value.getIdProducto());
+                System.out.println("#####");
+
+                String sql = "update mydb.productoporfarmacia set stock= stock -"+value.getCantidad()+" where idproducto="+value.getIdProducto()+" and idfarmacia=?;";
+
+                try (Connection conn = this.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+                    pstmt.setInt(1, idfarm);
+                    pstmt.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+        }
+    }
+
 
 }

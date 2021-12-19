@@ -265,6 +265,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                         bolsaCompraDao.realizarPedido(idPed, Ent, Boolean.parseBoolean(recetaStr), fotoReceta, codigoVenta, subTotal);
                     }
 
+                    bolsaCompraDao.actualizarStockPendiente(mapKey);
                     session.removeAttribute("bolsita");
                     session.removeAttribute("maps");
                     session.removeAttribute("map");

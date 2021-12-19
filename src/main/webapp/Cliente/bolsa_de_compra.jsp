@@ -371,7 +371,7 @@
                                                                           action="<%=request.getContextPath()%>/ImgRecetaServlet?idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>" enctype="multipart/form-data">
                                                                         <div class="row">
 
-                                                                            <div class="col-6"><input style="width: 97px" class="form-control"
+                                                                            <div class="col-6"><input accept="image/png,image/jpeg,image/jpg" style="width: 97px" class="form-control"
                                                                                                       name="fotoReceta" type="file"
                                                                                                       id="formFile1"></div>
                                                                             <div class="col-2"><button type="submit" class="btn btn-secondary btn-sm" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" title="Teleshock" data-bs-content="Solo se aceptan imágenes"  data-bs-trigger="hover focus"><i class="fas fa-upload"></i></button></div>

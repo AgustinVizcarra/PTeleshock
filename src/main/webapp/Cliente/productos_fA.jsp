@@ -196,56 +196,58 @@
                                         <%}%>
                                         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                                             <% for (BDetProd listaProd : listaProductosF) {%>
-                                            <div class="col mb-5">
-                                                <div class="card h-100">
-                                                    <!-- Sale badge
-                                                    <div class="badge bg-dark text-white position-absolute"
-                                                        style="top: 0.5rem; right: 0.5rem">Sale</div>-->
 
-                                                    <!-- Product image-->
-                                                    <img class="card-img-top"
-                                                         src="<%= request.getContextPath()%>/ImgClienteServlet?prod=<%=listaProd.getIdProducto()%>&idfarm=<%=farmacia.getIdFarmacia()%>">
-                                                    <!-- Product details-->
-                                                    <div class="card-body p-2">
-                                                        <div class="text-center">
-                                                            <!-- Product name-->
-                                                            <h5 class="fw-bolder"><%=listaProd.getNombre()%>
-                                                            </h5>
-                                                            <!-- Product price-->
-                                                            <a>Stock: <%=listaProd.getStock()%>
-                                                            </a>
-                                                            <br>
-                                                            <a>S/. <%=listaProd.getPreciounitario()%>
-                                                            </a>
+                                                <div class="col mb-5">
+                                                    <div class="card h-100">
+                                                        <!-- Sale badge
+                                                        <div class="badge bg-dark text-white position-absolute"
+                                                            style="top: 0.5rem; right: 0.5rem">Sale</div>-->
+
+                                                        <!-- Product image-->
+                                                        <img class="card-img-top"
+                                                             src="<%= request.getContextPath()%>/ImgClienteServlet?prod=<%=listaProd.getIdProducto()%>&idfarm=<%=farmacia.getIdFarmacia()%>">
+                                                        <!-- Product details-->
+                                                        <div class="card-body p-2">
+                                                            <div class="text-center">
+                                                                <!-- Product name-->
+                                                                <h5 class="fw-bolder"><%=listaProd.getNombre()%>
+                                                                </h5>
+                                                                <!-- Product price-->
+                                                                <a>Stock: <%=listaProd.getStock()%>
+                                                                </a>
+                                                                <br>
+                                                                <a>S/. <%=listaProd.getPreciounitario()%>
+                                                                </a>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <!-- Product actions-->
-                                                    <%if(listaProd.getStock()==0){%>
-                                                    <p class="text-center text-danger mt-auto disabled">Agotado</p>
-                                                    <%}else {%>
-                                                    <div class="card-footer p-2 pt-0 border-top-0 bg-transparent text-center">
-                                                        <form method="POST"
-                                                              action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=agregar">
-                                                            <input type="hidden" class="form-control" name="idProd"
-                                                                   value="<%=listaProd.getIdProducto()%>">
-                                                            <input type="hidden" class="form-control" name="cantidad"
-                                                                   value="1">
-                                                            <input type="hidden" class="form-control" name="idFarmacia"
-                                                                   value="<%=farmacia.getIdFarmacia()%>">
-                                                            <input type="hidden" class="form-control" name="receta"
-                                                                   value="<%=listaProd.isRecetaMedicaB()?"1":"0"%>">
-                                                            <button class="btn btn-outline-dark mt-auto" type="submit">Agregar</button>
-                                                        </form>
-                                                    </div>
-                                                    <%}%>
-                                                    <div class="card-footer p-4 pt-0 border-top-0  bg-transparent">
-                                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                                                    href="<%= request.getContextPath()%>/Client_Detalles_Producto?idF=<%=farmacia.getIdFarmacia()%>&idP=<%=listaProd.getIdProducto()%>">Ver
-                                                            detalles</a>
+                                                        <!-- Product actions-->
+                                                        <%if(listaProd.getStock()==0){%>
+                                                        <p class="text-center text-danger mt-auto disabled">Agotado</p>
+                                                        <%}else {%>
+                                                        <div class="card-footer p-2 pt-0 border-top-0 bg-transparent text-center">
+                                                            <form method="POST"
+                                                                  action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=agregar">
+                                                                <input type="hidden" class="form-control" name="idProd"
+                                                                       value="<%=listaProd.getIdProducto()%>">
+                                                                <input type="hidden" class="form-control" name="cantidad"
+                                                                       value="1">
+                                                                <input type="hidden" class="form-control" name="idFarmacia"
+                                                                       value="<%=farmacia.getIdFarmacia()%>">
+                                                                <input type="hidden" class="form-control" name="receta"
+                                                                       value="<%=listaProd.isRecetaMedicaB()?"1":"0"%>">
+                                                                <button class="btn btn-outline-dark mt-auto" type="submit">Agregar</button>
+                                                            </form>
+                                                        </div>
+                                                        <%}%>
+                                                        <div class="card-footer p-4 pt-0 border-top-0  bg-transparent">
+                                                            <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                                                                        href="<%= request.getContextPath()%>/Client_Detalles_Producto?idF=<%=farmacia.getIdFarmacia()%>&idP=<%=listaProd.getIdProducto()%>">Ver
+                                                                detalles</a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+
                                             <%}%>
                                         </div>
                                     </div>

@@ -363,11 +363,11 @@
                 <form method="post" action="<%=request.getContextPath()%>/ImgServlet?prod=<%=idp%>" enctype="multipart/form-data">
                     <img src="<%= request.getContextPath()%>/ImgServlet?prod=<%=idp%>" class="circular--square" width="400px">
                     <div  class="my-3" style="display: flex; justify-content: center">
-                        <input class="form-control" type="file" name="foto" style="width: 60% "  id="formFile1">
+                        <input accept="image/png,image/jpeg,image/jpg" class="form-control" type="file" name="foto" style="width: 60% "  id="formFile1">
                     </div>
 
                     <a href="#" class="btn btn-danger mb-2">Cancelar</a>
-                    <button class="btn btn-primary mb-2"  style="margin-left: 80px; background-color: #5bc0de" type="submit">Actualizar</button>
+                    <button  class="btn btn-primary mb-2"  data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" title="Teleshock" data-bs-content="Solo se aceptan imágenes" data-bs-trigger="hover focus" style="margin-left: 80px; background-color: #5bc0de" type="submit">Actualizar</button>
 
                 </form>
 
@@ -393,7 +393,12 @@
         </div>
     </div>
 </nav>
-
+    <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+    </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
 <script src="js/scripts.js"></script>

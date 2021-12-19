@@ -78,7 +78,7 @@ public class Farm_Detalles_Pedido_ModServlet extends HttpServlet {
             String verifi=gPedidoDao.verificarestadopedido(idPedidoInt,idEstadoInt);
             if(verifi.equals("no")){
 
-                if(idEstado.equals("4")){
+                if(idEstado.equals("4") && !gPedidoDao.validarpedidoentregado(idPedidoInt,3)){
                     gPedidoDao.actualizarestado(idEstadoInt,idPedidoInt);
                     ArrayList<BPedidoD> listaprod = (ArrayList<BPedidoD>) session.getAttribute("listaprod");
                     int idfarm= (int) session.getAttribute("idFarmacia");
@@ -87,6 +87,8 @@ public class Farm_Detalles_Pedido_ModServlet extends HttpServlet {
                 }else {
                     if(gPedidoDao.validarpedidocancelado(idPedidoInt,4)){
                         response.sendRedirect(request.getContextPath() + "/Farm_Detalle_Pedido_Mod?id="+idPedido+"&msg=cancel");
+                    }else if(gPedidoDao.validarpedidoentregado(idPedidoInt,3)){
+                        response.sendRedirect(request.getContextPath() + "/Farm_Detalle_Pedido_Mod?id="+idPedido+"&msg=entreg");
                     }else{
                         gPedidoDao.actualizarestado(idEstadoInt,idPedidoInt);
                         response.sendRedirect(request.getContextPath() + "/Farm_Detalle_Pedido_Mod?id="+idPedido+"&msg=ok");

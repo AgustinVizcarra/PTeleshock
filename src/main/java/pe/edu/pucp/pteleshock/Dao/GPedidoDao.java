@@ -416,5 +416,25 @@ public class GPedidoDao extends BaseDao {
         return ver;
     }
 
+    public boolean validarpedidoentregado(int idPedido,int estadoped){
+        boolean ver1=false;
+        String sql = "SELECT ep.nombre FROM pedido p \n" +
+                "inner join estatuspedido ep on (p.idestatuspedido= ep.idestatuspedido)\n" +
+                "where p.idpedido=? and p.idestatuspedido= ?;";
+        try (Connection connection = this.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+            preparedStatement.setInt(1, idPedido);
+            preparedStatement.setInt(2, estadoped);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    ver1=true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ver1;
+    }
+
 
 }

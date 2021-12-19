@@ -18,16 +18,16 @@ public class ProductosFDao extends BaseDao {
         ArrayList<BDetProd> listarProductosF = new ArrayList<>();
 
 
-        String sql = "Select  p.idproducto,p.nombre, f.foto1,pf.stock,pf.preciounitario,pf.recetamedica from productoporfarmacia pf\n" +
+        String sql = "Select  p.idproducto,p.nombre, f.foto1,pf.stock,pf.preciounitario,pf.recetamedica,pf.estadoproducto from productoporfarmacia pf\n" +
                 "inner join producto p on (pf.idproducto=p.idproducto)\n" +
                 "left join foto f on (pf.idproducto=f.idproducto and pf.idfarmacia=f.idfarmacia)\n" +
-                "where lower(p.nombre) like lower(?) and pf.idfarmacia=? and pf.stock >= 0 limit " + inicio + ",8 ;";
+                "where lower(p.nombre) like lower(?) and pf.idfarmacia=? and pf.stock >= 0 and pf.estadoproducto='habilitado' limit " + inicio + ",8 ;";
 
         if (inicio == -1) {
-            sql = "Select  p.idproducto,p.nombre, f.foto1,pf.stock,pf.preciounitario,pf.recetamedica from productoporfarmacia pf\n" +
+            sql = "Select  p.idproducto,p.nombre, f.foto1,pf.stock,pf.preciounitario,pf.recetamedica,pf.estadoproducto from productoporfarmacia pf\n" +
                     "inner join producto p on (pf.idproducto=p.idproducto)\n" +
                     "left join foto f on (pf.idproducto=f.idproducto and pf.idfarmacia=f.idfarmacia)\n" +
-                    "where lower(p.nombre) like lower(?) and pf.idfarmacia=?;";
+                    "where lower(p.nombre) like lower(?) and pf.idfarmacia=? and and pf.estadoproducto='habilitado';";
         }
 
 
@@ -46,7 +46,7 @@ public class ProductosFDao extends BaseDao {
                     detProd.setStock(rs.getInt(4));
                     detProd.setPreciounitario(rs.getDouble(5));
                     detProd.setRecetaMedicaB(rs.getBoolean(6));
-
+                    detProd.setEstadoproducto(rs.getString(7));
 
                     listarProductosF.add(detProd);
                 }
