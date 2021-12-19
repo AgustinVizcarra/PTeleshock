@@ -176,7 +176,7 @@ public class GPedidoDao extends BaseDao {
         try {
             Connection connection = this.getConnection();
             PreparedStatement pstmt = connection.prepareStatement("select pr.nombre as 'Producto',\n" +
-                    "pf.descripcion, dp.cantidad as 'Unidades', pf.preciounitario,pf.recetamedica\n" +
+                    "pf.descripcion, dp.cantidad as 'Unidades', pf.preciounitario,pf.recetamedica,pf.idproducto\n" +
                     "from detallepedido dp\n" +
                     "inner join pedido p on (dp.idpedido=p.idpedido)\n" +
                     "inner join usuario u on (p.idusuario=u.idusuario)\n" +
@@ -195,6 +195,7 @@ public class GPedidoDao extends BaseDao {
                     bpd.setUnidades(rs.getInt(3));
                     bpd.setPrecioUnitario(rs.getDouble(4));
                     bpd.setRecetamedica(rs.getBoolean(5));
+                    bpd.setIdproducto(rs.getInt(6));
                     listaPedidosD.add(bpd);
                 }
             }
@@ -359,5 +360,61 @@ public class GPedidoDao extends BaseDao {
         return listaPedidos;
 
     }
+
+    public String verificarestadopedido(int idPedido,int estadoped){
+        String ver="no";
+        String sql = "SELECT ep.nombre FROM pedido p \n" +
+                "inner join estatuspedido ep on (p.idestatuspedido= ep.idestatuspedido)\n" +
+                "where p.idpedido=? and p.idestatuspedido= ?;";
+        try (Connection connection = this.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+            preparedStatement.setInt(1, idPedido);
+            preparedStatement.setInt(2, estadoped);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    ver=rs.getString(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ver;
+    }
+
+
+    public void actualizarStockCancelado(ArrayList<BPedidoD> listaprod,int idf){
+
+        for(BPedidoD bPedidoD:listaprod) {
+            String sql = "update mydb.productoporfarmacia set stock= stock +"+bPedidoD.getUnidades()+" where idproducto="+bPedidoD.getIdproducto()+" and idfarmacia=?;";
+
+            try (Connection conn = this.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+                pstmt.setInt(1, idf);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public boolean validarpedidocancelado(int idPedido,int estadoped){
+        boolean ver=false;
+        String sql = "SELECT ep.nombre FROM pedido p \n" +
+                "inner join estatuspedido ep on (p.idestatuspedido= ep.idestatuspedido)\n" +
+                "where p.idpedido=? and p.idestatuspedido= ?;";
+        try (Connection connection = this.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+            preparedStatement.setInt(1, idPedido);
+            preparedStatement.setInt(2, estadoped);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    ver=true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ver;
+    }
+
 
 }

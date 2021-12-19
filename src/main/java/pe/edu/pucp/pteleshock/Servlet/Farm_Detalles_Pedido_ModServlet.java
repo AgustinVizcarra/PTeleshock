@@ -1,6 +1,7 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
 
+import pe.edu.pucp.pteleshock.Beans.BPedidoD;
 import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.GPedidoDao;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "Farm_Detalle_Pedido_ModServlet", value = "/Farm_Detalle_Pedido_Mod")
 public class Farm_Detalles_Pedido_ModServlet extends HttpServlet {
@@ -31,6 +33,7 @@ public class Farm_Detalles_Pedido_ModServlet extends HttpServlet {
             session.setAttribute("idpedido",idint);
             request.setAttribute("listaDPedido",gPedidoDao.listaPedidosD(idF,idint));
             request.setAttribute("listaproducto",gPedidoDao.listaProductospag(idF,idint,pag));
+            session.setAttribute("listaprod",gPedidoDao.listaProductos(idF,idint));
             request.setAttribute("listaEstados",gPedidoDao.listaEstados());
             int cantPed=gPedidoDao.cantidadProductos1(idF,idint);
             String cantPedStr= String.valueOf(cantPed);
@@ -62,6 +65,7 @@ public class Farm_Detalles_Pedido_ModServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String action = request.getParameter("action") ==null? "editar" : request.getParameter("action");
         GPedidoDao gPedidoDao = new GPedidoDao();
         if(action.equals("editar")){
@@ -70,8 +74,30 @@ public class Farm_Detalles_Pedido_ModServlet extends HttpServlet {
             System.out.println(idPedido+idEstado);
             int idEstadoInt = Integer.parseInt(idEstado);
             int idPedidoInt = Integer.parseInt(idPedido);
-            gPedidoDao.actualizarestado(idEstadoInt,idPedidoInt);
-            response.sendRedirect(request.getContextPath() + "/Farm_Detalle_Pedido_Mod?id="+idPedido+"&msg=ok");
+
+            String verifi=gPedidoDao.verificarestadopedido(idPedidoInt,idEstadoInt);
+            if(verifi.equals("no")){
+
+                if(idEstado.equals("4")){
+                    gPedidoDao.actualizarestado(idEstadoInt,idPedidoInt);
+                    ArrayList<BPedidoD> listaprod = (ArrayList<BPedidoD>) session.getAttribute("listaprod");
+                    int idfarm= (int) session.getAttribute("idFarmacia");
+                    gPedidoDao.actualizarStockCancelado(listaprod,idfarm);
+                    response.sendRedirect(request.getContextPath() + "/Farm_Detalle_Pedido_Mod?id="+idPedido+"&msg=ok");
+                }else {
+                    if(gPedidoDao.validarpedidocancelado(idPedidoInt,4)){
+                        response.sendRedirect(request.getContextPath() + "/Farm_Detalle_Pedido_Mod?id="+idPedido+"&msg=cancel");
+                    }else{
+                        gPedidoDao.actualizarestado(idEstadoInt,idPedidoInt);
+                        response.sendRedirect(request.getContextPath() + "/Farm_Detalle_Pedido_Mod?id="+idPedido+"&msg=ok");
+                    }
+                }
+
+            }else{
+                response.sendRedirect(request.getContextPath() + "/Farm_Detalle_Pedido_Mod?id="+idPedido+"&msg="+verifi);
+            }
+
+
         }
     }
 }

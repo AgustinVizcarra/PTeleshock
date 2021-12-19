@@ -310,7 +310,7 @@
         <h5 class="card-header text-center ">Teleshock</h5>
         <div class="card-body">
             <form>
-                <h5 class="card-title p-2">Se ha editado el producto correctamente</h5>
+                <h5 class="card-title p-2">Se ha editado el estado correctamente</h5>
                 <div class="btn-group" role="group" aria-label="Basic example" style="display: flex;justify-content: center">
 
                     <%for(BPedidoD bPedidoD1:listaDPedido){%>
@@ -321,14 +321,48 @@
         </div>
     </div>
 </nav>
-<% }else{%>
-<%}%>
+<% }else if(msg.equals("cancelado") || msg.equals("pendiente") || msg.equals("entregado")){%>
+    <nav id="popup" class="overlay1" style="display: flex; justify-content: center ; align-items: center">
+        <div class=" popup card text-center " style="background-color: white">
+            <h5 class="card-header text-center ">Teleshock</h5>
+            <div class="card-body">
+                <form>
+                    <h5 class="card-title p-2">El estado del pedido ya se encuentra <%=msg%></h5>
+                    <div class="btn-group" role="group" aria-label="Basic example" style="display: flex;justify-content: center">
+
+
+                        <a href="<%= request.getContextPath()%>/Farm_Detalle_Pedido_Mod?id=<%=idped%>" class="btn btn-success mb-2">Aceptar</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+<%}else if(msg.equals("cancel")){%>
+    <nav id="popup" class="overlay1" style="display: flex; justify-content: center ; align-items: center">
+        <div class=" popup card text-center " style="background-color: white">
+            <h5 class="card-header text-center ">Teleshock</h5>
+            <div class="card-body">
+                <form>
+                    <h5 class="card-title p-2">No se puede actualizar el estado, el pedido está cancelado</h5>
+                    <div class="btn-group" role="group" aria-label="Basic example" style="display: flex;justify-content: center">
+
+
+                        <a href="<%= request.getContextPath()%>/Farm_Detalle_Pedido_Mod?id=<%=idped%>" class="btn btn-success mb-2">Aceptar</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <%}%>
 
 <nav id="popup2" class="overlay" style="display: flex; justify-content: center ; align-items: center">
     <div class=" popup card text-center " style="background-color: white">
         <h5 class="card-header text-center ">Teleshock</h5>
         <div class="card-body">
-            <h5 class="card-title p-2">Se ha editado el producto correctamente</h5>
+            <h5 class="card-title p-2">Se ha editado el estado correctamente</h5>
             <%for(BPedidoD bPedidoD1:listaDPedido){%>
             <a href="<%= request.getContextPath()%>/Farm_Detalles_Pedido?id=<%=bPedidoD1.getIdpedido()%>" class="btn btn-success mb-2">Aceptar</a>
             <%}%>

@@ -105,7 +105,7 @@
                         <div class="input-group">
                             <input class="form-control"  type="text" name="textoBuscar" placeholder="Buscar..." aria-label="Buscar..."
                                    aria-describedby="btnNavbarSearch"/>
-                            <button class="btn btn-primary" id="btnNavbarSearch" type="submit">
+                            <button style="background-color: #375880" class="btn btn-primary" id="btnNavbarSearch" type="submit">
                                 <i class="fas fa-search"></i></button>
                             <a class="input-group-text" href="<%=request.getContextPath()%>/Farm_Gestionar_Pedidos">
                                 <i class="fas fa-undo"></i>
@@ -146,7 +146,7 @@
                                 <td><%=bPedidoG.getDni()%></td>
                                 <td><%=bPedidoG.getCodigoV()%></td>
                                 <td> <%=bPedidoG.getPrecioTotal()%></td>
-                                <td><a class="btn btn-primary" href="<%= request.getContextPath()%>/Farm_Detalles_Pedido?id=<%=bPedidoG.getIdPedido()%>">Ver más detalles</a></td>
+                                <td><a style="background-color: #375880" class="btn btn-primary " href="<%= request.getContextPath()%>/Farm_Detalles_Pedido?id=<%=bPedidoG.getIdPedido()%>">Ver más detalles</a></td>
                             </tr>
                             <%}%>
                             </tbody>

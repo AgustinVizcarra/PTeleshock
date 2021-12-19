@@ -121,7 +121,7 @@
                                 <div class="input-group">
                                     <input class="form-control"  type="text" name="textoBuscar" value="<%=textbuscar%>"  placeholder="Buscar..." aria-label="Buscar..."
                                            aria-describedby="btnNavbarSearch" />
-                                    <button class="btn btn-primary" id="btnNavbarSearch" type="submit">
+                                    <button style="background-color: #375880" class="btn btn-primary" id="btnNavbarSearch" type="submit">
                                         <i class="fas fa-search"></i></button>
                                     <a class="input-group-text" href="<%=request.getContextPath()%>/Farm_Vista_ProductosServlet">
                                         <i class="fas fa-undo"></i>
