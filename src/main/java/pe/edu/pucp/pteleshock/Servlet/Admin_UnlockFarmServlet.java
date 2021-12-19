@@ -36,7 +36,7 @@ public class Admin_UnlockFarmServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idFarmaciastr = request.getParameter("farmaciaId")==null?"":request.getParameter("farmaciaId");
-        String razon = request.getParameter("razon")==null?"":request.getParameter("razon");
+        String razon = request.getParameter("razon").strip()==null?"":request.getParameter("razon").strip();
         String admin = request.getParameter("admin");
         response.setCharacterEncoding("UTF-8");
         //verificacion de campos nulos

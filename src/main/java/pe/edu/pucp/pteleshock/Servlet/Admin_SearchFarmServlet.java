@@ -31,13 +31,13 @@ public class Admin_SearchFarmServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
+        String ruc = request.getParameter("ruc").strip() != null ? request.getParameter("ruc").strip() : "";
 
         FarmaciaDao farmaciaDao = new FarmaciaDao();
         String mensaje = "";
         boolean campos_nulos = false;
 
-        if (request.getParameter("ruc").isEmpty()) {
+        if (request.getParameter("ruc").strip().isEmpty()) {
             campos_nulos = true;
             mensaje = "Usted envio campos nulos, por favor intente de nuevo";
         }

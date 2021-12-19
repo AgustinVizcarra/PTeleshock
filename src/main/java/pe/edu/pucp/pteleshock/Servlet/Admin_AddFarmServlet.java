@@ -47,8 +47,8 @@ public class Admin_AddFarmServlet extends HttpServlet {
         boolean campos_nulos = false;
         ValidacionAdd_Dao validacionAdd_dao = new ValidacionAdd_Dao();
         String mensaje = "Se logro registrar de manera correcta";
-        if ((request.getParameter("nombre_farmacia").isEmpty() || request.getParameter("ruc_farmacia").isEmpty() || request.getParameter("distrito_farmacia") == null ||
-                request.getParameter("correo_farmacia").isEmpty())) {
+        if ((request.getParameter("nombre_farmacia").strip().isEmpty() || request.getParameter("ruc_farmacia").strip().isEmpty() || request.getParameter("distrito_farmacia") == null ||
+                request.getParameter("correo_farmacia").strip().isEmpty())) {
             campos_nulos = true;
             todo_claro = false;
             mensaje = "Usted envio campos nulos, por favor intente de nuevo";
@@ -79,10 +79,10 @@ public class Admin_AddFarmServlet extends HttpServlet {
         String correo_farmacia = "";
         String direccion_farmacia = "";
         int distrito_farmacia;
-        nombre_farmacia = request.getParameter("nombre_farmacia");
-        ruc_farmacia = request.getParameter("ruc_farmacia");
-        correo_farmacia = request.getParameter("correo_farmacia");
-        direccion_farmacia = request.getParameter("direccion_farmacia");
+        nombre_farmacia = request.getParameter("nombre_farmacia").strip();
+        ruc_farmacia = request.getParameter("ruc_farmacia").strip();
+        correo_farmacia = request.getParameter("correo_farmacia").strip();
+        direccion_farmacia = request.getParameter("direccion_farmacia").strip();
         if (request.getParameter("distrito_farmacia") != null) {
             distrito_farmacia = Integer.parseInt(request.getParameter("distrito_farmacia"));
         } else {
