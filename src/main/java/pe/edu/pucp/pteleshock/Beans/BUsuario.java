@@ -10,6 +10,7 @@ public class BUsuario {
     private String dni;
     private String ruc;
     private String pwd;
+    private String elimLogico;
 
     public int getIdUsuario() {
         return idUsuario;
@@ -81,5 +82,11 @@ public class BUsuario {
 
     public void setPwd(String pwd) {
         this.pwd = pwd;
+    }
+    public String getElimLogico() {
+        return elimLogico;
+    }
+    public void setElimLogico(String elimLogico) {
+        this.elimLogico = elimLogico;
     }
 }
