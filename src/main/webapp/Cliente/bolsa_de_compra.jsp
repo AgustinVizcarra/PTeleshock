@@ -374,7 +374,7 @@
                                                                             <div class="col-6"><input style="width: 97px" class="form-control"
                                                                                                       name="fotoReceta" type="file"
                                                                                                       id="formFile1"></div>
-                                                                            <div class="col-2"><button type="submit" class="btn btn-secondary btn-sm"><i class="fas fa-upload"></i></button></div>
+                                                                            <div class="col-2"><button type="submit" class="btn btn-secondary btn-sm" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" title="Teleshock" data-bs-content="Solo se aceptan imágenes"  data-bs-trigger="hover focus"><i class="fas fa-upload"></i></button></div>
 
 
 <%--                                                                            <div class="col-1"><a href="#popup<%=i%>" class="btn btn-secondary btn-sm"><i class="fas fa-eye"></i></a></div>--%>
@@ -436,7 +436,7 @@
                                 </div>
                                 <%}%>
                                 <h5 class="card-title mb-4">Resumen de compra</h5>
-                                <form method="POST"
+                                <form method="POST" id="myForm"
                                       action="<%=request.getContextPath()%>/Client_Bolsa_Compra?action=comprar">
                                     <%double total = 0.0;%>
                                     <%int i = 0;%>
@@ -464,7 +464,7 @@
                                     </div>
                                     <div class="col">
                                         <div>
-                                            <label class="me-2">Fecha de entrega:</label>
+                                            <label class="me-2" for="party">Fecha de entrega:</label>
                                             <input id="party" type="datetime-local" name="horaEnt<%=i%>"
                                                 <% LocalTime time=LocalTime.now();
                                                         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm");
@@ -566,11 +566,16 @@
             </symbol>
         </svg>
         <%--F--%>
-
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
                 crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-
+        <script>
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl)
+            })
+        </script>
     </body>
 </html>
