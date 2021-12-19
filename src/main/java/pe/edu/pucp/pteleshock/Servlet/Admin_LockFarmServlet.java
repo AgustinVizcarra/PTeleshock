@@ -31,8 +31,8 @@ public class Admin_LockFarmServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
-        String razon = request.getParameter("razon") != null ? request.getParameter("razon") : "";
-        String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
+        String razon = request.getParameter("razon").strip() != null ? request.getParameter("razon").strip() : "";
+        String ruc = request.getParameter("ruc").strip() != null ? request.getParameter("ruc").strip() : "";
         String admin = request.getParameter("admin") != null ? request.getParameter("admin") : "";
 
         System.out.println(ruc);
@@ -44,7 +44,7 @@ public class Admin_LockFarmServlet extends HttpServlet {
 
         boolean campos_nulos = false;
 
-        if (request.getParameter("razon").isEmpty() || request.getParameter("ruc").isEmpty()) {
+        if (request.getParameter("razon").strip().isEmpty() || request.getParameter("ruc").strip().isEmpty()) {
             campos_nulos = true;
             mensaje = "Usted envio campos nulos, por favor intente de nuevo";
         }

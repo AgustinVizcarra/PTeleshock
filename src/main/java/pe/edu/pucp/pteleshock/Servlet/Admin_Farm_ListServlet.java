@@ -74,7 +74,7 @@ Admin_Farm_ListServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        String texto = request.getParameter("textoBuscar");
+        String texto = request.getParameter("textoBuscar").strip();
         String iddistrito = request.getParameter("iddistrito");
         String pag = request.getParameter("pag") != null ? request.getParameter("pag") : "1";
         if (pag.equalsIgnoreCase("")){

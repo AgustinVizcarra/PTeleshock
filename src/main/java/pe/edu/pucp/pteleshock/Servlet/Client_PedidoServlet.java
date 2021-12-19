@@ -38,6 +38,8 @@ public class Client_PedidoServlet extends HttpServlet {
         int totalPag = (int) Math.ceil((double) pedidoDao.obtenerNumPedidos(idPG,cliente.getIdUsuario()) / (double) pedidosxPag);
         if (0 < pag & pag <= totalPag) {
             inicio = pag * pedidosxPag - pedidosxPag;
+        }else {
+            pag = 1;
         }
 
         //Enviar datos al servlet
