@@ -108,7 +108,7 @@
     <div class=" popup card text-center ">
         <h5 class="card-header text-center">Teleshock</h5>
         <div class="card-body">
-            <h5 class="card-title p-2"><%=mensajealerta.equalsIgnoreCase("a")?"Se ha ingresado una contraseña o dirección de correo invalidos.":mensajealerta.equalsIgnoreCase("b")?"La farmacia se encuentra bloqueada, por favor ponerse en contacto con el Administrador.":"Se ha ingresado credenciales de un usuario deshabilitado, por favor comunicarse con el administrador."%></h5>
+            <h5 class="card-title p-2"><%=mensajealerta.equalsIgnoreCase("a")?"Se ha ingresado una contraseña o dirección de correo invalidos.":mensajealerta.equalsIgnoreCase("b")?"La farmacia se encuentra bloqueada, por favor ponerse en contacto con el Administrador.":"Se ha ingresado credenciales de un usuario no registrado, por favor comunicarse con el administrador."%></h5>
             <!--<p>Se ha enviado un correo para confirmar el cambio de contraseña</p>-->
             <%HttpSession session1 = request.getSession();
               session1.removeAttribute("mensajealerta");%>

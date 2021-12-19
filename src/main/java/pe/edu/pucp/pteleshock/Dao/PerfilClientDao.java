@@ -68,9 +68,21 @@ public class PerfilClientDao extends BaseDao {
         }
     }
 
-
-
-
-
-
+    public boolean validacionElimCliente(int idCliente){
+        boolean sePuede = true;
+        String sql = "select idusuario, idpedido, idestatuspedido from pedido\n" +
+                "where idusuario = ? and idestatuspedido = 2";
+        try(Connection conn = this.getConnection();
+            PreparedStatement psmt = conn.prepareStatement(sql)){
+            psmt.setInt(1,idCliente);
+            try (ResultSet rs = psmt.executeQuery()) {
+                if (rs.next()) {
+                    sePuede = false;
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return sePuede;
+    }
 }

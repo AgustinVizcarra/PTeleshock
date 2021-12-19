@@ -67,9 +67,12 @@ public class Client_PerfilServlet extends HttpServlet {
                     break;
                 case "elimLogico":
                     String idClienteStr1 = request.getParameter("idC") != null ? request.getParameter("idC") : "";
-                    perfilClientDao.elimLogicoCliente(Integer.parseInt(idClienteStr1));
-                    view = request.getRequestDispatcher("/Login");
-                    view.forward(request, response);
+                    if (perfilClientDao.validacionElimCliente(Integer.parseInt(idClienteStr1))){
+                        perfilClientDao.elimLogicoCliente(Integer.parseInt(idClienteStr1));
+                        response.sendRedirect(request.getContextPath() + "/Client_Perfil#popup2");
+                    }else{
+                        response.sendRedirect(request.getContextPath() + "/Client_Perfil#popup3");
+                    }
                     break;
                 default:
                     response.sendRedirect(request.getContextPath() + "/Client_Perfil");

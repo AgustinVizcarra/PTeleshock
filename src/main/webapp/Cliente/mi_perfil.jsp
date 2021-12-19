@@ -204,6 +204,19 @@
             </div>
         </nav>
 
+        <nav id="popup3" class="overlay">
+            <div class=" popup card text-center ">
+                <h5 class="card-header text-center">Teleshock</h5>
+                <div class="card-body">
+                    <img class="img" style="width: 50px; height: 50px;"
+                         src="https://cdn-icons-png.flaticon.com/512/179/179386.png">
+                    <br>
+                    <h5 class="card-title p-2">Su cuenta no puede ser eliminada, ya que cuenta con pedidos pendientes.</h5>
+                    <a href="<%= request.getContextPath()%>/Client_Perfil" class="btn btn-danger mb-2">Aceptar</a>
+                </div>
+            </div>
+        </nav>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
                 crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
