@@ -371,7 +371,7 @@
                                                                           action="<%=request.getContextPath()%>/ImgRecetaServlet?idProd=<%=ee.getValue().get(i).getIdProducto()%>&idF=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idP=<%=ee.getValue().get(i).getPedido().getIdPedido()%>" enctype="multipart/form-data">
                                                                         <div class="row">
 
-                                                                            <div class="col-6"><input class="form-control"
+                                                                            <div class="col-6"><input style="width: 97px" class="form-control"
                                                                                                       name="fotoReceta" type="file"
                                                                                                       id="formFile1"></div>
                                                                             <div class="col-2"><button type="submit" class="btn btn-secondary btn-sm"><i class="fas fa-upload"></i></button></div>
@@ -383,8 +383,6 @@
                                                                             <a href="#" class="lightbox" id="img<%=i%>">
                                                                                 <span style="background-image: url('<%=request.getContextPath()%>/ImgRecetaServlet?prod=<%=ee.getValue().get(i).getIdProducto()%>&idfarm=<%=ee.getValue().get(i).getPedido().getIdFarmacia()%>&idped=<%=ee.getValue().get(i).getPedido().getIdPedido()%>')"></span>
                                                                             </a>
-                                                                            <%i++;%>
-
 
 <%--                                                                            <div id="popup<%=i%>" class="overlay">--%>
 <%--                                                                                <div id="popupBody<%=i%>">--%>

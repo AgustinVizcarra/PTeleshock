@@ -146,7 +146,7 @@
                                 <td><%=bPedidoG.getDni()%></td>
                                 <td><%=bPedidoG.getCodigoV()%></td>
                                 <td> <%=bPedidoG.getPrecioTotal()%></td>
-                                <td><a href="<%= request.getContextPath()%>/Farm_Detalles_Pedido?id=<%=bPedidoG.getIdPedido()%>">Ver más detalles</a></td>
+                                <td><a class="btn btn-primary" href="<%= request.getContextPath()%>/Farm_Detalles_Pedido?id=<%=bPedidoG.getIdPedido()%>">Ver más detalles</a></td>
                             </tr>
                             <%}%>
                             </tbody>
