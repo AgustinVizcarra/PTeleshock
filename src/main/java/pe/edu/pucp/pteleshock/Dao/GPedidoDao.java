@@ -112,7 +112,7 @@ public class GPedidoDao extends BaseDao {
         String sql="select count(*) from (select count(*) from detallepedido dp\n" +
                 "                                   inner join pedido p on (dp.idpedido=p.idpedido)\n" +
                 "                                   inner join usuario u on (p.idusuario=u.idusuario)\n" +
-                "                                    where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+" and (lower(u.nombre) like ? or lower(u.apellido) like ? or u.dni like ?)  #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
+                "                                    where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+" and (lower(u.nombre) like ? or lower(u.apellido) like ? or u.dni like ? or p.fechapedido like ?)  #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
                 "                                  group by dp.idpedido\n" +
                 "                                  order by p.fechapedido desc) tabla;";
 
@@ -121,6 +121,7 @@ public class GPedidoDao extends BaseDao {
             pstmt.setString(1, "%" + texto + "%");
             pstmt.setString(2, "%" + texto + "%");
             pstmt.setString(3, "%" + texto + "%");
+            pstmt.setString(4, "%" + texto + "%");
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     cant=rs.getInt(1);

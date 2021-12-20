@@ -18,6 +18,8 @@ public class Farm_Gestionar_PedidosServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         request.setCharacterEncoding("UTF-8");
+        String texto ="";
+        request.setAttribute("textbuscar",texto);
         BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
 
         if (farmacia != null) {
@@ -128,8 +130,6 @@ public class Farm_Gestionar_PedidosServlet extends HttpServlet {
 
         if (farmacia != null) {
 
-
-
             GPedidoDao pedidodao = new GPedidoDao();
             int idF = (Integer) session.getAttribute("idFarmacia");
 
@@ -150,23 +150,25 @@ public class Farm_Gestionar_PedidosServlet extends HttpServlet {
 
                     request.setAttribute("listaPedido",pedidodao.listaPedidosporNombre(idF,pag,texto));
 
-                    RequestDispatcher view = request.getRequestDispatcher("/Farmacia/gestionar_pedidos.jsp");
+                    RequestDispatcher view = request.getRequestDispatcher("/Farmacia/gestionar_pedidos_filtrados.jsp");
                     view.forward(request,response);
 
                 }else{
                     request.setAttribute("pag",pag);
+                    request.setAttribute("textbuscar",texto);
                     String cantPedStr= String.valueOf(cantPed);
                     request.setAttribute("listaPedido",pedidodao.listaPedidosporNombre(idF,"1",texto));
                     request.setAttribute("cantPed",cantPedStr);
-                    RequestDispatcher view = request.getRequestDispatcher("/Farmacia/gestionar_pedidos.jsp");
+                    RequestDispatcher view = request.getRequestDispatcher("/Farmacia/gestionar_pedidos_filtrados.jsp");
                     view.forward(request,response);
                 }
             }else{
                 request.setAttribute("pag",pag);
+                request.setAttribute("textbuscar",texto);
                 String cantPedStr= String.valueOf(cantPed);
                 request.setAttribute("listaPedido",pedidodao.listaPedidosporNombre(idF,"1",texto));
                 request.setAttribute("cantPed",cantPedStr);
-                RequestDispatcher view = request.getRequestDispatcher("/Farmacia/gestionar_pedidos.jsp");
+                RequestDispatcher view = request.getRequestDispatcher("/Farmacia/gestionar_pedidos_filtrados.jsp");
                 view.forward(request,response);
             }
 
