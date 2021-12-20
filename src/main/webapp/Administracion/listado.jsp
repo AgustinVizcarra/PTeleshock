@@ -113,7 +113,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer" style="height: 10%; background-color: #00152D; color: darkgrey">
+                    <div class="sb-sidenav-footer" style="background-color: #00152D; color: darkgrey">
                         <div class="small">Logueado como:</div>
                         <%=adminSession.getNombre() + " " + adminSession.getApellido()%>
                     </div>
