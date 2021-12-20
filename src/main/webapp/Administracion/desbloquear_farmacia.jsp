@@ -1,12 +1,12 @@
-<%@ page import="pe.edu.pucp.pteleshock.Beans.Bbloqueadas" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="pe.edu.pucp.pteleshock.Beans.BLbloqueadas" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BLbloqueadas" %>
 <jsp:useBean id="adminSession" scope="session" class="pe.edu.pucp.pteleshock.Beans.BUsuario"/>
 <jsp:useBean id="farmaciasBloqueadas" scope="session" class="java.util.ArrayList"
              type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BLbloqueadas>"/>
 <jsp:useBean id="mensaje" scope="request" class="java.lang.String" type="java.lang.String"/>
 <jsp:useBean id="idfarm" scope="request" class="java.lang.String" type="java.lang.String"/>
+<jsp:useBean id="cantidad" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="pag" scope="request" type="java.lang.String"/>
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
@@ -112,7 +112,8 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-lock"></i></div>
                                 <font>Bloquear farmacias</font>
                             </a>
-                            <a class="nav-link active bg-secondary" href="<%= request.getContextPath()%>/Admin_UnlockFarm">
+                            <a class="nav-link active bg-secondary"
+                               href="<%= request.getContextPath()%>/Admin_UnlockFarm">
                                 <div class="sb-nav-link-icon"><i class="fas fa-lock-open"></i></div>
                                 Desbloquear farmacias
                             </a>
@@ -153,7 +154,7 @@
                                             <div class="card-body" ;
                                                  style="background-color: #7ED957; border-bottom-left-radius: 1rem; border-bottom-right-radius: 2rem">
                                                 <form method="post"
-                                                      action="<%= request.getContextPath()%>/Admin_UnlockFarm">
+                                                      action="<%=request.getContextPath()%>/Admin_UnlockFarm">
                                                     <br>
                                                     <div class="row" style="background-color: #8CD48C; opacity: 0.9">
                                                         <table class="table table-striped">
@@ -213,6 +214,20 @@
                                                         </table>
                                                     </div>
                                                     <br>
+                                                    <div class="col align-self-center">
+                                                        <a style="position: center">
+                                                            <nav aria-label="Page navigation example" style="align-content: center">
+                                                                <ul class="pagination justify-content-center">
+                                                                    <% int resto = cantidad % 7 == 0 ? 0 : 1;%>
+                                                                    <% for (int i = 1; i < Math.floor(cantidad / 7) + resto + 1; i++) { %>
+                                                                    <li class="page-item"><a class="page-link"
+                                                                                             href="<%= request.getContextPath()%>/Admin_UnlockFarm?pag=<%=i %>"><%=i%>
+                                                                    </a></li>
+                                                                    <% } %>
+                                                                </ul>
+                                                            </nav>
+                                                        </a>
+                                                    </div>
                                                     <div class="mb-3">
                                                         <label for="razondesbloquear" class="form-label"
                                                                style="color: rgba(12,11,11,0.82)"><b>Razón de
@@ -221,13 +236,14 @@
                                                                   name="razon"
                                                                   rows="3" maxlength="300"></textarea>
                                                     </div>
-                                                    <input type="hidden" value="<%=adminSession.getNombre()%>"
-                                                           name="admin">
+                                                    <input type="hidden" name="admin"
+                                                           value="<%=adminSession.getNombre()%>">
                                                     <div class="mt-4 mb-0" style="align-content: center">
                                                         <div class="row align-items-center"
                                                              style="display: flex; justify-content: center">
                                                             <button class="btn btn-primary" type="submit" style="margin-top: 5px; margin-bottom: 5px; background-color: #8BC34A; width: fit-content;
-                                                       margin-left: auto; margin-right: auto;border-color: #7ed957" href="#popup1">GRABAR Y
+                                                       margin-left: auto; margin-right: auto;border-color: #7ed957"
+                                                                    href="#popup1">GRABAR Y
                                                                 CONTINUAR
                                                             </button>
                                                             <a class="btn btn-primary"
@@ -300,8 +316,10 @@
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
                     <div class="row align-items-center" style="display: flex; justify-content: center">
-                        <a href="#" class="btn btn-primary my-auto col-3" role="button" aria-expanded="true">Cancelar</a>
-                        <form class="col-3 my-auto" method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                        <a href="#" class="btn btn-primary my-auto col-3" role="button"
+                           aria-expanded="true">Cancelar</a>
+                        <form class="col-3 my-auto" method="post"
+                              action="<%=request.getContextPath()%>/Login?action=logout">
                             <button class="btn btn-danger" type="submit">
                                 Salir
                             </button>

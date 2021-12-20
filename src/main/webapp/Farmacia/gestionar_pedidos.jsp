@@ -129,7 +129,8 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Fecha:</th>
+                                <th>Fecha Pedido:</th>
+                                <th>Fecha Entrega:</th>
                                 <th>Nombre:</th>
                                 <th>Apellido:</th>
                                 <th>Dni:</th>
@@ -142,6 +143,7 @@
                             <%for(BPedidoG bPedidoG : listaPedido){%>
                             <tr>
                                 <td><%=bPedidoG.getFecha()%></td>
+                                <td><%=bPedidoG.getFechaEntrega()%></td>
                                 <td ><%=bPedidoG.getNombre()%></td>
                                 <td><%=bPedidoG.getApellido()%></td>
                                 <td><%=bPedidoG.getDni()%></td>
