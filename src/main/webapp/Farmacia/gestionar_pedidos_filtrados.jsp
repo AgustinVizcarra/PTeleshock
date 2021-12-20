@@ -9,9 +9,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% ArrayList<BPedidoG> listaPedido=(ArrayList<BPedidoG>) request.getAttribute("listaPedidosfiltrada");%>
+<%-- <% ArrayList<BPedidoG> listaPedido=(ArrayList<BPedidoG>) request.getAttribute("listaPedidosfiltrada");%>
+--%>
+<% ArrayList<BPedidoG> listaPedido=(ArrayList<BPedidoG>) request.getAttribute("listaPedido");%>
+
 <jsp:useBean type="java.lang.String" scope="request" id="textbuscar" class="java.lang.String"/>
 <jsp:useBean type="java.lang.String" scope="request" id="cantPed" class="java.lang.String"/>
+<jsp:useBean type="java.lang.String" scope="request" id="pag" class="java.lang.String"/>
+
 <head>
 
     <meta charset="utf-8">
@@ -130,8 +135,8 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Fecha:</th>
-                                        <th>Nombre:</th>
+                                        <th>Fecha Pedido:</th>
+                                        <th>Fecha Entrega:</th>
                                         <th>Apellido:</th>
                                         <th>Dni:</th>
                                         <th>Pedidos:</th>
@@ -143,6 +148,7 @@
                                     <%for(BPedidoG bPedidoG : listaPedido){%>
                                     <tr>
                                         <td><%=bPedidoG.getFecha()%></td>
+                                        <td><%=bPedidoG.getFechaEntrega()%></td>
                                         <td ><%=bPedidoG.getNombre()%></td>
                                         <td><%=bPedidoG.getApellido()%></td>
                                         <td><%=bPedidoG.getDni()%></td>
@@ -158,13 +164,13 @@
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-end">
                             <% int cantPedInt=Integer.parseInt(cantPed);%>
-                            <% int resto= cantPedInt%3==0? 0:1; %>
-                            <% for(int i=1; i<Math.floor(cantPedInt/3)+resto+1; i++) { %>
+                            <% int resto= cantPedInt%6==0? 0:1; %>
+                            <% for(int i=1; i<Math.floor(cantPedInt/6)+resto+1; i++) { %>
 
                             <form method="post"   action="<%=request.getContextPath()%>/Farm_Gestionar_Pedidos?pag=<%=i%>&textoBuscar=<%=textbuscar %> ">
                                 <!-- <input class="form-control" type="hidden"   value="" placeholder="Buscar..." aria-label="Buscar..."
                                         aria-describedby="btnNavbarSearch" /> -->
-                                <button class="page-item"><a class="page-link" type="submit"><%=i%></a></button>
+                                <button class="page-item <%= pag.equals(String.valueOf(i))?"active":""%>"><a class="page-link" type="submit"><%=i%></a></button>
 
                             </form>
 
