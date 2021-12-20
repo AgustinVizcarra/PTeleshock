@@ -57,7 +57,7 @@ public class UsuarioDao extends BaseDao {
                     usuario.setDni(rs.getString(7));
                     usuario.setRuc(rs.getString(8));
                     usuario.setPwd(rs.getString(9));
-                    usuario.setElimLogico(rs.getString(10));
+                    usuario.setElimLogico(rs.getString(11));
                 }
             }
 
