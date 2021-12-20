@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "LoginServlet", value = "/Login")
+@WebServlet(name = "LoginServlet", urlPatterns = {"/Login",""})
 public class Login_SessionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
