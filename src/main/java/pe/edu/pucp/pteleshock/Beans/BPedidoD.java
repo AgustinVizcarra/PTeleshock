@@ -3,6 +3,8 @@ package pe.edu.pucp.pteleshock.Beans;
 public class BPedidoD {
     private int idpedido;
     private String fecha;
+    private String fechaEntrega;
+    private String fechaEstatus;
     private String codigoV;
     private String estado;
     private String nombre;
@@ -135,5 +137,21 @@ public class BPedidoD {
 
     public void setIdproducto(int idproducto) {
         this.idproducto = idproducto;
+    }
+
+    public String getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(String fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }
+
+    public String getFechaEstatus() {
+        return fechaEstatus;
+    }
+
+    public void setFechaEstatus(String fechaEstatus) {
+        this.fechaEstatus = fechaEstatus;
     }
 }

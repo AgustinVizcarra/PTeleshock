@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=utf-8" language="java" %>
 <jsp:useBean type="java.lang.String" scope="request" id="mensaje" class="java.lang.String"/>
 <jsp:useBean type="java.lang.String" scope="request" id="rucListado" class="java.lang.String"/>
 <jsp:useBean type="java.lang.String" scope="request" id="razon" class="java.lang.String"/>

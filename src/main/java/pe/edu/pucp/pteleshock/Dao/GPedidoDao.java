@@ -53,7 +53,7 @@ public class GPedidoDao extends BaseDao {
         try {
             Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select p.idpedido,p.fechapedido, u.nombre,u.apellido,u.dni,p.codigodeventa,p.preciototal from detallepedido dp\n" +
+            ResultSet rs = statement.executeQuery("select p.idpedido,p.fechapedido,p.fechaentrega, u.nombre,u.apellido,u.dni,p.codigodeventa,p.preciototal from detallepedido dp\n" +
                     "inner join pedido p on (dp.idpedido=p.idpedido)\n" +
                     "inner join usuario u on (p.idusuario=u.idusuario)\n" +
                     "where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+" #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
@@ -65,11 +65,12 @@ public class GPedidoDao extends BaseDao {
                 BPedidoG bpg = new BPedidoG();
                 bpg.setIdPedido(rs.getInt(1));
                 bpg.setFecha(rs.getString(2));
-                bpg.setNombre(rs.getString(3));
-                bpg.setApellido(rs.getString(4));
-                bpg.setDni(rs.getString(5));
-                bpg.setCodigoV(rs.getString(6));
-                bpg.setPrecioTotal(rs.getDouble(7));
+                bpg.setFechaEntrega(rs.getString(3));
+                bpg.setNombre(rs.getString(4));
+                bpg.setApellido(rs.getString(5));
+                bpg.setDni(rs.getString(6));
+                bpg.setCodigoV(rs.getString(7));
+                bpg.setPrecioTotal(rs.getDouble(8));
                 listaPedidos.add(bpg);
             }
 
@@ -138,7 +139,7 @@ public class GPedidoDao extends BaseDao {
 
         try {
             Connection connection = this.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("select p.idpedido,p.fechapedido,p.codigodeventa,ep.nombre as 'estado' , u.nombre,u.apellido,u.dni,\n" +
+            PreparedStatement pstmt = connection.prepareStatement("select p.idpedido,p.fechapedido,p.fechaentrega,p.fechastatus,p.codigodeventa,ep.nombre as 'estado' , u.nombre,u.apellido,u.dni,\n" +
                     "u.correo,d.nombre as 'distrito'\n" +
                     "from detallepedido dp\n" +
                     "inner join pedido p on (dp.idpedido=p.idpedido)\n" +
@@ -155,13 +156,19 @@ public class GPedidoDao extends BaseDao {
                     BPedidoD bpd = new BPedidoD();
                     bpd.setIdpedido(rs.getInt(1));
                     bpd.setFecha(rs.getString(2));
-                    bpd.setCodigoV(rs.getString(3));
-                    bpd.setEstado(rs.getString(4));
-                    bpd.setNombre(rs.getString(5));
-                    bpd.setApellido(rs.getString(6));
-                    bpd.setDni(rs.getString(7));
-                    bpd.setCorreo(rs.getString(8));
-                    bpd.setDistrito(rs.getString(9));
+                    bpd.setFechaEntrega(rs.getString(3));
+                    if(rs.getString(4)==null){
+                        bpd.setFechaEstatus("no");
+                    }else{
+                        bpd.setFechaEstatus(rs.getString(4));
+                    }
+                    bpd.setCodigoV(rs.getString(5));
+                    bpd.setEstado(rs.getString(6));
+                    bpd.setNombre(rs.getString(7));
+                    bpd.setApellido(rs.getString(8));
+                    bpd.setDni(rs.getString(9));
+                    bpd.setCorreo(rs.getString(10));
+                    bpd.setDistrito(rs.getString(11));
                     listaPedidosD.add(bpd);
                 }
             }

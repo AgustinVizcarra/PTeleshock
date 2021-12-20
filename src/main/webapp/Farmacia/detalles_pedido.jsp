@@ -150,18 +150,21 @@
                         A continuación, se mostrarán los detalles del pedido!
                     </div>
                 </div>
+
                 <div class="row">
                     <%for(BPedidoD bPedidoD:listaDPedido){%>
                     <div class="card col-6 mb-4">
                         <h4 class="text-center">Pedido</h4>
                         <div class="row">
-                            <div class="col-2">
-                                <p >Fecha:</p>
+                            <div class="col-3">
+                                <p >Fecha Pedido:</p>
+                                <p >Fecha Entrega:</p>
                                 <p >Codigo:</p>
                                 <p >Estado:</p>
                             </div>
                             <div class="col-4">
                                 <p ><%=bPedidoD.getFecha()%></p>
+                                <p ><%=bPedidoD.getFechaEntrega()%></p>
                                 <p ><%=bPedidoD.getCodigoV()%></p>
                                 <p ><%=bPedidoD.getEstado()%></p>
                             </div>
@@ -203,8 +206,17 @@
                             </div>
                         </div>
                     </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-9"></div>
+                    <%if(bPedidoD.getFechaEstatus().equals("no")){%>
+                    <div class="col-3 small fst-italic">No hubo modificaciones </div>
+                    <%}else{%>
+                    <div class="col-3 small fst-italic">Ultima modificacion:  <%=bPedidoD.getFechaEstatus()%> </div>
                     <%}%>
                 </div>
+                <%}%>
                 <div class="card mb-4">
                     <div class="card-header  bg-warning">
                         <i class="fas fa-table me-1"></i>

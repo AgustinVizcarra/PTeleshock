@@ -10,6 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% ArrayList<BPedidoG> listaPedido=(ArrayList<BPedidoG>) request.getAttribute("listaPedido");%>
 <jsp:useBean type="java.lang.String" scope="request" id="cantPed" class="java.lang.String"/>
+<jsp:useBean type="java.lang.String" scope="request" id="pag" class="java.lang.String"/>
 
 <head>
 
@@ -128,7 +129,8 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Fecha:</th>
+                                <th>Fecha Pedido:</th>
+                                <th>Fecha Entrega:</th>
                                 <th>Nombre:</th>
                                 <th>Apellido:</th>
                                 <th>Dni:</th>
@@ -141,6 +143,7 @@
                             <%for(BPedidoG bPedidoG : listaPedido){%>
                             <tr>
                                 <td><%=bPedidoG.getFecha()%></td>
+                                <td><%=bPedidoG.getFechaEntrega()%></td>
                                 <td ><%=bPedidoG.getNombre()%></td>
                                 <td><%=bPedidoG.getApellido()%></td>
                                 <td><%=bPedidoG.getDni()%></td>
@@ -155,11 +158,21 @@
                 </div>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-end">
+                        <li class="page-item  <%= Integer.parseInt(pag)==1?"disabled":""%>  ">
+                            <a class="page-link"
+                               href="<%= request.getContextPath()%>/Farm_Gestionar_Pedidos?pag=<%=Integer.parseInt(pag)-1  %>">Anterior</a>
+                        </li>
+
                         <% int cantPedInt=Integer.parseInt(cantPed);%>
                         <% int resto= cantPedInt%6==0? 0:1; %>
                         <% for(int i=1; i<Math.floor(cantPedInt/6)+resto+1; i++) { %>
-                        <li class="page-item"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Gestionar_Pedidos?pag=<%=i %>"><%=i%></a></li>
+                        <li class="page-item <%= pag.equals(String.valueOf(i))?"active":""%>"><a class="page-link" href="<%= request.getContextPath()%>/Farm_Gestionar_Pedidos?pag=<%=i %>"><%=i%></a></li>
                         <% } %>
+
+                        <li class="page-item <%=Integer.parseInt(pag)==Math.floor(cantPedInt/6)+resto?"disabled":""%>  ">
+                            <a class="page-link"
+                               href="<%= request.getContextPath()%>/Farm_Gestionar_Pedidos?pag=<%=Integer.parseInt(pag)+1  %>">Siguiente</a>
+                        </li>
 
                     </ul>
                 </nav>
