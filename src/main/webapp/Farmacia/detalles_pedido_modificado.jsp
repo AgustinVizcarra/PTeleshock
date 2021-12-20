@@ -164,7 +164,7 @@
                 </ol>
                 <div class="card mb-4">
                     <div class="card-body">
-                        A continuación, se puede modificar el estado del pedido!
+                        Se puede realizar en cambio de estado
                     </div>
                 </div>
                 <div class="row">
@@ -173,13 +173,15 @@
                         <form method="post" action="<%=request.getContextPath()%>/Farm_Detalle_Pedido_Mod?action=editar">
                             <h4 class="text-center">Pedido</h4>
                             <div class="row">
-                                <div class="col-2">
-                                    <p >Fecha:</p>
+                                <div class="col-3">
+                                    <p >Fecha Pedido:</p>
+                                    <p >Fecha Entrega:</p>
                                     <p >Codigo:</p>
                                     <p >Estado:</p>
                                 </div>
                                 <div class="col-4">
                                     <p ><%=bPedidoD.getFecha()%></p>
+                                    <p ><%=bPedidoD.getFechaEntrega()%></p>
                                     <p ><%=bPedidoD.getCodigoV()%></p>
                                     <input class="form-control" type="hidden"  name="idPedido" value="<%=bPedidoD.getIdpedido()%>">
                                     <select name="idEstado">
@@ -191,7 +193,7 @@
                             </div>
                             <div style="padding-bottom:5px; display: flex;justify-content: center">
 
-                                <button type="submit" class="btn btn-primary" >Actualizar</button>
+                                <button type="submit" class="btn btn-warning" >Actualizar</button>
 
                             </div>
 
@@ -229,8 +231,17 @@
                             </div>
                         </div>
                     </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-9"></div>
+                    <%if(bPedidoD.getFechaEstatus().equals("no")){%>
+                    <div class="col-3 small fst-italic">No hubo modificaciones </div>
+                    <%}else{%>
+                    <div class="col-3 small fst-italic">Ultima modificacion:  <%=bPedidoD.getFechaEstatus()%> </div>
                     <%}%>
                 </div>
+                <%}%>
                 <div class="card mb-4">
                     <div class="card-header  bg-warning">
                         <i class="fas fa-table me-1"></i>
