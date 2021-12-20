@@ -20,37 +20,25 @@ public class Farm_Gestionar_PedidosServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String texto ="";
         request.setAttribute("textbuscar",texto);
-        BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
+        String pag= request.getParameter("pag")!= null? request.getParameter("pag"):"1";
 
-        if (farmacia != null) {
+        GPedidoDao gPedidoDao = new GPedidoDao();
+        int idF = (Integer) session.getAttribute("idFarmacia");
+        int cantPed= gPedidoDao.cantidadPedidos(idF);
 
-            String pag= request.getParameter("pag")!= null? request.getParameter("pag"):"1";
+        if(pag.length()<10){
 
-            GPedidoDao gPedidoDao = new GPedidoDao();
-            int idF = (Integer) session.getAttribute("idFarmacia");
-            int cantPed= gPedidoDao.cantidadPedidos(idF);
-
-            if(pag.length()<10){
-
-                boolean isNumeric =  false;
-                if(!(pag.equals(""))){
-                    isNumeric =  pag.matches("[+-]?\\d*(\\.\\d+)?");
-                }
-                if(isNumeric){
-                    request.setAttribute("pag",pag);
-                    String cantPedStr= String.valueOf(cantPed);
-                    request.setAttribute("listaPedido",gPedidoDao.listaPedidosPag(idF,pag));
-                    request.setAttribute("cantPed",cantPedStr);
-                    RequestDispatcher view = request.getRequestDispatcher("/Farmacia/gestionar_pedidos.jsp");
-                    view.forward(request,response);
-                }else{
-                    request.setAttribute("pag",pag);
-                    String cantPedStr= String.valueOf(cantPed);
-                    request.setAttribute("listaPedido",gPedidoDao.listaPedidosPag(idF,"1"));
-                    request.setAttribute("cantPed",cantPedStr);
-                    RequestDispatcher view = request.getRequestDispatcher("/Farmacia/gestionar_pedidos.jsp");
-                    view.forward(request,response);
-                }
+            boolean isNumeric =  false;
+            if(!(pag.equals(""))){
+                isNumeric =  pag.matches("[+-]?\\d*(\\.\\d+)?");
+            }
+            if(isNumeric){
+                request.setAttribute("pag",pag);
+                String cantPedStr= String.valueOf(cantPed);
+                request.setAttribute("listaPedido",gPedidoDao.listaPedidosPag(idF,pag));
+                request.setAttribute("cantPed",cantPedStr);
+                RequestDispatcher view = request.getRequestDispatcher("/Farmacia/gestionar_pedidos.jsp");
+                view.forward(request,response);
             }else{
                 request.setAttribute("pag",pag);
                 String cantPedStr= String.valueOf(cantPed);
@@ -59,12 +47,13 @@ public class Farm_Gestionar_PedidosServlet extends HttpServlet {
                 RequestDispatcher view = request.getRequestDispatcher("/Farmacia/gestionar_pedidos.jsp");
                 view.forward(request,response);
             }
-
-
-
-        } else {
-            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
-            viewError.forward(request, response);
+        }else{
+            request.setAttribute("pag",pag);
+            String cantPedStr= String.valueOf(cantPed);
+            request.setAttribute("listaPedido",gPedidoDao.listaPedidosPag(idF,"1"));
+            request.setAttribute("cantPed",cantPedStr);
+            RequestDispatcher view = request.getRequestDispatcher("/Farmacia/gestionar_pedidos.jsp");
+            view.forward(request,response);
         }
 
     }

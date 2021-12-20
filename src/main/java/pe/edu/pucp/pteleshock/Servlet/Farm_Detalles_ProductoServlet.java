@@ -20,9 +20,6 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
-
-        if (farmacia != null) {
         response.setContentType("text/html");
 
         String prod = request.getParameter("prod");
@@ -127,14 +124,6 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
             }
         }
 
-
-
-
-
-        } else {
-            RequestDispatcher viewError = request.getRequestDispatcher("/Cliente/errorAccesoDenegado.jsp");
-            viewError.forward(request, response);
-        }
     }
 
 }
