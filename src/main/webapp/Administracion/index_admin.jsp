@@ -55,7 +55,6 @@
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-
                 </div>
             </form>
             <!-- Navbar-->
@@ -144,7 +143,9 @@
                         </div>
                     </div>
                     <div class="container" style="height: 50px;bottom: 10%;right: 5%;position: absolute">
-                            <a class="btn boton_añadir_escape" role="button" aria-expanded="false" href="<%=request.getContextPath()%>/Admin_AddFarm"><i class="fas fa-plus-circle fs-3"></i></a>
+                        <a class="btn boton_añadir_escape" role="button" aria-expanded="false"
+                           href="<%=request.getContextPath()%>/Admin_AddFarm"><i
+                                class="fas fa-plus-circle fs-3"></i></a>
                     </div>
                 </main>
                 <footer class="py-4 bg-light" style="height: 7%">
@@ -169,8 +170,10 @@
                 <div class="card-body">
                     <h5 class="card-title p-2">¿Desea cerrar esta sesión?</h5>
                     <div class="row align-items-center" style="display: flex; justify-content: center">
-                        <a href="#" class="btn btn-primary my-auto col-3" role="button" aria-expanded="true">Cancelar</a>
-                        <form class="col-3 my-auto" method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                        <a href="#" class="btn btn-primary my-auto col-3" role="button"
+                           aria-expanded="true">Cancelar</a>
+                        <form class="col-3 my-auto" method="post"
+                              action="<%=request.getContextPath()%>/Login?action=logout">
                             <button class="btn btn-danger" type="submit">
                                 Salir
                             </button>

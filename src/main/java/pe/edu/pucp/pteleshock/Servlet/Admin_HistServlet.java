@@ -23,6 +23,7 @@ public class Admin_HistServlet extends HttpServlet {
         Dfarm_Dao dfarm_dao = new Dfarm_Dao();
         String action = request.getParameter("action") == null ? "" : request.getParameter("action");
         String pag = request.getParameter("pag") == null ? "1" : request.getParameter("pag");
+        if (pag.equals("")) {pag = "1";}
         System.out.println("accion: " + action);
         System.out.println("pag: " + pag);
         switch (action) {

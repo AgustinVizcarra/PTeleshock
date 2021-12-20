@@ -1,7 +1,6 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
 import pe.edu.pucp.pteleshock.Beans.BLbloqueadas;
-import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.ValidacionUnl_Dao;
 
 import javax.servlet.RequestDispatcher;
@@ -23,22 +22,32 @@ public class Admin_UnlockFarmServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         ValidacionUnl_Dao ufarmDao = new ValidacionUnl_Dao();
+        String pag = request.getParameter("pag") == null ? "1" : request.getParameter("pag");
+        if (pag.equals("")) {pag = "1";}
         String mensaje = request.getParameter("mensaje")==null?"":request.getParameter("mensaje");
         String idfarmacia = request.getParameter("idfarmacia")==null?"":request.getParameter("idfarmacia");
-        ArrayList<BLbloqueadas> farmaciabloqueadas = ufarmDao.listarBloqueada();
-        session.setAttribute("farmaciasBloqueadas",farmaciabloqueadas);
-        request.setAttribute("mensaje",mensaje);
-        request.setAttribute("idfarm",idfarmacia);
-        RequestDispatcher view = request.getRequestDispatcher("/Administracion/desbloquear_farmacia.jsp");
-        view.forward(request, response);
+        try{
+            ArrayList<BLbloqueadas> farmaciabloqueadas = ufarmDao.listarBloqueada(pag);
+            request.setAttribute("pag", pag);
+            request.setAttribute("cantidad",ufarmDao.cantidadListarBloqueadas());
+            session.setAttribute("farmaciasBloqueadas",farmaciabloqueadas);
+            request.setAttribute("mensaje",mensaje);
+            request.setAttribute("idfarm",idfarmacia);
+            RequestDispatcher view = request.getRequestDispatcher("/Administracion/desbloquear_farmacia.jsp");
+            view.forward(request, response);
+        }catch (Exception e) {
+            response.sendRedirect(request.getContextPath() + "/Admin_Index");
+        }
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        request.setCharacterEncoding("UTF-8");
         String idFarmaciastr = request.getParameter("farmaciaId")==null?"":request.getParameter("farmaciaId");
         String razon = request.getParameter("razon")==null?"":request.getParameter("razon");
         String admin = request.getParameter("admin");
-        response.setCharacterEncoding("UTF-8");
         //verificacion de campos nulos
         String mensaje = "Desbloqueo exitoso";
         if(!idFarmaciastr.equalsIgnoreCase("")&&!razon.equalsIgnoreCase("")){

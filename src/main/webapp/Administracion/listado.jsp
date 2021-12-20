@@ -1,5 +1,5 @@
-<%@ page import="pe.edu.pucp.pteleshock.Beans.BFarmacia" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="pe.edu.pucp.pteleshock.Beans.BFarmacia" %>
 <jsp:useBean id="listaFarmacias" scope="request"
              type="java.util.ArrayList<pe.edu.pucp.pteleshock.Beans.BFarmacia>"/>
 <!--Bfarmacia-->
