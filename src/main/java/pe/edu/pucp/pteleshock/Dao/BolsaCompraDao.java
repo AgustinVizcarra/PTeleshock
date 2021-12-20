@@ -277,6 +277,7 @@ public class BolsaCompraDao extends BaseDao {
 
     public boolean validacionReceta(HashMap<Integer, ArrayList<BPedidoEstado>> map){
         boolean validar=false;
+        val:
         for(Map.Entry<Integer, ArrayList<BPedidoEstado>> ee : map.entrySet()) {
             System.out.println("###");
             System.out.println(ee.getKey());
@@ -289,7 +290,9 @@ public class BolsaCompraDao extends BaseDao {
                 System.out.println(value.getIdProducto());
                 System.out.println("#####");
 
-                String sql="Select validacionreceta from detallepedido where idfarmacia = ? and idpedido =? and idproducto=?;";
+                String sql="Select dp.validacionreceta from detallepedido dp \n" +
+                        "inner join productoporfarmacia pxf on dp.idproducto=pxf.idproducto and dp.idfarmacia=pxf.idfarmacia\n" +
+                        "where dp.idfarmacia = ? and dp.idpedido =? and dp.idproducto=? and pxf.recetamedica=1;";
 
                 try (Connection connection = this.getConnection();
                      PreparedStatement pstmt = connection.prepareStatement(sql);) {
@@ -301,6 +304,7 @@ public class BolsaCompraDao extends BaseDao {
                         if (rs.next()) {
                             if(rs.getInt(1)==0){
                                 validar=true;
+                                break val;
                             }
                         }
                     }
