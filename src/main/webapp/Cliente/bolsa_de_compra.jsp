@@ -539,6 +539,27 @@
             </div>
         </nav>
 
+        <nav id="popup2" class="overlay">
+            <div class=" popup card text-center ">
+                <h5 class="card-header text-center text-light">Teleshock</h5>
+                <div class="card-body">
+                    <h5 class="card-title p-2"><%=session.getAttribute("msg2")%></h5>
+                    <a href="<%= request.getContextPath()%>/Client_Bolsa_Compra" class="btn btn-warning mb-2">Aceptar</a>
+                </div>
+            </div>
+        </nav>
+
+        <nav id="popup3" class="overlay">
+            <div class=" popup card text-center ">
+                <h5 class="card-header text-center text-light">Teleshock</h5>
+                <div class="card-body">
+                    <h5 class="card-title p-2"><%=session.getAttribute("msg3")%></h5>
+                    <a href="<%= request.getContextPath()%>/Client_Bolsa_Compra" class="btn btn-warning mb-2">Aceptar</a>
+                </div>
+            </div>
+        </nav>
+
+
         <nav id="salir" class="overlay">
             <div class=" popup card text-center " style="background-color: white">
                 <h5 class="card-header text-center">Teleshock</h5>
