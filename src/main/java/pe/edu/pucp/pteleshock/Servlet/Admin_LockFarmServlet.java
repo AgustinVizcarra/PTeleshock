@@ -19,6 +19,7 @@ public class Admin_LockFarmServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         request.setCharacterEncoding("UTF-8");
+
         String mensaje = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
         String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
         String razon = request.getParameter("razon") != null ? request.getParameter("razon") : "";
