@@ -13,6 +13,7 @@
 <% ArrayList<BListaPFarmacia> listaxFarmacia=(ArrayList<BListaPFarmacia>) request.getAttribute("listaxFarmacia"); %>
 <jsp:useBean type="java.lang.String" scope="request" id="cantProd" class="java.lang.String"/>
 <jsp:useBean type="java.lang.String" scope="request" id="textbuscar" class="java.lang.String"/>
+<jsp:useBean type="java.lang.String" scope="request" id="pag" class="java.lang.String"/>
 
 
 <html lang="en">
@@ -202,21 +203,40 @@
                     <% if(!(listaxFarmacia.isEmpty())){ %>
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-end">
+                            <li class="page-item  <%= Integer.parseInt(pag)==1?"disabled":""%>  ">
+                                <form method="post"   action="<%=request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=<%=Integer.parseInt(pag)-1 %>&textoBuscar=<%=textbuscar %> ">
+                                    <!-- <input class="form-control" type="hidden"   value="" placeholder="Buscar..." aria-label="Buscar..."
+                                            aria-describedby="btnNavbarSearch" /> -->
+                                    <button class="page-item"><a class="page-link" type="submit">Anterior</a></button>
+                                </form>
+                            </li>
 
                             <% int cantProdInt=Integer.parseInt(cantProd);%>
                             <% int resto= cantProdInt%12==0? 0:1; %>
                             <% for(int i=1; i<Math.floor(cantProdInt/12)+resto+1; i++) { %>
 
 
-
                             <form method="post"   action="<%=request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=<%=i%>&textoBuscar=<%=textbuscar %> ">
                                <!-- <input class="form-control" type="hidden"   value="" placeholder="Buscar..." aria-label="Buscar..."
                                        aria-describedby="btnNavbarSearch" /> -->
-                                <button class="page-item"><a class="page-link" type="submit"><%=i%></a></button>
+                                <button class="page-item <%= pag.equals(String.valueOf(i))?"active":""%>"><a class="page-link" type="submit"><%=i%></a></button>
 
                             </form>
 
                             <% } %>
+
+
+                            <li class="page-item <%=Integer.parseInt(pag)==Math.floor(cantProdInt/12)+resto?"disabled":""%>  ">
+                                <form method="post"   action="<%=request.getContextPath()%>/Farm_Vista_ProductosServlet?pag=<%=Integer.parseInt(pag)+1 %>&textoBuscar=<%=textbuscar %> ">
+                                    <!-- <input class="form-control" type="hidden"   value="" placeholder="Buscar..." aria-label="Buscar..."
+                                            aria-describedby="btnNavbarSearch" /> -->
+                                    <button class="page-item"><a class="page-link" type="submit">Siguiente</a></button>
+                                </form>
+                            </li>
+
+
+
+
 
                         </ul>
                     </nav>
