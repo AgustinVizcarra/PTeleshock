@@ -293,7 +293,7 @@
                                 <% if (filtrar == 0) {%>
                                 <ul class="pagination justify-content-center">
                                     <% for (int i = 1; i < Math.floor(cantidad / 4) + resto + 1; i++) { %>
-                                    <li class="page-item"><a class="page-link"
+                                    <li class="page-item <%=pag.equals(i+"")?"active":""%>"><a class="page-link"
                                                              href="<%= request.getContextPath()%>/Admin_Farm_List?pag=<%=i %>"><%=i%>
                                     </a></li>
                                     <% } %>
@@ -302,7 +302,7 @@
                                 } else {%>
                                 <ul class="pagination justify-content-center">
                                     <% for (int i = 1; i < Math.floor(cantidad / 4) + resto + 1; i++) { %>
-                                    <li class="page-item"><a class="page-link"
+                                    <li class="page-item <%=pag.equals(i+"")?"active":""%>"><a class="page-link"
                                                              href="<%= request.getContextPath()%>/Admin_Farm_List?iddistrito=<%=distrito.getId_distrito()%>&pag=<%=i %>"><%=i%>
                                     </a></li>
                                     <% } %>
