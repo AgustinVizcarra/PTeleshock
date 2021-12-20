@@ -332,7 +332,7 @@ public class GPedidoDao extends BaseDao {
         String sql = "select p.idpedido,p.fechapedido, u.nombre,u.apellido,u.dni,p.codigodeventa,p.preciototal from detallepedido dp\n" +
                 "                    inner join pedido p on (dp.idpedido=p.idpedido)\n" +
                 "                    inner join usuario u on (p.idusuario=u.idusuario)\n" +
-                "                    where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+"  and (lower(u.nombre) like ? or lower(u.apellido) like ? or u.dni like ?)  #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
+                "                    where not (p.idestatuspedido = 1) and dp.idfarmacia="+idFarmacia+"  and (lower(u.nombre) like ? or lower(u.apellido) like ? or u.dni like ? or date(p.fechapedido) like ?)  #idfarmacia es un parámetro que varía de acuerdo a la farmacia\n" +
                 "                    group by dp.idpedido\n" +
                 "                    order by p.fechapedido desc limit "+(pagint-1)*6 +",6;";
 
@@ -341,6 +341,7 @@ public class GPedidoDao extends BaseDao {
             pstmt.setString(1, "%" + nombre + "%");
             pstmt.setString(2, "%" + nombre + "%");
             pstmt.setString(3, "%" + nombre + "%");
+            pstmt.setString(4, "%" + nombre + "%");
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     BPedidoG bpg = new BPedidoG();
