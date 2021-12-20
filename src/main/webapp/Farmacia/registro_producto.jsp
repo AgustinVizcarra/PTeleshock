@@ -233,7 +233,7 @@
 
 
                             <div style="display: flex; justify-content: center; margin-bottom: 12px" >
-                                <input accept="image/png,image/jpeg,image/jpg" class="form-control" type="file" name="foto" style="width: 60% "  id="formFile1">
+                                <input accept="image/png,image/jpeg,image/jpg" required class="form-control" type="file" name="foto" style="width: 60% "  id="formFile1">
                             </div>
 
 
