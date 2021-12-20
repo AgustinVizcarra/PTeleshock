@@ -158,11 +158,13 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
                 }
 
                 if(isNumeric){
+                    request.setAttribute("pag",pag);
                     request.setAttribute("listaxFarmacia", pxFarDao.buscarProductoPorNombre(idF,pag,texto));
                     RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productosFiltrados.jsp");
                     view.forward(request, response);
 
                 }else{
+                    request.setAttribute("pag",pag);
                     request.setAttribute("listaxFarmacia", pxFarDao.buscarProductoPorNombre(idF,"1",texto));
                     RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productosFiltrados.jsp");
                     view.forward(request, response);
@@ -174,9 +176,6 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
             viewError.forward(request, response);
         }
 
-
-
     }
-
 
 }
