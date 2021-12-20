@@ -475,7 +475,7 @@
                                                         cal.add(Calendar.MONTH, +1);
                                                                                                    %>
                                                    value="<%=LocalDate.now()+"T"+time.format(formatter2)%>"
-                                                   min="<%=LocalDate.now()+"T"+time.format(formatter2)%>" max="<%=format.format(cal.getTime())+"T"+format1.format(cal.getTime())%>"
+                                                   min="<%=LocalDate.now()+"T"+"09:30"%>" max="<%=format.format(cal.getTime())+"T"+format1.format(cal.getTime())%>"
                                                    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
                                             <span class="validity"></span>
                                         </div>
