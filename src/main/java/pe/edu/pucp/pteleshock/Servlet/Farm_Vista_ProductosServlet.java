@@ -29,7 +29,7 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
 
                 PxFarDao pxFarDao=new PxFarDao();
 
-                int cant=pxFarDao.cantidadProductosF(idF);
+                int cant=pxFarDao.cantidadProductosFelimi(idF);
                 String cantStr=String.valueOf(cant);
 
                 boolean isNumeric =  false;

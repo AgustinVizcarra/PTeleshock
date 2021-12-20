@@ -26,7 +26,8 @@ public class Farm_Detalles_PedidoServlet extends HttpServlet {
             GPedidoDao gPedidoDao = new GPedidoDao();
             String id = request.getParameter("id");
 
-            if(id.length()<10){
+
+            if(id.length()<10 && id!=null && !(id.isEmpty()) ){
 
                 boolean isIdNumeric =  false;
 
