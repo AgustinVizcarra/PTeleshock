@@ -22,8 +22,6 @@ public class Client_FarmaciasServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");
-
-
         String idDistritoStr = request.getParameter("idD") != null ? request.getParameter("idD") : String.valueOf(cliente.getIdDistrito());
         String pagStr = request.getParameter("pag") != null ? request.getParameter("pag") : "1";
         String nombreFarmaciaBuscar = request.getParameter("nombreFarmacia") != null ? request.getParameter("nombreFarmacia") : "";
@@ -53,6 +51,8 @@ public class Client_FarmaciasServlet extends HttpServlet {
             int totalPag = (int) Math.ceil((double) fxDao.obtenerNumFarmacias(idDistritoStr, nombreFarmaciaBuscar) / (double) pedidosxPag);
             if (0 < pag & pag <= totalPag) {
                 inicio = pag * pedidosxPag - pedidosxPag;
+            }else {
+                pag = 1;
             }
 
             request.setAttribute("listaxFarmacias", fxDao.listarFarmaciasPorDistritoConBusqueda(idDistrito, inicio, nombreFarmaciaBuscar));

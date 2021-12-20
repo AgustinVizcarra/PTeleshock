@@ -39,6 +39,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
 
             session.setAttribute("hora-min", hora.format(f));
             ProductosFDao productosFDao = new ProductosFDao();
+            String msg1 = "Debe ingresar la fecha de entrega.";
 
             switch (action) {
                 case "anadir":
@@ -54,10 +55,10 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     ArrayList<BFarmacia> listaFarmacia = farmaciaDao.getListaTodasFarmacias("");
                     int cantFarm = listaFarmacia.size();
                     if (!idPedidoStr.equals("")) {
-                        listBolsa1.add(bolsaCompraDao.pedidosCarrito(Integer.parseInt(idPedidoStr),Integer.parseInt(idProductoStr)));
+                        listBolsa1.add(bolsaCompraDao.pedidosCarrito(Integer.parseInt(idPedidoStr), Integer.parseInt(idProductoStr)));
                         session.setAttribute("bolsita", listBolsa1);
                     }
-                    request.getRequestDispatcher("/Client_Productos_F").forward(request,response);
+                    request.getRequestDispatcher("/Client_Productos_F").forward(request, response);
                     break;
                 case "listar":
                     ArrayList<BPedidoEstado> listBolsa3 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
@@ -67,7 +68,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     int cantFarm1 = listaFarmacia1.size();
                     System.out.println(cantFarm1);
                     HashMap<Integer, ArrayList<BPedidoEstado>> map5 = new HashMap<>();
-                    session.setAttribute("map",map5);
+                    session.setAttribute("map", map5);
                     for (int i = 1; i <= cantFarm1; i++) {
                         ArrayList<BPedidoEstado> lista = new ArrayList<>();
                         for (BPedidoEstado bp : listBolsa3) {
@@ -84,10 +85,10 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                         session.setAttribute("msg", "No tiene productos agregados a su bolsa de compras");
                         session.removeAttribute("msg1");
                     }
-                    System.out.println("msg1"+session.getAttribute("msg1"));
+                    System.out.println("msg1" + session.getAttribute("msg1"));
                     RequestDispatcher view1 = request.getRequestDispatcher("/Cliente/bolsa_de_compra.jsp");
                     view1.forward(request, response);
-                    session.removeAttribute("msg1");
+                    //session.removeAttribute("msg1");
                     break;
                 case "borrar":
                     String idFarmaciaStr = request.getParameter("idF") != null ? request.getParameter("idF") : "";
@@ -99,7 +100,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     bolsaCompraDao.eliminarCarrito(Integer.parseInt(idProd), Integer.parseInt(idPedido), Integer.parseInt(idFarmaciaStr));
                     ArrayList<BPedidoEstado> listBolsa2 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
                     HashMap<Integer, Integer> map1 = (HashMap<Integer, Integer>) session.getAttribute("maps");
-                    System.out.println( bped.getNombreProducto());
+                    System.out.println(bped.getNombreProducto());
                     if (bped != null) {
                         for (int i = 0; i < listBolsa2.size(); i++) {
                             BPedidoEstado bped1 = listBolsa2.get(i);
@@ -114,10 +115,11 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                         }
                         session.setAttribute("maps", map1);
                         session.setAttribute("bolsita", listBolsa2);
-                        System.out.println("validacion: "+listBolsa2.isEmpty());
+                        System.out.println("validacion: " + listBolsa2.isEmpty());
                     } else {
                         System.out.println("es nulo");
                     }
+                    session.setAttribute("msg1", msg1);
                     response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra");
                     break;
                 case "cancelar":
@@ -130,6 +132,11 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     bolsaCompraDao.cancelarPedido(idP);
                     response.sendRedirect(request.getContextPath() + "/Client_Estado_Pendiente?idPG=" + cod + "&idFPd=" + idF);
                     break;
+                default:
+                    String idFarmaciaStr2 = request.getParameter("idF") != null ? request.getParameter("idF") : "";
+
+                    response.sendRedirect(request.getContextPath() + "/Client_Productos_F?idF=" + idFarmaciaStr2);
+
             }
 
         } else {
@@ -145,6 +152,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
         BolsaCompraDao bolsaCompraDao = new BolsaCompraDao();
         HttpSession session = request.getSession();
         BUsuario cliente = (BUsuario) session.getAttribute("clienteSession");
+        String msg1 = "Debe ingresar la fecha de entrega.";
 
         switch (action) {
             case "actualizarFoto":
@@ -164,6 +172,8 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                         break;
                     }
                 }
+                session.setAttribute("msg1", msg1);
+                System.out.println("msg1" + session.getAttribute("msg1"));
                 response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra");
                 break;
             case "actualizar":
@@ -184,9 +194,9 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                         break;
                     }
                 }
-                String msg1="Debe ingresar la fecha de entrega";
-                session.setAttribute("msg1",msg1);
-                System.out.println("msg1"+session.getAttribute("msg1"));
+                //Aviso de la fecha.
+                session.setAttribute("msg1", msg1);
+                System.out.println("msg1" + session.getAttribute("msg1"));
                 response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra");
                 break;
             case "agregar":
@@ -223,12 +233,12 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
 
                 if (producto == null) {
                     session.setAttribute("idPed", Integer.toString(idPedido));
-                    session.setAttribute("idProd",idProdStr);
+                    session.setAttribute("idProd", idProdStr);
                     bolsaCompraDao.agregarProductoCarrito(idPedido, Integer.parseInt(idProdStr), Integer.parseInt(cantidadPStr), Integer.parseInt(idFarmaciaStr));
-                    response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra?action=anadir&idF=" + idFarmacia + "#popup1"); //+ "&idF=" + idFarmacia);
+                    response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra?action=anadir&idF=" + idFarmacia + "#pAnadido"); //+ "&idF=" + idFarmacia);
 
                 } else {
-                    response.sendRedirect(request.getContextPath() + "/Client_Productos_F?idF=" + idFarmacia); //+ "&idF=" + idFarmacia);
+                    response.sendRedirect(request.getContextPath() + "/Client_Detalles_Producto?idF=" + idFarmacia); //+ "&idF=" + idFarmacia);
                     session.setAttribute("proAgregado", "El producto ya se encuentra en su bolsa de compras");
                 }
                 break;
@@ -284,8 +294,12 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
 
 
                 }
+                session.setAttribute("msg1", msg1);
                 response.sendRedirect(request.getContextPath() + "/Client_Listado_Producto");
                 break;
+            default:
+                String idFarmacia3 = request.getParameter("idF") != null ? request.getParameter("idF") : "";
+                response.sendRedirect(request.getContextPath() + "/Client_Productos_F?idF=" + idFarmacia3);
         }
 
     }

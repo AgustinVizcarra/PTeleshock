@@ -90,6 +90,33 @@ public class Farm_Detalles_ProductoServlet extends HttpServlet {
                     }
 
                     break;
+
+                case "restaurar":
+                    BListaPFarmacia exProd1 = dpdao.existeProParaEliminar(idF,prod);
+
+                    int idproducto1= Integer.parseInt(prod);
+                    if (exProd1 != null) {
+                        request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));
+                        request.setAttribute("idp",prod);
+                        request.setAttribute("valor","noborr");
+                        RequestDispatcher view = request.getRequestDispatcher("/Farmacia/detalles_producto.jsp");
+                        view.forward(request,response);
+                    } else {
+                        try {
+
+                            dpdao.productorestauradologico(idF,idproducto1);
+
+                            response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
+
+                        } catch (SQLException e) {
+                            response.sendRedirect(request.getContextPath() + "/Farm_Vista_ProductosServlet");
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    break;
+
                 case "detalles":
 
                     request.setAttribute("listadetallesP",dpdao.listadetallesP(idF,prod));

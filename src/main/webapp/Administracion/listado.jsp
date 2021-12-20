@@ -146,7 +146,8 @@
                                                aria-describedby="btnNavbarSearch" <%
                                             if (textoBusqueda != null) {%>
                                                value="<%=textoBusqueda%>"
-                                                <% } %> />
+                                                <% }%>/>
+
                                         <% if (filtrar == 1) {%>
                                         <input class="form-control" type="text" name="iddistrito"
                                                hidden aria-describedby="btnNavbarSearch"

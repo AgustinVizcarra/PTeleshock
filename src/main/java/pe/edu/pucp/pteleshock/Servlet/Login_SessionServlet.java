@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "LoginServlet", value = "/Login")
+@WebServlet(name = "LoginServlet", urlPatterns = {"/Login",""})
 public class Login_SessionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,18 +56,26 @@ public class Login_SessionServlet extends HttpServlet {
 
                 if (usuario != null) {
                     HttpSession session = request.getSession();
-
                     int rol = usuario.getIdRol();
                     switch (rol) {
                         case 1:
-                            session.setAttribute("clienteSession", usuario);
-                            session.setAttribute("bolsita",new ArrayList<BPedidoEstado>());
-                            int codigoVenta=0;
-                            session.setAttribute("codVenta",codigoVenta);
-                            HashMap<Integer, Integer> map= new HashMap<>();
-                            map.put(0,0);
-                            session.setAttribute("maps",map);
-                            response.sendRedirect(request.getContextPath() + "/Client_Farmacias");
+                            if(usuario.getElimLogico().equals("habilitado")){
+                                session.setAttribute("clienteSession", usuario);
+                                session.setAttribute("bolsita",new ArrayList<BPedidoEstado>());
+                                int codigoVenta=0;
+                                session.setAttribute("codVenta",codigoVenta);
+                                HashMap<Integer, Integer> map= new HashMap<>();
+                                map.put(0,0);
+                                session.setAttribute("maps",map);
+                                response.sendRedirect(request.getContextPath() + "/Client_Farmacias");
+                            }else{
+                                mensaje = "c";
+                                HttpSession session_e = request.getSession();
+                                session_e.setAttribute("mensajealerta",mensaje);
+                                session_e.setAttribute("mail",correo);
+                                session_e.setAttribute("pwd",pass);
+                                response.sendRedirect(request.getContextPath() + "/Login");
+                            }
                             break;
                         case 2:
                             session.setAttribute("adminSession", usuario);
@@ -91,8 +99,6 @@ public class Login_SessionServlet extends HttpServlet {
                         default:
                             System.out.println("ocurrio un error en el switch del login");
                     }
-
-                    System.out.println("tracer 1");
                 } else {
                     mensaje = "a";
                     HttpSession session_e = request.getSession();

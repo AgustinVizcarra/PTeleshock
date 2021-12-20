@@ -132,7 +132,19 @@ public class DetProdDao extends BaseDao {
         }
     }
 
+    public void productorestauradologico(int idFarmacia,int idproducto) throws SQLException{
+        String sql2 = "update productoporfarmacia set estadoproducto= 'habilitado' where idproducto=? and idfarmacia="+idFarmacia+";";
 
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt2 = connection.prepareStatement(sql2);) {
+
+            pstmt2.setInt(1, idproducto);
+
+            pstmt2.executeUpdate();
+
+
+        }
+    }
 
 
     public void listarImg (int idFarmacia,String prod, HttpServletResponse response){

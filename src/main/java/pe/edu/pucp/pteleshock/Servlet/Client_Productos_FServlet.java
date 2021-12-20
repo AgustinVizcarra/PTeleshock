@@ -33,13 +33,14 @@ public class Client_Productos_FServlet extends HttpServlet {
             idFarmacia = Integer.parseInt(idFarmaciaStr);
             pag = Integer.parseInt(pagStr);
             ProductosFDao productosFDao = new ProductosFDao();
-
             // Listar pedidos general | Validación de páginas
             int inicio = 0;
             int pedidosxPag = 8;
             int totalPag = (int) Math.ceil((double) productosFDao.obtenerNumProductos(idFarmaciaStr, nombreProductoBuscar) / (double) pedidosxPag);
             if (0 < pag & pag <= totalPag) {
                 inicio = pag * pedidosxPag - pedidosxPag;
+            }else {
+                pag = 1;
             }
 
             if (fxDDao.obtenerFarmacia(idFarmacia)== null){

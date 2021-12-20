@@ -15,8 +15,6 @@ public class PerfilFarmDao extends BaseDao{
         ArrayList<BPerfilFarmacia> perfilFarmacia = new ArrayList<>();
 
         try {
-
-
             Connection connection = this.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("select u.nombre,u.correo,u.ruc,concat(f.direccion,\"-\",d.nombre) as 'direccion' \n" +
@@ -29,17 +27,13 @@ public class PerfilFarmDao extends BaseDao{
             while (rs.next()) {
 
                 BPerfilFarmacia pf = new BPerfilFarmacia();
-
                 pf.setNombre(rs.getString(1));
                 pf.setCorreo(rs.getString(2));
                 pf.setRuc(rs.getString(3));
                 pf.setDireccion(rs.getString(4));
-
-
                 perfilFarmacia.add(pf);
+
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

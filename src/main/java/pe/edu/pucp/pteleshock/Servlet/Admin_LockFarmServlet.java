@@ -1,6 +1,7 @@
 package pe.edu.pucp.pteleshock.Servlet;
 
 import pe.edu.pucp.pteleshock.Beans.BFarmacia;
+import pe.edu.pucp.pteleshock.Beans.BUsuario;
 import pe.edu.pucp.pteleshock.Dao.FarmaciaDao;
 
 import javax.servlet.RequestDispatcher;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "Admin_BloqFarmServlet", value = "/Admin_BloqFarm")
@@ -17,7 +19,6 @@ public class Admin_LockFarmServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         request.setCharacterEncoding("UTF-8");
-
         String mensaje = request.getParameter("mensaje") != null ? request.getParameter("mensaje") : "";
         String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
         String razon = request.getParameter("razon") != null ? request.getParameter("razon") : "";
@@ -32,11 +33,9 @@ public class Admin_LockFarmServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
-
-        String razon = request.getParameter("razon") != null ? request.getParameter("razon") : "";
-        String ruc = request.getParameter("ruc") != null ? request.getParameter("ruc") : "";
+        String razon = request.getParameter("razon").strip() != null ? request.getParameter("razon").strip() : "";
+        String ruc = request.getParameter("ruc").strip() != null ? request.getParameter("ruc").strip() : "";
         String admin = request.getParameter("admin") != null ? request.getParameter("admin") : "";
-
 
         System.out.println(ruc);
 
@@ -47,7 +46,7 @@ public class Admin_LockFarmServlet extends HttpServlet {
 
         boolean campos_nulos = false;
 
-        if (request.getParameter("razon").isEmpty() || request.getParameter("ruc").isEmpty()) {
+        if (request.getParameter("razon").strip().isEmpty() || request.getParameter("ruc").strip().isEmpty()) {
             campos_nulos = true;
             mensaje = "Usted envio campos nulos, por favor intente de nuevo";
         }

@@ -46,7 +46,7 @@ public class Admin_UnlockFarmServlet extends HttpServlet {
         response.setContentType("text/html");
         request.setCharacterEncoding("UTF-8");
         String idFarmaciastr = request.getParameter("farmaciaId")==null?"":request.getParameter("farmaciaId");
-        String razon = request.getParameter("razon")==null?"":request.getParameter("razon");
+        String razon = request.getParameter("razon").strip()==null?"":request.getParameter("razon").strip();
         String admin = request.getParameter("admin");
         //verificacion de campos nulos
         String mensaje = "Desbloqueo exitoso";

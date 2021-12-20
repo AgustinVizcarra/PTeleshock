@@ -19,7 +19,7 @@ public class FarmaciasPorDistritoDao extends BaseDao {
         String sql = "select u.nombre as 'Farmacias', dis.nombre as 'Distrito', f.direccion, f.idfarmacia,u.iddistrito from farmacia f\n" +
                 "inner join usuario u on (f.idusuario = u.idusuario)\n" +
                 "inner join distrito dis on (u.iddistrito = dis.iddistrito)\n" +
-                "where dis.iddistrito = ? limit " + inicio + ",6;";
+                "where dis.iddistrito = ? and f.estatus='desbloqueado' " + inicio + ",6";
 
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -54,7 +54,7 @@ public class FarmaciasPorDistritoDao extends BaseDao {
         String sql = "select u.nombre as 'Farmacias', dis.nombre as 'Distrito', f.direccion, f.idfarmacia,u.iddistrito from farmacia f\n" +
                 "inner join usuario u on (f.idusuario = u.idusuario)\n" +
                 "inner join distrito dis on (u.iddistrito = dis.iddistrito)\n" +
-                "where lower(u.nombre) like lower(?) and dis.iddistrito = ? limit " + inicio + ",6;";
+                "where lower(u.nombre) like lower(?) and f.estatus='desbloqueado'and dis.iddistrito = ? limit " + inicio + ",6;";
 
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -70,7 +70,6 @@ public class FarmaciasPorDistritoDao extends BaseDao {
                     fxD.setIdDistritoF(rs.getString(5));
                     listaFarmaciasPorDistrito.add(fxD);
                 }
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,7 +84,7 @@ public class FarmaciasPorDistritoDao extends BaseDao {
 
         int numFarm = 0;
 
-        String sql = "select count(*) from (select f.idfarmacia, u.nombre, u.iddistrito from farmacia f inner join usuario u on (f.idusuario = u.idusuario) where iddistrito = ? and lower(u.nombre) like lower(?)) as `farmacias`";
+        String sql = "select count(*) from (select f.idfarmacia, u.nombre, u.iddistrito from farmacia f inner join usuario u on (f.idusuario = u.idusuario) where iddistrito = ? and f.estatus='desbloqueado'and lower(u.nombre) like lower(?)) as `farmacias`";
 
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -113,7 +112,7 @@ public class FarmaciasPorDistritoDao extends BaseDao {
 
         String sql = "SELECT f.idfarmacia, u.nombre,u.iddistrito,d.nombre,f.direccion FROM farmacia f \n" +
                 "inner join usuario u on (f.idusuario = u.idusuario) \n" +
-                "inner join distrito d on (u.iddistrito=d.iddistrito) where f.idfarmacia = ?;";
+                "inner join distrito d on (u.iddistrito=d.iddistrito) where f.idfarmacia = ? and f.estatus='desbloqueado';";
 
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {

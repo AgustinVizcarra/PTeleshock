@@ -41,6 +41,8 @@ public class Client_Listado_ProductoServlet extends HttpServlet {
 
         if (0<pag & pag <= totalPag ) {
             inicio = pag*pedidosxPag - pedidosxPag;
+        }else {
+            pag = 1;
         }
 
         request.setAttribute("listaPedidosG", pedidosGDao.listarPedidosGeneral(inicio, cliente.getIdUsuario()));

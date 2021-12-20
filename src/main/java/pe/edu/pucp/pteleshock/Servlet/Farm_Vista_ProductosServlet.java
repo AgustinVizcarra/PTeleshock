@@ -22,47 +22,105 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
         BUsuario farmacia = (BUsuario) session.getAttribute("farmaciaSession");
 
         if (farmacia != null) {
-            int idF = (Integer) session.getAttribute("idFarmacia");
-            String pag = request.getParameter("pag") !=null ? request.getParameter("pag"): "1";
+            String verelimi= request.getParameter("verelim") !=null ? request.getParameter("verelim"): "norm";;
+            if (verelimi.equals("elimi")){
+                int idF = (Integer) session.getAttribute("idFarmacia");
+                String pag = request.getParameter("pag") !=null ? request.getParameter("pag"): "1";
 
-            PxFarDao pxFarDao=new PxFarDao();
+                PxFarDao pxFarDao=new PxFarDao();
 
-            int cant=pxFarDao.cantidadProductosF(idF);
-            String cantStr=String.valueOf(cant);
+                int cant=pxFarDao.cantidadProductosF(idF);
+                String cantStr=String.valueOf(cant);
 
-            boolean isNumeric =  false;
+                boolean isNumeric =  false;
 
-            if(!(pag.equals(""))){
-                isNumeric =  pag.matches("[+-]?\\d*(\\.\\d+)?");
-            }
+                if(!(pag.equals(""))){
+                    isNumeric =  pag.matches("[+-]?\\d*(\\.\\d+)?");
+                }
 
-            int lengthPag = pag.length();
-            if(isNumeric && lengthPag<10){
+                int lengthPag = pag.length();
+                if(isNumeric && lengthPag<10){
 
-                int pagInt = Integer.parseInt(pag);
-                int resto = cant%12==0? 0:1;
-                if(pagInt <= (Math.floor(cant/12)+resto) && pagInt>0 ){
-                    request.setAttribute("listaxFarmacia",pxFarDao.listarProductosF(idF,pag));
-                    request.setAttribute("cantProd",cantStr);
-                    RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
-                    view.forward(request,response);
+                    int pagInt = Integer.parseInt(pag);
+                    int resto = cant%12==0? 0:1;
+                    if(pagInt <= (Math.floor(cant/12)+resto) && pagInt>0 ){
+                        request.setAttribute("pag",pag);
+                        request.setAttribute("listaxFarmacia",pxFarDao.listarProductosFeliminado(idF,pag));
+                        request.setAttribute("cantProd",cantStr);
+                        request.setAttribute("el","eliminado");
+                        RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
+                        view.forward(request,response);
+                    }else{
+                        pag=String.valueOf((int) (Math.floor(cant/12)+resto));
+                        request.setAttribute("pag",pag);
+                        String pagFinal = String.valueOf((int)(Math.floor(cant/12)+resto));
+                        request.setAttribute("listaxFarmacia",pxFarDao.listarProductosFeliminado(idF,pagFinal));
+                        request.setAttribute("cantProd",cantStr);
+                        request.setAttribute("el","eliminado");
+                        RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
+                        view.forward(request,response);
+                    }
+
+
+
                 }else{
-                    String pagFinal = String.valueOf((int)(Math.floor(cant/12)+resto));
-                    request.setAttribute("listaxFarmacia",pxFarDao.listarProductosF(idF,pagFinal));
+                    cantStr = "noExiste";
+                    request.setAttribute("listaxFarmacia",pxFarDao.listarProductosFeliminado(idF,"1"));
                     request.setAttribute("cantProd",cantStr);
+                    request.setAttribute("el","eliminado");
                     RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
                     view.forward(request,response);
                 }
 
-
-
             }else{
-                cantStr = "noExiste";
-                request.setAttribute("listaxFarmacia",pxFarDao.listarProductosF(idF,"1"));
-                request.setAttribute("cantProd",cantStr);
-                RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
-                view.forward(request,response);
+                int idF = (Integer) session.getAttribute("idFarmacia");
+                String pag = request.getParameter("pag") !=null ? request.getParameter("pag"): "1";
+
+                PxFarDao pxFarDao=new PxFarDao();
+
+                int cant=pxFarDao.cantidadProductosF(idF);
+                String cantStr=String.valueOf(cant);
+
+                boolean isNumeric =  false;
+
+                if(!(pag.equals(""))){
+                    isNumeric =  pag.matches("[+-]?\\d*(\\.\\d+)?");
+                }
+
+                int lengthPag = pag.length();
+                if(isNumeric && lengthPag<10){
+
+                    int pagInt = Integer.parseInt(pag);
+                    int resto = cant%12==0? 0:1;
+                    if(pagInt <= (Math.floor(cant/12)+resto) && pagInt>0 ){
+                        request.setAttribute("pag",pag);
+                        request.setAttribute("listaxFarmacia",pxFarDao.listarProductosF(idF,pag));
+                        request.setAttribute("cantProd",cantStr);
+                        RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
+                        view.forward(request,response);
+                    }else{
+                        pag=String.valueOf((int) (Math.floor(cant/12)+resto));
+                        request.setAttribute("pag",pag);
+                        String pagFinal = String.valueOf((int)(Math.floor(cant/12)+resto));
+                        request.setAttribute("listaxFarmacia",pxFarDao.listarProductosF(idF,pagFinal));
+                        request.setAttribute("cantProd",cantStr);
+                        RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
+                        view.forward(request,response);
+                    }
+
+
+
+                }else{
+                    cantStr = "noExiste";
+                    request.setAttribute("listaxFarmacia",pxFarDao.listarProductosF(idF,"1"));
+                    request.setAttribute("cantProd",cantStr);
+                    RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productos.jsp");
+                    view.forward(request,response);
+                }
             }
+
+
+
 
 
 
@@ -100,11 +158,13 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
                 }
 
                 if(isNumeric){
+                    request.setAttribute("pag",pag);
                     request.setAttribute("listaxFarmacia", pxFarDao.buscarProductoPorNombre(idF,pag,texto));
                     RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productosFiltrados.jsp");
                     view.forward(request, response);
 
                 }else{
+                    request.setAttribute("pag",pag);
                     request.setAttribute("listaxFarmacia", pxFarDao.buscarProductoPorNombre(idF,"1",texto));
                     RequestDispatcher view = request.getRequestDispatcher("/Farmacia/visualizar_productosFiltrados.jsp");
                     view.forward(request, response);
@@ -116,9 +176,6 @@ public class Farm_Vista_ProductosServlet extends HttpServlet {
             viewError.forward(request, response);
         }
 
-
-
     }
-
 
 }

@@ -183,7 +183,11 @@
                     <img class="img" style="width: 50px; height: 50px;"
                          src="https://cdn-icons-png.flaticon.com/512/142/142311.png">
                     <h5 class="card-title p-2">Esperamos volver a verlo pronto</h5>
-                    <a href="<%= request.getContextPath()%>/Login" class="btn btn-danger mb-2">Aceptar</a>
+                    <form method="post" action="<%=request.getContextPath()%>/Login?action=logout">
+                        <button class="btn btn-danger mb-2" type="submit">
+                            Aceptar
+                        </button>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -200,6 +204,19 @@
                         </button>
                     </form>
 
+                </div>
+            </div>
+        </nav>
+
+        <nav id="popup3" class="overlay">
+            <div class=" popup card text-center ">
+                <h5 class="card-header text-center">Teleshock</h5>
+                <div class="card-body">
+                    <img class="img" style="width: 50px; height: 50px;"
+                         src="https://cdn-icons-png.flaticon.com/512/179/179386.png">
+                    <br>
+                    <h5 class="card-title p-2">Su cuenta no puede ser eliminada, ya que cuenta con pedidos pendientes.</h5>
+                    <a href="<%= request.getContextPath()%>/Client_Perfil" class="btn btn-danger mb-2">Aceptar</a>
                 </div>
             </div>
         </nav>
