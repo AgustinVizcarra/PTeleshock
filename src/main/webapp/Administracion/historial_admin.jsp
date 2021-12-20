@@ -103,15 +103,14 @@
                             </a>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small"><font color="#00152D">Logueado como:</font></div>
-                        <font color="#00152D"><%=adminSession.getNombre()%>
-                        </font>
+                    <div class="sb-sidenav-footer" style="height: 10%; background-color: #00152D; color: darkgrey">
+                        <div class="small">Logueado como:</div>
+                        <%=adminSession.getNombre() + " " + adminSession.getApellido()%>
                     </div>
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-                <main class="clase_historial-farmacia" style="height: 92%">
+                <main class="clase_historial-farmacia" style="height: 100%">
                     <div class="container-fluid px-4">
                         <h1 class="mt-4 text-center texto-central" style="padding-top: 0px; padding-bottom: 5px">
                             Historial</h1>
@@ -201,7 +200,7 @@
                         </div>
                     </div>
                 </main>
-                <footer class="py-4 bg-light mt-auto" style="height: 8%">
+                <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Teleshock.Inc &copy; 2021</div>

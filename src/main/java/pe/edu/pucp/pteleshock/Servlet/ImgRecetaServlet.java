@@ -39,15 +39,27 @@ public class ImgRecetaServlet extends HttpServlet {
         String idprodstr = request.getParameter("idProd").strip();
         String idpedstr = request.getParameter("idP");
         String idfarmstr = request.getParameter("idF");
-        int idprod= Integer.parseInt(idprodstr);
-        int idped= Integer.parseInt(idpedstr);
+        int idprod = Integer.parseInt(idprodstr);
+        int idped = Integer.parseInt(idpedstr);
         int idF = Integer.parseInt(idfarmstr);
-        Part part=request.getPart("fotoReceta");
+        Part part = request.getPart("fotoReceta");
+        System.out.println(idprodstr);
+        System.out.println(idpedstr);
+        System.out.println(idfarmstr);
+        System.out.println("imagen: "+part);
         InputStream inputStream=part.getInputStream();
-
-        bolsaCompraDao.actualizarFotoreceta(idF,idped,idprod,inputStream);
-        response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra");
-
+        System.out.println("igual= "+inputStream);
+        System.out.println(part.getInputStream().available());
+        String msg2="";
+        session.setAttribute("msg2",msg2);
+        if(part.getInputStream().available()!=0){
+            bolsaCompraDao.actualizarFotoreceta(idF,idped,idprod,inputStream);
+            response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra");
+        }else{
+            msg2="Porfavor seleccione una imagen como receta";
+            session.setAttribute("msg2",msg2);
+            response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra#popup2");
+        }
 
     }
 }

@@ -15,7 +15,6 @@
 
 <%
     ArrayList<BPedidoGeneral> listaPedidosG = (ArrayList<BPedidoGeneral>) request.getAttribute("listaPedidosG");
-
 %>
 
 <html lang="en">

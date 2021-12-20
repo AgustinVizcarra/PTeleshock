@@ -61,6 +61,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     request.getRequestDispatcher("/Client_Productos_F").forward(request, response);
                     break;
                 case "listar":
+                    session.setAttribute("msg1", msg1);
                     ArrayList<BPedidoEstado> listBolsa3 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
                     FarmaciaDao farmaciaDao1 = new FarmaciaDao();
                     ArrayList<BFarmacia> listaFarmacia1 = farmaciaDao1.getListaTodasFarmacias("");
@@ -244,58 +245,65 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                 break;
 
             case "comprar":
-                int cont = (int) session.getAttribute("contador");
+                HashMap<Integer, ArrayList<BPedidoEstado>> mapKey = (HashMap<Integer, ArrayList<BPedidoEstado>>) session.getAttribute("map");
+                if (bolsaCompraDao.validacionReceta(mapKey)){
+                    String msg3="No ha seleccionado una imagen como receta";
+                    session.setAttribute("msg3",msg3);
+                    response.sendRedirect(request.getContextPath() + "/Client_Bolsa_Compra#popup3");
+                }else{
+                    int cont = (int) session.getAttribute("contador");
 
-                if (cont != 0) {
-                    String recetaStr = request.getParameter("receta") != null ? request.getParameter("receta") : "";
-                    String fotoReceta = request.getParameter("fotoReceta") != null ? request.getParameter("fotoReceta") : "";
-                    int codigoVenta = (Integer) session.getAttribute("codVenta");
-                    if (codigoVenta == 0) {
-                        codigoVenta = (int) Math.floor(Math.random() * 4000 + 1000);
-                        session.setAttribute("codVenta", codigoVenta);
-                    } else {
-                        codigoVenta = (Integer) session.getAttribute("codVenta");
-                    }
-                    HashMap<Integer, String> entrega = new HashMap<>();
-                    HashMap<Integer, Double> mapSubtotal = (HashMap<Integer, Double>) session.getAttribute("Subtotal");
-                    HashMap<Integer, ArrayList<BPedidoEstado>> mapKey = (HashMap<Integer, ArrayList<BPedidoEstado>>) session.getAttribute("map");
-                    ArrayList<Integer> keys = new ArrayList<>();
-                    for (Map.Entry<Integer, ArrayList<BPedidoEstado>> ee : mapKey.entrySet()) {
-                        keys.add(ee.getKey());
-                    }
-                    for (int i = 1; i <= cont; i++) {
-                        String Ent = request.getParameter("horaEnt" + i) != null ? request.getParameter("horaEnt" + i) : "";
-                        entrega.put(keys.get(i - 1), Ent);
-                    }
-                    for (Map.Entry<Integer, ArrayList<BPedidoEstado>> es : mapKey.entrySet()) {
-                        int key = es.getKey();
-                        int idPed = es.getValue().get(0).getPedido().getIdPedido();
-                        String Ent = entrega.get(key);
-                        Double subTotal = mapSubtotal.get(key);
-                        bolsaCompraDao.realizarPedido(idPed, Ent, Boolean.parseBoolean(recetaStr), fotoReceta, codigoVenta, subTotal);
-                    }
+                    if (cont != 0) {
+                        String recetaStr = request.getParameter("receta") != null ? request.getParameter("receta") : "";
+                        String fotoReceta = request.getParameter("fotoReceta") != null ? request.getParameter("fotoReceta") : "";
+                        int codigoVenta = (Integer) session.getAttribute("codVenta");
+                        if (codigoVenta == 0) {
+                            codigoVenta = (int) Math.floor(Math.random() * 4000 + 1000);
+                            session.setAttribute("codVenta", codigoVenta);
+                        } else {
+                            codigoVenta = (Integer) session.getAttribute("codVenta");
+                        }
+                        HashMap<Integer, String> entrega = new HashMap<>();
+                        HashMap<Integer, Double> mapSubtotal = (HashMap<Integer, Double>) session.getAttribute("Subtotal");
 
-                    bolsaCompraDao.actualizarStockPendiente(mapKey);
-                    session.removeAttribute("bolsita");
-                    session.removeAttribute("maps");
-                    session.removeAttribute("map");
-                    session.removeAttribute("Subtotal");
-                    session.removeAttribute("hora-min");
-                    session.removeAttribute("codVenta");
-                    session.removeAttribute("contador");
-                    session.setAttribute("bolsita", new ArrayList<BPedidoEstado>());
-                    int codigoVenta1 = 0;
-                    session.setAttribute("codVenta", codigoVenta1);
-                    HashMap<Integer, Integer> map1 = new HashMap<>();
-                    map1.put(0, 0);
-                    session.setAttribute("maps", map1);
-                    //HashMap<Integer, Integer> map2 = new HashMap<>();
-                    //session.setAttribute("map", map2);
+                        ArrayList<Integer> keys = new ArrayList<>();
+                        for (Map.Entry<Integer, ArrayList<BPedidoEstado>> ee : mapKey.entrySet()) {
+                            keys.add(ee.getKey());
+                        }
+                        for (int i = 1; i <= cont; i++) {
+                            String Ent = request.getParameter("horaEnt" + i) != null ? request.getParameter("horaEnt" + i) : "";
+                            entrega.put(keys.get(i - 1), Ent);
+                        }
+                        for (Map.Entry<Integer, ArrayList<BPedidoEstado>> es : mapKey.entrySet()) {
+                            int key = es.getKey();
+                            int idPed = es.getValue().get(0).getPedido().getIdPedido();
+                            String Ent = entrega.get(key);
+                            Double subTotal = mapSubtotal.get(key);
+                            bolsaCompraDao.realizarPedido(idPed, Ent, Boolean.parseBoolean(recetaStr), fotoReceta, codigoVenta, subTotal);
+                        }
+
+                        bolsaCompraDao.actualizarStockPendiente(mapKey);
+                        session.removeAttribute("bolsita");
+                        session.removeAttribute("maps");
+                        session.removeAttribute("map");
+                        session.removeAttribute("Subtotal");
+                        session.removeAttribute("hora-min");
+                        session.removeAttribute("codVenta");
+                        session.removeAttribute("contador");
+                        session.setAttribute("bolsita", new ArrayList<BPedidoEstado>());
+                        int codigoVenta1 = 0;
+                        session.setAttribute("codVenta", codigoVenta1);
+                        HashMap<Integer, Integer> map1 = new HashMap<>();
+                        map1.put(0, 0);
+                        session.setAttribute("maps", map1);
+                        //HashMap<Integer, Integer> map2 = new HashMap<>();
+                        //session.setAttribute("map", map2);
 
 
+                    }
+                    session.setAttribute("msg1", msg1);
+                    response.sendRedirect(request.getContextPath() + "/Client_Listado_Producto");
                 }
-                session.setAttribute("msg1", msg1);
-                response.sendRedirect(request.getContextPath() + "/Client_Listado_Producto");
                 break;
             default:
                 String idFarmacia3 = request.getParameter("idF") != null ? request.getParameter("idF") : "";

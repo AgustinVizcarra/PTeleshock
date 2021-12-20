@@ -258,7 +258,7 @@ public class BolsaCompraDao extends BaseDao {
 
     public void actualizarFotoreceta(int idFarm, int idPedido, int idProd, InputStream inputstream){
 
-        String sql = "UPDATE detallepedido set recetamedica=? where idfarmacia = ? and idpedido =? and idproducto=?;";
+        String sql = "UPDATE detallepedido set recetamedica=?,validacionreceta=1 where idfarmacia = ? and idpedido =? and idproducto=?;";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
@@ -273,6 +273,46 @@ public class BolsaCompraDao extends BaseDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean validacionReceta(HashMap<Integer, ArrayList<BPedidoEstado>> map){
+        boolean validar=false;
+        for(Map.Entry<Integer, ArrayList<BPedidoEstado>> ee : map.entrySet()) {
+            System.out.println("###");
+            System.out.println(ee.getKey());
+            int idfarm=ee.getKey();
+            ArrayList<BPedidoEstado> values = ee.getValue();
+
+            for (BPedidoEstado value : values) {
+                System.out.println("#####");
+                System.out.println(value.getCantidad());
+                System.out.println(value.getIdProducto());
+                System.out.println("#####");
+
+                String sql="Select validacionreceta from detallepedido where idfarmacia = ? and idpedido =? and idproducto=?;";
+
+                try (Connection connection = this.getConnection();
+                     PreparedStatement pstmt = connection.prepareStatement(sql);) {
+                    pstmt.setInt(1,idfarm);
+                    pstmt.setInt(2,value.getPedido().getIdPedido());
+                    pstmt.setInt(3,value.getIdProducto());
+                    pstmt.executeQuery();
+                    try (ResultSet rs = pstmt.executeQuery()) {
+                        if (rs.next()) {
+                            if(rs.getInt(1)==0){
+                                validar=true;
+                            }
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+        }
+
+        return validar;
     }
 
     public void actualizarStockPendiente(HashMap<Integer, ArrayList<BPedidoEstado>> map){
