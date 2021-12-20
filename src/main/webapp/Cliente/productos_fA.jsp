@@ -147,13 +147,11 @@
                                 <br><br>
 
                                 <%if (listaProductosF.isEmpty()) {%>
-                                <%if (nombreProducto == null) {%>
+                                <%if (nombreProducto.equalsIgnoreCase("")) {%>
                                 <div class="text-center">
                                     <div class="alert alert-warning text-center" role="alert">
-                                        <p><em>No se han encontrado productos disponibles"</em></p>
+                                        <p><em>No se han encontrado productos disponibles :(</em></p>
                                     </div>
-                                    <a class="btn btn-primary me-md-4 text-center"
-                                       href="<%=request.getContextPath()%>/Client_Farmacias?idD=<%=farmacia.getIdFarmacia()%>">Regresar</a>
                                 </div>
                                 <%} else {%>
                                 <div class="text-center">
