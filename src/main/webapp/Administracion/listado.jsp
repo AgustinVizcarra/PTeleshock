@@ -113,15 +113,14 @@
                             </a>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small"><font color="#00152D">Logueado como:</font></div>
-                        <font color="#00152D"><%=adminSession.getNombre()%>
-                        </font>
+                    <div class="sb-sidenav-footer" style="height: 10%; background-color: #00152D; color: darkgrey">
+                        <div class="small">Logueado como:</div>
+                        <%=adminSession.getNombre() + " " + adminSession.getApellido()%>
                     </div>
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-                <main class="clase_principal" style="height:93%; position: relative">
+                <main class="clase_principal" style="height:100%; position: relative">
                     <div class="container-fluid px-4">
                         <div>
                             <%
@@ -318,7 +317,7 @@
                            style="width: fit-content; position: absolute; right: 15px; height: 38px; background-color: #00152D; border-color: #00152D">Regresar</a>
                     </div>
                 </main>
-                <footer class="py-4 bg-light mt-auto" style="height: 7%">
+                <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Teleshock.Inc &copy; 2021</div>

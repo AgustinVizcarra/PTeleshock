@@ -131,15 +131,14 @@
                             </a>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small"><font color="#00152D">Logueado como:</font></div>
-                        <font color="#00152D"><%=adminSession.getNombre()%>
-                        </font>
+                    <div class="sb-sidenav-footer" style="height: 10%; background-color: #00152D; color: darkgrey">
+                        <div class="small">Logueado como:</div>
+                        <%=adminSession.getNombre() + " " + adminSession.getApellido()%>
                     </div>
                 </nav>
             </div>
             <div id="layoutSidenav_content">
-                <main class="clase_desbloquear-farmacia" style="height:92%">
+                <main class="clase_desbloquear-farmacia" style="height:100%">
                     <div class="container-fluid px-4">
                         <div class="row">
                             <div class="container">
@@ -265,7 +264,7 @@
                         </div>
                     </div>
                 </main>
-                <footer class="py-4 bg-light mt-auto" style="background: #7ED957; height: 8%">
+                <footer class="py-4 bg-light mt-auto" style="background: #7ED957">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Teleshock.Inc &copy; 2021</div>
