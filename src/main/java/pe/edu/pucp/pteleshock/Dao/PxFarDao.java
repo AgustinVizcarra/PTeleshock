@@ -97,6 +97,36 @@ public class PxFarDao extends BaseDao {
         return listaProductosF;
     }
 
+    public ArrayList<BListaPFarmacia> buscarProductoEliminadoPorNombre(int idFarmacia,String pag, String nombre) {
+        ArrayList<BListaPFarmacia> listaProductosF = new ArrayList<>();
+        int pagint =Integer.parseInt(pag);
+        String sql = "Select  p.idproducto,p.nombre, f.foto1,pf.stock,pf.estadoproducto  from productoporfarmacia pf\n" +
+                " inner join producto p on (pf.idproducto=p.idproducto)\n" +
+                " left join foto f on (pf.idproducto=f.idproducto and pf.idfarmacia=f.idfarmacia)\n" +
+                "where pf.idfarmacia="+idFarmacia+" and lower(p.nombre) like ? and pf.estadoproducto='eliminado' limit "+(pagint-1)*12 +",12";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            pstmt.setString(1, "%" + nombre + "%");
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    BListaPFarmacia pxf = new BListaPFarmacia();
+                    pxf.setIdProducto(rs.getInt(1));
+                    pxf.setNombre(rs.getString(2));
+                    pxf.setFoto(rs.getString(3));
+                    pxf.setStock(rs.getInt(4));
+                    pxf.setEstadoproducto(rs.getString(5));
+                    listaProductosF.add(pxf);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaProductosF;
+    }
+
+
     public int obtenerStock(int idFarm, int idProd){
         BListaPFarmacia prod=null;
         String sql = "Select  pf.stock from productoporfarmacia pf\n" +
