@@ -61,6 +61,7 @@ public class Client_Bolsa_CompraServlet extends HttpServlet {
                     request.getRequestDispatcher("/Client_Productos_F").forward(request, response);
                     break;
                 case "listar":
+                    session.setAttribute("msg1", msg1);
                     ArrayList<BPedidoEstado> listBolsa3 = (ArrayList<BPedidoEstado>) session.getAttribute("bolsita");
                     FarmaciaDao farmaciaDao1 = new FarmaciaDao();
                     ArrayList<BFarmacia> listaFarmacia1 = farmaciaDao1.getListaTodasFarmacias("");
